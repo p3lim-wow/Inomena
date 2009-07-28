@@ -38,3 +38,10 @@ do
 		orig(...)
 	end
 end
+
+--[[ Auto repair ]]
+Inomena:Register('MERCHANT_SHOW', function()
+	if(CanMerchantRepair()) then
+		RepairAllItems()
+	end
+end
