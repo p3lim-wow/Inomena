@@ -80,3 +80,7 @@ Inomena:Register('ADDON_LOADED', function(self, event, name)
 
 	self:UnregisterEvent(event)
 end)
+
+--[[ GM ticket shortcut ]]
+SLASH_TICKETGM1 = '/gm'
+SlashCmdList.TICKETGM = ToggleHelpFrame
