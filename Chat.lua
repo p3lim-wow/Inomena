@@ -1,3 +1,6 @@
+local orig = {}
+local gsub = string.gsub
+
 local function poof(obj)
 	obj.Show = obj.Hide
 	obj:Hide()
@@ -7,6 +10,12 @@ local function tellTarget(str)
 	if(UnitIsPlayer('target') and UnitIsFriend('player', 'target')) then
 		SendChatMessage(str, 'WHISPER', GetDefaultLanguage('player'), GetUnitName('target', 'true'):gsub('%s', '', 2))
 	end
+end
+
+local function addMessage(self, str, ...)
+	str = str:gsub('(|Hchannel:(%d+)|h%[?(.-)%]?|h.+(|Hplayer.+)', '(%1)|h %3')
+
+	return orig[self](self, str, ...)
 end
 
 local function onSpacePressed(self)
@@ -50,6 +59,9 @@ for i = 1, NUM_CHAT_WINDOWS do
 	poof(_G['ChatFrame'..i..'UpButton'])
 	poof(_G['ChatFrame'..i..'DownButton'])
 	poof(_G['ChatFrame'..i..'BottomButton'])
+
+	orig[frame] = frame.AddMessage
+	frame.AddMessage = addMessage
 end
 
 poof(ChatFrameMenuButton)
