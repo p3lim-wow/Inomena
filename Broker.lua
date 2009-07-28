@@ -1,27 +1,33 @@
-local gear = cargoShip('Broker_Equipment', {
-})
-gear:SetPoint('BOTTOMRIGHT', Minimap)
+local gear = cargoShip('Broker_Equipment', {noText = true})
+gear:SetPoint('BOTTOMRIGHT', Minimap, -1, 1)
+gear:SetScript('OnLeave', function() gear:SetAlpha(0) end)
+gear:SetScript('OnEnter', function() gear:SetAlpha(1) end)
+gear:SetAlpha(0)
+
 
 local dps = cargoShip('Broker_SimpleDPS', {
+	noShadow = true,
+	noIcon = true,
+	font = [=[Interface\AddOns\pMinimap\font.ttf]=],
+	fontStyle = 'OUTLINE',
+	fontSize = 13,
 })
 dps:SetPoint('BOTTOMLEFT', Minimap)
+dps:SetScript('OnEnter', function() dps:SetAlpha(1) end)
+dps:SetScript('OnLeave', function()
+	if(not UnitAffectingCombat('player')) then
+		dps:SetAlpha(0)
+	end
+end)
 
-local function onEvent()
+local function fadeText()
 	if(UnitAffectingCombat('player')) then
-		dps:Show()
+		dps:SetAlpha(1)
 	else
-		dps:Hide()
+		dps:SetAlpha(0)
 	end
 end
 
-Inomena:Register('PLAYER_REGEN_ENABLED', onEvent)
-Inomena:Register('PLAYER_REGEN_DISABLED', onEvent)
-
-gear:SetScript('OnLeave', function() gear:Hide() end)
-gear:SetScript('OnEnter', function() gear:Show() end)
-dps:SetScript('OnEnter', function() dps:Show() end)
-dps:SetScript('OnLeave', function()
-	if(not UnitAffectingCombat('player')) then
-		dps:Hide()
-	end
-end)
+Inomena:Register('PLAYER_REGEN_ENABLED', fadeText)
+Inomena:Register('PLAYER_REGEN_DISABLED', fadeText)
+fadeText()
