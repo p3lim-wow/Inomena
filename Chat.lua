@@ -26,7 +26,7 @@ _G.CHAT_YELL_GET = '%s:\32'
 _G.CHAT_SAY_GET = '%s:\32'
 
 local function addMessage(self, str, ...)
-	str = str:gsub('(|Hchannel:(%d+)|h%[?(.-)%]?|h.+(|Hplayer.+)', '(%1)|h %3')
+	str = str:gsub('|Hchannel:(%d+)|h%[?(.-)%]?|h.+(|Hplayer.+)', '(%1)|h %3')
 
 	return orig[self](self, str, ...)
 end
