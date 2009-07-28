@@ -45,3 +45,9 @@ Inomena:Register('MERCHANT_SHOW', function()
 		RepairAllItems()
 	end
 end
+
+--[[ Force readycheck warning ]]
+ReadyCheckListenerFrame:SetScript('OnShow', nil)
+Inomena:Register('READY_CHECK', function()
+	PlaySoundFile([=[Sound\Interface\ReadyCheck.wav]=])
+end
