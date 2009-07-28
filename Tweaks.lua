@@ -51,3 +51,12 @@ ReadyCheckListenerFrame:SetScript('OnShow', nil)
 Inomena:Register('READY_CHECK', function()
 	PlaySoundFile([=[Sound\Interface\ReadyCheck.wav]=])
 end
+
+--[[ Worldmap enhancing ]]
+UIPanelWindows.WorldMapFrame = {area = 'center', pushable = 9}
+hooksecurefunc(WorldMapFrame, 'Show', function(self)
+	self:SetScale(0.75)
+	self:EnableKeyboard(false)
+	self:EnableMouse(false)
+	BlackoutWorld:Hide()
+end)
