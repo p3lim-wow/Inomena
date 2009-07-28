@@ -12,6 +12,19 @@ local function tellTarget(str)
 	end
 end
 
+_G.CHAT_GUILD_GET = '|Hchannel:Guild|h(G)|h %s:\32'
+_G.CHAT_OFFICER_GET = '|Hchannel:o|h(O)|h %s:\32'
+_G.CHAT_PARTY_GET = '|Hchannel:Party|h(P)|h %s:\32'
+_G.CHAT_RAID_GET = '|Hchannel:raid|h(R)|h %s:\32'
+_G.CHAT_RAID_LEADER_GET = '|Hchannel:raid|h(|cff00ffffR|r)|h %s:\32'
+_G.CHAT_RAID_WARNING_GET = '(W) %s:\32'
+_G.CHAT_BATTLEGROUND_GET = '|Hchannel:Battleground|h(B)|h %s:\32'
+_G.CHAT_BATTLEGROUND_LEADER_GET = '|Hchannel:Battleground|h(|cff00ffffB|r)|h %s:\32'
+_G.CHAT_WHISPER_INFORM_GET = '(T) %s:\32'
+_G.CHAT_WHISPER_GET = '%s:\32'
+_G.CHAT_YELL_GET = '%s:\32'
+_G.CHAT_SAY_GET = '%s:\32'
+
 local function addMessage(self, str, ...)
 	str = str:gsub('(|Hchannel:(%d+)|h%[?(.-)%]?|h.+(|Hplayer.+)', '(%1)|h %3')
 
