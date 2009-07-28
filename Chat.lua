@@ -34,3 +34,5 @@ for i = 1, NUM_CHAT_WINDOWS do
 end
 
 poof(ChatFrameMenuButton)
+
+CHAT_TELL_ALERT_TIME = 0
