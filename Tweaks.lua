@@ -60,3 +60,14 @@ hooksecurefunc(WorldMapFrame, 'Show', function(self)
 	self:EnableMouse(false)
 	BlackoutWorld:Hide()
 end)
+
+--[[ GM chat frame enhancement ]]
+Inomena:Register('ADDON_LOADED', function(self, event, name)
+	if(name ~= 'Blizzard_GMChatUI') then return end
+
+	GMChatFrame:EnableMouseWheel()
+	GMChatFrame:SetScript('OnMouseWheel', ChatFrame1:GetScript('OnMouseWheel'))
+	GMChatFrame:SetHeight(GMChatFrame:GetHeight() * 3)
+
+	self:UnregisterEvent(event)
+end)
