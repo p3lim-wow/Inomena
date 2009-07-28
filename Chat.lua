@@ -83,6 +83,8 @@ CHAT_TELL_ALERT_TIME = 0
 
 local regions = {ChatFrameEditBox:GetRegions()}
 poof(regions[6]); poof(regions[7]); poof(regions[8])
+
+ChatFrameEditBox:ClearAllPoints()
 ChatFrameEditBox:SetPoint('BOTTOMLEFT', ChatFrame1, 'TOPLEFT', -5, 20)
 ChatFrameEditBox:SetPoint('BOTTOMRIGHT', ChatFrame1, 'TOPRIGHT', -5, 20)
 ChatFrameEditBox:SetAltArrowKeyMode(nil)
