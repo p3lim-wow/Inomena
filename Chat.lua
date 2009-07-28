@@ -1,3 +1,8 @@
+local function poof(obj)
+	obj.Show = obj.Hide
+	obj:Hide()
+end
+
 local function onMouseWheel(self, dir)
 	if(dir > 0) then
 		if(IsShiftKeyDown()) then
@@ -22,4 +27,10 @@ for i = 1, NUM_CHAT_WINDOWS do
 	local frame = _G['ChatFrame'..i]
 	frame:EnableMouseWheel()
 	frame:SetScript('OnMouseWheel', onMouseWheel)
+
+	poof(_G['ChatFrame'..i..'UpButton'])
+	poof(_G['ChatFrame'..i..'DownButton'])
+	poof(_G['ChatFrame'..i..'BottomButton'])
 end
+
+poof(ChatFrameMenuButton)
