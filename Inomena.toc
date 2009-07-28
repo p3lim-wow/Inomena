@@ -6,3 +6,10 @@
 Inomena.lua
 Tweaks.lua
 Chat.lua
+
+libs\LibStub.lua
+libs\CallbackHandler-1.0.lua
+libs\LibDataBroker-1.1.lua
+libs\LibCargoShip-2.0.lua
+
+Broker.lua
