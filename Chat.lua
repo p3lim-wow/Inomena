@@ -9,6 +9,18 @@ local function tellTarget(str)
 	end
 end
 
+local function onSpacePressed(self)
+	local text = string.lower(self:GetText())
+	if(string.sub(text, 1, 1) == '/' and string.match(text, '^/tt $')) then
+		if(UnitIsPlayer('target') and UnitIsFriend('player', 'target')) then
+			self:Hide()
+			self:SetAttribute('chatType', 'WHISPER')
+			self:SetAttribute('tellTarget', GetUnitName('target', 'true'):gsub('%s', '', 2))
+			ChatFrame_OpenChat('')
+		end
+	end
+end
+
 local function onMouseWheel(self, dir)
 	if(dir > 0) then
 		if(IsShiftKeyDown()) then
@@ -45,3 +57,5 @@ CHAT_TELL_ALERT_TIME = 0
 
 SLASH_TellTarget1 = '/tt'
 SlashCmdList.TellTarget = tellTarget
+
+hooksecurefunc('ChatEdit_OnSpacePressed', onSpacePressed)
