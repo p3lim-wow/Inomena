@@ -30,7 +30,7 @@ do
 			SendMailNameEditBox:SetText(last)
 			SendMailNameEditBox:HighlightText()
 		end
-	end
+	end)
 
 	local orig = SendMailFrame_SendMail
 	function SendMailFrame_SendMail(...)
@@ -44,13 +44,13 @@ Inomena:Register('MERCHANT_SHOW', function()
 	if(CanMerchantRepair()) then
 		RepairAllItems()
 	end
-end
+end)
 
 --[[ Force readycheck warning ]]
 ReadyCheckListenerFrame:SetScript('OnShow', nil)
 Inomena:Register('READY_CHECK', function()
 	PlaySoundFile([=[Sound\Interface\ReadyCheck.wav]=])
-end
+end)
 
 --[[ Worldmap enhancing ]]
 UIPanelWindows.WorldMapFrame = {area = 'center', pushable = 9}
