@@ -41,7 +41,16 @@ end
 
 --[[ Auto repair ]]
 Inomena:Register('MERCHANT_SHOW', function()
-	if(CanMerchantRepair()) then
+	local val, afford = GetRepairAllCost()
+	if(CanMerchantRepair() and afford) then
+		if(val > 1e4) then
+			print(format('|cffff8080Inomena:|r Repaired for |cffffff66%d|r|TInterface\\MoneyFrame\\UI-GoldIcon:18|t |cffc0c0c0%d|r|TInterface\\MoneyFrame\\UI-SilverIcon:18|t |cffcc9900%d|r|TInterface\\MoneyFrame\\UI-CopperIcon:18|t', val / 1e4, mod(val, 1e4) / 1e2, mod(val, 1e2)))
+		elseif(val > 1e2) then
+			print(format('|cffff8080Inomena:|r Repaired for |cffc0c0c0%d|r|TInterface\\MoneyFrame\\UI-SilverIcon:18|t |cffcc9900%d|r|TInterface\\MoneyFrame\\UI-CopperIcon:18|t', val / 1e2, mod(val, 1e2)))
+		else
+			print(format('|cffff8080Inomena:|r Repaired for |cffcc9900%d|r|TInterface\\MoneyFrame\\UI-CopperIcon:18|t', val))
+		end
+	
 		RepairAllItems()
 	end
 end)
