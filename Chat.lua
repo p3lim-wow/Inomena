@@ -3,6 +3,12 @@ local function poof(obj)
 	obj:Hide()
 end
 
+local function tellTarget(str)
+	if(UnitIsPlayer('target') and UnitIsFriend('player', 'target')) then
+		SendChatMessage(str, 'WHISPER', GetDefaultLanguage('player'), GetUnitName('target', 'true'):gsub('%s', '', 2))
+	end
+end
+
 local function onMouseWheel(self, dir)
 	if(dir > 0) then
 		if(IsShiftKeyDown()) then
@@ -36,3 +42,6 @@ end
 poof(ChatFrameMenuButton)
 
 CHAT_TELL_ALERT_TIME = 0
+
+SLASH_TellTarget1 = '/tt'
+SlashCmdList.TellTarget = tellTarget
