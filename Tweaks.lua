@@ -14,3 +14,10 @@ Inomena:Register('PLAYER_LOGIN', function(r, g, b)
 	paste:SetText('Paste')
 	paste:SetScript('OnClick', function() ColorPickerFrame:SetColorRGB(r, g, b) end)
 end)
+
+--[[ Sound on new mail ]]
+Inomena:RegisterEvent('UPDATE_PENDING_MAIL', function()
+	if(HasNewMail() and not MailFrame:IsShown() and (AuctionFrame and not ActionFrame:IsShown())) then -- need more arg checks
+		PlaySoundFile([=[Interface\AddOns\Inomena\mail.wav]=])
+	end
+end)
