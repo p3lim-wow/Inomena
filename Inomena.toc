@@ -6,6 +6,7 @@
 Inomena.lua
 Tweaks.lua
 Chat.lua
+Strip.lua
 
 libs\LibStub.lua
 libs\CallbackHandler-1.0.lua
