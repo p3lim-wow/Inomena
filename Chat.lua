@@ -23,9 +23,9 @@ local function addMessage(self, str, ...)
 
 	str = str:gsub('^(%[(Raid Warning)%])', '(W)')
 
-	str = str:gsub('^|Hchannel:o|h(%[(Officer)%])|h', '|Hchannel:o|h(O)|h')
-	str = str:gsub('^|Hchannel:Guild|h(%[(Guild)%])|h', '|Hchannel:Guild|h(G)|h')
-	str = str:gsub('^|Hchannel:Party|h(%[(Party)%])|h', '|Hchannel:Party|h(P)|h')
+	str = str:gsub('^|Hchannel:o|h(%[(.-)%])|h', '|Hchannel:o|h(O)|h')
+	str = str:gsub('^|Hchannel:Guild|h(%[(.-)%])|h', '|Hchannel:Guild|h(G)|h')
+	str = str:gsub('^|Hchannel:Party|h(%[(.-)%])|h', '|Hchannel:Party|h(P)|h')
 	str = str:gsub('^|Hchannel:Battleground|h(%[(Battleground Leader)%])|h', '|Hchannel:Battleground|h(|cffffff00B|r)|h')
 	str = str:gsub('^|Hchannel:Battleground|h(%[(Battleground)%])|h', '|Hchannel:Battleground|h(B)|h')
 	str = str:gsub('^|Hchannel:raid|h(%[(Raid Leader)%])|h', '|Hchannel:raid|h(|cffffff00R|r)|h')
