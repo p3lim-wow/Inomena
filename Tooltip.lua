@@ -16,10 +16,6 @@ local function smartScript(self, script, handler)
 end
 
 smartScript(GameTooltip, 'OnShow', function(self)
-	self:SetBackdropColor(0.2, 0.2, 0.2, 0.8)
-	self:SetBackdropBorderColor(0.1, 0.1, 0.1, 0.9)
---	self:SetBackdropBorderColor(0.8, 0.2, 0.2, 0.9)
-
 	for index = 2, self:NumLines() do
 		if(_G['GameTooltipTextLeft'..index]:GetText() == PVP_ENABLED) then
 			if(GameTooltipStatusBar:IsShown()) then
@@ -98,18 +94,7 @@ smartScript(GameTooltip, 'OnTooltipSetUnit', function(self)
 	end
 end)
 
--- Quality Borders
-local function qualityColor(self)
-	local item = self:GetItem()
-	if(item) then
-		local name, link, quality = GetItemInfo(item)
-		self:SetBackdropBorderColor(GetItemQualityColor(quality or 0))
-	end
-	self:SetBackdropColor(0.2, 0.2, 0.2, 0.8)
-end
-
 for k, v in next, {GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3} do
-	v:HookScript('OnTooltipSetItem', qualityColor)
-	v:HookScript('OnShow', qualityColor)
 	v:SetBackdrop({bgFile = [=[Interface\Tooltips\UI-Tooltip-Background]=]})
+	v:SetBackdropColor(0.2, 0.2, 0.2, 0.8)
 end
