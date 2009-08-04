@@ -96,7 +96,10 @@ smartScript(GameTooltip, 'OnTooltipSetUnit', function(self)
 	else
 		nameLine:SetFormattedText('%s%s', index and format('%s22|t', ICON_LIST[index]) or '', name) -- add reaction color
 		infoLine:SetFormattedText('%s%s%s|r %s',  hex(GetDifficultyColor(level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit))
-		-- do something to minion stuff (like guild)
+
+		if(titleLine) then
+			titleLine:SetFormattedText('<%s>', titleLine:GetText())
+		end
 	end
 end)
 
