@@ -71,20 +71,20 @@ smartScript(GameTooltip, 'OnTooltipSetUnit', function(self)
 	local name, realm = UnitName(unit)
 	local localized, class = UnitClass(unit)
 	local index = GetRaidTargetIndex(unit)
-	local GameTooltipTextLeftX
+	local nameLine, infoLine = GameTooltipTextLeft1
 
 	for index = 2, self:NumLines() do
 		local line = _G['GameTooltipTextLeft'..index]
 		local levelLine = line:GetText():find('^'..TOOLTIP_UNIT_LEVEL:gsub('%%s', '.+'))
 
 		if(levelLine) then
-			GameTooltipTextLeftX = line
+			infoLine = line
 		end
 	end
 
 	if(UnitIsPlayer(unit)) then
-		GameTooltipTextLeft1:SetFormattedText('%s%s%s|r%s', index and format('%s22|t', ICON_LIST[index]) or '', hex(RAID_CLASS_COLORS[class]), name, realm and realm ~= '' and ' (*)' or '')
-		GameTooltipTextLeftX:SetFormattedText('%s%s|r %s %s', hex(GetDifficultyColor(level > 0 and level or 99)), level > 0 and level or '??', UnitRace(unit), UnitIsAFK(unit)and CHAT_FLAG_AFK or UnitIsDND(unit) and CHAT_FLAG_DND or not UnitIsConnected(unit) and '<DC>' or '')
+		nameLine:SetFormattedText('%s%s%s|r%s', index and format('%s22|t', ICON_LIST[index]) or '', hex(RAID_CLASS_COLORS[class]), name, realm and realm ~= '' and ' (*)' or '')
+		infoLine:SetFormattedText('%s%s|r %s %s', hex(GetDifficultyColor(level > 0 and level or 99)), level > 0 and level or '??', UnitRace(unit), UnitIsAFK(unit)and CHAT_FLAG_AFK or UnitIsDND(unit) and CHAT_FLAG_DND or not UnitIsConnected(unit) and '<DC>' or '')
 
 		if(guild) then -- better checks
 			GameTooltipTextLeft2:SetFormattedText('|cff%s<%s>|r', IsInGuild() and GetGuildInfo('player') == guild and '0090ff' or '00ff10', guild)
@@ -92,8 +92,8 @@ smartScript(GameTooltip, 'OnTooltipSetUnit', function(self)
 
 		self.class = class
 	else
-		GameTooltipTextLeft1:SetFormattedText('%s%s', index and format('%s22|t', ICON_LIST[index]) or '', name) -- add reaction color
-		GameTooltipTextLeftX:SetFormattedText('%s%s%s|r %s',  hex(GetDifficultyColor(level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit))
+		nameLine:SetFormattedText('%s%s', index and format('%s22|t', ICON_LIST[index]) or '', name) -- add reaction color
+		infoLine:SetFormattedText('%s%s%s|r %s',  hex(GetDifficultyColor(level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit))
 		-- do something to minion stuff (like guild)
 	end
 end)
