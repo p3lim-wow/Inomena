@@ -1,3 +1,6 @@
+local _G = getfenv(0)
+local find, gsub, format = string.find, string.gsub, string.format
+
 local classification = {
 	worldboss = ' Boss|r',
 	rareelite = '+|r Rare',
@@ -9,7 +12,7 @@ local function hex(r, g, b)
 	if(type(r) == 'table') then
 		if(r.r) then r, g, b = r.r, r.g, r.b else r, g, b = unpack(r) end
 	end
-	return string.format('%02x%02x%02x', r * 255, g * 255, b * 255)
+	return format('%02x%02x%02x', r * 255, g * 255, b * 255)
 end
 
 local function smartScript(self, script, handler)
