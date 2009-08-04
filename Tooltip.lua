@@ -74,8 +74,11 @@ smartScript(GameTooltip, 'OnTooltipSetUnit', function(self)
 	local GameTooltipTextLeftX
 
 	for index = 2, self:NumLines() do
-		if(_G['GameTooltipTextLeft'..index]:GetText():find('^'..LEVEL)) then
-			GameTooltipTextLeftX =  _G['GameTooltipTextLeft'..index]
+		local line = _G['GameTooltipTextLeft'..index]
+		local levelLine = line:GetText():find('^'..TOOLTIP_UNIT_LEVEL:gsub('%%s', '.+'))
+
+		if(levelLine) then
+			GameTooltipTextLeftX = line
 		end
 	end
 
