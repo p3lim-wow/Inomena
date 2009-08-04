@@ -26,12 +26,6 @@ smartScript(GameTooltip, 'OnUpdate', function(self)
 		GameTooltipStatusBar:SetStatusBarColor(x.r, x.g, x.b)
 	end
 
-	if(UnitExists('mouseover') and self.height and self.height ~= self:GetHeight()) then
-		self:SetHeight(self.height)
-	end
-end)
-
-smartScript(GameTooltip, 'OnShow', function(self)
 	for index = 2, self:NumLines() do
 		if(_G['GameTooltipTextLeft'..index]:GetText() == PVP_ENABLED) then
 			_G['GameTooltipTextLeft'..index]:SetText()
@@ -39,6 +33,12 @@ smartScript(GameTooltip, 'OnShow', function(self)
 		end
 	end
 
+	if(UnitExists('mouseover') and self.height and self.height ~= self:GetHeight()) then
+		self:SetHeight(self.height)
+	end
+end)
+
+smartScript(GameTooltip, 'OnShow', function(self)
 	if(GameTooltipStatusBar:IsShown() and UnitExists('mouseover')) then
 		if(UnitIsPVP('mouseover')) then
 			self:SetHeight(self:GetHeight() - 3)
