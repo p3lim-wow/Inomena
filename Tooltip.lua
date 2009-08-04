@@ -32,6 +32,8 @@ smartScript(GameTooltip, 'OnUpdate', function(self)
 			break
 		end
 	end
+
+	self:Show()
 end)
 
 smartScript(GameTooltip, 'OnShow', function(self)
