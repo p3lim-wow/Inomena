@@ -21,6 +21,11 @@ local function smartScript(self, script, handler)
 end
 
 smartScript(GameTooltip, 'OnUpdate', function(self)
+	if(self.class and UnitIsPlayer('mouseover')) then
+		local x = RAID_CLASS_COLORS[self.class]
+		GameTooltipStatusBar:SetStatusBarColor(x.r, x.g, x.b)
+	end
+
 	if(UnitExists('mouseover') and self.height and self.height ~= self:GetHeight()) then
 		self:SetHeight(self.height)
 	end
@@ -82,8 +87,7 @@ smartScript(GameTooltip, 'OnTooltipSetUnit', function(self)
 			GameTooltipTextLeft2:SetFormattedText('|cff%s<%s>|r', IsInGuild() and GetGuildInfo('player') == guild and '0090ff' or '00ff10', guild)
 		end
 
-		local c = RAID_CLASS_COLORS[class]
-		GameTooltipStatusBar:SetStatusBarColor(c.r, c.g, c.b)
+		self.class = class
 	else
 		GameTooltipTextLeft1:SetFormattedText('%s%s', index and format('%s22|t', ICON_LIST[index]) or '', name) -- add reaction color
 		GameTooltipTextLeftX:SetFormattedText('%s%s%s|r %s',  hex(GetDifficultyColor(level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit))
