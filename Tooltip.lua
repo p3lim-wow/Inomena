@@ -32,21 +32,11 @@ smartScript(GameTooltip, 'OnUpdate', function(self)
 			break
 		end
 	end
-
-	if(UnitExists('mouseover') and self.height and self.height ~= self:GetHeight()) then
-		self:SetHeight(self.height)
-	end
 end)
 
 smartScript(GameTooltip, 'OnShow', function(self)
-	if(GameTooltipStatusBar:IsShown() and UnitExists('mouseover')) then
-		if(UnitIsPVP('mouseover')) then
-			self:SetHeight(self:GetHeight() - 3)
-		else
-			self:SetHeight(self:GetHeight() + 11)
-		end
-
-		self.height = self:GetHeight()
+	if(GameTooltipStatusBar:IsShown()) then
+		self:AddLine(' ') -- find a better way to handle this, but it works for now
 	end
 end)
 
