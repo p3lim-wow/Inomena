@@ -15,19 +15,28 @@ local function smartScript(self, script, handler)
 	end
 end
 
+smartScript(GameTooltip, 'OnUpdate', function(self)
+	if(UnitExists('mouseover') and self.height and self.height ~= self:GetHeight()) then
+		self:SetHeight(self.height)
+	end
+end)
+
 smartScript(GameTooltip, 'OnShow', function(self)
 	for index = 2, self:NumLines() do
 		if(_G['GameTooltipTextLeft'..index]:GetText() == PVP_ENABLED) then
-			if(GameTooltipStatusBar:IsShown()) then
-				self:SetHeight(self:GetHeight() - 3)
-			end
-
-			return _G['GameTooltipTextLeft'..index]:SetText()
+			_G['GameTooltipTextLeft'..index]:SetText()
+			break
 		end
 	end
 
-	if(GameTooltipStatusBar:IsShown()) then
-		self:SetHeight(self:GetHeight() + 11)
+	if(GameTooltipStatusBar:IsShown() and UnitExists('mouseover')) then
+		if(UnitIsPVP('mouseover')) then
+			self:SetHeight(self:GetHeight() - 3)
+		else
+			self:SetHeight(self:GetHeight() + 11)
+		end
+
+		self.height = self:GetHeight()
 	end
 end)
 
