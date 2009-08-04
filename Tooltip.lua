@@ -1,9 +1,3 @@
-local backdrop = {
-	bgFile = [=[Interface\Tooltips\UI-Tooltip-Background]=], tile = true, tileSize = 8,
-	edgeFile =  [=[Interface\Tooltips\UI-Tooltip-Background]=], edgeSize = 2,
-	insets = {left = 1, right = 1, top = 1, bottom = 1}
-}
-
 local classification = {
 	worldboss = ' Boss|r',
 	rareelite = '+|r Rare',
@@ -117,5 +111,5 @@ end
 for k, v in next, {GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3} do
 	v:HookScript('OnTooltipSetItem', qualityColor)
 	v:HookScript('OnShow', qualityColor)
-	v:SetBackdrop(backdrop)
+	v:SetBackdrop({bgFile = [=[Interface\Tooltips\UI-Tooltip-Background]=]})
 end
