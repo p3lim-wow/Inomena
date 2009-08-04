@@ -5,7 +5,12 @@ local classification = {
 	elite = '+|r',
 }
 
-local reactionColor = {} -- todo
+local function hex(r, g, b)
+	if type(r) == "table" then
+		if r.r then r, g, b = r.r, r.g, r.b else r, g, b = unpack(r) end
+	end
+	return string.format("|cff%02x%02x%02x", r*255, g*255, b*255)
+end
 
 local function smartScript(self, script, handler)
 	if(self:GetScript(script)) then
@@ -56,50 +61,33 @@ smartScript(GameTooltip, 'OnTooltipSetUnit', function(self)
 		GameTooltipStatusBar.bg:SetTexture(0.4, 0.4, 0.4)
 	end
 
-	local index = GetRaidTargetIndex(unit)
-	local name, realm = UnitName(unit)
-
-	if(UnitIsPlayer(unit)) then
-		local _, class = UnitClass(unit)
-		local color = RAID_CLASS_COLORS[class]
-		if(index) then
-			GameTooltipTextLeft1:SetFormattedText('%s22|t |cff%02x%02x%02x%s|r %s', ICON_LIST[index], color.r * 255, color.g * 255, color.b * 255, name, realm and realm ~= '' and realm ~= GetRealmName() and '(*)' or '')
-		else
-			GameTooltipTextLeft1:SetFormattedText('|cff%02x%02x%02x%s|r %s', color.r * 255, color.g * 255, color.b * 255, name, realm and realm ~= '' and realm ~= GetRealmName() and '(*)' or '')
-		end
-	
-		local guild = GetGuildInfo(unit)
-		if(guild) then
-			if(IsInGuild() and GetGuildInfo('player') == guild) then
-				GameTooltipTextLeft2:SetFormattedText('|cff0090ff<%s>|r', guild)
-			else
-				GameTooltipTextLeft2:SetFormattedText('|cff00ff10<%s>|r', guild)
-			end
-		end
-	else
-		local color = reactionColor[UnitReaction(unit, 'player')] or {r = 1, g = 1, b = 1}
-		if(index) then
-			GameTooltipTextLeft1:SetFormattedText('%s22|t |cff%02x%02x%02x%s|r', ICON_LIST[index], color.r * 255, color.g * 255, color.b * 255, name)
-		else
-			GameTooltipTextLeft1:SetFormattedText('|cff%02x%02x%02x%s|r', color.r * 255, color.g * 255, color.b * 255, name)
-		end
-
---		GameTooltipTextLeft2:SetFormattedText('<%s>', GameTooltipTextLeft2:GetText()) -- npc title
-	end
-
 	local level = UnitLevel(unit)
-	local color = GetDifficultyColor(level > 0 and level or 99)
+	local guild = GetGuildInfo(unit)
+	local name, realm = UnitName(unit)
+	local localized, class = UnitClass(unit)
+	local index = GetRaidTargetIndex(unit)
+	local GameTooltipTextLeftX
 
 	for index = 2, self:NumLines() do
-		local line = _G['GameTooltipTextLeft'..index]
-		if(line:GetText():find('^'..LEVEL)) then
-			if(UnitIsPlayer(unit)) then
-				line:SetFormattedText('|cff%02x%02x%02x%s|r %s %s', color.r * 255, color.g * 255, color.b * 255, level > 0 and level or '??', UnitRace(unit), UnitIsAFK(unit)and CHAT_FLAG_AFK or UnitIsDND(unit) and CHAT_FLAG_DND or not UnitIsConnected(unit) and '<DC>' or '')
-			else
-				line:SetFormattedText('|cff%02x%02x%02x%s%s|r %s', color.r * 255, color.g * 255, color.b * 255, level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit))
-			end
-			break
+		if(_G['GameTooltipTextLeft'..index]:GetText():find('^'..LEVEL)) then
+			GameTooltipTextLeftX =  _G['GameTooltipTextLeft'..index]
 		end
+	end
+
+	if(UnitIsPlayer(unit)) then
+		GameTooltipTextLeft1:SetFormattedText('%s%s%s|r%s', index and format('%s22|t', ICON_LIST[index]) or '', hex(RAID_CLASS_COLORS[class]), name, realm and realm ~= '' and ' (*)' or '')
+		GameTooltipTextLeftX:SetFormattedText('%s%s|r %s %s', hex(GetDifficultyColor(level > 0 and level or 99)), level > 0 and level or '??', UnitRace(unit), UnitIsAFK(unit)and CHAT_FLAG_AFK or UnitIsDND(unit) and CHAT_FLAG_DND or not UnitIsConnected(unit) and '<DC>' or '')
+
+		if(guild) then -- better checks
+			GameTooltipTextLeft2:SetFormattedText('|cff%s<%s>|r', IsInGuild() and GetGuildInfo('player') == guild and '0090ff' or '00ff10', guild)
+		end
+
+		local c = RAID_CLASS_COLORS[class]
+		GameTooltipStatusBar:SetStatusBarColor(c.r, c.g, c.b)
+	else
+		GameTooltipTextLeft1:SetFormattedText('%s%s', index and format('%s22|t', ICON_LIST[index]) or '', name) -- add reaction color
+		GameTooltipTextLeftX:SetFormattedText('%s%s%s|r %s',  hex(GetDifficultyColor(level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit))
+		-- do something to minion stuff (like guild)
 	end
 end)
 
