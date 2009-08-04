@@ -6,10 +6,10 @@ local classification = {
 }
 
 local function hex(r, g, b)
-	if type(r) == "table" then
-		if r.r then r, g, b = r.r, r.g, r.b else r, g, b = unpack(r) end
+	if(type(r) == 'table') then
+		if(r.r) then r, g, b = r.r, r.g, r.b else r, g, b = unpack(r) end
 	end
-	return string.format("|cff%02x%02x%02x", r*255, g*255, b*255)
+	return string.format('%02x%02x%02x', r * 255, g * 255, b * 255)
 end
 
 local function smartScript(self, script, handler)
@@ -85,7 +85,7 @@ smartScript(GameTooltip, 'OnTooltipSetUnit', function(self)
 	end
 
 	if(UnitIsPlayer(unit)) then
-		nameLine:SetFormattedText('%s%s%s|r%s', index and format('%s22|t', ICON_LIST[index]) or '', hex(RAID_CLASS_COLORS[class]), name, realm and realm ~= '' and ' (*)' or '')
+		nameLine:SetFormattedText('%s|cff%s%s|r%s', index and format('%s22|t', ICON_LIST[index]) or '', hex(RAID_CLASS_COLORS[class]), name, realm and realm ~= '' and ' (*)' or '')
 		infoLine:SetFormattedText('|cff%s%s|r %s %s', hex(GetDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', UnitRace(unit), UnitIsAFK(unit)and CHAT_FLAG_AFK or UnitIsDND(unit) and CHAT_FLAG_DND or not UnitIsConnected(unit) and '<DC>' or '')
 
 		if(guild and titleLine) then
