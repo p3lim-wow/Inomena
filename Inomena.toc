@@ -1,5 +1,6 @@
-## Interface: 30100
+## Interface: 30200
 ## Author: p3lim
+## Version: Alpha
 ## Title: Inomena
 ## Notes: Random tweaks and settings
 
