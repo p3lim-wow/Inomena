@@ -8,7 +8,7 @@ gear:SetAlpha(0)
 local dps = cargoShip('Broker_SimpleDPS', {
 	noShadow = true,
 	noIcon = true,
-	font = [=[Interface\AddOns\pMinimap\font.ttf]=],
+	font = [=[Interface\AddOns\pMinimap\media\font.ttf]=],
 	fontStyle = 'OUTLINE',
 	fontSize = 13,
 })
