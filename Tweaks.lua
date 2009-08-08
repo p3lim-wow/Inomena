@@ -40,7 +40,7 @@ do
 end
 
 --[[ Auto repair ]]
-Inomena:Register('MERCHANT_SHOW', function()
+Inomena:Register('MERCHANT_SHOW', function(self)
 	local val, afford = GetRepairAllCost()
 	if(CanMerchantRepair() and afford) then
 		if(val > 1e4) then
