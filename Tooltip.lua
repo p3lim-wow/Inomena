@@ -90,7 +90,7 @@ smartScript(GameTooltip, 'OnTooltipSetUnit', function(self)
 		self.class = class
 	else
 		nameLine:SetFormattedText('%s%s', index and format('%s22|t', ICON_LIST[index]) or '', name) -- add reaction color
-		infoLine:SetFormattedText('|cff%s%s%s|r %s', hex(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit))
+		infoLine:SetFormattedText('|cff%s%s%s|r %s', hex(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit) or '')
 
 		if(titleLine) then
 			titleLine:SetFormattedText('<%s>', titleLine:GetText())
