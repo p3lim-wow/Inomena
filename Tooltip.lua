@@ -15,15 +15,7 @@ local function hex(r, g, b)
 	return format('%02x%02x%02x', r * 255, g * 255, b * 255)
 end
 
-local function smartScript(self, script, handler)
-	if(self:GetScript(script)) then
-		self:HookScript(script, handler)
-	else
-		self:SetScript(script, handler)
-	end
-end
-
-smartScript(GameTooltip, 'OnUpdate', function(self)
+GameTooltip:HookScript('OnUpdate', function(self)
 	if(self.class and UnitIsPlayer('mouseover')) then
 		local x = RAID_CLASS_COLORS[self.class]
 		GameTooltipStatusBar:SetStatusBarColor(x.r, x.g, x.b)
@@ -39,13 +31,13 @@ smartScript(GameTooltip, 'OnUpdate', function(self)
 	self:Show()
 end)
 
-smartScript(GameTooltip, 'OnShow', function(self)
+GameTooltip:HookScript('OnShow', function(self)
 	if(GameTooltipStatusBar:IsShown()) then
 		self:AddLine(' ') -- find a better way to handle this, but it works for now
 	end
 end)
 
-smartScript(GameTooltip, 'OnTooltipSetUnit', function(self)
+GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 	local _, unit = self:GetUnit()
 	if(not unit or not UnitExists(unit)) then return end
 
