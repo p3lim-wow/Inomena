@@ -1,7 +1,6 @@
 assert(LibStub, "LibCargoShip-2.0 requires LibStub")
-assert(LibStub:GetLibrary("LibDataBroker-1.1", true), "LibCargoShip-2.0 requires LibDataBroker-1.1")
-
-local lib, oldminor = LibStub:NewLibrary("LibCargoShip-2.0", 1)
+local LDB = LibStub:GetLibrary("LibDataBroker-1.1")
+local lib, oldminor = LibStub:NewLibrary("LibCargoShip-2.0", 2)
 if(not lib) then return end
 
 --[[
@@ -10,7 +9,6 @@ if(not lib) then return end
 
 local obj, dataobj, unused
 local _G = getfenv(0)
-local LDB = LibStub:GetLibrary("LibDataBroker-1.1")
 local defaults = {}
 local objects = {}
 local updateFunctions
@@ -75,7 +73,11 @@ end
 		If it does not exist, it will be created with the defined arguments
 *******************************]]
 function lib:Create(name, opt)
-	if(not name or strlen(name)<1) then return nil end
+	if(type(name) == "table" and not opt) then
+		opt = name
+		name = opt.name
+	end
+	if(not name or name:len() < 1) then return end
 	opt = opt or defaults
 
 	local object = CreateFrame("Button", nil, opt.parent or UIParent)
@@ -119,8 +121,8 @@ end
 	lib:GetUnused()
 		Return a table of all unused dataobjects
 *******************************]]
+local unused = {}
 function lib:GetUnused()
-	local unused = {}
 	for name, dataobj in LDB:DataObjectIterator() do
 		if(not objects[name]) then unused[name] = dataobj else unused[name] = nil end
 	end
@@ -217,7 +219,7 @@ updateFunctions = {
 updateFunctions.value = updateFunctions.text
 updateFunctions.suffix = updateFunctions.text
 updateFunctions.iconG = updateFunctions.iconR
-updateFunctions.iconB = updateFunctions.iconB
+updateFunctions.iconB = updateFunctions.iconR
 updateFunctions.OnTooltipShow = updateFunctions.tooltip
 
 --[[##################################
