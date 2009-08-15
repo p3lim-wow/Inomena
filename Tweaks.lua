@@ -34,7 +34,7 @@ do
 
 	local orig = SendMailFrame_SendMail
 	function SendMailFrame_SendMail(...)
-		last = SendMailFrameEditBox:GetText()
+		last = SendMailNameEditBox:GetText()
 		orig(...)
 	end
 end
