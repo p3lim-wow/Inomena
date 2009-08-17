@@ -8,14 +8,14 @@ local classification = {
 	elite = '+|r',
 }
 
-local function hex(t)
-	return format('|cff%02x%02x%02x', t.r * 255, t.g * 255, t.b * 255)
+local function hex(c)
+	return format('|cff%02x%02x%02x', c.r * 255, c.g * 255, c.b * 255)
 end
 
 GameTooltip:HookScript('OnUpdate', function(self)
 	if(self.class and UnitIsPlayer('mouseover')) then
-		local x = RAID_CLASS_COLORS[self.class]
-		GameTooltipStatusBar:SetStatusBarColor(x.r, x.g, x.b)
+		local c = RAID_CLASS_COLORS[self.class]
+		GameTooltipStatusBar:SetStatusBarColor(c.r, c.g, c.b)
 	end
 
 	for index = 2, self:NumLines() do
