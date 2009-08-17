@@ -8,11 +8,8 @@ local classification = {
 	elite = '+|r',
 }
 
-local function hex(r, g, b)
-	if(type(r) == 'table') then
-		if(r.r) then r, g, b = r.r, r.g, r.b else r, g, b = unpack(r) end
-	end
-	return format('%02x%02x%02x', r * 255, g * 255, b * 255)
+local function hex(t)
+	return format('|cff%02x%02x%02x', t.r * 255, t.g * 255, t.b * 255)
 end
 
 GameTooltip:HookScript('OnUpdate', function(self)
@@ -72,8 +69,8 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 	end
 
 	if(UnitIsPlayer(unit)) then
-		nameLine:SetFormattedText('%s|cff%s%s|r%s', index and format('%s22|t', ICON_LIST[index]) or '', hex(RAID_CLASS_COLORS[class]), name, realm and realm ~= '' and ' (*)' or '')
-		infoLine:SetFormattedText('|cff%s%s|r %s %s', hex(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', UnitRace(unit), UnitIsAFK(unit)and CHAT_FLAG_AFK or UnitIsDND(unit) and CHAT_FLAG_DND or not UnitIsConnected(unit) and '<DC>' or '')
+		nameLine:SetFormattedText('%s%s%s|r%s', index and format('%s22|t', ICON_LIST[index]) or '', hex(RAID_CLASS_COLORS[class]), name, realm and realm ~= '' and ' (*)' or '')
+		infoLine:SetFormattedText('%s%s|r %s %s', hex(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', UnitRace(unit), UnitIsAFK(unit)and CHAT_FLAG_AFK or UnitIsDND(unit) and CHAT_FLAG_DND or not UnitIsConnected(unit) and '<DC>' or '')
 
 		if(guild and titleLine) then
 			titleLine:SetFormattedText('|cff%s<%s>|r', IsInGuild() and GetGuildInfo('player') == guild and '0090ff' or '00ff10', guild)
@@ -82,7 +79,7 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 		self.class = class
 	else
 		nameLine:SetFormattedText('%s%s', index and format('%s22|t', ICON_LIST[index]) or '', name) -- add reaction color
-		infoLine:SetFormattedText('|cff%s%s%s|r %s', hex(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit) or '')
+		infoLine:SetFormattedText('%s%s%s|r %s', hex(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit) or '')
 
 		if(titleLine) then
 			titleLine:SetFormattedText('<%s>', titleLine:GetText())
