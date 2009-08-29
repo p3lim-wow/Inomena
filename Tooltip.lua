@@ -41,14 +41,7 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 	GameTooltipStatusBar:ClearAllPoints()
 	GameTooltipStatusBar:SetPoint('BOTTOMLEFT', 8, 9)
 	GameTooltipStatusBar:SetPoint('BOTTOMRIGHT', -8, 9)
-	GameTooltipStatusBar:SetStatusBarTexture([=[Interface\AddOns\Inomena\media\minimalist]=])
-	GameTooltipStatusBar:SetHeight(7)
 
-	if(not GameTooltipStatusBar.bg) then
-		GameTooltipStatusBar.bg = GameTooltipStatusBar:CreateTexture(nil, 'BACKGROUND')
-		GameTooltipStatusBar.bg:SetAllPoints(GameTooltipStatusBar)
-		GameTooltipStatusBar.bg:SetTexture(0.4, 0.4, 0.4)
-	end
 
 	local level = UnitLevel(unit)
 	local guild = GetGuildInfo(unit)
@@ -86,6 +79,13 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 		end
 	end
 end)
+
+GameTooltipStatusBar.bg = GameTooltipStatusBar:CreateTexture(nil, 'BACKGROUND')
+GameTooltipStatusBar.bg:SetAllPoints(GameTooltipStatusBar)
+GameTooltipStatusBar.bg:SetTexture(0.4, 0.4, 0.4)
+
+GameTooltipStatusBar:SetHeight(7)
+GameTooltipStatusBar:SetStatusBarTexture([=[Interface\AddOns\Inomena\media\minimalist]=])
 
 for k, v in next, {GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3} do
 	v:SetBackdrop({bgFile = [=[Interface\Tooltips\UI-Tooltip-Background]=]})
