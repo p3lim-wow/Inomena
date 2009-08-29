@@ -12,28 +12,6 @@ local function hex(c)
 	return format('|cff%02x%02x%02x', c.r * 255, c.g * 255, c.b * 255)
 end
 
-GameTooltip:HookScript('OnUpdate', function(self)
-	if(self.class and UnitIsPlayer('mouseover')) then
-		local c = RAID_CLASS_COLORS[self.class]
-		GameTooltipStatusBar:SetStatusBarColor(c.r, c.g, c.b)
-	end
-
-	for index = 2, self:NumLines() do
-		if(_G['GameTooltipTextLeft'..index]:GetText() == PVP_ENABLED) then
-			_G['GameTooltipTextLeft'..index]:SetText()
-			break
-		end
-	end
-
-	self:Show()
-end)
-
-GameTooltip:HookScript('OnShow', function(self)
-	if(GameTooltipStatusBar:IsShown()) then
-		self:AddLine(' ') -- find a better way to handle this, but it works for now
-	end
-end)
-
 GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 	local _, unit = self:GetUnit()
 	if(not unit or not UnitExists(unit)) then return end
