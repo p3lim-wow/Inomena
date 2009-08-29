@@ -80,12 +80,25 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 	end
 end)
 
+GameTooltipStatusBar.text = GameTooltipStatusBar:CreateFontString(nil, 'OVERLAY', 'GameFontHighlightSmall')
+GameTooltipStatusBar.text:SetPoint('CENTER')
+
 GameTooltipStatusBar.bg = GameTooltipStatusBar:CreateTexture(nil, 'BACKGROUND')
 GameTooltipStatusBar.bg:SetAllPoints(GameTooltipStatusBar)
 GameTooltipStatusBar.bg:SetTexture(0.4, 0.4, 0.4)
 
 GameTooltipStatusBar:SetHeight(7)
 GameTooltipStatusBar:SetStatusBarTexture([=[Interface\AddOns\Inomena\media\minimalist]=])
+GameTooltipStatusBar:HookScript('OnValueChanged', function(self, value)
+	if(value) then
+		local min, max = self:GetMinMaxValues()
+		if(value == min) then
+			self.text:SetText('Dead')
+		else
+			self.text:SetFormattedText('%d%%', value / max * 100)
+		end
+	end
+end)
 
 for k, v in next, {GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3} do
 	v:SetBackdrop({bgFile = [=[Interface\Tooltips\UI-Tooltip-Background]=]})
