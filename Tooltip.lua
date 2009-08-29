@@ -9,7 +9,7 @@ local classification = {
 }
 
 local function hex(c)
-	return format('|cff%02x%02x%02x', c.r * 255, c.g * 255, c.b * 255)
+	return format('%02x%02x%02x', c.r * 255, c.g * 255, c.b * 255)
 end
 
 GameTooltip:HookScript('OnTooltipSetUnit', function(self)
@@ -29,13 +29,13 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 	end
 
 	self:ClearLines()
-	self:AddLine(format('%s|cff%s%s|r', index and format('%s22|t', ICON_LIST[index]) or '', hexColor(color), GetUnitName(unit)))
+	self:AddLine(format('%s|cff%s%s|r', index and format('%s22|t', ICON_LIST[index]) or '', hex(color), GetUnitName(unit)))
 
 	if(UnitIsPlayer(unit)) then
 		local level = UnitLevel(unit)
 		local index = GetRaidTargetIndex(unit)
 
-		self:AddLine(format('|cff%s%s|r |cffffffff%s %s|r', hexColor(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', UnitRace(unit), UnitIsAFK(unit) and CHAT_FLAG_AFK or UnitIsDND(unit) and CHAT_FLAG_DND or not UnitIsConnected(unit) and '<DC>' or ''))
+		self:AddLine(format('|cff%s%s|r |cffffffff%s %s|r', hex(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', UnitRace(unit), UnitIsAFK(unit) and CHAT_FLAG_AFK or UnitIsDND(unit) and CHAT_FLAG_DND or not UnitIsConnected(unit) and '<DC>' or ''))
 
 		if(GetGuildInfo(unit)) then
 			self:AddLine(GameTooltipTextLeft2:GetText())
@@ -45,7 +45,7 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 		local level = UnitLevel(unit)
 		local index = GetRaidTargetIndex(unit)
 
-		self:AddLine(format('|cff%s%s%s|r |cffffffff%s|r', hexColor(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit) or ''))
+		self:AddLine(format('|cff%s%s%s|r |cffffffff%s|r', hex(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit) or ''))
 
 		if(title) then
 			self:AddLine(GameTooltipTextLeft2:GetText())
