@@ -1,5 +1,12 @@
-local function onClick()
-	-- todo
+local function onClick(self)
+	if(Broker_EquipmentDB.text == 'Nekkid') then
+		self:SetNormalTexture([=[Interface\Buttons\UI-Panel-Button-Disabled]=])
+		EquipmentManager_EquipSet(self.gear or 'Cat')
+	else
+		self.gear = Broker_EquipmentDB.text
+		EquipmentManager_EquipSet('Nekkid')
+		self:SetNormalTexture([=[Interface\Buttons\UI-Panel-Button-Up]=])
+	end
 end
 
 local nekkid = CreateFrame('Button', nil, PaperDollFrame, 'UIPanelButtonTemplate')
