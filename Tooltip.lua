@@ -78,6 +78,8 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 	GameTooltipStatusBar:ClearAllPoints()
 	GameTooltipStatusBar:SetPoint('BOTTOMLEFT', 8, 9)
 	GameTooltipStatusBar:SetPoint('BOTTOMRIGHT', -8, 9)
+	GameTooltipStatusBar:SetStatusBarColor(color.r, color.g, color.b)
+	GameTooltipStatusBar:Show()
 
 	self:AddLine(' ')
 end)
