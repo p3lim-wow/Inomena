@@ -62,6 +62,10 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 	self:AddLine(' ')
 end)
 
+GameTooltip:HookScript('OnTooltipCleared', function()
+	GameTooltipStatusBar:Hide()
+end)
+
 GameTooltipStatusBar.text = GameTooltipStatusBar:CreateFontString(nil, 'OVERLAY', 'GameFontHighlightSmall')
 GameTooltipStatusBar.text:SetPoint('CENTER')
 
