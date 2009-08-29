@@ -38,46 +38,48 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 	local _, unit = self:GetUnit()
 	if(not unit or not UnitExists(unit)) then return end
 
+	local localized, class = UnitClass(unit)
+	local color = UnitIsPlayer(unit) and RAID_CLASS_COLORS[class] or FACTION_BAR_COLORS[UnitReaction(unit, 'player')]
+
+	-- stupid shit, no api
+	local title
+	for index = 2, self:NumLines() do
+		local text = _G['GameTooltipTextLeft'..index]:GetText()
+		if(index == 2 and not text:find('^'..TOOLTIP_UNIT_LEVEL:gsub('%%s', '.+'))) then
+			title = text
+		end
+	end
+
+	self:ClearLines()
+	self:AddLine(format('%s|cff%s%s|r', index and format('%s22|t', ICON_LIST[index]) or '', hexColor(color), GetUnitName(unit)))
+
+	if(UnitIsPlayer(unit)) then
+		local level = UnitLevel(unit)
+		local index = GetRaidTargetIndex(unit)
+
+		self:AddLine(format('|cff%s%s|r |cffffffff%s %s|r', hexColor(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', UnitRace(unit), UnitIsAFK(unit) and CHAT_FLAG_AFK or UnitIsDND(unit) and CHAT_FLAG_DND or not UnitIsConnected(unit) and '<DC>' or ''))
+
+		if(GetGuildInfo(unit)) then
+			self:AddLine(GameTooltipTextLeft2:GetText())
+			GameTooltipTextLeft2:SetFormattedText('|cff%s<%s>|r', IsInGuild() and UnitIsInMyGuild(unit) and '0090ff' or '00ff10', GetGuildInfo(unit))
+		end
+	else
+		local level = UnitLevel(unit)
+		local index = GetRaidTargetIndex(unit)
+
+		self:AddLine(format('|cff%s%s%s|r |cffffffff%s|r', hexColor(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit) or ''))
+
+		if(title) then
+			self:AddLine(GameTooltipTextLeft2:GetText())
+			GameTooltipTextLeft2:SetFormattedText('|cffffffff<%s>|r', title)
+		end
+	end
+
 	GameTooltipStatusBar:ClearAllPoints()
 	GameTooltipStatusBar:SetPoint('BOTTOMLEFT', 8, 9)
 	GameTooltipStatusBar:SetPoint('BOTTOMRIGHT', -8, 9)
 
-
-	local level = UnitLevel(unit)
-	local guild = GetGuildInfo(unit)
-	local name, realm = UnitName(unit)
-	local localized, class = UnitClass(unit)
-	local index = GetRaidTargetIndex(unit)
-	local nameLine, titleLine, infoLine = GameTooltipTextLeft1
-
-	for index = 2, self:NumLines() do
-		local line = _G['GameTooltipTextLeft'..index]
-		local levelLine = line:GetText():find('^'..TOOLTIP_UNIT_LEVEL:gsub('%%s', '.+'))
-
-		if(levelLine) then
-			infoLine = line
-		elseif(index == 2 and not levelLine) then
-			titleLine = line
-		end
-	end
-
-	if(UnitIsPlayer(unit)) then
-		nameLine:SetFormattedText('%s%s%s|r%s', index and format('%s22|t', ICON_LIST[index]) or '', hex(RAID_CLASS_COLORS[class]), name, realm and realm ~= '' and ' (*)' or '')
-		infoLine:SetFormattedText('%s%s|r %s %s', hex(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', UnitRace(unit), UnitIsAFK(unit)and CHAT_FLAG_AFK or UnitIsDND(unit) and CHAT_FLAG_DND or not UnitIsConnected(unit) and '<DC>' or '')
-
-		if(guild and titleLine) then
-			titleLine:SetFormattedText('|cff%s<%s>|r', IsInGuild() and GetGuildInfo('player') == guild and '0090ff' or '00ff10', guild)
-		end
-
-		self.class = class
-	else
-		nameLine:SetFormattedText('%s%s', index and format('%s22|t', ICON_LIST[index]) or '', name) -- add reaction color
-		infoLine:SetFormattedText('%s%s%s|r %s', hex(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit) or '')
-
-		if(titleLine) then
-			titleLine:SetFormattedText('<%s>', titleLine:GetText())
-		end
-	end
+	self:AddLine(' ')
 end)
 
 GameTooltipStatusBar.text = GameTooltipStatusBar:CreateFontString(nil, 'OVERLAY', 'GameFontHighlightSmall')
