@@ -1,5 +1,8 @@
 local _G = getfenv(0)
-local find, gsub, format = string.find, string.gsub, string.format
+
+local find = string.find
+local gsub = string.gsub
+local format = string.format
 
 local classification = {
 	worldboss = ' Boss|r',
