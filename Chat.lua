@@ -16,7 +16,7 @@ local function addMessage(self, str, ...)
 	str = str:gsub('^|Hchannel:(%d+)|h(%[([%d%. ]*)([^%]]+)%])|h', '|Hchannel:%1|h%1|h')
 	str = str:gsub('(|Hplayer.-|h)%[(.-)%]|h', '%1%2|h')
 
-	str = str:gsub('^To (.-|h):', 't %1:')
+	str = str:gsub('^To (.-|h):', '%1:|cffcc6699')
 	str = str:gsub('^(.-|h) whispers:', '%1:')
 	str = str:gsub('^(.-|h) says:', '%1:')
 	str = str:gsub('^(.-|h) yells:', '%1:')
