@@ -83,6 +83,7 @@ end
 poof(ChatFrameMenuButton)
 
 CHAT_TELL_ALERT_TIME = 0
+ChatTypeInfo.OFFICER.sticky = 1
 
 local regions = {ChatFrameEditBox:GetRegions()}
 poof(regions[6]); poof(regions[7]); poof(regions[8])
