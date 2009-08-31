@@ -91,4 +91,5 @@ end)
 
 for k, v in next, {GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3} do
 	v:SetBackdrop({bgFile = [=[Interface\Tooltips\UI-Tooltip-Background]=]})
+	v:SetBackdropColor(0.1, 0.1, 0.1)
 end
