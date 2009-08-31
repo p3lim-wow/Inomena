@@ -13,23 +13,23 @@ local function tellTarget(str)
 end
 
 local function addMessage(self, str, ...)
-	str = str:gsub('^|Hchannel:(%d+)|h(%[([%d%. ]*)([^%]]+)%])|h', '|Hchannel:%1|h(%1)|h')
+	str = str:gsub('^|Hchannel:(%d+)|h(%[([%d%. ]*)([^%]]+)%])|h', '|Hchannel:%1|h%1|h')
 	str = str:gsub('(|Hplayer.-|h)%[(.-)%]|h', '%1%2|h')
 
-	str = str:gsub('^To (.-|h):', '(T) %1:')
+	str = str:gsub('^To (.-|h):', 't %1:')
 	str = str:gsub('^(.-|h) whispers:', '%1:')
 	str = str:gsub('^(.-|h) says:', '%1:')
 	str = str:gsub('^(.-|h) yells:', '%1:')
 
-	str = str:gsub('^(%[('..RAID_WARNING..')%])', '(W)')
+	str = str:gsub('^(%[('..RAID_WARNING..')%])', 'w')
 
-	str = str:gsub('^|Hchannel:o|h(%[(.-)%])|h', '|Hchannel:o|h(O)|h')
-	str = str:gsub('^|Hchannel:Guild|h(%[(.-)%])|h', '|Hchannel:Guild|h(G)|h')
-	str = str:gsub('^|Hchannel:Party|h(%[(.-)%])|h', '|Hchannel:Party|h(P)|h')
-	str = str:gsub('^|Hchannel:Battleground|h(%[('..CHAT_MSG_BATTLEGROUND_LEADER..')%])|h', '|Hchannel:Battleground|h(|cffffff00B|r)|h')
-	str = str:gsub('^|Hchannel:Battleground|h(%[('..CHAT_MSG_BATTLEGROUND..')%])|h', '|Hchannel:Battleground|h(B)|h')
-	str = str:gsub('^|Hchannel:raid|h(%[('..CHAT_MSG_RAID_LEADER..')%])|h', '|Hchannel:raid|h(|cffffff00R|r)|h')
-	str = str:gsub('^|Hchannel:raid|h(%[('..CHAT_MSG_RAID..')%])|h', '|Hchannel:raid|h(R)|h')	
+	str = str:gsub('^|Hchannel:o|h(%[(.-)%])|h', '|Hchannel:o|ho|h')
+	str = str:gsub('^|Hchannel:Guild|h(%[(.-)%])|h', '|Hchannel:Guild|hg|h')
+	str = str:gsub('^|Hchannel:Party|h(%[(.-)%])|h', '|Hchannel:Party|hp|h')
+	str = str:gsub('^|Hchannel:Battleground|h(%[('..CHAT_MSG_BATTLEGROUND_LEADER..')%])|h', '|Hchannel:Battleground|h|cffffff00b|r|h')
+	str = str:gsub('^|Hchannel:Battleground|h(%[('..CHAT_MSG_BATTLEGROUND..')%])|h', '|Hchannel:Battleground|hb|h')
+	str = str:gsub('^|Hchannel:raid|h(%[('..CHAT_MSG_RAID_LEADER..')%])|h', '|Hchannel:raid|h|cffffff00r|r|h')
+	str = str:gsub('^|Hchannel:raid|h(%[('..CHAT_MSG_RAID..')%])|h', '|Hchannel:raid|hr|h')	
 
 	return orig[self](self, str, ...)
 end
