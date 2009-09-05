@@ -82,6 +82,7 @@ end
 
 poof(ChatFrameMenuButton)
 
+DEFAULT_CHATFRAME_ALPHA = 0
 CHAT_TELL_ALERT_TIME = 0
 ChatTypeInfo.OFFICER.sticky = 1
 
