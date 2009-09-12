@@ -4,15 +4,11 @@
 ## Title: Inomena
 ## Notes: Random tweaks and settings
 
+libs\libs.xml
+
 Inomena.lua
 Tweaks.lua
 Chat.lua
 Strip.lua
 Tooltip.lua
-
-libs\LibStub.lua
-libs\CallbackHandler-1.0.lua
-libs\LibDataBroker-1.1.lua
-libs\LibCargoShip-2.0.lua
-
 Broker.lua

@@ -10,3 +10,8 @@ function Inomena:Print(...)
 end
 
 Inomena:SetScript('OnEvent', function(self, event, ...) self[event](self, event, ...) end)
+
+-- Register my fonts with LSM
+local SharedMedia = LibStub('LibSharedMedia-3.0')
+SharedMedia:Register('font', 'Bitstream Vera Serif', [=[Interface\AddOns\Inomena\media\vera.ttf]=])
+SharedMedia:Register('font', 'Marke Eigenbau', [=[Interface\AddOns\Inomena\media\marke.ttf]=])
