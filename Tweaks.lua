@@ -17,7 +17,7 @@ end)
 
 --[[ Sound on new mail ]]
 Inomena:Register('UPDATE_PENDING_MAIL', function()
-	if(HasNewMail() and not MailFrame:IsShown() and (AuctionFrame and not ActionFrame:IsShown())) then -- need more arg checks
+	if(HasNewMail() and not MailFrame:IsShown() and (AuctionFrame and not AuctionFrame:IsShown())) then -- need more arg checks
 		PlaySoundFile([=[Interface\AddOns\Inomena\mail.wav]=])
 	end
 end)
