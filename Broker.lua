@@ -8,9 +8,9 @@ gear:SetAlpha(0)
 local dps = cargoShip('Broker_SimpleDPS', {
 	noShadow = true,
 	noIcon = true,
-	font = [=[Interface\AddOns\pMinimap\media\font.ttf]=],
+	font = [=[Interface\AddOns\Inomena\media\marke.ttf]=],
 	fontStyle = 'OUTLINE',
-	fontSize = 13,
+	fontSize = 9,
 })
 dps:SetPoint('BOTTOMLEFT', Minimap)
 dps:SetScript('OnEnter', function() dps:SetAlpha(1) end)

@@ -70,7 +70,7 @@ for i = 1, NUM_CHAT_WINDOWS do
 	local frame = _G['ChatFrame'..i]
 	frame:EnableMouseWheel()
 	frame:SetScript('OnMouseWheel', onMouseWheel)
-	frame:SetFont([=[Interface\AddOns\Inomena\media\font.ttf]=], 12)
+	frame:SetFont([=[Interface\AddOns\Inomena\media\vera.ttf]=], 12)
 
 	poof(_G['ChatFrame'..i..'UpButton'])
 	poof(_G['ChatFrame'..i..'DownButton'])
@@ -93,7 +93,7 @@ ChatFrameEditBox:ClearAllPoints()
 ChatFrameEditBox:SetPoint('BOTTOMLEFT', ChatFrame1, 'TOPLEFT', -5, 20)
 ChatFrameEditBox:SetPoint('BOTTOMRIGHT', ChatFrame1, 'TOPRIGHT', -5, 20)
 ChatFrameEditBox:SetAltArrowKeyMode(nil)
-ChatFrameEditBox:SetFont([=[Interface\AddOns\Inomena\media\font.ttf]=], 14)
+ChatFrameEditBox:SetFont([=[Interface\AddOns\Inomena\media\vera.ttf]=], 14)
 
 SLASH_TellTarget1 = '/tt'
 SlashCmdList.TellTarget = tellTarget
