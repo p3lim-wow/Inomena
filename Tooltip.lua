@@ -56,38 +56,25 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 		end
 	end
 
-	GameTooltipStatusBar:ClearAllPoints()
-	GameTooltipStatusBar:SetPoint('BOTTOMLEFT', 8, 9)
-	GameTooltipStatusBar:SetPoint('BOTTOMRIGHT', -8, 9)
-	GameTooltipStatusBar:SetStatusBarColor(color.r, color.g, color.b)
-	GameTooltipStatusBar:Show()
-
-	self:AddLine(' ')
+	if(not UnitIsDeadOrGhost(unit)) then
+		GameTooltipStatusBar:ClearAllPoints()
+		GameTooltipStatusBar:SetPoint('BOTTOMLEFT', 1, 1)
+		GameTooltipStatusBar:SetPoint('BOTTOMRIGHT', -1, 1)
+		GameTooltipStatusBar:SetStatusBarColor(color.r, color.g, color.b)
+		GameTooltipStatusBar:Show()
+	end
 end)
 
 GameTooltip:HookScript('OnTooltipCleared', function()
 	GameTooltipStatusBar:Hide()
 end)
 
-GameTooltipStatusBar.text = GameTooltipStatusBar:CreateFontString(nil, 'OVERLAY', 'GameFontHighlightSmall')
-GameTooltipStatusBar.text:SetPoint('CENTER')
+GameTooltipStatusBar:SetHeight(3)
+GameTooltipStatusBar:SetStatusBarTexture([=[Interface\AddOns\Inomena\media\minimalist]=])
 
 GameTooltipStatusBar.bg = GameTooltipStatusBar:CreateTexture(nil, 'BACKGROUND')
 GameTooltipStatusBar.bg:SetAllPoints(GameTooltipStatusBar)
 GameTooltipStatusBar.bg:SetTexture(0.4, 0.4, 0.4)
-
-GameTooltipStatusBar:SetHeight(7)
-GameTooltipStatusBar:SetStatusBarTexture([=[Interface\AddOns\Inomena\media\minimalist]=])
-GameTooltipStatusBar:HookScript('OnValueChanged', function(self, value)
-	if(value) then
-		local min, max = self:GetMinMaxValues()
-		if(value == min) then
-			self.text:SetText('Dead')
-		else
-			self.text:SetFormattedText('%d%%', value / max * 100)
-		end
-	end
-end)
 
 for k, v in next, {GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3} do
 	v:SetBackdrop({bgFile = [=[Interface\Tooltips\UI-Tooltip-Background]=]})
