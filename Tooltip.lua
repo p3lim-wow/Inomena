@@ -91,8 +91,9 @@ end)
 
 for k, v in next, {GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3} do
 	v:SetBackdrop({bgFile = [=[Interface\Tooltips\UI-Tooltip-Background]=]})
-	v:SetBackdropColor(0.1, 0.1, 0.1)
 	v:HookScript('OnShow', function(self)
+		self:SetBackdropColor(0, 0, 0)
+
 		for index = 1, self:NumLines() do
 			_G[self:GetName()..'TextLeft'..index]:SetFont([=[Interface\AddOns\Inomena\media\marke.ttf]=], 8, 'OUTLINE')
 			_G[self:GetName()..'TextRight'..index]:SetFont([=[Interface\AddOns\Inomena\media\marke.ttf]=], 8, 'OUTLINE')
