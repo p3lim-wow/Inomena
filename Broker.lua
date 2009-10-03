@@ -1,4 +1,4 @@
-local gear = cargoShip('Broker_Equipment', {noText = true})
+local gear = LibStub('LibCargoShip-2.1'):CreateBlock('Broker_Equipment', {noText = true})
 gear:SetPoint('BOTTOMRIGHT', Minimap, -1, 1)
 gear:HookScript('OnLeave', function() gear:SetAlpha(0) end)
 gear:HookScript('OnEnter', function() gear:SetAlpha(1) end)
