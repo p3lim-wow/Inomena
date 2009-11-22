@@ -7,7 +7,6 @@ local strings = {
 	[CHAT_MSG_GUILD] = 'g',
 	[CHAT_MSG_PARTY] = 'p',
 	[CHAT_MSG_RAID] = 'r',
-	[CHAT_MSG_RAID_WARNING] = 'w',
 	[CHAT_MSG_RAID_LEADER] = '|cffffff00r|r',
 	[CHAT_MSG_BATTLEGROUND] = 'b',
 	[CHAT_MSG_BATTLEGROUND_LEADER] = '|cffffff00b|r',
@@ -23,6 +22,7 @@ local function AddMessage(self, str, ...)
 	str = str:gsub('(|Hplayer.-|h)%[(.-)%]|h', '%1%2|h')
 	str = str:gsub('^|Hchannel:(.-)|h%[(.-)%]|h', ReplaceStrings)
 
+	str = str:gsub('^%[Raid Warning%]', 'w')
 	str = str:gsub('(|Hplayer.-|h) has earned the achievement (.-)!', '%1 ! %2')
 	str = str:gsub('^To (.-|h)', 't %1')
 	str = str:gsub('^(.-|h) whispers', '%1')
