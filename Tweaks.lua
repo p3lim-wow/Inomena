@@ -81,6 +81,15 @@ Inomena:Register('ADDON_LOADED', function(self, event, name)
 	self:UnregisterEvent(event)
 end)
 
+--[[ Entering/leaving combat messages ]]
+Inomena:Register('PLAYER_REGEN_ENABLED', function()
+	UIErrorsFrame:AddMessage('- Combat', 1, 1, 1)
+end)
+
+Inomena:Register('PLAYER_REGEN_DISABLED', function()
+	UIErrorsFrame:AddMessage('+ Combat', 1, 1, 1)
+end)
+
 --[[ GM ticket shortcut ]]
 SLASH_TICKETGM1 = '/gm'
 SlashCmdList.TICKETGM = ToggleHelpFrame
