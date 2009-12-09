@@ -19,6 +19,7 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 	local _, unit = self:GetUnit()
 	if(not unit or not UnitExists(unit)) then return end
 
+	local index = GetRaidTargetIndex(unit)
 	local localized, class = UnitClass(unit)
 	local color = UnitIsPlayer(unit) and RAID_CLASS_COLORS[class] or FACTION_BAR_COLORS[UnitReaction(unit, 'player')]
 
@@ -36,8 +37,6 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 
 	if(UnitIsPlayer(unit)) then
 		local level = UnitLevel(unit)
-		local index = GetRaidTargetIndex(unit)
-
 		self:AddLine(format('|cff%s%s|r |cffffffff%s %s|r', hex(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', UnitRace(unit), UnitIsAFK(unit) and CHAT_FLAG_AFK or UnitIsDND(unit) and CHAT_FLAG_DND or not UnitIsConnected(unit) and '<DC>' or ''))
 
 		if(GetGuildInfo(unit)) then
@@ -46,8 +45,6 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 		end
 	else
 		local level = UnitLevel(unit)
-		local index = GetRaidTargetIndex(unit)
-
 		self:AddLine(format('|cff%s%s%s|r |cffffffff%s|r', hex(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit) or ''))
 
 		if(title) then
