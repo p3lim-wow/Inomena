@@ -6,6 +6,7 @@ local hooks = {}
 local strings = {
 	[CHAT_MSG_GUILD] = 'g',
 	[CHAT_MSG_PARTY] = 'p',
+	[CHAT_MSG_PARTY_LEADER] = '|cffffff00p|r',
 	[CHAT_MSG_RAID] = 'r',
 	[CHAT_MSG_RAID_LEADER] = '|cffffff00r|r',
 	[CHAT_MSG_BATTLEGROUND] = 'b',
