@@ -1,7 +1,8 @@
 local _G = getfenv(0)
 
+local _TOOLTIP_LEVEL = string.gsub(TOOLTIP_UNIT_LEVEL, '%%s', '.+')
+
 local find = string.find
-local gsub = string.gsub
 local format = string.format
 
 local classification = {
@@ -15,6 +16,17 @@ local function hex(c)
 	return format('%02x%02x%02x', c.r * 255, c.g * 255, c.b * 255)
 end
 
+local function ScanGuild(self)
+	local line
+	for index = 2, self:NumLines() do
+		local text = _G['GameTooltipTextLeft'..index]:GetText()
+		if(index == 2 and not text:find(_TOOLTIP_LEVEL)) then
+			line = text
+		end
+	end
+	return line
+end
+
 GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 	local _, unit = self:GetUnit()
 	if(not unit or not UnitExists(unit)) then return end
@@ -23,14 +35,7 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 	local localized, class = UnitClass(unit)
 	local color = UnitIsPlayer(unit) and RAID_CLASS_COLORS[class] or FACTION_BAR_COLORS[UnitReaction(unit, 'player')]
 
-	-- stupid shit, no api
-	local title
-	for index = 2, self:NumLines() do
-		local text = _G['GameTooltipTextLeft'..index]:GetText()
-		if(index == 2 and not text:find('^'..TOOLTIP_UNIT_LEVEL:gsub('%%s', '.+'))) then
-			title = text
-		end
-	end
+	local guild = ScanGuild(self)
 
 	self:ClearLines()
 	self:AddLine(format('%s|cff%s%s|r', index and format('%s22|t', ICON_LIST[index]) or '', hex(color), GetUnitName(unit)))
@@ -47,9 +52,9 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 		local level = UnitLevel(unit)
 		self:AddLine(format('|cff%s%s%s|r |cffffffff%s|r', hex(GetQuestDifficultyColor(UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 99)), level > 0 and level or '??', classification[UnitClassification(unit)] or '', UnitCreatureFamily(unit) or UnitCreatureType(unit) or ''))
 
-		if(title) then
+		if(guild) then
 			self:AddLine(GameTooltipTextLeft2:GetText())
-			GameTooltipTextLeft2:SetFormattedText('|cffffffff<%s>|r', title)
+			GameTooltipTextLeft2:SetFormattedText('|cffffffff<%s>|r', guild)
 		end
 	end
 
@@ -79,8 +84,8 @@ for k, v in next, {GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingToolti
 		self:SetBackdropColor(0, 0, 0)
 
 		for index = 1, self:NumLines() do
-			_G[self:GetName()..'TextLeft'..index]:SetFont([=[Interface\AddOns\Inomena\media\marke.ttf]=], 8, 'OUTLINE')
-			_G[self:GetName()..'TextRight'..index]:SetFont([=[Interface\AddOns\Inomena\media\marke.ttf]=], 8, 'OUTLINE')
+			_G[self:GetName()..'TextLeft'..index]:SetFont([=[Interface\AddOns\Inomena\media\semplice.ttf]=], 8, 'OUTLINE')
+			_G[self:GetName()..'TextRight'..index]:SetFont([=[Interface\AddOns\Inomena\media\semplice.ttf]=], 8, 'OUTLINE')
 		end
 	end)
 end
