@@ -65,6 +65,11 @@ Inomena:Register('CONFIRM_DISENCHANT_ROLL', function(self, event, id, rollType)
 	end
 end)
 
+--[[ Force LFG invite warning ]]
+Inomena:Register('LFG_PROPOSAL_SHOW', function()
+	PlaySoundFile([=[Sound\Interface\ReadyCheck.wav]=])
+end)
+
 --[[ Force readycheck warning ]]
 ReadyCheckListenerFrame:SetScript('OnShow', nil)
 Inomena:Register('READY_CHECK', function()
