@@ -55,16 +55,6 @@ Inomena:Register('MERCHANT_SHOW', function(self)
 	end
 end)
 
---[[ Disenchant confirmation (tekKrush) ]]
-Inomena:Register('CONFIRM_DISENCHANT_ROLL', function(self, event, id, rollType)
-	for index = 1, STATICPOPUP_NUMDIALOGS do
-		local frame = _G['StaticPopup'..index]
-		if(frame.which == 'CONFIRM_LOOT_ROLL' and frame.data == id and frame.data2 == rollType and frame:IsVisible()) then
-			StaticPopup_OnClick(frame, 1)
-		end
-	end
-end)
-
 --[[ Force LFG invite warning ]]
 Inomena:Register('LFG_PROPOSAL_SHOW', function()
 	PlaySoundFile([=[Sound\Interface\ReadyCheck.wav]=])
