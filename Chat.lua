@@ -2,10 +2,14 @@
 local gsub = string.gsub
 local format = string.format
 
+-- No idea why blizzard havent added this
+local CHAT_MSG_PARTY_GUIDE = gsub(CHAT_PARTY_GUIDE_GET, '|Hchannel:party|h%[(.-)%]|h .*', '%1')
+
 local hooks = {}
 local strings = {
 	[CHAT_MSG_GUILD] = 'g',
 	[CHAT_MSG_PARTY] = 'p',
+	[CHAT_MSG_PARTY_GUIDE] = '|cffffff00p|r',
 	[CHAT_MSG_PARTY_LEADER] = '|cffffff00p|r',
 	[CHAT_MSG_RAID] = 'r',
 	[CHAT_MSG_RAID_LEADER] = '|cffffff00r|r',
