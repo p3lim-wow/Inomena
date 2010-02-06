@@ -2,6 +2,8 @@
 local gsub = string.gsub
 local format = string.format
 
+local stamp = '|cff807070%s|r  %s'
+
 -- No idea why blizzard havent added this
 local CHAT_MSG_PARTY_GUIDE = gsub(CHAT_PARTY_GUIDE_GET, '|Hchannel:party|h%[(.-)%]|h .*', '%1')
 
@@ -29,10 +31,20 @@ local function AddMessage(self, str, ...)
 
 	str = str:gsub('^%[Raid Warning%]', 'w')
 	str = str:gsub('(|Hplayer.-|h) has earned the achievement (.-)!', '%1 ! %2')
-	str = str:gsub('^To (.-|h)', 't %1')
-	str = str:gsub('^(.-|h) whispers', '%1')
 	str = str:gsub('^(.-|h) says', '%1')
 	str = str:gsub('^(.-|h) yells', '%1')
+
+	return hooks[self](self, str, ...)
+end
+
+local function AddStampMessage(self, str, ...)
+	if(not str) then return hooks[self](self, str, ...) end
+
+	str = str:gsub('(|Hplayer.-|h)%[(.-)%]|h', '%1%2|h')
+	str = str:gsub('^To (.-|h)', '|cffffff00>|r %1')
+	str = str:gsub('^(.-|h) whispers', '%1')
+
+	str = stamp:format(date('%H%M.%S'), str)
 
 	return hooks[self](self, str, ...)
 end
@@ -73,7 +85,7 @@ for index = 1, NUM_CHAT_WINDOWS do
 	Poof(_G['ChatFrame'..index..'BottomButton'])
 
 	hooks[frame] = frame.AddMessage
-	frame.AddMessage = AddMessage
+	frame.AddMessage = index ~= 3 and AddMessage or AddStampMessage
 end
 
 do
@@ -90,8 +102,6 @@ do
 	regions[8]:Hide()
 
 	ChatFrameMenuButton:Hide()
-	DEFAULT_CHATFRAME_ALPHA = 0
-	CHAT_TELL_ALERT_TIME = 0
 end
 
 SLASH_TellTarget1 = '/tt'
