@@ -9,8 +9,5 @@ libs\libs.xml
 Inomena.lua
 Tweaks.lua
 Dropdown.lua
-Chat.lua
-Tabs.lua
 Strip.lua
-Tooltip.lua
 Broker.lua
