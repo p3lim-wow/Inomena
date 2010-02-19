@@ -1,17 +1,9 @@
-local Inomena = CreateFrame('Frame', 'Inomena')
+local _, ns = ...
 
-function Inomena:Register(event, method)
-	self[event] = method
-	self:RegisterEvent(event)
+local addon = CreateFrame('Frame')
+addon:SetScript('OnEvent', function(self, event, ...) self[event](self, event, ...) end)
+
+ns.Register = function(event, method)
+	addon[event] = method
+	addon:RegisterEvent(event)
 end
-
-function Inomena:Print(...)
-	print('|cffff8080Inomena:|r', ...)
-end
-
-Inomena:SetScript('OnEvent', function(self, event, ...) self[event](self, event, ...) end)
-
--- Register my fonts with LSM
-local SharedMedia = LibStub('LibSharedMedia-3.0')
-SharedMedia:Register('font', 'Bitstream Vera Serif', [=[Interface\AddOns\Inomena\media\vera.ttf]=])
-SharedMedia:Register('font', 'Semplice Regular', [=[Interface\AddOns\Inomena\media\semplice.ttf]=])
