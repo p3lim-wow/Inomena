@@ -1,6 +1,6 @@
 local _, ns = ...
 
---[[ Copy/paste function to colorpicker ]]
+--[[ Copy/paste ]]
 ns.Register('PLAYER_LOGIN', function(r, g, b)
 	local copy = CreateFrame('Button', nil, ColorPickerFrame, 'UIPanelButtonTemplate')
 	copy:SetPoint('BOTTOMLEFT', ColorPickerFrame, 'TOPLEFT', 208, -110)
@@ -34,25 +34,24 @@ do
 	end
 end
 
---[[ Auto repair ]]
+--[[ Auto-repair ]]
 ns.Register('MERCHANT_SHOW', function()
 	if(CanMerchantRepair()) then
 		RepairAllItems()
 	end
 end)
 
---[[ Force LFG invite warning ]]
+--[[ Force LFG sound ]]
 ns.Register('LFG_PROPOSAL_SHOW', function()
 	PlaySoundFile([=[Sound\Interface\ReadyCheck.wav]=])
 end)
 
---[[ Force readycheck warning ]]
-ReadyCheckListenerFrame:SetScript('OnShow', nil)
-ns.Register('READY_CHECK', function()
+--[[ Force readycheck sound ]]
+ReadyCheckListenerFrame:SetScript('OnShow', function()
 	PlaySoundFile([=[Sound\Interface\ReadyCheck.wav]=])
 end)
 
---[[ Entering/leaving combat messages ]]
+--[[ Combat status ]]
 ns.Register('PLAYER_REGEN_ENABLED', function()
 	UIErrorsFrame:AddMessage('- Combat', 1, 1, 1)
 end)
@@ -61,6 +60,6 @@ ns.Register('PLAYER_REGEN_DISABLED', function()
 	UIErrorsFrame:AddMessage('+ Combat', 1, 1, 1)
 end)
 
---[[ GM ticket shortcut ]]
+--[[ Ticket command ]]
 SLASH_TICKETGM1 = '/gm'
 SlashCmdList.TICKETGM = ToggleHelpFrame
