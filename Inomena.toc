@@ -5,7 +5,6 @@
 ## Notes: Random tweaks and settings
 
 libs\libs.xml
-Broker.lua
 
 Inomena.lua
 Tweaks.lua
