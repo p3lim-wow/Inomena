@@ -6,5 +6,6 @@
 
 Inomena.lua
 Tweaks.lua
+cvars.lua
 
 Dropdown.lua
