@@ -4,8 +4,6 @@
 ## Title: Inomena
 ## Notes: Random tweaks and settings
 
-libs\libs.xml
-
 Inomena.lua
 Tweaks.lua
 
