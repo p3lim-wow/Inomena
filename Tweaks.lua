@@ -24,6 +24,13 @@ ns.Register('MERCHANT_SHOW', function()
 	end
 end)
 
+--[[ Force BG sound ]]
+ns.Register('UPDATE_BATTLEFIELD_STATUS', function()
+	if(StaticPopup_Visible('CONFIRM_BATTLEFIELD_ENTRY')) then
+		PlaySoundFile([=[Sound\Interface\ReadyCheck.wav]=])
+	end
+end)
+
 --[[ Force LFG sound ]]
 ns.Register('LFG_PROPOSAL_SHOW', function()
 	PlaySoundFile([=[Sound\Interface\ReadyCheck.wav]=])
