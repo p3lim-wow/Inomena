@@ -1,9 +1,8 @@
-local _, ns = ...
+local _, Inomena = ...
 
---[[ Last receipt in mail ]]
 do
 	local last
-	ns.Register('MAIL_SEND_SUCCESS', function()
+	Inomena.Register('MAIL_SEND_SUCCESS', function()
 		if(last) then
 			SendMailNameEditBox:SetText(last)
 			SendMailNameEditBox:HighlightText()
@@ -17,39 +16,33 @@ do
 	end
 end
 
---[[ Auto-repair ]]
-ns.Register('MERCHANT_SHOW', function()
+Inomena.Register('MERCHANT_SHOW', function()
 	if(CanMerchantRepair()) then
 		RepairAllItems()
 	end
 end)
 
---[[ Force BG sound ]]
-ns.Register('UPDATE_BATTLEFIELD_STATUS', function()
+Inomena.Register('UPDATE_BATTLEFIELD_STATUS', function()
 	if(StaticPopup_Visible('CONFIRM_BATTLEFIELD_ENTRY')) then
 		PlaySoundFile([=[Sound\Interface\ReadyCheck.wav]=])
 	end
 end)
 
---[[ Force LFG sound ]]
-ns.Register('LFG_PROPOSAL_SHOW', function()
+Inomena.Register('LFG_PROPOSAL_SHOW', function()
 	PlaySoundFile([=[Sound\Interface\ReadyCheck.wav]=])
 end)
 
---[[ Force readycheck sound ]]
 ReadyCheckListenerFrame:SetScript('OnShow', function()
 	PlaySoundFile([=[Sound\Interface\ReadyCheck.wav]=])
 end)
 
---[[ Combat status ]]
-ns.Register('PLAYER_REGEN_ENABLED', function()
+Inomena.Register('PLAYER_REGEN_ENABLED', function()
 	UIErrorsFrame:AddMessage('- Combat', 1, 1, 1)
 end)
 
-ns.Register('PLAYER_REGEN_DISABLED', function()
+Inomena.Register('PLAYER_REGEN_DISABLED', function()
 	UIErrorsFrame:AddMessage('+ Combat', 1, 1, 1)
 end)
 
---[[ Ticket command ]]
 SLASH_TICKETGM1 = '/gm'
 SlashCmdList.TICKETGM = ToggleHelpFrame
