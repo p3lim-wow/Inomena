@@ -46,3 +46,5 @@ end)
 
 SLASH_TICKETGM1 = '/gm'
 SlashCmdList.TICKETGM = ToggleHelpFrame
+
+UIErrorsFrame:UnregisterEvent('UI_ERROR_MESSAGE')
