@@ -5,7 +5,7 @@
 ## Notes: Random tweaks and settings
 
 Inomena.lua
-Tweaks.lua
+tweaks.lua
 cvars.lua
 
-Dropdown.lua
+dropdown.lua
