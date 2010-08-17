@@ -3,9 +3,11 @@
 ## Version: Alpha
 ## Title: Inomena
 ## Notes: Random tweaks and settings
+## SavedVariables: ConsolidateDB
 
 Inomena.lua
 tweaks.lua
 cvars.lua
 
+consolidate
 dropdown.lua
