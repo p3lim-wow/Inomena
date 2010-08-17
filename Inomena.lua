@@ -28,3 +28,6 @@ Inomena.Register = function(event, method)
 		addon:RegisterEvent(event)
 	end
 end
+
+-- Bindings.xml
+BINDING_NAME_LOCKPITCH = 'Toggle Pitch Lock'
