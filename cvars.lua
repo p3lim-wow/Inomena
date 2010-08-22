@@ -29,7 +29,7 @@ Inomena.Register('PLAYER_ENTERING_WORLD', function()
 		cameraWaterCollision = 0,
 		cameraSmoothStyle = 0,
 		cameraDistanceMaxFactor = 4,
-		cameraDistanceMax = 20,
+		cameraDistanceMax = 50,
 		previewTalents = 1,
 		showTutorials = 0,
 		showGameTips = 0,
