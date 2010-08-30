@@ -40,6 +40,7 @@ Inomena.Register('PLAYER_ENTERING_WORLD', function()
 		showToastBroadcast = 0,
 		showToastWindow = 0,
 		chatStyle = 'classic',
+		consolidateBuffs = 1,
 
 		processAffinityMask = 15,
 		gxTripleBuffer = 1,
