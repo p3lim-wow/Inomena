@@ -1,13 +1,8 @@
-## Interface: 30300
+## Interface: 40000
 ## Author: p3lim
 ## Version: Alpha
 ## Title: Inomena
-## Notes: Random tweaks and settings
-## SavedVariables: ConsolidateDB
+## Notes: Personal tweaks and settings
 
 Inomena.lua
 tweaks.lua
-cvars.lua
-
-consolidate
-dropdown.lua

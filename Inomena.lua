@@ -11,7 +11,7 @@ local metatable = {
 	end
 }
 
-Inomena.Register = function(event, method)
+Inomena.RegisterEvent = function(event, method)
 	local current = addon[event]
 	if(current and method) then
 		if(type(current) == 'function') then
@@ -28,6 +28,3 @@ Inomena.Register = function(event, method)
 		addon:RegisterEvent(event)
 	end
 end
-
--- Bindings.xml
-BINDING_NAME_LOCKPITCH = 'Toggle Pitch Lock'

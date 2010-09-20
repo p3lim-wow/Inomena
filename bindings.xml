@@ -1,9 +1,0 @@
-<Bindings>
-	<Binding name='LOCKPITCH' header='MOVEMENT'>
-		if(GetCVar('pitchLimit') == '0') then
-			ConsoleExec('pitchLimit 90')
-		else
-			ConsoleExec('pitchLimit 0')
-		end
-	</Binding>
-</Bindings>
