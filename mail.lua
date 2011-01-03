@@ -15,3 +15,16 @@ do
 		orig(...)
 	end
 end
+
+Inomena:RegisterEvent('UPDATE_PENDING_MAIL', function()
+	for index = 1, GetNumTrackingTypes() do
+		local name, texture, active = GetTrackingInfo(index)
+		if(name == MINIMAP_TRACKING_MAILBOX) then
+			if(HasNewMail() and not active) then
+				return SetTracking(index, true)
+			elseif(not HasNewMail() and active) then
+				return SetTracking(index, false)
+			end
+		end
+	end
+end)
