@@ -2,7 +2,7 @@ local _, Inomena = ...
 
 do
 	local last
-	Inomena:RegisterEvent('MAIL_SEND_SUCCESS', function()
+	Inomena.RegisterEvent('MAIL_SEND_SUCCESS', function()
 		if(last) then
 			SendMailNameEditBox:SetText(last)
 			SendMailNameEditBox:HighlightText()
@@ -16,7 +16,7 @@ do
 	end
 end
 
-Inomena:RegisterEvent('UPDATE_PENDING_MAIL', function()
+Inomena.RegisterEvent('UPDATE_PENDING_MAIL', function()
 	for index = 1, GetNumTrackingTypes() do
 		local name, texture, active = GetTrackingInfo(index)
 		if(name == MINIMAP_TRACKING_MAILBOX) then

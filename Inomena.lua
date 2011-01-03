@@ -11,7 +11,7 @@ local metatable = {
 	end
 }
 
-Inomena:RegisterEvent = function(event, method)
+Inomena.RegisterEvent = function(event, method)
 	local current = addon[event]
 	if(current and method) then
 		if(type(current) == 'function') then

@@ -14,7 +14,7 @@ ForceLoot:SetScript('OnUpdate', function()
 	ConfirmLootSlot(currentSlot)
 end)
 
-Inomena:RegisterEvent('LOOT_BIND_CONFIRM', function(slot)
+Inomena.RegisterEvent('LOOT_BIND_CONFIRM', function(slot)
 	local id = tonumber(string.match(GetLootSlotLink(slot), 'item:(%d+)'))
 	if(id and (GetNumRaidMembers() == 0 or specialItem[id])) then
 		currentSlot = slot
@@ -22,7 +22,7 @@ Inomena:RegisterEvent('LOOT_BIND_CONFIRM', function(slot)
 	end
 end)
 
-Inomena:RegisterEvent('LOOT_SLOT_CLEARED', function(slot)
+Inomena.RegisterEvent('LOOT_SLOT_CLEARED', function(slot)
 	if(currentSlot == slot) then
 		ForceLoot:Hide()
 	end

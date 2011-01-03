@@ -1,6 +1,6 @@
 local _, Inomena = ...
 
-Inomena:RegisterEvent('PLAYER_LOGIN', function()
+Inomena.RegisterEvent('PLAYER_LOGIN', function()
 	for key, value in pairs({
 		deselectOnClick = 1,
 		autoDismountFlying = 1,
