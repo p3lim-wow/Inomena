@@ -6,3 +6,6 @@
 
 Inomena.lua
 tweaks.lua
+cvars.lua
+notify.lua
+mail.lua
