@@ -2,7 +2,7 @@ local _, Inomena = ...
 
 do
 	local last
-	Inomena.RegisterEvent('MAIL_SEND_SUCCESS', function()
+	Inomena:RegisterEvent('MAIL_SEND_SUCCESS', function()
 		if(last) then
 			SendMailNameEditBox:SetText(last)
 			SendMailNameEditBox:HighlightText()

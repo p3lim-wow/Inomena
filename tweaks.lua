@@ -1,16 +1,16 @@
 local _, Inomena = ...
 
-Inomena.RegisterEvent('MERCHANT_SHOW', function()
+Inomena:RegisterEvent('MERCHANT_SHOW', function()
 	if(CanMerchantRepair()) then
 		RepairAllItems()
 	end
 end)
 
-Inomena.RegisterEvent('PLAYER_REGEN_ENABLED', function()
+Inomena:RegisterEvent('PLAYER_REGEN_ENABLED', function()
 	UIErrorsFrame:AddMessage('- Combat', 1, 1, 1)
 end)
 
-Inomena.RegisterEvent('PLAYER_REGEN_DISABLED', function()
+Inomena:RegisterEvent('PLAYER_REGEN_DISABLED', function()
 	UIErrorsFrame:AddMessage('+ Combat', 1, 1, 1)
 end)
 

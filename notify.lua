@@ -22,13 +22,13 @@ do
 	end
 end
 
-Inomena.RegisterEvent('UPDATE_BATTLEFIELD_STATUS', function()
+Inomena:RegisterEvent('UPDATE_BATTLEFIELD_STATUS', function()
 	if(StaticPopup_Visible('CONFIRM_BATTLEFIELD_ENTRY')) then
 		NotifySound()
 	end
 end)
 
-Inomena.RegisterEvent('LFG_PROPOSAL_SHOW', function()
+Inomena:RegisterEvent('LFG_PROPOSAL_SHOW', function()
 	NotifySound()
 end)
 
