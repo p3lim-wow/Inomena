@@ -8,4 +8,5 @@ Inomena.lua
 tweaks.lua
 cvars.lua
 notify.lua
+autoloot.lua
 mail.lua
