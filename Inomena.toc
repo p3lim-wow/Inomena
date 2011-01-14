@@ -10,3 +10,5 @@ cvars.lua
 notify.lua
 autoloot.lua
 mail.lua
+roster.lua
+
