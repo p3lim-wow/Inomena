@@ -1,6 +1,6 @@
 local _, Inomena = ...
 
-Inomena.Register('ADDON_LOADED', function(name)
+Inomena.RegisterEvent('ADDON_LOADED', function(name)
 	if(name ~= 'Blizzard_GuildUI') then return end
 
 	GuildFrame:HookScript('OnShow', function()
