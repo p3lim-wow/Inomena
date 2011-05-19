@@ -28,8 +28,3 @@ end)
 
 SLASH_TICKETGM1 = '/gm'
 SlashCmdList.TICKETGM = ToggleHelpFrame
-
-UIErrorsFrame:UnregisterEvent('UI_ERROR_MESSAGE')
-
--- Disable combatlog
-UIParent:UnregisterEvent('PLAYER_LOGIN')

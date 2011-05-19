@@ -6,9 +6,9 @@
 
 Inomena.lua
 tweaks.lua
+diaf.lua
 cvars.lua
 notify.lua
 autoloot.lua
 mail.lua
 roster.lua
-
