@@ -11,6 +11,9 @@ CompactRaidFrameManager:Hide()
 CompactRaidFrameContainer:UnregisterAllEvents()
 CompactRaidFrameContainer:Hide()
 
+VehicleSeatIndicator:UnregisterAllEvents()
+VehicleSeatIndicator:Hide()
+
 UIErrorsFrame:UnregisterEvent('UI_ERROR_MESSAGE')
 
 function CombatLog_LoadUI() end
