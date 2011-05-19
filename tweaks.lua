@@ -2,7 +2,7 @@ local _, Inomena = ...
 
 Inomena.RegisterEvent('MERCHANT_SHOW', function()
 	if(CanMerchantRepair()) then
-		RepairAllItems()
+		RepairAllItems(CanGuildBankRepair() and GetGuildBankWithdrawMoney() >= GetRepairAllCost())
 	end
 end)
 
