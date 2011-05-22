@@ -35,7 +35,7 @@ Inomena.RegisterEvent('PLAYER_LOGIN', function()
 		showTutorials = 0,
 		showNewbieTips = 0,
 
-		Sound_EnableAllSound = 0,
+		Sound_EnableAllSound = 1,
 		Sound_EnableErrorSpeech = 0,
 		Sound_EnableEmoteSounds = 0,
 		Sound_EnablePetSounds = 0,
