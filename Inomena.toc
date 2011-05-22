@@ -6,6 +6,7 @@
 
 Inomena.lua
 tweaks.lua
+chat.lua
 diaf.lua
 cvars.lua
 notify.lua
