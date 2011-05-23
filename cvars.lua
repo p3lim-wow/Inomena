@@ -1,6 +1,6 @@
 local _, Inomena = ...
 
-Inomena.RegisterEvent('PLAYER_LOGIN', function()
+function Inomena.Initialize.CVARS()
 	for key, value in pairs({
 		deselectOnClick = 1,
 		autoDismountFlying = 1,
@@ -43,7 +43,9 @@ Inomena.RegisterEvent('PLAYER_LOGIN', function()
 		Sound_EnableAmbience = 0,
 		Sound_EnableSoundWhenGameIsInBG = 1,
 		Sound_NumChannels = 64,
-		
+
+		uiScale = 768 / string.match(({GetScreenResolutions()})[GetCurrentResolution()], '%d+x(%d+)'),
+
 		synchronizeSettings = 0,
 		processAffinityMask = 15,
 		screenshotQuality = 10,
@@ -51,4 +53,4 @@ Inomena.RegisterEvent('PLAYER_LOGIN', function()
 	}) do
 		SetCVar(key, value)
 	end
-end)
+end
