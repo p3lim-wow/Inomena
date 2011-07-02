@@ -26,5 +26,11 @@ Inomena.RegisterEvent('PLAYER_REGEN_DISABLED', function()
 	UIErrorsFrame:AddMessage('+ Combat', 1, 1, 1)
 end)
 
+Inomena.RegisterEvent('ADDON_LOADED', function(addon)
+	if(addon == 'Blizzard_AchievementUI') then
+		AchievementFrame_SetFilter(3)
+	end
+end)
+
 SLASH_TICKETGM1 = '/gm'
 SlashCmdList.TICKETGM = ToggleHelpFrame
