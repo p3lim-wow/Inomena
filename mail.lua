@@ -28,3 +28,9 @@ Inomena.RegisterEvent('UPDATE_PENDING_MAIL', function()
 		end
 	end
 end)
+
+Inomena.RegisterEvent('UI_ERROR_MESSAGE', function(msg)
+	if(msg == ERR_MAIL_INVALID_ATTACHMENT_SLOT) then
+		SendMailMailButton:Click()
+	end
+end)
