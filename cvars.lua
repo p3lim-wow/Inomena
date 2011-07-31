@@ -46,7 +46,6 @@ function Inomena.Initialize.CVARS()
 
 		uiScale = 768 / string.match(({GetScreenResolutions()})[GetCurrentResolution()], '%d+x(%d+)'),
 
-		synchronizeSettings = 0,
 		processAffinityMask = 15,
 		screenshotQuality = 10,
 		taintLog = 1,
