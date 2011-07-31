@@ -52,8 +52,11 @@ function Inomena.Initialize.CHAT()
 	ToggleChatColorNamesByClassGroup(true, 'CHANNEL2')
 	ToggleChatColorNamesByClassGroup(true, 'CHANNEL3')
 
-	ChangeChatColor('RAID_LEADER', 1, 127/255, 0)
+	ChangeChatColor('RAID', 0, 1, 4/5)
+	ChangeChatColor('RAID_LEADER', 0, 1, 4/5)
 	ChangeChatColor('RAID_WARNING', 1, 1/4, 1/4)
-	ChangeChatColor('BATTLEGROUND_LEADER', 1, 127/255, 0)
+	ChangeChatColor('BATTLEGROUND_LEADER', 1, 1/2, 0)
 	ChangeChatColor('PARTY_LEADER', 2/3, 2/3, 1)
+	ChangeChatColor('BN_WHISPER', 1, 1/2, 1)
+	ChangeChatColor('BN_WHISPER_INFORM', 1, 1/2, 1)
 end
