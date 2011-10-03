@@ -1,12 +1,6 @@
 local _, Inomena = ...
 
 local currentSlot
-local specialItem = {
-	[19807] = true, -- Speckled Tastyfish
-	[19803] = true, -- Brownell's Blue Striped Racer
-	[19806] = true, -- Dezian Queenfish
-	[50289] = true, -- Blacktip Shark
-}
 
 local ForceLoot = CreateFrame('Frame')
 ForceLoot:Hide()
@@ -15,8 +9,7 @@ ForceLoot:SetScript('OnUpdate', function()
 end)
 
 Inomena.RegisterEvent('LOOT_BIND_CONFIRM', function(slot)
-	local id = tonumber(string.match(GetLootSlotLink(slot), 'item:(%d+)'))
-	if(id and (GetNumRaidMembers() == 0 or specialItem[id])) then
+	if(GetNumRaidMembers() == 0 or IsFishingLoot()) then
 		currentSlot = slot
 		ForceLoot:Show()
 	end
