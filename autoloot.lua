@@ -18,5 +18,12 @@ end)
 Inomena.RegisterEvent('LOOT_SLOT_CLEARED', function(slot)
 	if(currentSlot == slot) then
 		ForceLoot:Hide()
+
+		local items = GetNumLootItems()
+		if(items > 0) then
+			for index = 1, items do
+				return LootSlot(index)
+			end
+		end
 	end
 end)
