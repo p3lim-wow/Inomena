@@ -27,3 +27,11 @@ Inomena.RegisterEvent('LOOT_SLOT_CLEARED', function(slot)
 		end
 	end
 end)
+
+local hexstick = GetItemInfo(33865)
+Inomena.RegisterEvent('START_LOOT_ROLL', function(id)
+	local _, name = GetLootRollItemInfo(id)
+	if(name == hexstick) then
+		RollOnLoot(id, 0)
+	end
+end)
