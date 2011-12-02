@@ -39,6 +39,4 @@ SLASH_TICKETGM1 = '/gm'
 SlashCmdList.TICKETGM = ToggleHelpFrame
 
 SLASH_JOURNAL1 = '/ej'
-SlashCmdList.JOURNAL = function()
-	ToggleFrame(EncounterJournal)
-end
+SlashCmdList.JOURNAL = ToggleEncounterJournal
