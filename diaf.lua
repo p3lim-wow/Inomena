@@ -6,12 +6,6 @@ for index = 1, MAX_BOSS_FRAMES do
 	frame:Hide()
 end
 
-CompactRaidFrameManager:UnregisterAllEvents()
-CompactRaidFrameManager:Hide()
-
-CompactRaidFrameContainer:UnregisterAllEvents()
-CompactRaidFrameContainer:Hide()
-
 VehicleSeatIndicator:UnregisterAllEvents()
 VehicleSeatIndicator:Hide()
 
