@@ -1,3 +1,4 @@
+local _, Inomena = ...
 
 for index = 1, MAX_BOSS_FRAMES do
 	local frame = _G['Boss' .. index .. 'TargetFrame']
@@ -17,3 +18,9 @@ VehicleSeatIndicator:Hide()
 UIErrorsFrame:UnregisterEvent('UI_ERROR_MESSAGE')
 
 function CombatLog_LoadUI() end
+
+-- Fuck you Blizzard
+Inomena.RegisterEvent('PLAYER_ENTERING_WORLD', function()
+	SetCVar('profanityFilter', 0)
+	BNSetMatureLanguageFilter(false)
+end)
