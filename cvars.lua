@@ -8,7 +8,6 @@ function Inomena.Initialize.CVARS()
 		autoLootDefault = 1,
 		threatWarning = 1,
 		mapQuestDifficulty = 1,
-		advancedWorldMap = 1,
 		chatStyle = 'classic',
 		conversationMode = 'inline',
 		chatBubblesParty = 0,
