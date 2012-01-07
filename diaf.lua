@@ -19,5 +19,8 @@ function CombatLog_LoadUI() end
 -- Fuck you Blizzard
 Inomena.RegisterEvent('PLAYER_ENTERING_WORLD', function()
 	SetCVar('profanityFilter', 0)
-	BNSetMatureLanguageFilter(false)
+
+	if(BNConnected()) then
+		BNSetMatureLanguageFilter(false)
+	end
 end)
