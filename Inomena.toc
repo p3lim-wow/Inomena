@@ -13,3 +13,4 @@ notify.lua
 autoloot.lua
 mail.lua
 roster.lua
+vellum.lua
