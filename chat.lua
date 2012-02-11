@@ -32,6 +32,7 @@ function Inomena.Initialize.CHAT()
 	local frame = CreateChat(4, 'Channels')
 	ChatFrame_AddChannel(frame, 'General')
 	ChatFrame_AddChannel(frame, 'Trade')
+	ChatFrame_AddChannel(ChatFrame1, 'FindingHealers')
 
 	SetChatWindowAlpha(1, 0)
 	SetChatWindowSavedPosition(1, 'BOTTOMLEFT', 0.003, 0.025)
