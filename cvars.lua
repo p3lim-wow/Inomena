@@ -6,11 +6,15 @@ function Inomena.Initialize.CVARS()
 		autoDismountFlying = 1,
 		lootUnderMouse = 0,
 		autoLootDefault = 1,
+		interactOnLeftClick = 0,
+		spellActivationOverlayOpacity = 1,
 		threatWarning = 1,
 		mapQuestDifficulty = 1,
 		chatStyle = 'classic',
 		conversationMode = 'inline',
+		profanityFilter = 0,
 		chatBubblesParty = 0,
+		removeChatDelay = 1,
 		guildMemberNotify = 0,
 		UnitNamePlayerGuild = 0,
 		UnitNamePlayerPVPTitle = 0,
@@ -32,7 +36,9 @@ function Inomena.Initialize.CVARS()
 		cameraWaterCollision = 0,
 		cameraSmoothStyle = 0,
 		showTutorials = 0,
+		showGameTips = 0,
 		showNewbieTips = 0,
+		scriptErrors = 1,
 
 		Sound_EnableAllSound = 1,
 		Sound_EnableErrorSpeech = 0,
@@ -43,9 +49,6 @@ function Inomena.Initialize.CVARS()
 		Sound_EnableSoundWhenGameIsInBG = 1,
 		Sound_NumChannels = 64,
 
-		uiScale = 768 / string.match(({GetScreenResolutions()})[GetCurrentResolution()], '%d+x(%d+)'),
-
-		processAffinityMask = 15,
 		screenshotQuality = 10,
 		taintLog = 1,
 	}) do
