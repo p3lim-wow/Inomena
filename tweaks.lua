@@ -32,6 +32,15 @@ Inomena.RegisterEvent('ADDON_LOADED', function(addon)
 	end
 end)
 
+Inomena.RegisterEvent('REPLACE_ENCHANT', function(...)
+	for index = 1, STATICPOPUP_NUMDIALOGS do
+		local popup = _G['StaticPopup' .. index]
+		if(popup.which == 'REPLACE_ENCHANT') then
+			StaticPopup_OnClick(popup, 1)
+		end
+	end
+end)
+
 StaticPopupDialogs.PARTY_INVITE.hideOnEscape = 0
 StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = 0
 
