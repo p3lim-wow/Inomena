@@ -15,12 +15,3 @@ UIErrorsFrame:UnregisterEvent('UI_ERROR_MESSAGE')
 FriendsFrameTab4:Hide()
 
 function CombatLog_LoadUI() end
-
--- Fuck you Blizzard
-Inomena.RegisterEvent('PLAYER_ENTERING_WORLD', function()
-	SetCVar('profanityFilter', 0)
-
-	if(BNConnected()) then
-		BNSetMatureLanguageFilter(false)
-	end
-end)
