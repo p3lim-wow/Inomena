@@ -29,9 +29,9 @@ function Inomena.Initialize.CHAT()
 	CreateChat(2, 'Whisper', 'BN_WHISPER', 'WHISPER', 'IGNORED')
 	CreateChat(3, 'Loot', 'LOOT', 'COMBAT_FACTION_CHANGE')
 
-	local channels = CreateChat(4, 'Channels')
-	ChatFrame_AddChannel(channels, 'General')
-	ChatFrame_AddChannel(channels, 'Trade')
+	local frame = CreateChat(4, 'Channels')
+	ChatFrame_AddChannel(frame, 'General')
+	ChatFrame_AddChannel(frame, 'Trade')
 
 	SetChatWindowAlpha(1, 0)
 	SetChatWindowSavedPosition(1, 'BOTTOMLEFT', 0.003, 0.025)
