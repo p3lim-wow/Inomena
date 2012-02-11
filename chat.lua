@@ -21,7 +21,7 @@ local function CreateChat(index, name, ...)
 end
 
 function Inomena.Initialize.CHAT()
-	CreateChat(1, 'General', 'SAY', 'EMOTE', 'GUILD', 'PARTY', 'PARTY_LEADER', 'RAID', 'RAID_LEADER', 'RAID_WARNING', 'BATTLEGROUND', 'BATTLEGROUND_LEADER', 'SYSTEM', 'MONSTER_WHISPER', 'MONSTER_BOSS_WHISPER', 'ACHIEVEMENT', 'GUILD_ACHIEVEMENT')
+	CreateChat(1, 'General', 'SAY', 'EMOTE', 'GUILD', 'OFFICER', 'PARTY', 'PARTY_LEADER', 'RAID', 'RAID_LEADER', 'RAID_WARNING', 'BATTLEGROUND', 'BATTLEGROUND_LEADER', 'SYSTEM', 'MONSTER_WHISPER', 'MONSTER_BOSS_WHISPER', 'ACHIEVEMENT', 'GUILD_ACHIEVEMENT')
 	FCF_Close(ChatFrame2)
 	CreateChat(2, 'Whisper', 'BN_WHISPER', 'WHISPER', 'IGNORED')
 	CreateChat(3, 'Loot', 'LOOT', 'COMBAT_FACTION_CHANGE')
@@ -34,6 +34,7 @@ function Inomena.Initialize.CHAT()
 	SetChatWindowSavedPosition(1, 'BOTTOMLEFT', 0.003, 0.025)
 	SetChatWindowSavedDimensions(1, 400, 100)
 
+	ChangeChatColor('OFFICER', 3/4, 1/2, 1/2)
 	ChangeChatColor('RAID', 0, 1, 4/5)
 	ChangeChatColor('RAID_LEADER', 0, 1, 4/5)
 	ChangeChatColor('RAID_WARNING', 1, 1/4, 1/4)
