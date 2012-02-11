@@ -21,8 +21,11 @@ local function CreateChat(index, name, ...)
 end
 
 function Inomena.Initialize.CHAT()
+	for index = 2, NUM_CHAT_WINDOWS do
+		FCF_Close(_G['ChatFrame' .. index])
+	end
+
 	CreateChat(1, 'General', 'SAY', 'EMOTE', 'GUILD', 'OFFICER', 'PARTY', 'PARTY_LEADER', 'RAID', 'RAID_LEADER', 'RAID_WARNING', 'BATTLEGROUND', 'BATTLEGROUND_LEADER', 'SYSTEM', 'MONSTER_WHISPER', 'MONSTER_BOSS_WHISPER', 'ACHIEVEMENT', 'GUILD_ACHIEVEMENT')
-	FCF_Close(ChatFrame2)
 	CreateChat(2, 'Whisper', 'BN_WHISPER', 'WHISPER', 'IGNORED')
 	CreateChat(3, 'Loot', 'LOOT', 'COMBAT_FACTION_CHANGE')
 
