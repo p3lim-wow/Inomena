@@ -34,23 +34,6 @@ function Inomena.Initialize.CHAT()
 	SetChatWindowSavedPosition(1, 'BOTTOMLEFT', 0.003, 0.025)
 	SetChatWindowSavedDimensions(1, 400, 100)
 
-	ToggleChatColorNamesByClassGroup(true, 'SAY')
-	ToggleChatColorNamesByClassGroup(true, 'EMOTE')
-	ToggleChatColorNamesByClassGroup(true, 'GUILD')
-	ToggleChatColorNamesByClassGroup(true, 'WHISPER')
-	ToggleChatColorNamesByClassGroup(true, 'PARTY')
-	ToggleChatColorNamesByClassGroup(true, 'PARTY_LEADER')
-	ToggleChatColorNamesByClassGroup(true, 'RAID')
-	ToggleChatColorNamesByClassGroup(true, 'RAID_LEADER')
-	ToggleChatColorNamesByClassGroup(true, 'RAID_WARNING')
-	ToggleChatColorNamesByClassGroup(true, 'BATTLEGROUND')
-	ToggleChatColorNamesByClassGroup(true, 'BATTLEGROUND_LEADER')
-	ToggleChatColorNamesByClassGroup(true, 'ACHIEVEMENT')
-	ToggleChatColorNamesByClassGroup(true, 'GUILD_ACHIEVEMENT')
-	ToggleChatColorNamesByClassGroup(true, 'CHANNEL1')
-	ToggleChatColorNamesByClassGroup(true, 'CHANNEL2')
-	ToggleChatColorNamesByClassGroup(true, 'CHANNEL3')
-
 	ChangeChatColor('RAID', 0, 1, 4/5)
 	ChangeChatColor('RAID_LEADER', 0, 1, 4/5)
 	ChangeChatColor('RAID_WARNING', 1, 1/4, 1/4)
@@ -59,3 +42,9 @@ function Inomena.Initialize.CHAT()
 	ChangeChatColor('BN_WHISPER', 1, 1/2, 1)
 	ChangeChatColor('BN_WHISPER_INFORM', 1, 1/2, 1)
 end
+
+Inomena.RegisterEvent('UPDATE_CHAT_COLOR_NAME_BY_CLASS', function(type, enabled)
+	if(not enabled) then
+		SetChatColorNameByClass(type, true)
+	end
+end)
