@@ -46,6 +46,8 @@ function Inomena.Initialize.CHAT()
 	ChangeChatColor('PARTY_LEADER', 2/3, 2/3, 1)
 	ChangeChatColor('BN_WHISPER', 1, 1/2, 1)
 	ChangeChatColor('BN_WHISPER_INFORM', 1, 1/2, 1)
+
+	FCF_SelectDockFrame(ChatFrame1)
 end
 
 Inomena.RegisterEvent('UPDATE_CHAT_COLOR_NAME_BY_CLASS', function(type, enabled)
