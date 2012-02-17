@@ -22,7 +22,7 @@ Inomena.RegisterEvent('ADDON_LOADED', function(addon)
 				if(service == ENSCRIBE) then
 					button:Show()
 
-					if(TradeSkillCreateButton:IsEnabled() and GetItemCount(38682)) then
+					if(TradeSkillCreateButton:IsEnabled() and GetItemCount(38682) > 0) then
 						button:Enable()
 					else
 						button:Disable()
