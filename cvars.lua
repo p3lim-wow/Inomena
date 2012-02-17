@@ -9,6 +9,7 @@ function Inomena.Initialize.CVARS()
 		interactOnLeftClick = 0,
 		spellActivationOverlayOpacity = 1,
 		threatWarning = 1,
+		displayWorldPVPObjectives = 2,
 		mapQuestDifficulty = 1,
 		chatStyle = 'classic',
 		conversationMode = 'inline',
@@ -54,4 +55,7 @@ function Inomena.Initialize.CVARS()
 	}) do
 		SetCVar(key, value)
 	end
+
+	-- Not a cvar, but is set through the interface options
+	SetNamePlateMotionType(2)
 end
