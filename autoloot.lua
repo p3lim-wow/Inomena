@@ -6,6 +6,7 @@ local ForceLoot = CreateFrame('Frame')
 ForceLoot:Hide()
 ForceLoot:SetScript('OnUpdate', function()
 	ConfirmLootSlot(currentSlot)
+	StaticPopup_Hide('LOOT_BIND')
 end)
 
 Inomena.RegisterEvent('LOOT_BIND_CONFIRM', function(slot)
@@ -19,19 +20,25 @@ Inomena.RegisterEvent('LOOT_SLOT_CLEARED', function(slot)
 	if(currentSlot == slot) then
 		ForceLoot:Hide()
 
-		local items = GetNumLootItems()
-		if(items > 0) then
-			for index = 1, items do
-				return LootSlot(index)
+		if(not IsModifiedClick('AUTOLOOTTOGGLE')) then
+			local items = GetNumLootItems()
+			if(items > 0) then
+				for index = 1, items do
+					LootSlot(index)
+				end
 			end
 		end
 	end
 end)
 
-local hexstick = GetItemInfo(33865)
-Inomena.RegisterEvent('START_LOOT_ROLL', function(id)
-	local _, name = GetLootRollItemInfo(id)
-	if(name == hexstick) then
-		RollOnLoot(id, 0)
+Inomena.RegisterEvent('CONFIRM_LOOT_ROLL', function(id, type)
+	if(type > 0) then
+		ConfirmLootRoll(id, type)
+	end
+end)
+
+Inomena.RegisterEvent('CONFIRM_DISENCHANT_ROLL', function(id, type)
+	if(type > 0) then
+		ConfirmLootRoll(id, type)
 	end
 end)
