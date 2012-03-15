@@ -27,6 +27,12 @@ Inomena.RegisterEvent('REPLACE_ENCHANT', function()
 	end
 end)
 
+Inomena.RegisterEvent('PLAYER_ENTERING_WORLD', function()
+	if(IsChatAFK()) then
+		SendChatMessage('', 'AFK')
+	end
+end)
+
 StaticPopupDialogs.PARTY_INVITE.hideOnEscape = 0
 StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = 0
 
