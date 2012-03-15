@@ -18,7 +18,7 @@ Inomena.RegisterEvent('TRADE_SKILL_SHOW', function()
 	elseif(GetTradeSkillLine() == PROFESSIONS_COOKING) then
 		button:Show()
 
-		if(GetItemCount(46349) > 0) then
+		if(GetItemCount(46349) and GetItemCount(46349) > 0) then
 			hat = GetInventoryItemLink('player', 1)
 			EquipItemByName(46349)
 		end
@@ -41,6 +41,8 @@ Inomena.RegisterEvent('TRADE_SKILL_UPDATE', function()
 			hat = nil
 		end
 
-		button:Hide()
+		if(button) then
+			button:Hide()
+		end
 	end
 end)
