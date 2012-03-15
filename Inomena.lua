@@ -1,7 +1,7 @@
 local _, Inomena = ...
 
-local addon = CreateFrame('Frame')
-addon:SetScript('OnEvent', function(self, event, ...) self[event](...) end)
+local handler = CreateFrame('Frame')
+handler:SetScript('OnEvent', function(self, event, ...) self[event](...) end)
 
 local metatable = {
 	__call = function(funcs, self, ...)
@@ -13,10 +13,10 @@ local metatable = {
 
 Inomena.Initialize = {}
 Inomena.RegisterEvent = function(event, method)
-	local current = addon[event]
+	local current = handler[event]
 	if(current and method) then
 		if(type(current) == 'function') then
-			addon[event] = setmetatable({current, method}, metatable)
+			handler[event] = setmetatable({current, method}, metatable)
 		else
 			for _, func in pairs(current) do
 				if(func == method) then return end
@@ -25,8 +25,8 @@ Inomena.RegisterEvent = function(event, method)
 			table.insert(current, method)
 		end
 	else
-		addon[event] = method
-		addon:RegisterEvent(event)
+		handler[event] = method
+		handler:RegisterEvent(event)
 	end
 end
 
