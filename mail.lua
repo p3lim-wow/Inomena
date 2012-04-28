@@ -1,19 +1,17 @@
 local _, Inomena = ...
 
 do
-	local last
+	local lastReceipient
 	Inomena.RegisterEvent('MAIL_SEND_SUCCESS', function()
-		if(last) then
-			SendMailNameEditBox:SetText(last)
+		if(lastReceipient) then
+			SendMailNameEditBox:SetText(lastReceipient)
 			SendMailNameEditBox:ClearFocus()
 		end
 	end)
 
-	local orig = SendMailFrame_SendMail
-	function SendMailFrame_SendMail(...)
-		last = SendMailNameEditBox:GetText()
-		orig(...)
-	end
+	hooksecurefunc('SendMail', function(name)
+		lastReceipient = name
+	end)
 end
 
 Inomena.RegisterEvent('UPDATE_PENDING_MAIL', function()
