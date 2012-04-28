@@ -47,6 +47,12 @@ do
 		end
 	end
 
+	local function MoneySubject(self)
+		if(self:GetText() ~= '' and SendMailSubjectEditBox:GetText() == '') then
+			SendMailSubjectEditBox:SetText(MONEY)
+		end
+	end
+
 	local function GetFreeSlots()
 		local slots = 0
 		for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
@@ -114,6 +120,10 @@ do
 		button:SetText(OPENMAIL)
 
 		InboxFrame:HookScript('OnUpdate', UpdateInbox)
+
+		SendMailMoneyGold:HookScript('OnTextChanged', MoneySubject)
+		SendMailMoneySilver:HookScript('OnTextChanged', MoneySubject)
+		SendMailMoneyCopper:HookScript('OnTextChanged', MoneySubject)
 
 		initialized = true
 	end)
