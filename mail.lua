@@ -36,6 +36,17 @@ end)
 do
 	local button = CreateFrame('Button', nil, InboxFrame, 'UIPanelButtonTemplate')
 
+	local totalElapsed = 0
+	local function UpdateInbox(self, elapsed)
+		if(totalElapsed < 10) then
+			totalElapsed = totalElapsed + elapsed
+		else
+			totalElapsed = 0
+
+			CheckInbox()
+		end
+	end
+
 	local function GetFreeSlots()
 		local slots = 0
 		for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
@@ -101,6 +112,8 @@ do
 		button:SetPoint('BOTTOM', -12, 88)
 		button:SetSize(90, 25)
 		button:SetText(OPENMAIL)
+
+		InboxFrame:HookScript('OnUpdate', UpdateInbox)
 
 		initialized = true
 	end)
