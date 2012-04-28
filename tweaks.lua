@@ -33,6 +33,26 @@ Inomena.RegisterEvent('PLAYER_ENTERING_WORLD', function()
 	end
 end)
 
+Inomena.RegisterEvent('PARTY_INVITE_REQUEST', function(name)
+	for index = 1, select(2, GetNumGuildMembers()) do
+		if(GetGuildRosterInfo(index) == name) then
+			return AcceptGroup()
+		end
+	end
+
+	for index = 1, GetNumFriends() do
+		if(GetFriendInfo(index) == name) then
+			return AcceptGroup()
+		end
+	end
+end)
+
+Inomena.RegisterEvent('PARTY_LEADER_CHANGED', function()
+	if(StaticPopup_Visible('PARTY_INVITE')) then
+		StaticPopup_Hide('PARTY_INVITE')
+	end
+end)
+
 StaticPopupDialogs.PARTY_INVITE.hideOnEscape = 0
 StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = 0
 
