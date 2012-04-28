@@ -5,7 +5,7 @@ do
 	Inomena.RegisterEvent('MAIL_SEND_SUCCESS', function()
 		if(last) then
 			SendMailNameEditBox:SetText(last)
-			SendMailNameEditBox:HighlightText()
+			SendMailNameEditBox:ClearFocus()
 		end
 	end)
 
