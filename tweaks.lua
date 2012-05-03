@@ -40,6 +40,12 @@ Inomena.RegisterEvent('PARTY_INVITE_REQUEST', function(name)
 		end
 	end
 
+	for index = 1, select(2, BNGetNumFriends()) do
+		if(string.match(select(4, BNGetFriendInfo(index)), name)) then
+			return AcceptGroup()
+		end
+	end
+
 	for index = 1, GetNumFriends() do
 		if(GetFriendInfo(index) == name) then
 			return AcceptGroup()
