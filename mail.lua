@@ -65,7 +65,7 @@ do
 		return slots
 	end
 
-	local skipNum, lastNum
+	local skipNum, lastNum, cashOnly
 	local function GetMail()
 		if(GetInboxNumItems() - skipNum <= 0) then
 			button:Enable()
@@ -75,9 +75,10 @@ do
 
 		local index = 1 + skipNum
 		local _, _, _, _, money, cod, _, multiple, _, _, _, _, _, single = GetInboxHeaderInfo(index)
-		if(cod > 0) then
+
+		if(cod > 0 or (cashOnly and multiple)) then
 			skipNum = skipNum + 1
-			GetMail(self)
+			GetMail()
 		elseif(money > 0) then
 			TakeInboxMoney(index)
 		elseif(single and (GetFreeSlots() > 6)) then
@@ -95,29 +96,31 @@ do
 			return
 		end
 
-		GetMail(self)
+		GetMail()
 	end)
 
 	button:SetScript('OnClick', function(self)
 		self:RegisterEvent('MAIL_INBOX_UPDATE')
 		self:Disable()
 
+		cashOnly = IsShiftKeyDown()
 		lastNum = 0
 		skipNum = 0
 
-		GetMail(self)
+		GetMail()
 	end)
 
 	local initialized
 	Inomena.RegisterEvent('MAIL_SHOW', function()
 		if(initialized) then
 			button:Enable()
+			button:SetText(QUICKBUTTON_NAME_EVERYTHING)
 			return
 		end
 
 		button:SetPoint('BOTTOM', -12, 88)
 		button:SetSize(90, 25)
-		button:SetText(OPENMAIL)
+		button:SetText(QUICKBUTTON_NAME_EVERYTHING)
 
 		InboxFrame:HookScript('OnUpdate', UpdateInbox)
 
@@ -126,5 +129,15 @@ do
 		SendMailMoneyCopper:HookScript('OnTextChanged', MoneySubject)
 
 		initialized = true
+	end)
+
+	Inomena.RegisterEvent('MODIFIER_STATE_CHANGED', function()
+		if(not InboxFrame:IsShown()) then return end
+
+		if(IsShiftKeyDown()) then
+			button:SetText(MONEY)
+		else
+			button:SetText(QUICKBUTTON_NAME_EVERYTHING)
+		end
 	end)
 end
