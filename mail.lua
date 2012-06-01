@@ -65,7 +65,7 @@ do
 		return slots
 	end
 
-	local skipNum, lastNum, cashOnly
+	local skipNum, lastNum, cashOnly, unreadOnly
 	local function GetMail()
 		if(GetInboxNumItems() - skipNum <= 0) then
 			button:Enable()
@@ -74,9 +74,9 @@ do
 		end
 
 		local index = 1 + skipNum
-		local _, _, _, _, money, cod, _, multiple, _, _, _, _, _, single = GetInboxHeaderInfo(index)
+		local _, _, _, _, money, cod, _, multiple, read, _, _, _, _, single = GetInboxHeaderInfo(index)
 
-		if(cod > 0 or (cashOnly and multiple)) then
+		if(cod > 0 or (cashOnly and multiple) or (unreadOnly and read)) then
 			skipNum = skipNum + 1
 			GetMail()
 		elseif(money > 0) then
@@ -104,6 +104,7 @@ do
 		self:Disable()
 
 		cashOnly = IsShiftKeyDown()
+		unreadOnly = IsControlKeyDown()
 		lastNum = 0
 		skipNum = 0
 
@@ -135,9 +136,11 @@ do
 		if(not InboxFrame:IsShown()) then return end
 
 		if(IsShiftKeyDown()) then
-			button:SetText(MONEY)
+			button:SetText('Money')
+		elseif(IsControlKeyDown()) then
+			button:SetText('Unread')
 		else
-			button:SetText(QUICKBUTTON_NAME_EVERYTHING)
+			button:SetText('Everything')
 		end
 	end)
 end
