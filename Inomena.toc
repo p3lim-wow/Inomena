@@ -17,3 +17,4 @@ vellum.lua
 angler.lua
 chef.lua
 stats.lua
+archaeology.lua
