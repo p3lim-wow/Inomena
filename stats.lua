@@ -55,7 +55,7 @@ PAPERDOLL_STATCATEGORIES = {
 	SPELL = {
 		id = 2,
 		stats = {
-			'SPRIT',
+			'SPIRIT',
 			'INTELLECT',
 			'SPELLDAMAGE',
 			'SPELLHEALING',
