@@ -10,7 +10,7 @@ ForceLoot:SetScript('OnUpdate', function()
 end)
 
 Inomena.RegisterEvent('LOOT_BIND_CONFIRM', function(slot)
-	if(GetNumRaidMembers() == 0 or IsFishingLoot()) then
+	if(GetNumGroupMembers() == 0 or IsFishingLoot()) then
 		currentSlot = slot
 		ForceLoot:Show()
 	end

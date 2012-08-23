@@ -27,12 +27,6 @@ Inomena.RegisterEvent('REPLACE_ENCHANT', function()
 	end
 end)
 
-Inomena.RegisterEvent('PLAYER_ENTERING_WORLD', function()
-	if(IsChatAFK()) then
-		SendChatMessage('', 'AFK')
-	end
-end)
-
 Inomena.RegisterEvent('PARTY_INVITE_REQUEST', function(name, l, f, g)
 	if(l or f or g) then return end
 
@@ -43,7 +37,7 @@ Inomena.RegisterEvent('PARTY_INVITE_REQUEST', function(name, l, f, g)
 	end
 
 	for index = 1, select(2, BNGetNumFriends()) do
-		if(string.match(select(4, BNGetFriendInfo(index)), name)) then
+		if(string.match(select(5, BNGetFriendInfo(index)), name)) then
 			return AcceptGroup()
 		end
 	end
@@ -66,6 +60,3 @@ StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = 0
 
 SLASH_TICKETGM1 = '/gm'
 SlashCmdList.TICKETGM = ToggleHelpFrame
-
-SLASH_JOURNAL1 = '/ej'
-SlashCmdList.JOURNAL = ToggleEncounterJournal
