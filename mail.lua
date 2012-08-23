@@ -119,7 +119,7 @@ do
 			return
 		end
 
-		button:SetPoint('BOTTOM', -12, 88)
+		button:SetPoint('BOTTOM', -28, 100)
 		button:SetSize(90, 25)
 		button:SetText(QUICKBUTTON_NAME_EVERYTHING)
 
