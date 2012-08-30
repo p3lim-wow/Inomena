@@ -89,7 +89,7 @@ local sort = {
 local spec
 local classes = {
 	DEATHKNIGHT = {1, 1, 1},
-	DRUID = {3, 1, 3},
+	DRUID = {3, 1, 1, 3},
 	HUNTER = {2, 2, 2},
 	MAGE = {3, 3, 3},
 	PALADIN = {3, 1, 1},
@@ -104,21 +104,13 @@ local handler = CreateFrame('Frame')
 handler:RegisterEvent('PLAYER_TALENT_UPDATE')
 handler:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
 handler:SetScript('OnEvent', function()
-	local tabs = GetNumTalentTabs()
-	if(tabs == 0) then return end
+	local spec = GetSpecialization()
 
-	local mostPoints = -1
-	for index = 1, tabs do
-		local _, _, _, _, points = GetTalentTabInfo(index)
-		if(points > mostPoints) then
-			mostPoints = points
-			spec = index
+	if(spec) then
+		PaperDoll_InitStatCategories = function()
+			orig(sort[classes[class][spec]], nil, nil, 'player')
+			PaperDollFrame_CollapseStatCategory(CharacterStatsPaneCategory4)
 		end
-	end
-
-	PaperDoll_InitStatCategories = function()
-		orig(sort[classes[class][spec]], nil, nil, 'player')
-		PaperDollFrame_CollapseStatCategory(CharacterStatsPaneCategory4)
 	end
 end)
 
