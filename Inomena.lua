@@ -1,11 +1,11 @@
-local _, Inomena = ...
+local __, Inomena = ...
 
 local handler = CreateFrame('Frame')
 handler:SetScript('OnEvent', function(self, event, ...) self[event](...) end)
 
 local metatable = {
 	__call = function(funcs, self, ...)
-		for _, func in pairs(funcs) do
+		for __, func in pairs(funcs) do
 			func(self, ...)
 		end
 	end
@@ -18,7 +18,7 @@ Inomena.RegisterEvent = function(event, method)
 		if(type(current) == 'function') then
 			handler[event] = setmetatable({current, method}, metatable)
 		else
-			for _, func in pairs(current) do
+			for __, func in pairs(current) do
 				if(func == method) then return end
 			end
 

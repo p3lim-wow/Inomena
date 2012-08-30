@@ -1,4 +1,4 @@
-local _, Inomena = ...
+local __, Inomena = ...
 
 Inomena.RegisterEvent('ADDON_LOADED', function(addon)
 	if(addon ~= 'Blizzard_TradeSkillUI') then return end
@@ -18,7 +18,7 @@ Inomena.RegisterEvent('ADDON_LOADED', function(addon)
 			if(IsTradeSkillGuild() or IsTradeSkillLinked()) then
 				button:Hide()
 			elseif(CURRENT_TRADESKILL == enchanting) then
-				local _, _, _, _, service = GetTradeSkillInfo(TradeSkillFrame.selectedSkill)
+				local __, __, __, __, service = GetTradeSkillInfo(TradeSkillFrame.selectedSkill)
 				if(service == ENSCRIBE) then
 					button:Show()
 
