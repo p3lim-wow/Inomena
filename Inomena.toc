@@ -18,3 +18,4 @@ angler.lua
 chef.lua
 stats.lua
 archaeology.lua
+bigwigs.lua
