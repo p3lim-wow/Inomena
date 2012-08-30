@@ -56,11 +56,6 @@ PAPERDOLL_STATCATEGORIES = {
 			'PARRY',
 			'BLOCK',
 			'RESILIENCE_REDUCTION',
-			'ARCANE',
-			'FIRE',
-			'FROST',
-			'NATURE',
-			'SHADOW',
 		},
 	},
 }
