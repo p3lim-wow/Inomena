@@ -55,6 +55,18 @@ Inomena.RegisterEvent('PARTY_LEADER_CHANGED', function()
 	end
 end)
 
+Inomena.RegisterEvent('CINEMATIC_START', function(boolean)
+	SetCVar('Sound_EnableMusic', 1)
+	SetCVar('Sound_EnableAmbience', 1)
+	SetCVar('Sound_EnableSFX', 1)
+end)
+
+Inomena.RegisterEvent('CINEMATIC_STOP', function()
+	SetCVar('Sound_EnableMusic', 0)
+	SetCVar('Sound_EnableAmbience', 0)
+	SetCVar('Sound_EnableSFX', 0)
+end)
+
 StaticPopupDialogs.PARTY_INVITE.hideOnEscape = 0
 StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = 0
 
