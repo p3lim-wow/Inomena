@@ -1,6 +1,6 @@
 local __, Inomena = ...
 
-local hat, shoe
+local hat
 local pole = select(17, GetAuctionItemSubClasses(1))
 
 Inomena.RegisterEvent('UNIT_INVENTORY_CHANGED', function(unit)
@@ -9,22 +9,16 @@ Inomena.RegisterEvent('UNIT_INVENTORY_CHANGED', function(unit)
 	local __, __, __, __, __, __, type = GetItemInfo(GetInventoryItemLink('player', 16) or 0)
 	if(type == pole and not hat) then
 		hat = GetInventoryItemLink('player', 1)
-		shoe = GetInventoryItemLink('player', 8)
 
-		if(GetItemCount(33820) and GetItemCount(33820) > 0) then
+		if(GetItemCount(88710) and GetItemCount(88710) > 0) then
+			EquipItemByName(88710)
+		elseif(GetItemCount(33820) and GetItemCount(33820) > 0) then
 			EquipItemByName(33820)
 		elseif(GetItemCount(19972) and GetItemCount(19972) > 0) then
 			EquipItemByName(19972)
 		end
-
-		if(GetItemCount(50287) and GetItemCount(50287) > 0) then
-			EquipItemByName(50287)
-		elseif(GetItemCount(19969) and GetItemCount(19969) > 0) then
-			EquipItemByName(19969)
-		end
-	elseif(type ~= pole and (hat or shoe)) then
+	elseif(type ~= pole and hat) then
 		EquipItemByName(hat)
-		EquipItemByName(shoe)
-		hat, show = nil, nil
+		hat = nil
 	end
 end)
