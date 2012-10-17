@@ -4,7 +4,7 @@ local button, hat
 Inomena.RegisterEvent('TRADE_SKILL_SHOW', function()
 	if(not button) then
 		button = CreateFrame('Button', 'FireButton', TradeSkillFrame, 'SecureActionButtonTemplate')
-		button:SetPoint('RIGHT', TradeSkillFrameCloseButton, 'LEFT')
+		button:SetPoint('RIGHT', TradeSkillFrameCloseButton, 'LEFT', -235, 0)
 		button:SetSize(20, 20)
 
 		local name, __, icon = GetSpellInfo(818)
