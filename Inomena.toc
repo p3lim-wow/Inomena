@@ -12,7 +12,6 @@ cvars.lua
 notify.lua
 autoloot.lua
 mail.lua
-roster.lua
 vellum.lua
 angler.lua
 chef.lua
