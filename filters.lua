@@ -31,7 +31,7 @@ local function CreateButton(parent, click, texture)
 	local button = CreateFrame('CheckButton', nil, parent)
 	button:SetSize(26, 26)
 	button:SetScript('OnEnter', OnEnter)
-	button:SetScript('OnEnter', GameTooltip_Hide)
+	button:SetScript('OnLeave', GameTooltip_Hide)
 	button:SetScript('OnClick', click)
 
 	local icon = button:CreateTexture(nil, 'BACKGROUND')
