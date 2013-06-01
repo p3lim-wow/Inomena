@@ -25,14 +25,13 @@ function Inomena.Initialize.CHAT()
 		FCF_Close(_G['ChatFrame' .. index])
 	end
 
-	CreateChat(1, 'General', 'SAY', 'EMOTE', 'GUILD', 'OFFICER', 'PARTY', 'PARTY_LEADER', 'RAID', 'RAID_LEADER', 'RAID_WARNING', 'BATTLEGROUND', 'BATTLEGROUND_LEADER', 'SYSTEM', 'MONSTER_WHISPER', 'MONSTER_BOSS_WHISPER', 'ACHIEVEMENT', 'GUILD_ACHIEVEMENT')
+	CreateChat(1, 'General', 'SAY', 'EMOTE', 'GUILD', 'OFFICER', 'PARTY', 'PARTY_LEADER', 'RAID', 'RAID_LEADER', 'RAID_WARNING', 'BATTLEGROUND', 'BATTLEGROUND_LEADER', 'SYSTEM', 'MONSTER_WHISPER', 'MONSTER_BOSS_WHISPER', 'ACHIEVEMENT', 'GUILD_ACHIEVEMENT', 'INSTANCE_CHAT', 'INSTANCE_CHAT_LEADER')
 	CreateChat(2, 'Whisper', 'BN_WHISPER', 'WHISPER', 'IGNORED')
 	CreateChat(3, 'Loot', 'LOOT', 'COMBAT_FACTION_CHANGE')
 
 	local frame = CreateChat(4, 'Channels')
 	ChatFrame_AddChannel(frame, 'General')
 	ChatFrame_AddChannel(frame, 'Trade')
-	ChatFrame_AddChannel(ChatFrame1, 'FindingHealers')
 
 	SetChatWindowAlpha(1, 0)
 	SetChatWindowSavedPosition(1, 'BOTTOMLEFT', 0.003, 0.025)
@@ -46,6 +45,7 @@ function Inomena.Initialize.CHAT()
 	ChangeChatColor('PARTY_LEADER', 2/3, 2/3, 1)
 	ChangeChatColor('BN_WHISPER', 1, 1/2, 1)
 	ChangeChatColor('BN_WHISPER_INFORM', 1, 1/2, 1)
+	ChangeChatColor('INSTANCE_CHAT_LEADER', 1, 1/2, 0)
 
 	FCF_SelectDockFrame(ChatFrame1)
 end
