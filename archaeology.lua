@@ -1,4 +1,4 @@
-local __, Inomena = ...
+local _, Inomena = ...
 
 StaticPopupDialogs.ARCHAEOLOGY_SOLVE = {
 	text = '%s',
@@ -30,8 +30,8 @@ Inomena.RegisterEvent('CHAT_MSG_CURRENCY', function(message)
 	if(race) then
 		SetSelectedArtifact(race)
 
-		local race, __, stone = GetArchaeologyRaceInfo(race)
-		local artifact, __, rare, __, __, stones = GetSelectedArtifactInfo()
+		local race, _, stone = GetArchaeologyRaceInfo(race)
+		local artifact, _, rare, _, _, stones = GetSelectedArtifactInfo()
 
 		for index = 1, math.min(stones, GetItemCount(stone)) do
 			if(not ItemAddedToArtifact(index)) then

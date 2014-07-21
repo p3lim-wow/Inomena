@@ -1,4 +1,4 @@
-local __, Inomena = ...
+local _, Inomena = ...
 
 local hat
 local pole = select(17, GetAuctionItemSubClasses(1))
@@ -6,7 +6,7 @@ local pole = select(17, GetAuctionItemSubClasses(1))
 Inomena.RegisterEvent('UNIT_INVENTORY_CHANGED', function(unit)
 	if(unit ~= 'player') then return end
 
-	local __, __, __, __, __, __, type = GetItemInfo(GetInventoryItemLink('player', 16) or 0)
+	local _, _, _, _, _, _, type = GetItemInfo(GetInventoryItemLink('player', 16) or 0)
 	if(type == pole and not hat) then
 		hat = GetInventoryItemLink('player', 1)
 

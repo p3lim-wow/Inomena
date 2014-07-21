@@ -1,4 +1,4 @@
-local __, Inomena = ...
+local _, Inomena = ...
 
 do
 	local lastReceipient
@@ -61,7 +61,7 @@ do
 		end
 
 		local index = 1 + skipNum
-		local __, __, __, __, money, cod, __, multiple, read, __, __, __, __, single = GetInboxHeaderInfo(index)
+		local _, _, _, _, money, cod, _, multiple, read, _, _, _, _, single = GetInboxHeaderInfo(index)
 
 		if(cod > 0 or (cashOnly and multiple) or (unreadOnly and read)) then
 			skipNum = skipNum + 1

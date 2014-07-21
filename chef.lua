@@ -1,4 +1,4 @@
-local __, Inomena = ...
+local _, Inomena = ...
 
 local button, hat
 Inomena.RegisterEvent('TRADE_SKILL_SHOW', function()
@@ -7,7 +7,7 @@ Inomena.RegisterEvent('TRADE_SKILL_SHOW', function()
 		button:SetPoint('RIGHT', TradeSkillFrameCloseButton, 'LEFT', -235, 0)
 		button:SetSize(20, 20)
 
-		local name, __, icon = GetSpellInfo(818)
+		local name, _, icon = GetSpellInfo(818)
 		button:SetAttribute('type', 'spell')
 		button:SetAttribute('spell', name)
 		button:SetNormalTexture(icon)
