@@ -11,7 +11,6 @@ local metatable = {
 	end
 }
 
-Inomena.Initialize = {}
 Inomena.RegisterEvent = function(event, method)
 	local current = handler[event]
 	if(current and method) then
@@ -29,13 +28,3 @@ Inomena.RegisterEvent = function(event, method)
 		handler:RegisterEvent(event)
 	end
 end
-
-function SlashCmdList.Inomena()
-	for type, func in next, Inomena.Initialize do
-		func()
-	end
-
-	print('|cffff6000Inomena:|r Successfully initialized settings')
-end
-
-SLASH_Inomena1 = '/init'

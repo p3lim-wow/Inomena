@@ -1,7 +1,7 @@
 local _, Inomena = ...
 
-function Inomena.Initialize.CVARS()
-	for key, value in pairs({
+local function Initialize()
+	for key, value in next, {
 		deselectOnClick = 1,
 		autoDismountFlying = 1,
 		lootUnderMouse = 0,
@@ -38,13 +38,39 @@ function Inomena.Initialize.CVARS()
 		scriptErrors = 1,
 
 		Sound_EnableAllSound = 1,
+		Sound_EnableSFX = 0,
 		Sound_EnableMusic = 0,
 		Sound_EnableAmbience = 0,
 		Sound_EnableSoundWhenGameIsInBG = 1,
 
 		screenshotQuality = 10,
 		taintLog = 1,
-	}) do
+	} do
 		SetCVar(key, value)
 	end
+
+	print('|cffff6000Inomena:|r Successfully initialized settings')
 end
+
+local function Decline()
+	print('|cffff6000Inomena:|r Settings not initialized, you can do so later with /init')
+end
+
+StaticPopupDialogs.INOMENA_INITIALIZE = {
+	text = '|cffff6000Inomena:|r Load settings?',
+	button1 = YES,
+	button2 = NO,
+	OnAccept = Initialize,
+	OnCancel = Decline,
+	timeout = 0
+}
+
+Inomena.RegisterEvent('PLAYER_LOGIN', function()
+	if(not InomenaDB) then
+		InomenaDB = true
+		StaticPopup_Show('INOMENA_INITIALIZE')
+	end
+end)
+
+SlashCmdList.Inomena = Initialize
+SLASH_Inomena1 = '/init'
