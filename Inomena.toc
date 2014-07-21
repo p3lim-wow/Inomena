@@ -17,7 +17,6 @@ angler.lua
 chef.lua
 stats.lua
 archaeology.lua
-bigwigs.lua
 filters.lua
 tiller.lua
 bnet.lua
