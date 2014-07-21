@@ -32,6 +32,7 @@ Inomena.RegisterEvent('REPLACE_ENCHANT', function()
 end)
 
 Inomena.RegisterEvent('PARTY_INVITE_REQUEST', function(name, l, f, g)
+	if(QueueStatusMinimapButton:IsShown()) then return end
 	if(l or f or g) then return end
 
 	for index = 1, select(2, GetNumGuildMembers()) do
