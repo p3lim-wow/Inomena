@@ -26,7 +26,7 @@ function Inomena.Initialize.CHAT()
 	end
 
 	CreateChat(1, 'General', 'SAY', 'EMOTE', 'GUILD', 'OFFICER', 'PARTY', 'PARTY_LEADER', 'RAID', 'RAID_LEADER', 'RAID_WARNING', 'BATTLEGROUND', 'BATTLEGROUND_LEADER', 'SYSTEM', 'MONSTER_WHISPER', 'MONSTER_BOSS_WHISPER', 'ACHIEVEMENT', 'GUILD_ACHIEVEMENT', 'INSTANCE_CHAT', 'INSTANCE_CHAT_LEADER')
-	CreateChat(2, 'Whisper', 'BN_WHISPER', 'WHISPER', 'IGNORED')
+	CreateChat(2, 'Whisper', 'BN_WHISPER', 'BN_CONVERSATION', 'WHISPER', 'IGNORED')
 	CreateChat(3, 'Loot', 'LOOT', 'COMBAT_FACTION_CHANGE')
 
 	local frame = CreateChat(4, 'Channels')
