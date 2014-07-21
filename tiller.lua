@@ -1,4 +1,3 @@
-
 local Handler = CreateFrame('Frame')
 Handler:RegisterEvent('ZONE_CHANGED')
 Handler:RegisterEvent('PLAYER_LOGIN')

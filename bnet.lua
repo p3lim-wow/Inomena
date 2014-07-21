@@ -1,4 +1,3 @@
-
 local _, Inomena = ...
 
 local dialogShown
