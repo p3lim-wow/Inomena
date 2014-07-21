@@ -5,7 +5,7 @@ handler:SetScript('OnEvent', function(self, event, ...) self[event](...) end)
 
 local metatable = {
 	__call = function(funcs, self, ...)
-		for __, func in pairs(funcs) do
+		for __, func in next, funcs do
 			func(self, ...)
 		end
 	end
@@ -18,7 +18,7 @@ Inomena.RegisterEvent = function(event, method)
 		if(type(current) == 'function') then
 			handler[event] = setmetatable({current, method}, metatable)
 		else
-			for __, func in pairs(current) do
+			for __, func in next, current do
 				if(func == method) then return end
 			end
 
@@ -31,7 +31,7 @@ Inomena.RegisterEvent = function(event, method)
 end
 
 function SlashCmdList.Inomena()
-	for type, func in pairs(Inomena.Initialize) do
+	for type, func in next, Inomena.Initialize do
 		func()
 	end
 

@@ -22,7 +22,7 @@ local function GuildClick(self)
 	GuildRoster()
 	GuildRoster_Update()
 
-	for _, button in pairs(guild) do
+	for _, button in next, guild do
 		button:SetChecked(button == self)
 	end
 end
@@ -63,7 +63,7 @@ Inomena.RegisterEvent('ADDON_LOADED', function(addon)
 		offline:SetScript('OnLeave', GameTooltip_Hide)
 		offline:GetRegions():SetText()
 
-		for index, info in pairs(guild) do
+		for index, info in next, guild do
 			local button = CreateButton(GuildRosterFrame, GuildClick, info[2])
 			button:SetChecked(GetCVar('guildRosterView') == info[1])
 			button.category = info[1]
@@ -99,7 +99,7 @@ local merchant = {
 }
 
 local function MerchantUpdate(state)
-	for _, button in pairs(merchant) do
+	for _, button in next, merchant do
 		button:SetChecked(button.category == state)
 	end
 end
