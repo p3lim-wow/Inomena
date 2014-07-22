@@ -60,6 +60,31 @@ Inomena.RegisterEvent('PARTY_LEADER_CHANGED', function()
 	end
 end)
 
+local soundFile = [=[Sound\Interface\ReadyCheck.wav]=]
+Inomena.RegisterEvent('UPDATE_BATTLEFIELD_STATUS', function()
+	if(StaticPopup_Visible('CONFIRM_BATTLEFIELD_ENTRY')) then
+		PlaySoundFile(soundFile, 'Master')
+	end
+end)
+
+Inomena.RegisterEvent('LFG_PROPOSAL_SHOW', function()
+	PlaySoundFile(soundFile, 'Master')
+end)
+
+ReadyCheckListenerFrame:SetScript('OnShow', function()
+	PlaySoundFile(soundFile, 'Master')
+end)
+
+Inomena.RegisterEvent('PARTY_INVITE_REQUEST', function()
+	PlaySoundFile(soundFile, 'Master')
+end)
+
+Inomena.RegisterEvent('CHAT_MSG_RAID_BOSS_WHISPER', function(msg, name)
+	if(name == UnitName('player') and msg == 'You are next in line!') then
+		PlaySoundFile(soundFile, 'Master')
+	end
+end)
+
 Inomena.RegisterEvent('CINEMATIC_START', function(boolean)
 	SetCVar('Sound_EnableMusic', 1)
 	SetCVar('Sound_EnableAmbience', 1)
@@ -77,3 +102,8 @@ StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = 0
 
 SLASH_TICKETGM1 = '/gm'
 SlashCmdList.TICKETGM = ToggleHelpFrame
+
+VehicleSeatIndicator:UnregisterAllEvents()
+VehicleSeatIndicator:Hide()
+
+UIErrorsFrame:UnregisterEvent('UI_ERROR_MESSAGE')
