@@ -8,13 +8,10 @@
 Inomena.lua
 tweaks.lua
 cvars.lua
+professions.lua
 autoloot.lua
 mail.lua
-vellum.lua
-angler.lua
-chef.lua
 stats.lua
-archaeology.lua
 filters.lua
 tiller.lua
 bnet.lua
