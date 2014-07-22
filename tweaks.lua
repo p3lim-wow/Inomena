@@ -2,7 +2,7 @@ local _, Inomena = ...
 
 Inomena.RegisterEvent('MERCHANT_SHOW', function()
 	if(CanMerchantRepair() and not IsShiftKeyDown()) then
-		RepairAllItems(CanGuildBankRepair() and GetGuildBankWithdrawMoney() >= GetRepairAllCost())
+		RepairAllItems(CanGuildBankRepair() and CanWithdrawGuildBankMoney() and GetGuildBankWithdrawMoney() >= GetRepairAllCost())
 	end
 end)
 
