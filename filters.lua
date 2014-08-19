@@ -4,11 +4,17 @@ local guild = {
 	{'reputation', [=[Interface\Icons\Achievement_GuildPerk_HonorableMention]=], GUILD_REPUTATION},
 	{'tradeskill', [=[Interface\Icons\Achievement_GuildPerk_WorkingOvertime]=], TRADE_SKILLS},
 	{'achievement', [=[Interface\Icons\Ability_Warrior_InnerRage]=], ACHIEVEMENT_POINTS},
-	{'totalxp', [=[Interface\Icons\Achievement_GuildPerk_MrPopularity_Rank2]=], GUILD_XP_TOTAL},
-	{'weeklyxp', [=[Interface\Icons\Achievement_GuildPerk_MrPopularity]=], GUILD_XP_WEEKLY},
 	{'guildStatus', [=[Interface\Icons\Achievement_GuildPerk_Everyones a Hero_Rank2]=], GUILD_STATUS},
 	{'playerStatus', [=[Interface\Icons\Warrior_Talent_Icon_Blitz]=], PLAYER_STATUS},
 }
+
+if(not Inomena.WoD) then
+	guild[6] = guild[4]
+	guild[7] = guild[5]
+
+	guild[4] = {'totalxp', [=[Interface\Icons\Achievement_GuildPerk_MrPopularity_Rank2]=], GUILD_XP_TOTAL}
+	guild[5] = {'weeklyxp', [=[Interface\Icons\Achievement_GuildPerk_MrPopularity]=], GUILD_XP_WEEKLY}
+end
 
 local function OnEnter(self)
 	GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
