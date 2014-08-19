@@ -28,3 +28,5 @@ Inomena.RegisterEvent = function(event, method)
 		handler:RegisterEvent(event)
 	end
 end
+
+Inomena.WoD = select(4, GetBuildInfo()) >= 6e4

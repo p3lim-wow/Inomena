@@ -116,6 +116,15 @@ local cvars = {
 	Sound_NumChannels = 24
 }
 
+if(Inomena.WoD) then
+	cvars.UnitNameForceHideMinus = 0
+	cvars.Outline = 2
+	cvars.CombatDamageStyle = 2
+	cvars.enablePetBattleCombatText = 1
+	cvars.mapFade = 1
+	cvars.trackQuestSorting = 'proximity'
+end
+
 local function Initialize()
 	for key, value in next, cvars do
 		SetCVar(key, value)
