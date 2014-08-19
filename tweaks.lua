@@ -97,6 +97,17 @@ Inomena.RegisterEvent('CINEMATIC_STOP', function()
 	SetCVar('Sound_EnableSFX', 0)
 end)
 
+if(Inomena.WoD) then
+	Inomena.RegisterEvent('PLAYER_LOGIN', function()
+		ObjectiveTrackerFrame:ClearAllPoints()
+		ObjectiveTrackerFrame:SetPoint('TOPLEFT', 50, -142)
+		ObjectiveTrackerFrame:SetHeight(600)
+
+		ObjectiveTrackerFrame.ClearAllPoints = Inomena.null
+		ObjectiveTrackerFrame.SetPoint = Inomena.null
+	end)
+end
+
 StaticPopupDialogs.PARTY_INVITE.hideOnEscape = 0
 StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = 0
 
