@@ -35,7 +35,6 @@ local cvars = {
 	threatPlaySounds = 0,
 	SpellTooltip_DisplayAvgValues = 1,
 	movieSubtitle = 1,
-	mapQuestDifficulty = 1,
 
 	-- Objectives
 	autoQuestWatch = 1,
@@ -123,6 +122,8 @@ if(Inomena.WoD) then
 	cvars.enablePetBattleCombatText = 1
 	cvars.mapFade = 1
 	cvars.trackQuestSorting = 'proximity'
+else
+	cvars.mapQuestDifficulty = 1
 end
 
 local function Initialize()
