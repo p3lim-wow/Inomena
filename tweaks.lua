@@ -31,6 +31,12 @@ Inomena.RegisterEvent('REPLACE_ENCHANT', function()
 	end
 end)
 
+Inomena.RegisterEvent('DELETE_ITEM_CONFIRM', function()
+	if(StaticPopup_Visible('DELETE_GOOD_ITEM')) then
+		StaticPopup1EditBox:SetText('delete')
+	end
+end)
+
 Inomena.RegisterEvent('PARTY_INVITE_REQUEST', function(name, l, f, g)
 	if(QueueStatusMinimapButton:IsShown()) then return end
 	if(l or f or g) then return end
