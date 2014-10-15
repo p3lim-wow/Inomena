@@ -30,5 +30,3 @@ Inomena.RegisterEvent = function(event, method)
 end
 
 Inomena.null = function() end
-
-Inomena.WoD = select(4, GetBuildInfo()) >= 6e4

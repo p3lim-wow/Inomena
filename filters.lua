@@ -8,14 +8,6 @@ local guild = {
 	{'playerStatus', [=[Interface\Icons\Warrior_Talent_Icon_Blitz]=], PLAYER_STATUS},
 }
 
-if(not Inomena.WoD) then
-	guild[6] = guild[4]
-	guild[7] = guild[5]
-
-	guild[4] = {'totalxp', [=[Interface\Icons\Achievement_GuildPerk_MrPopularity_Rank2]=], GUILD_XP_TOTAL}
-	guild[5] = {'weeklyxp', [=[Interface\Icons\Achievement_GuildPerk_MrPopularity]=], GUILD_XP_WEEKLY}
-end
-
 local function OnEnter(self)
 	GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
 	GameTooltip:AddLine(self.tooltip)

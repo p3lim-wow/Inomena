@@ -35,9 +35,12 @@ local cvars = {
 	threatPlaySounds = 0,
 	SpellTooltip_DisplayAvgValues = 1,
 	movieSubtitle = 1,
+	Outline = 2,
 
 	-- Objectives
 	autoQuestWatch = 1,
+	mapFade = 1,
+	trackQuestSorting = 'proximity',
 
 	-- Social
 	chatBubbles = 1,
@@ -46,6 +49,7 @@ local cvars = {
 	-- Names
 	UnitNameOwn = 0,
 	UnitNameNPC = 0,
+	UnitNameForceHideMinus = 0,
 	UnitNameHostleNPC = 0,
 	UnitNameFriendlySpecialNPCName = 1,
 	UnitNameNonCombatCreatureName = 0,
@@ -68,8 +72,10 @@ local cvars = {
 	CombatHealing = 1,
 	CombatHealingAbsorbTarget = 1,
 	fctSpellMechanics = 0,
+	CombatDamageStyle = 2,
 	enableCombatText = 0,
 	showArenaEnemyFrames = 0,
+	enablePetBattleCombatText = 1,
 
 	-- Battle.net
 	showToastOnline = 0,
@@ -111,20 +117,13 @@ local cvars = {
 	Sound_EnableReverb = 0,
 	Sound_EnableSoftwareHRTF = 0,
 	Sound_EnableDSPEffects = 0,
-	Sound_OutputQuality = 1,
-	Sound_NumChannels = 24
-}
+	Sound_NumChannels = 24,
 
-if(Inomena.WoD) then
-	cvars.UnitNameForceHideMinus = 0
-	cvars.Outline = 2
-	cvars.CombatDamageStyle = 2
-	cvars.enablePetBattleCombatText = 1
-	cvars.mapFade = 1
-	cvars.trackQuestSorting = 'proximity'
-else
-	cvars.mapQuestDifficulty = 1
-end
+	-- Misc
+	taintLog = 1,
+	screenshotQuality = 10,
+	screenshotFormat = 'png',
+}
 
 local function Initialize()
 	for key, value in next, cvars do

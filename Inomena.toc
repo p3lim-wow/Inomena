@@ -11,7 +11,7 @@ cvars.lua
 professions.lua
 autoloot.lua
 mail.lua
-stats.lua
+#stats.lua
 filters.lua
 tiller.lua
 bnet.lua
