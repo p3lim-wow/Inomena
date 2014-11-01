@@ -107,7 +107,7 @@ local CoordText
 local totalElapsed = 0
 local function UpdateCoords(self, elapsed)
 	if(totalElapsed > 0.1) then
-		if(self:IsMouseOver()) then
+		if(WorldMapScrollFrame:IsMouseOver()) then
 			local scale = self:GetEffectiveScale()
 			local centerX, centerY = self:GetCenter()
 			local width, height = self:GetSize()
