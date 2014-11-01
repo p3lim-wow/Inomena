@@ -66,6 +66,7 @@ do
 
 	Inomena.RegisterEvent('CHAT_MSG_CURRENCY', function(message)
 		local link = string.match(message, _CURRENCY)
+		if(not link) then return end
 		local id = string.match(link, ':(%d+)|h')
 
 		local race = fragment[id]
