@@ -63,6 +63,8 @@ end)
 Inomena.RegisterEvent('PARTY_LEADER_CHANGED', function()
 	if(StaticPopup_Visible('PARTY_INVITE')) then
 		StaticPopup_Hide('PARTY_INVITE')
+	elseif(StaticPopup_Visible('PARTY_INVITE_XREALM')) then
+		StaticPopup_Hide('PARTY_INVITE_XREALM')
 	end
 end)
 
