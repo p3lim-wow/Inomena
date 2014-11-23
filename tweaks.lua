@@ -21,6 +21,9 @@ Inomena.RegisterEvent('ADDON_LOADED', function(addon)
 		GuildFrame:HookScript('OnShow', function()
 			GuildFrameTab2:Click()
 		end)
+	elseif(addon == 'Blizzard_ArchaeologyUI') then
+		ArcheologyDigsiteProgressBar:ClearAllPoints()
+		ArcheologyDigsiteProgressBar:SetPoint('TOP', 0, -50)
 	end
 end)
 
