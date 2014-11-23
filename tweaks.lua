@@ -147,6 +147,9 @@ Inomena.RegisterEvent('PLAYER_LOGIN', function()
 	CoordText:SetPoint('RIGHT', WorldMapFrameCloseButton, 'LEFT', -30, 0)
 
 	WorldMapDetailFrame:HookScript('OnUpdate', UpdateCoords)
+
+	WorldMapPlayerUpper:EnableMouse(false)
+	WorldMapPlayerLower:EnableMouse(false)
 end)
 
 StaticPopupDialogs.PARTY_INVITE.hideOnEscape = 0
