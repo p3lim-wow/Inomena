@@ -21,10 +21,20 @@ Inomena.RegisterEvent('UI_ERROR_MESSAGE', function(msg)
 end)
 
 do
-	local button = CreateFrame('Button', nil, InboxFrame, 'UIPanelButtonTemplate')
+	local function OnTextChanged(self)
+		if(self:GetText() ~= '' and SendMailSubjectEditBox:GetText() == '') then
+			SendMailSubjectEditBox:SetText(MONEY)
+		end
+	end
 
+	SendMailMoneyGold:HookScript('OnTextChanged', OnTextChanged)
+	SendMailMoneySilver:HookScript('OnTextChanged', OnTextChanged)
+	SendMailMoneyCopper:HookScript('OnTextChanged', OnTextChanged)
+end
+
+do
 	local totalElapsed = 0
-	local function UpdateInbox(self, elapsed)
+	InboxFrame:HookScript('OnUpdate', function(self, elapsed)
 		if(totalElapsed < 10) then
 			totalElapsed = totalElapsed + elapsed
 		else
@@ -32,102 +42,50 @@ do
 
 			CheckInbox()
 		end
-	end
+	end)
+end
 
-	local function MoneySubject(self)
-		if(self:GetText() ~= '' and SendMailSubjectEditBox:GetText() == '') then
-			SendMailSubjectEditBox:SetText(MONEY)
-		end
-	end
+do
+	local Button = CreateFrame('Button', nil, InboxFrame, 'UIPanelButtonTemplate')
+	Button:SetPoint('BOTTOM', -28, 100)
+	Button:SetSize(90, 25)
+	Button:SetText(QUICKBUTTON_NAME_EVERYTHING)
 
-	local function GetFreeSlots()
-		local slots = 0
-		for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
-			local free, family = GetContainerNumFreeSlots(bag)
-			if(family == 0) then
-				slots = slots + free
-			end
-		end
-
-		return slots
-	end
-
-	local skipNum, lastNum, cashOnly, unreadOnly
+	local lastIndex
 	local function GetMail()
-		if(GetInboxNumItems() - skipNum <= 0) then
-			button:Enable()
-			button:UnregisterEvent('MAIL_INBOX_UPDATE')
+		if(GetInboxNumItems() - lastIndex <= 0) then
+			Button:GetScript('OnHide')(Button)
 			return
 		end
 
-		local index = 1 + skipNum
-		local _, _, _, _, money, cod, _, multiple, read, _, _, _, _, single = GetInboxHeaderInfo(index)
+		local index = lastIndex + 1
+		local _, _, sender, _, money, cod, _, numItems, isRead, _, _, _, numStacks = GetInboxHeaderInfo(index)
 
-		if(cod > 0 or (cashOnly and multiple) or (unreadOnly and read)) then
-			skipNum = skipNum + 1
-			GetMail()
-		elseif(money > 0) then
+		if(money > 0) then
 			TakeInboxMoney(index)
-		elseif(single and (GetFreeSlots() > 6)) then
-			AutoLootMailItem(index)
-		elseif(multiple and (GetFreeSlots() + multiple > 6)) then
+		end
+
+		if(numItems or numStacks) then
 			AutoLootMailItem(index)
 		end
+
+		if(sender == 'The Postmaster' and not numItems and money == 0) then
+			DeleteInboxItem(index)
+		elseif(isRead or cod > 0) then
+			lastIndex = index
+		end
+
+		C_Timer.After(1/2, GetMail)
 	end
 
-	button:SetScript('OnEvent', function(self)
-		local num = GetInboxNumItems()
-		if(lastNum ~= num) then
-			lastNum = num
-		else
-			return
-		end
-
-		GetMail()
-	end)
-
-	button:SetScript('OnClick', function(self)
-		self:RegisterEvent('MAIL_INBOX_UPDATE')
+	Button:SetScript('OnClick', function(self)
 		self:Disable()
-
-		cashOnly = IsShiftKeyDown()
-		unreadOnly = IsControlKeyDown()
-		lastNum = 0
-		skipNum = 0
-
+		lastIndex = 0
 		GetMail()
 	end)
 
-	local initialized
-	Inomena.RegisterEvent('MAIL_SHOW', function()
-		if(initialized) then
-			button:Enable()
-			button:SetText(QUICKBUTTON_NAME_EVERYTHING)
-			return
-		end
-
-		button:SetPoint('BOTTOM', -28, 100)
-		button:SetSize(90, 25)
-		button:SetText(QUICKBUTTON_NAME_EVERYTHING)
-
-		InboxFrame:HookScript('OnUpdate', UpdateInbox)
-
-		SendMailMoneyGold:HookScript('OnTextChanged', MoneySubject)
-		SendMailMoneySilver:HookScript('OnTextChanged', MoneySubject)
-		SendMailMoneyCopper:HookScript('OnTextChanged', MoneySubject)
-
-		initialized = true
-	end)
-
-	Inomena.RegisterEvent('MODIFIER_STATE_CHANGED', function()
-		if(not InboxFrame:IsShown()) then return end
-
-		if(IsShiftKeyDown()) then
-			button:SetText('Money')
-		elseif(IsControlKeyDown()) then
-			button:SetText('Unread')
-		else
-			button:SetText('Everything')
-		end
+	Button:SetScript('OnHide', function(self)
+		self:UnregisterEvent('MAIL_INBOX_UPDATE')
+		self:Enable()
 	end)
 end
