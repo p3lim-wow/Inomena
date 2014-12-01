@@ -46,9 +46,9 @@ function Button:Update()
 	end
 
 	local macro
-	if(SecureCmdOptionParse('[mod:alt]')) then
+	if(IsAltKeyDown()) then
 		macro = '/cast Traveler\'s Tundra Mammoth'
-	elseif(SecureCmdOptionParse('[mod:shift]') or IsSwimming()) then
+	elseif(IsShiftKeyDown() or IsSwimming()) then
 		macro = '/cast Azure Water Strider'
 	else
 		local spellName = HasCorralOutpost()
