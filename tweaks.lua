@@ -152,6 +152,8 @@ Inomena.RegisterEvent('PLAYER_LOGIN', function()
 	WorldMapPlayerLower:EnableMouse(false)
 end)
 
+QueueStatusMinimapButton.EyeHighlightAnim:SetScript('OnLoop', nil)
+
 StaticPopupDialogs.PARTY_INVITE.hideOnEscape = 0
 StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = 0
 
