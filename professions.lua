@@ -3,20 +3,22 @@ local _, Inomena = ...
 -- Enchanting vellum button
 do
 	Inomena.RegisterEvent('ADDON_LOADED', function(addon)
-		if(addon ~= 'Blizzard_TradeSkillUI') then return end
+		if(addon ~= 'Blizzard_TradeSkillUI' or InCombatLockdown()) then return end
 
 		if(IsSpellKnown(13262)) then
-			local button = CreateFrame('Button', 'TradeSkillVellumButton', TradeSkillCreateButton, 'MagicButtonTemplate')
+			local button = CreateFrame('Button', 'TradeSkillVellumButton', TradeSkillCreateButton, 'SecureActionButtonTemplate, MagicButtonTemplate')
 			button:SetPoint('TOPRIGHT', TradeSkillCreateButton, 'TOPLEFT')
 			button:SetSize(80, 22)
 			button:SetText('Scroll')
-			button:SetScript('OnClick', function()
-				DoTradeSkill(TradeSkillFrame.selectedSkill)
-				UseItemByName(38682)
-			end)
+			button:SetAttribute('type', 'macro')
+			button:SetAttribute('macrotext', '/click TradeSkillCreateButton\n/use item:38682')
 
 			local enchanting = GetSpellInfo(7411)
 			hooksecurefunc('TradeSkillFrame_Update', function()
+				if(InCombatLockdown()) then
+					return
+				end
+
 				if(IsTradeSkillGuild() or IsTradeSkillLinked()) then
 					button:Hide()
 				elseif(CURRENT_TRADESKILL == enchanting) then
@@ -127,6 +129,10 @@ end
 do
 	local button, hat
 	Inomena.RegisterEvent('TRADE_SKILL_SHOW', function()
+		if(InCombatLockdown()) then
+			return
+		end
+
 		if(not button) then
 			button = CreateFrame('Button', 'FireButton', TradeSkillFrame, 'SecureActionButtonTemplate')
 			button:SetPoint('RIGHT', TradeSkillFrameCloseButton, 'LEFT', -235, 0)
@@ -166,7 +172,7 @@ do
 				hat = nil
 			end
 
-			if(button) then
+			if(button and not InCombatLockdown()) then
 				button:Hide()
 			end
 		end
