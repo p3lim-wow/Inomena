@@ -91,7 +91,7 @@ local cvars = {
 	cameraWaterCollision = 0,
 	cameraPivot = 1,
 	cameraDistanceMaxFactor = 4,
-	cameraDistanceMax = 12,
+	cameraDistanceMax = 50,
 	cameraSmoothStyle = 0,
 
 	-- Mouse
