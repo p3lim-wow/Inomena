@@ -71,7 +71,7 @@ Inomena.RegisterEvent('PARTY_LEADER_CHANGED', function()
 	end
 end)
 
-local soundFile = [=[Sound\Interface\ReadyCheck.wav]=]
+local soundFile = [[Sound\Interface\ReadyCheck.wav]]
 Inomena.RegisterEvent('UPDATE_BATTLEFIELD_STATUS', function()
 	if(StaticPopup_Visible('CONFIRM_BATTLEFIELD_ENTRY')) then
 		PlaySoundFile(soundFile, 'Master')
