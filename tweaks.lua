@@ -96,6 +96,21 @@ Inomena.RegisterEvent('CHAT_MSG_RAID_BOSS_WHISPER', function(msg, name)
 	end
 end)
 
+local recentlySpotted = {}
+Inomena.RegisterEvent('VIGNETTE_ADDED', function(id)
+	if(id and not recentlySpotted[id]) then
+		local x, y, name, iconID = C_Vignettes.GetVignetteInfoFromInstanceID(id)
+		if(iconID == 40) then
+			return
+		end
+
+		RaidNotice_AddMessage(RaidWarningFrame, name or 'Unknown' .. ' spotted!', ChatTypeInfo.RAID_WARNING)
+		PlaySoundFile([[Sound\Interface\RaidWarning.wav]], 'master')
+
+		recentlySpotted[id] = true
+	end
+end)
+
 Inomena.RegisterEvent('CINEMATIC_START', function(boolean)
 	SetCVar('Sound_EnableMusic', 1)
 	SetCVar('Sound_EnableAmbience', 1)
