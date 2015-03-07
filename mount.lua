@@ -43,6 +43,8 @@ end
 function Button:Update()
 	if(InCombatLockdown()) then
 		return
+	elseif(UnitOnTaxi('player')) then
+		return TaxiRequestEarlyLanding()
 	end
 
 	local macro
