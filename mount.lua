@@ -26,8 +26,8 @@ Button:SetScript('OnEvent', function(self, event)
 end)
 
 local DISMOUNT = [[
-/leavevehicle [canexitvehicle]
-/dismount [mounted]
+/leavevehicle
+/dismount
 ]]
 
 local function HasCorralOutpost()
