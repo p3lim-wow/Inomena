@@ -12,7 +12,4 @@ professions.lua
 autoloot.lua
 mail.lua
 filters.lua
-tiller.lua
-bnet.lua
 mount.lua
-garrison.lua

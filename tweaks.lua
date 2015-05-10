@@ -172,9 +172,6 @@ QueueStatusMinimapButton.EyeHighlightAnim:SetScript('OnLoop', nil)
 StaticPopupDialogs.PARTY_INVITE.hideOnEscape = 0
 StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = 0
 
-SLASH_TICKETGM1 = '/gm'
-SlashCmdList.TICKETGM = ToggleHelpFrame
-
 VehicleSeatIndicator:UnregisterAllEvents()
 VehicleSeatIndicator:Hide()
 
