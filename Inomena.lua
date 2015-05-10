@@ -29,4 +29,4 @@ Inomena.RegisterEvent = function(event, method)
 	end
 end
 
-Inomena.null = function() end
+Inomena.noop = function() end

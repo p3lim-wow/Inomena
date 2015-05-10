@@ -71,7 +71,7 @@ Inomena.RegisterEvent('PARTY_LEADER_CHANGED', function()
 	end
 end)
 
-local soundFile = [[Sound\Interface\ReadyCheck.wav]]
+local soundFile = [[Sound\Interface\ReadyCheck.ogg]]
 Inomena.RegisterEvent('UPDATE_BATTLEFIELD_STATUS', function()
 	if(StaticPopup_Visible('CONFIRM_BATTLEFIELD_ENTRY')) then
 		PlaySoundFile(soundFile, 'Master')
@@ -104,14 +104,16 @@ Inomena.RegisterEvent('VIGNETTE_ADDED', function(id)
 			return
 		end
 
-		RaidNotice_AddMessage(RaidWarningFrame, name or 'Unknown' .. ' spotted!', ChatTypeInfo.RAID_WARNING)
-		PlaySoundFile([[Sound\Interface\RaidWarning.wav]], 'master')
+		name = name or 'Unknown Rare'
+
+		RaidNotice_AddMessage(RaidWarningFrame, name .. ' spotted!', ChatTypeInfo.RAID_WARNING)
+		PlaySoundFile(soundFile, 'Master')
 
 		recentlySpotted[id] = true
 	end
 end)
 
-Inomena.RegisterEvent('CINEMATIC_START', function(boolean)
+Inomena.RegisterEvent('CINEMATIC_START', function()
 	SetCVar('Sound_EnableMusic', 1)
 	SetCVar('Sound_EnableAmbience', 1)
 	SetCVar('Sound_EnableSFX', 1)
@@ -155,8 +157,8 @@ Inomena.RegisterEvent('PLAYER_LOGIN', function()
 	ObjectiveTrackerFrame:SetPoint('TOPLEFT', 50, -142)
 	ObjectiveTrackerFrame:SetHeight(600)
 
-	ObjectiveTrackerFrame.ClearAllPoints = Inomena.null
-	ObjectiveTrackerFrame.SetPoint = Inomena.null
+	ObjectiveTrackerFrame.ClearAllPoints = Inomena.noop
+	ObjectiveTrackerFrame.SetPoint = Inomena.noop
 
 	CoordText = WorldMapFrameCloseButton:CreateFontString(nil, nil, 'GameFontNormal')
 	CoordText:SetPoint('RIGHT', WorldMapFrameCloseButton, 'LEFT', -30, 0)
