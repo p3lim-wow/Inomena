@@ -40,6 +40,12 @@ Inomena.RegisterEvent('DELETE_ITEM_CONFIRM', function()
 	end
 end)
 
+Inomena.RegisterEvent('BANKFRAME_OPENED', function()
+	if(not IsShiftKeyDown()) then
+		DepositReagentBank()
+	end
+end)
+
 Inomena.RegisterEvent('PARTY_INVITE_REQUEST', function(name, l, f, g)
 	if(QueueStatusMinimapButton:IsShown()) then return end
 	if(l or f or g) then return end
