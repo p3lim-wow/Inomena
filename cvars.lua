@@ -131,6 +131,7 @@ local function Initialize()
 	end
 
 	SetAutoDeclineGuildInvites(true)
+	InomenaCVars = true
 
 	print('|cffff6000Inomena:|r Successfully initialized settings')
 end
@@ -149,8 +150,7 @@ StaticPopupDialogs.INOMENA_INITIALIZE = {
 }
 
 Inomena.RegisterEvent('PLAYER_LOGIN', function()
-	if(not InomenaDB) then
-		InomenaDB = true
+	if(not InomenaCVars) then
 		StaticPopup_Show('INOMENA_INITIALIZE')
 	end
 end)

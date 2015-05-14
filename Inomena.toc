@@ -3,7 +3,7 @@
 ## Version: Alpha
 ## Title: Inomena
 ## Notes: Personal tweaks and settings
-## SavedVariablesPerCharacter: InomenaDB
+## SavedVariablesPerCharacter: InomenaCVars
 
 Inomena.lua
 tweaks.lua
