@@ -117,6 +117,32 @@ Inomena.RegisterEvent('CINEMATIC_START', function()
 	SetCVar('Sound_EnableMusic', 1)
 	SetCVar('Sound_EnableAmbience', 1)
 	SetCVar('Sound_EnableSFX', 1)
+
+	if(IsInInstance()) then
+		if(not InomenaCinematics) then
+			InomenaCinematics = {}
+		end
+
+		SetMapToCurrentZone()
+		local _, _, _, _, _, _, _, zone = GetInstanceInfo()
+		local floor = GetCurrentMapDungeonLevel() or 0
+		if(InomenaCinematics[zone .. floor]) then
+			CinematicFrame_CancelCinematic()
+		else
+			InomenaCinematics[zone .. floor] = true
+		end
+	end
+end)
+
+Inomena.RegisterEvent('PLAY_MOVIE', function(id)
+	if(IsInInstance()) then
+		local _, _, _, _, _, _, _, zone = GetInstanceInfo()
+		if(InomenaCinematics[zone .. id]) then
+			MovieFrame_OnMovieFinished(MovieFrame)
+		else
+			InomenaCinematics[zone .. id] = true
+		end
+	end
 end)
 
 Inomena.RegisterEvent('CINEMATIC_STOP', function()

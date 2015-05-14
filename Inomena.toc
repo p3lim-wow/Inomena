@@ -4,6 +4,7 @@
 ## Title: Inomena
 ## Notes: Personal tweaks and settings
 ## SavedVariablesPerCharacter: InomenaCVars
+## SavedVariables: InomenaCinematics
 
 Inomena.lua
 tweaks.lua
