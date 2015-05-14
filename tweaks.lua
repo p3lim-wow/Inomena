@@ -34,11 +34,10 @@ Inomena.RegisterEvent('REPLACE_ENCHANT', function()
 	end
 end)
 
-Inomena.RegisterEvent('DELETE_ITEM_CONFIRM', function()
-	if(StaticPopup_Visible('DELETE_GOOD_ITEM')) then
-		StaticPopup1EditBox:SetText('delete')
-	end
-end)
+StaticPopupDialogs.DELETE_GOOD_ITEM.hasEditBox = false
+StaticPopupDialogs.DELETE_GOOD_ITEM.OnShow = function(self)
+	self.button1:Enable()
+end
 
 Inomena.RegisterEvent('BANKFRAME_OPENED', function()
 	if(not IsShiftKeyDown()) then
