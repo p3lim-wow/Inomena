@@ -152,3 +152,40 @@ do
 		end
 	end)
 end
+
+-- Tabs
+do
+	local tabs = {}
+	Inomena.RegisterEvent('TRADE_SKILL_SHOW', function()
+		if(InCombatLockdown()) then
+			return
+		end
+
+		if(#tabs == 0) then
+			for index, id in next, {GetProfessions()} do
+				if(id and index ~= 4) then -- ignore fishing
+					local name, texture, rank, maxRank = GetProfessionInfo(id)
+					local tab = CreateFrame('CheckButton', nil, TradeSkillFrame, 'SpellBookSkillLineTabTemplate, SecureActionButtonTemplate')
+					tab:SetAttribute('type', 'spell')
+					tab:SetAttribute('spell', name)
+					tab:SetNormalTexture(texture)
+					tab.name = name
+					tab.tooltip = string.format(ITEM_SET_NAME, name, rank, maxRank)
+
+					if(#tabs == 0) then
+						tab:SetPoint('TOPLEFT', TradeSkillFrame, 'TOPRIGHT', 0, -36)
+					else
+						tab:SetPoint('TOPLEFT', tabs[#tabs], 'BOTTOMLEFT', 0, -17)
+					end
+					tab:Show()
+
+					tabs[#tabs + 1] = tab
+				end
+			end
+		end
+
+		for _, tab in next, tabs do
+			tab:SetChecked(IsCurrentSpell(tab.name))
+		end
+	end)
+end
