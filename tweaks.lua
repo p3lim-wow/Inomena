@@ -95,6 +95,12 @@ Inomena.RegisterEvent('PARTY_INVITE_REQUEST', function()
 	PlaySoundFile(soundFile, 'Master')
 end)
 
+Inomena.RegisterEvent('LFG_LIST_APPLICATION_STATUS_UPDATED', function(_, status)
+	if(status == 'invited') then
+		PlaySoundFile(soundFile, 'Master')
+	end
+end)
+
 Inomena.RegisterEvent('CHAT_MSG_RAID_BOSS_WHISPER', function(msg, name)
 	if(name == UnitName('player') and msg == 'You are next in line!') then
 		PlaySoundFile(soundFile, 'Master')
