@@ -50,7 +50,7 @@ Inomena.RegisterEvent('PARTY_INVITE_REQUEST', function(name, l, f, g)
 	if(l or f or g) then return end
 
 	for index = 1, select(2, GetNumGuildMembers()) do
-		if(GetGuildRosterInfo(index) == name) then
+		if(string.split('-', (GetGuildRosterInfo(index))) == name) then
 			return AcceptGroup()
 		end
 	end
