@@ -192,7 +192,7 @@ end
 Inomena.RegisterEvent('PLAYER_LOGIN', function()
 	ObjectiveTrackerFrame:ClearAllPoints()
 	ObjectiveTrackerFrame:SetPoint('TOPLEFT', 50, -142)
-	ObjectiveTrackerFrame:SetHeight(600)
+	ObjectiveTrackerFrame:SetHeight(700)
 
 	ObjectiveTrackerFrame.ClearAllPoints = Inomena.noop
 	ObjectiveTrackerFrame.SetPoint = Inomena.noop
