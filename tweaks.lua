@@ -1,8 +1,21 @@
 local _, Inomena = ...
 
 Inomena.RegisterEvent('MERCHANT_SHOW', function()
-	if(CanMerchantRepair() and not IsShiftKeyDown()) then
+	if(IsShiftKeyDown()) then
+		return
+	end
+
+	if(CanMerchantRepair()) then
 		RepairAllItems(CanGuildBankRepair() and CanWithdrawGuildBankMoney() and GetGuildBankWithdrawMoney() >= GetRepairAllCost())
+	end
+
+	for bag = 0, 4 do
+		for slot = 0, GetContainerNumSlots(bag) do
+			local _, _, _, quality = GetContainerItemInfo(bag, slot)
+			if(quality == LE_ITEM_QUALITY_POOR) then
+				UseContainerItem(bag, slot)
+			end
+		end
 	end
 end)
 
