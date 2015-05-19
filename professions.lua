@@ -169,6 +169,7 @@ do
 					tab:SetAttribute('type', 'spell')
 					tab:SetAttribute('spell', name)
 					tab:SetNormalTexture(texture)
+					tab:SetID(index)
 					tab.name = name
 					tab.tooltip = string.format(ITEM_SET_NAME, name, rank, maxRank)
 
@@ -184,8 +185,11 @@ do
 			end
 		end
 
-		for _, tab in next, tabs do
+		for index, tab in next, tabs do
 			tab:SetChecked(IsCurrentSpell(tab.name))
+			if(tab:GetID() ~= 3) then
+				tab:SetButtonState(tab:GetChecked() and 'DISABLED' or 'NORMAL')
+			end
 		end
 	end)
 end
