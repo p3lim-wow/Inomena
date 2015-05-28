@@ -9,7 +9,7 @@ do
 			local button = CreateFrame('Button', 'TradeSkillVellumButton', TradeSkillCreateButton, 'SecureActionButtonTemplate, MagicButtonTemplate')
 			button:SetPoint('TOPRIGHT', TradeSkillCreateButton, 'TOPLEFT')
 			button:SetSize(80, 22)
-			button:SetText('Scroll')
+			button:SetText((GetSpellInfo(162250)))
 			button:SetAttribute('type', 'macro')
 			button:SetAttribute('macrotext', '/click TradeSkillCreateButton\n/use item:38682')
 
@@ -99,56 +99,48 @@ do
 	end)
 end
 
--- Cooking auto-equip and fire button
+-- Cooking and Anvil buttons
 do
-	local button, hat
+	local button
 	Inomena.RegisterEvent('TRADE_SKILL_SHOW', function()
-		if(InCombatLockdown()) then
-			return
-		end
-
-		if(not button) then
-			button = CreateFrame('Button', 'FireButton', TradeSkillFrame, 'SecureActionButtonTemplate')
+		if(not InCombatLockdown() and not button) then
+			button = CreateFrame('Button', 'TradeSkillExtraButton', TradeSkillFrame, 'SecureActionButtonTemplate')
 			button:SetPoint('RIGHT', TradeSkillFrameCloseButton, 'LEFT', -235, 0)
 			button:SetSize(20, 20)
-
-			local name, _, icon = GetSpellInfo(818)
-			button:SetAttribute('type', 'spell')
-			button:SetAttribute('spell', name)
-			button:SetNormalTexture(icon)
-		end
-
-		if(IsTradeSkillGuild() or IsTradeSkillLinked()) then
-			button:Hide()
-		elseif(GetTradeSkillLine() == PROFESSIONS_COOKING) then
-			button:Show()
-
-			if(GetItemCount(46349) and GetItemCount(46349) > 0) then
-				hat = GetInventoryItemLink('player', 1)
-				EquipItemByName(46349)
-			end
-		else
 			button:Hide()
 		end
 	end)
 
-	Inomena.RegisterEvent('TRADE_SKILL_CLOSE', function()
-		if(hat) then
-			EquipItemByName(hat)
-			hat = nil
-		end
-	end)
-
-	Inomena.RegisterEvent('TRADE_SKILL_UPDATE', function()
-		if(GetTradeSkillLine() ~= PROFESSIONS_COOKING) then
-			if(hat) then
-				EquipItemByName(hat)
-				hat = nil
-			end
-
-			if(button and not InCombatLockdown()) then
+	Inomena.RegisterEvent('CURRENT_SPELL_CAST_CHANGED', function()
+		if(not InCombatLockdown() and TradeSkillFrame and TradeSkillFrame:IsShown()) then
+			if(IsTradeSkillGuild() or IsTradeSkillLinked()) then
 				button:Hide()
+				return
 			end
+
+			local skillLine = GetTradeSkillLine()
+			if(skillLine == PROFESSIONS_COOKING) then
+				local name, _, texture = GetSpellInfo(818)
+				button:SetNormalTexture(texture)
+				button:SetAttribute('type', 'spell')
+				button:SetAttribute('spell', name)
+				button:Show()
+
+				return
+			elseif(skillLine == (GetSpellInfo(59193)) or skillLine == (GetSpellInfo(88422)) or skillLine == (GetSpellInfo(61422))) then
+				local count = GetItemCount(87216)
+				if(count and count > 0) then
+					local name, _, _, _, _, _, _, _, _, texture = GetItemInfo(87216)
+					button:SetNormalTexture(texture)
+					button:SetAttribute('type', 'item')
+					button:SetAttribute('item', name)
+					button:Show()
+
+					return
+				end
+			end
+
+			button:Hide()
 		end
 	end)
 end
