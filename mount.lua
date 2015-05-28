@@ -26,6 +26,7 @@ Button:SetScript('OnEvent', function(self, event)
 end)
 
 local DISMOUNT = [[
+/cancelform
 /leavevehicle
 /dismount
 ]]
