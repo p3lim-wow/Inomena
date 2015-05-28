@@ -1,21 +1,37 @@
 local _, Inomena = ...
 
-Inomena.RegisterEvent('MERCHANT_SHOW', function()
-	if(IsShiftKeyDown()) then
-		return
-	end
+do
+	local lastNumItems = 0
+	local function SellJunk()
+		lastNumItems = 0
 
-	if(CanMerchantRepair()) then
-		RepairAllItems(CanGuildBankRepair() and CanWithdrawGuildBankMoney() and GetGuildBankWithdrawMoney() >= GetRepairAllCost())
-	end
-
-	for bag = 0, 4 do
-		for slot = 0, GetContainerNumSlots(bag) do
-			local _, _, _, quality = GetContainerItemInfo(bag, slot)
-			if(quality == LE_ITEM_QUALITY_POOR) then
-				UseContainerItem(bag, slot)
+		for bag = 0, 4 do
+			for slot = 0, GetContainerNumSlots(bag) do
+				local _, _, _, quality = GetContainerItemInfo(bag, slot)
+				if(quality == LE_ITEM_QUALITY_POOR) then
+					lastNumItems = lastNumItems + 1
+					UseContainerItem(bag, slot)
+				end
 			end
 		end
+	end
+
+	Inomena.RegisterEvent('MERCHANT_SHOW', function()
+		if(not IsShiftKeyDown()) then
+			SellJunk()
+		end
+	end)
+
+	Inomena.RegisterEvent('BAG_UPDATE_DELAYED', function()
+		if(lastNumItems > 0) then
+			SellJunk()
+		end
+	end)
+end
+
+Inomena.RegisterEvent('MERCHANT_SHOW', function()
+	if(CanMerchantRepair() and not IsShiftKeyDown()) then
+		RepairAllItems(CanGuildBankRepair() and CanWithdrawGuildBankMoney() and GetGuildBankWithdrawMoney() >= GetRepairAllCost())
 	end
 end)
 
