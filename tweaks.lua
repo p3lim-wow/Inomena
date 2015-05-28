@@ -68,6 +68,8 @@ StaticPopupDialogs.DELETE_GOOD_ITEM.OnShow = function(self)
 	self.button1:Enable()
 end
 
+StaticPopupDialogs.CONFIRM_PURCHASE_TOKEN_ITEM.enterClicksFirstButton = true
+
 Inomena.RegisterEvent('BANKFRAME_OPENED', function()
 	if(not IsShiftKeyDown()) then
 		DepositReagentBank()
