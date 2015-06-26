@@ -235,6 +235,8 @@ Inomena.RegisterEvent('PLAYER_LOGIN', function()
 
 	WorldMapPlayerUpper:EnableMouse(false)
 	WorldMapPlayerLower:EnableMouse(false)
+
+	CompactRaidFrameManager:SetFrameStrata('MEDIUM')
 end)
 
 QueueStatusMinimapButton.EyeHighlightAnim:SetScript('OnLoop', nil)
