@@ -5,6 +5,15 @@
 	<Script file='modules/core/utils.lua'/>
 	<Script file='modules/core/output.lua'/>
 
+	<Script file='modules/actionbars/blizzard.lua'/>
+	<Script file='modules/actionbars/actionbutton.lua'/>
+	<Script file='modules/actionbars/bindings.lua'/>
+	<Script file='modules/actionbars/cooldowns.lua'/>
+	<Script file='modules/actionbars/actionbar.lua'/>
+	<Script file='modules/actionbars/extra.lua'/>
+	<Script file='modules/actionbars/override.lua'/>
+	<Script file='modules/actionbars/pet.lua'/>
+
 	<Script file='modules/misc/alerts.lua'/>
 	<Script file='modules/misc/autoinvites.lua'/>
 	<Script file='modules/misc/autoloot.lua'/>
