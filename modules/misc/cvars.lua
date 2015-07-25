@@ -1,4 +1,4 @@
-local _, Inomena = ...
+local E, F = unpack(select(2, ...))
 
 local cvars = {
 	-- Controls
@@ -133,11 +133,11 @@ local function Initialize()
 	SetAutoDeclineGuildInvites(true)
 	InomenaCVars = true
 
-	print('|cffff6000Inomena:|r Successfully initialized settings')
+	F:Print('Successfully initialized settings')
 end
 
 local function Decline()
-	print('|cffff6000Inomena:|r Settings not initialized, you can do so later with /init')
+	F:Print('Settings not initialized, you can do so later with /init')
 end
 
 StaticPopupDialogs.INOMENA_INITIALIZE = {
@@ -149,11 +149,10 @@ StaticPopupDialogs.INOMENA_INITIALIZE = {
 	timeout = 0
 }
 
-Inomena.RegisterEvent('PLAYER_LOGIN', function()
+function E:PLAYER_LOGIN()
 	if(not InomenaCVars) then
 		StaticPopup_Show('INOMENA_INITIALIZE')
 	end
-end)
+end
 
-SlashCmdList.Inomena = Initialize
-SLASH_Inomena1 = '/init'
+F:RegisterSlash('/init', Initialize)

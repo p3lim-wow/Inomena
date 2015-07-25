@@ -1,24 +1,24 @@
-local _, Inomena = ...
+local E, F = unpack(select(2, ...))
 
 do
 	local lastReceipient
-	Inomena.RegisterEvent('MAIL_SEND_SUCCESS', function()
+	function E:MAIL_SEND_SUCCESS()
 		if(lastReceipient) then
 			SendMailNameEditBox:SetText(lastReceipient)
 			SendMailNameEditBox:ClearFocus()
 		end
-	end)
+	end
 
 	hooksecurefunc('SendMail', function(name)
 		lastReceipient = name
 	end)
 end
 
-Inomena.RegisterEvent('UI_ERROR_MESSAGE', function(msg)
+function E:UI_ERROR_MESSAGE(msg)
 	if(msg == ERR_MAIL_INVALID_ATTACHMENT_SLOT) then
 		SendMailMailButton:Click()
 	end
-end)
+end
 
 do
 	local function OnTextChanged(self)

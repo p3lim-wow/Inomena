@@ -2,16 +2,8 @@
 ## Author: p3lim
 ## Version: Alpha
 ## Title: Inomena
-## Notes: Personal tweaks and settings
+## Notes: Personal UI
 ## SavedVariablesPerCharacter: InomenaCVars
 ## SavedVariables: InomenaCinematics
 
-Inomena.lua
-tweaks.lua
-cvars.lua
-professions.lua
-autoloot.lua
-mail.lua
-filters.lua
-mount.lua
-broker.lua
+Inomena.xml

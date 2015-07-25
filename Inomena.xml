@@ -1,0 +1,22 @@
+<Ui xmlns='http://www.blizzard.com/wow/ui'>
+	<Script file='modules/core/init.lua'/>
+	<Script file='modules/core/events.lua'/>
+	<Script file='modules/core/utils.lua'/>
+	<Script file='modules/core/outputs.lua'/>
+
+	<Script file='modules/misc/alerts.lua'/>
+	<Script file='modules/misc/autoinvites.lua'/>
+	<Script file='modules/misc/autoloot.lua'/>
+	<Script file='modules/misc/autorepair.lua'/>
+	<Script file='modules/misc/autoshipment.lua'/>
+	<Script file='modules/misc/autovendor.lua'/>
+	<Script file='modules/misc/broker.lua'/>
+	<Script file='modules/misc/cinematics.lua'/>
+	<Script file='modules/misc/coordinates.lua'/>
+	<Script file='modules/misc/cvars.lua'/>
+	<Script file='modules/misc/filterbuttons.lua'/>
+	<Script file='modules/misc/mail.lua'/>
+	<Script file='modules/misc/misc.lua'/>
+	<Script file='modules/misc/mount.lua'/>
+	<Script file='modules/misc/professiontabs.lua'/>
+</Ui>

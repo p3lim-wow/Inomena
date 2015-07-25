@@ -1,8 +1,12 @@
-local _, Inomena = ...
+local E = unpack(select(2, ...))
 
-Inomena.RegisterEvent('PLAYER_LOGIN', function()
+function E:PLAYER_LOGIN()
+	if(not LibStub) then
+		return
+	end
+
 	local LDB = LibStub('LibDataBroker-1.1')
-	if(not LDB --[[or not IsAddOnLoaded('BugSack')]]) then
+	if(not LDB) then
 		return
 	end
 
@@ -37,4 +41,4 @@ Inomena.RegisterEvent('PLAYER_LOGIN', function()
 			end
 		end)
 	end
-end)
+end

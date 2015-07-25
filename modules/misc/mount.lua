@@ -1,35 +1,16 @@
+local E, F = unpack(select(2, ...))
+
 local buttonName = (...) .. 'MountButton'
 local bindingString = string.format('CLICK %s:LeftButton', buttonName)
-
-local Button = CreateFrame('Button', buttonName, nil, 'SecureActionButtonTemplate')
-Button:SetAttribute('type', 'macro')
-Button:RegisterEvent('PLAYER_REGEN_ENABLED')
-Button:RegisterEvent('PLAYER_REGEN_DISABLED')
-Button:RegisterEvent('PLAYER_ENTERING_WORLD')
-Button:RegisterEvent('UPDATE_BINDINGS')
-
-Button:SetScript('OnEvent', function(self, event)
-	if(event == 'PLAYER_ENTERING_WORLD' or event == 'UPDATE_BINDINGS') then
-		ClearOverrideBindings(self)
-
-		local first, second = GetBindingKey('DISMOUNT')
-		if(first) then
-			SetOverrideBinding(self, false, first, bindingString)
-		end
-
-		if(second) then
-			SetOverrideBinding(self, false, second, bindingString)
-		end
-	else
-		self:Update()
-	end
-end)
 
 local DISMOUNT = [[
 /cancelform
 /leavevehicle
 /dismount
 ]]
+
+local Button = CreateFrame('Button', buttonName, nil, 'SecureActionButtonTemplate')
+Button:SetAttribute('type', 'macro')
 
 local function HasCorralOutpost()
 	if(HasDraenorZoneAbility()) then
@@ -41,7 +22,7 @@ local function HasCorralOutpost()
 	end
 end
 
-function Button:Update()
+local function Update()
 	if(InCombatLockdown()) then
 		return
 	elseif(UnitOnTaxi('player')) then
@@ -66,7 +47,25 @@ function Button:Update()
 		macro = strtrim(strjoin('\n', DISMOUNT, macro))
 	end
 
-	self:SetAttribute('macrotext', macro)
+	Button:SetAttribute('macrotext', macro)
 end
 
-Button:SetScript('PreClick', Button.Update)
+local function SetBindings()
+	ClearOverrideBindings(Button)
+
+	local first, second = GetBindingKey('DISMOUNT')
+	if(first) then
+		SetOverrideBinding(Button, false, first, bindingString)
+	end
+
+	if(second) then
+		SetOverrideBinding(Button, false, second, bindingString)
+	end
+end
+
+E.UPDATE_BINDINGS = SetBindings
+E.PLAYER_ENTERING_WORLD = SetBindings
+E.PLAYER_REGEN_DISABLED = Update
+E.PLAYER_REGEN_ENABLED = Update
+
+Button:SetScript('PreClick', Update)
