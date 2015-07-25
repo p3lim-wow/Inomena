@@ -1,8 +1,9 @@
 <Ui xmlns='http://www.blizzard.com/wow/ui'>
 	<Script file='modules/core/init.lua'/>
+	<Script file='modules/core/constants.lua'/>
 	<Script file='modules/core/events.lua'/>
 	<Script file='modules/core/utils.lua'/>
-	<Script file='modules/core/outputs.lua'/>
+	<Script file='modules/core/output.lua'/>
 
 	<Script file='modules/misc/alerts.lua'/>
 	<Script file='modules/misc/autoinvites.lua'/>
@@ -16,7 +17,9 @@
 	<Script file='modules/misc/cvars.lua'/>
 	<Script file='modules/misc/filterbuttons.lua'/>
 	<Script file='modules/misc/mail.lua'/>
+	<Script file='modules/misc/minimap.lua'/>
 	<Script file='modules/misc/misc.lua'/>
 	<Script file='modules/misc/mount.lua'/>
 	<Script file='modules/misc/professiontabs.lua'/>
+	<Script file='modules/misc/tracking.lua'/>
 </Ui>
