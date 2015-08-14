@@ -30,5 +30,6 @@
 	<Script file='modules/misc/misc.lua'/>
 	<Script file='modules/misc/mount.lua'/>
 	<Script file='modules/misc/professiontabs.lua'/>
+	<Script file='modules/misc/staticpopup.lua'/>
 	<Script file='modules/misc/tracking.lua'/>
 </Ui>

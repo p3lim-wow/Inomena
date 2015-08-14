@@ -18,14 +18,6 @@ function E:ADDON_LOADED(addon)
 	end
 end
 
--- Auto-accept replacing enchants
-function E:REPLACE_ENCHANT()
-	if(TradeSkillFrame and TradeSkillFrame:IsShown()) then
-		ReplaceEnchant()
-		StaticPopup_Hide('REPLACE_ENCHANT')
-	end
-end
-
 -- Auto-deposit reagents
 function E:BANKFRAME_OPENED()
 	if(not IsShiftKeyDown()) then
@@ -43,10 +35,6 @@ QueueStatusMinimapButton.EyeHighlightAnim:SetScript('OnLoop', nil)
 
 -- Disable error messages
 UIErrorsFrame:UnregisterEvent('UI_ERROR_MESSAGE')
-
--- Make summon and invite popups escape-proof
-StaticPopupDialogs.PARTY_INVITE.hideOnEscape = 0
-StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = 0
 
 -- Hide the vehicle seat indicator
 VehicleSeatIndicator:UnregisterAllEvents()
