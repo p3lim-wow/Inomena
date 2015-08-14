@@ -35,7 +35,7 @@ end
 -- Warn when spotting a rare
 local recentlySpotted = {}
 function E:VIGNETTE_ADDED(id)
-	if(id and not recentlySpotted[id]) then
+	if(id and not recentlySpotted[id] and not C_Garrison.IsOnGarrisonMap()) then
 		local x, y, name, iconID = C_Vignettes.GetVignetteInfoFromInstanceID(id)
 		if(iconID == 40) then
 			return
