@@ -21,7 +21,7 @@ local function GuildClick(self)
 	GuildRoster_Update()
 
 	for _, Button in next, guild do
-		Button:SetChecked(button == self)
+		Button:SetChecked(Button == self)
 	end
 end
 
@@ -102,7 +102,7 @@ local function MerchantUpdate(_, state)
 	end
 
 	for _, Button in next, merchant do
-		Button:SetChecked(button.category == state)
+		Button:SetChecked(Button.category == state)
 	end
 end
 
