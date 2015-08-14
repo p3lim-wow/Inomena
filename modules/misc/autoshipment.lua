@@ -15,11 +15,11 @@ local function ShipmentQueue(_, _, _, maxShipments)
 end
 
 function E:SHIPMENT_CRAFTER_OPENED()
-	self:RegisterEvent('SHIPMENT_CRAFTER_INFO', ShipmentQueue)
+	E:RegisterEvent('SHIPMENT_CRAFTER_INFO', ShipmentQueue)
 end
 
 function E:LOOT_CLOSED()
 	if(GarrisonCapacitiveDisplayFrame and GarrisonCapacitiveDisplayFrame:IsShown()) then
-		self:RegisterEvent('SHIPMENT_CRAFTER_INFO', ShipmentQueue)
+		E:RegisterEvent('SHIPMENT_CRAFTER_INFO', ShipmentQueue)
 	end
 end

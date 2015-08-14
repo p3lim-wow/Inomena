@@ -136,7 +136,7 @@ function E:MERCHANT_SHOW()
 
 	MerchantFrameLootFilter:Hide()
 
-	self:RegisterEvent('MERCHANT_SHOW', MerchantUpdate)
+	E:RegisterEvent('MERCHANT_SHOW', MerchantUpdate)
 
 	return true
 end
