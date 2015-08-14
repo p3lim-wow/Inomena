@@ -1,36 +1,33 @@
 local E, F = unpack(select(2, ...))
 
 local soundFile = [[Sound\Interface\ReadyCheck.ogg]]
+local function Alert()
+	PlaySoundFile(soundFile, 'Master')
+	FlashClientIcon()
+end
+
 function E:UPDATE_BATTLEFIELD_STATUS()
 	if(StaticPopup_Visible('CONFIRM_BATTLEFIELD_ENTRY')) then
-		PlaySoundFile(soundFile, 'Master')
+		Alert()
 	end
-end
-
-function E:LFG_PROPOSAL_SHOW()
-	PlaySoundFile(soundFile, 'Master')
-end
-
-ReadyCheckListenerFrame:SetScript('OnShow', function()
-	PlaySoundFile(soundFile, 'Master')
-end)
-
-function E:PARTY_INVITE_REQUEST()
-	PlaySoundFile(soundFile, 'Master')
 end
 
 function E:LFG_LIST_APPLICATION_STATUS_UPDATED(_, status)
 	if(status == 'invited') then
-		PlaySoundFile(soundFile, 'Master')
+		Alert()
 	end
 end
 
 -- Brawler's Guild queue
 function E:CHAT_MSG_RAID_BOSS_WHISPER(msg, name)
 	if(name == UnitName('player') and msg == 'You are next in line!') then
-		PlaySoundFile(soundFile, 'Master')
+		Alert()
 	end
 end
+
+E.PARTY_INVITE_REQUEST = Alert
+E.LFG_PROPOSAL_SHOW = Alert
+ReadyCheckListenerFrame:SetScript('OnShow', Alert)
 
 -- Warn when spotting a rare
 local recentlySpotted = {}
@@ -44,7 +41,7 @@ function E:VIGNETTE_ADDED(id)
 		name = name or 'Unknown Rare'
 
 		RaidNotice_AddMessage(RaidWarningFrame, name .. ' spotted!', ChatTypeInfo.RAID_WARNING)
-		PlaySoundFile(soundFile, 'Master')
+		Alert()
 
 		recentlySpotted[id] = true
 	end
