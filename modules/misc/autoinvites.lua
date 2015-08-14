@@ -5,7 +5,8 @@ function E:PARTY_INVITE_REQUEST(name, l, f, g)
 	if(l or f or g) then return end
 
 	for index = 1, select(2, GetNumGuildMembers()) do
-		if(string.split('-', (GetGuildRosterInfo(index))) == name) then
+		local characterName = GetGuildRosterInfo(index)
+		if(characterName and string.split('-', characterName) == name) then
 			return AcceptGroup()
 		end
 	end
