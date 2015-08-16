@@ -25,8 +25,16 @@ function E:BANKFRAME_OPENED()
 	end
 end
 
--- Fix frame strata on the raid manager
 function E:PLAYER_LOGIN()
+	-- Move and resize the objective tracker
+	ObjectiveTrackerFrame:ClearAllPoints()
+	ObjectiveTrackerFrame:SetPoint('TOPLEFT', 50, -142)
+	ObjectiveTrackerFrame:SetHeight(700)
+
+	ObjectiveTrackerFrame.ClearAllPoints = F.noop
+	ObjectiveTrackerFrame.SetPoint = F.noop
+
+	-- Fix frame strata on the raid manager
 	CompactRaidFrameManager:SetFrameStrata('MEDIUM')
 end
 

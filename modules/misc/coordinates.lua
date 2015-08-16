@@ -28,13 +28,6 @@ local function UpdateCoords(self, elapsed)
 end
 
 function E:PLAYER_LOGIN()
-	ObjectiveTrackerFrame:ClearAllPoints()
-	ObjectiveTrackerFrame:SetPoint('TOPLEFT', 50, -142)
-	ObjectiveTrackerFrame:SetHeight(700)
-
-	ObjectiveTrackerFrame.ClearAllPoints = F.noop
-	ObjectiveTrackerFrame.SetPoint = F.noop
-
 	CoordText = WorldMapFrameCloseButton:CreateFontString(nil, nil, 'GameFontNormal')
 	CoordText:SetPoint('RIGHT', WorldMapFrameCloseButton, 'LEFT', -30, 0)
 
