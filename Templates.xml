@@ -1,0 +1,18 @@
+<Ui xmlns='http://www.blizzard.com/wow/ui/'>
+	<Button name='InomenaAuraTemplate' inherits='SecureActionButtonTemplate' virtual='true'>
+		<Size x='26' y='26'/>
+		<Attributes>
+			<Attribute name='type' value='cancelaura'/>
+		</Attributes>
+		<Scripts>
+			<OnLoad>
+				self:RegisterForClicks('RightButtonUp')
+			</OnLoad>
+			<OnEnter>
+				GameTooltip:SetOwner(self, 'ANCHOR_BOTTOMLEFT')
+				GameTooltip:SetUnitAura(self:GetParent():GetAttribute('unit'), self:GetID(), 'HELPFUL')
+			</OnEnter>
+			<OnLeave function='GameTooltip_Hide'/>
+		</Scripts>
+	</Button>
+</Ui>

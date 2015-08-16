@@ -5,4 +5,6 @@
 ## Notes: Personal UI
 ## SavedVariablesPerCharacter: InomenaCVars
 
+Templates.xml
+
 Inomena.xml

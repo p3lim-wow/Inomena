@@ -14,24 +14,6 @@
 	<Script file='modules/actionbars/override.lua'/>
 	<Script file='modules/actionbars/pet.lua'/>
 
-	<!-- Cannot load other XML files from here, create template directly -->
-	<Button name='InomenaAuraTemplate' inherits='SecureActionButtonTemplate' virtual='true'>
-		<Size x='26' y='26'/>
-		<Attributes>
-			<Attribute name='type' value='cancelaura'/>
-		</Attributes>
-		<Scripts>
-			<OnLoad>
-				self:RegisterForClicks('RightButtonUp')
-			</OnLoad>
-			<OnEnter>
-				GameTooltip:SetOwner(self, 'ANCHOR_BOTTOMLEFT')
-				GameTooltip:SetUnitAura(self:GetParent():GetAttribute('unit'), self:GetID(), 'HELPFUL')
-			</OnEnter>
-			<OnLeave function='GameTooltip_Hide'/>
-		</Scripts>
-	</Button>
-
 	<Script file='modules/auras/buffs.lua'/>
 	<Script file='modules/auras/tray.lua'/>
 
