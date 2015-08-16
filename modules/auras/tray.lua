@@ -13,19 +13,48 @@ local buffs = {
 	{'spell_holy_mindvision', {[3] = 172967, [11] = 1126}},
 }
 
-local function OnParentEnter(self)
-	self:SetAlpha(1)
-end
+local ScanTooltip = CreateFrame('GameTooltip', 'ScanTooltip' .. GetTime(), nil, 'GameTooltipTemplate')
+ScanTooltip:SetOwner(WorldFrame, 'ANCHOR_NONE')
 
-local function OnParentLeave(self)
-	if(not self:IsMouseOver()) then
-		self:SetAlpha(0)
+local function GetCaster(buffID)
+	for index = 1, 40 do
+		local _, _, _, _, _, _, _, caster, _, _, spellID = UnitBuff('player', index)
+		if(spellID == buffID) then
+			if(caster) then
+				if(UnitIsPlayer(caster)) then
+					return caster
+				else
+					ScanTooltip:ClearLines()
+					ScanTooltip:SetUnit(caster)
+
+					local line = RaidBuffsTooltipTextLeft2:GetText()
+					if(line) then
+						local owner = string.split('\'', line)
+						if(owner and UnitIsPlayer(owner)) then
+							return owner
+						end
+					end
+				end
+			end
+		end
 	end
 end
 
+local STRING_CASTER = string.format('%s: |c%%s%%s|r', string.gsub(SPELL_TARGET_CENTER_CASTER, '^%l', string.upper))
 local function OnButtonEnter(self)
 	GameTooltip:SetOwner(self, 'ANCHOR_BOTTOMLEFT')
 	GameTooltip:AddLine(self.name, 1, 1, 1)
+
+	if(self.spellID) then
+		local caster = GetCaster(self.spellID)
+		if(caster) then
+			local _, className = UnitClass(caster)
+			local colorStr = RAID_CLASS_COLORS[className].colorStr
+
+			GameTooltip:AddLine(string.format(STRING_CASTER, colorStr, GetUnitName(caster, false)))
+		end
+	end
+
 	GameTooltip:Show()
 
 	self:GetParent():SetAlpha(1)
@@ -36,6 +65,16 @@ local function OnButtonLeave(self)
 
 	if(not self:GetParent():IsMouseOver()) then
 		self:GetParent():SetAlpha(0)
+	end
+end
+
+local function OnParentEnter(self)
+	self:SetAlpha(1)
+end
+
+local function OnParentLeave(self)
+	if(not self:IsMouseOver()) then
+		self:SetAlpha(0)
 	end
 end
 
@@ -92,7 +131,9 @@ local function UpdateTray()
 	local buffMask = GetRaidBuffInfo()
 
 	for index, Button in next, buttons do
-		local _, _, texture = GetRaidBuffTrayAuraInfo(index)
+		local _, _, texture, _, _, spellID = GetRaidBuffTrayAuraInfo(index)
+		Button.spellID = spellID
+
 		if(texture) then
 			Button:SetNormalTexture(texture)
 			Button:SetAlpha(1)
