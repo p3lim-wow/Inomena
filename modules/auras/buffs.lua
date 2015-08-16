@@ -60,14 +60,12 @@ Header:HookScript('OnAttributeChanged', function(self, name, Button)
 	Texture:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 	Button:SetNormalTexture(Texture)
 
-	local Duration = Button:CreateFontString()
+	local Duration = Button:CreateFontString(nil, nil, 'SempliceNormal')
 	Duration:SetPoint('TOPLEFT', 1, -1)
-	Duration:SetFont(C.Font, 8, 'OUTLINEMONOCHROME')
 	Button:SetFontString(Duration)
 
-	local Count = Button:CreateFontString()
+	local Count = Button:CreateFontString(nil, nil, 'SempliceNormal')
 	Count:SetPoint('BOTTOMRIGHT', -1, 1)
-	Count:SetFont(C.Font, 8, 'OUTLINEMONOCHROME')
 	Button.Count = Count
 end)
 
