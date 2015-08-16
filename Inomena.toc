@@ -4,6 +4,5 @@
 ## Title: Inomena
 ## Notes: Personal UI
 ## SavedVariablesPerCharacter: InomenaCVars
-## SavedVariables: InomenaCinematics
 
 Inomena.xml
