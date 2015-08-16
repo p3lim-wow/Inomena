@@ -33,6 +33,7 @@
 	</Button>
 
 	<Script file='modules/auras/buffs.lua'/>
+	<Script file='modules/auras/tray.lua'/>
 
 	<Script file='modules/misc/alerts.lua'/>
 	<Script file='modules/misc/autoinvites.lua'/>
