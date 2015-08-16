@@ -1,6 +1,10 @@
 local E, F = unpack(select(2, ...))
 
 local function ShipmentQueue(_, _, _, maxShipments)
+	if(IsShiftKeyDown()) then
+		return true
+	end
+
 	local numPending = C_Garrison.GetNumPendingShipments()
 	if(C_Garrison.IsOnShipmentQuestForNPC()) then
 		maxShipments = 1
