@@ -13,10 +13,8 @@ StaticPopupDialogs.PARTY_INVITE.hideOnEscape = 0
 StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = 0
 
 -- Remove the editbox for deleting "good" items
-StaticPopupDialogs.DELETE_GOOD_ITEM.hasEditBox = false
-StaticPopupDialogs.DELETE_GOOD_ITEM.OnShow = function(self)
-	self.button1:Enable()
-end
+StaticPopupDialogs.DELETE_ITEM.enterClicksFirstButton = true
+StaticPopupDialogs.DELETE_GOOD_ITEM = StaticPopupDialogs.DELETE_ITEM
 
 -- Use the enter key to purchase items from currencies
 StaticPopupDialogs.CONFIRM_PURCHASE_TOKEN_ITEM.enterClicksFirstButton = true
