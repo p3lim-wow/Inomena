@@ -4,6 +4,7 @@
 	<Script file='modules/core/events.lua'/>
 	<Script file='modules/core/utils.lua'/>
 	<Script file='modules/core/output.lua'/>
+	<Script file='modules/core/cvars.lua'/>
 
 	<Script file='modules/actionbars/blizzard.lua'/>
 	<Script file='modules/actionbars/actionbutton.lua'/>

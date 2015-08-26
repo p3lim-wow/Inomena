@@ -1,4 +1,5 @@
-local E, F = unpack(select(2, ...))
+local E, F, C = unpack(select(2, ...))
+if(not C.ApplyCVars) then return end
 
 local cvars = {
 	-- Controls

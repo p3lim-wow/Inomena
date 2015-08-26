@@ -87,7 +87,9 @@ function E:PLAYER_LOGIN()
 		end
 	end
 
-	SetCVar('rotateMinimap', 0)
+	if(C.ApplyCVars) then
+		SetCVar('rotateMinimap', 0)
+	end
 
 	E:UPDATE_INVENTORY_DURABILITY()
 end
