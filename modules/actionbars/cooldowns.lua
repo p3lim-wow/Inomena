@@ -34,10 +34,10 @@ end)
 
 hooksecurefunc('StartChargeCooldown', function(parent, start, duration)
 	if(hooked[parent] and not parent._chargeStyle) then
-		local cooldown = parent.chargeCooldown
-		cooldown:SetDrawEdge(false)
-		cooldown:SetDrawSwipe(true)
-		cooldown:SetSwipeColor(0, 0, 0, 0.9)
+		local Cooldown = parent.chargeCooldown
+		Cooldown:SetDrawEdge(false)
+		Cooldown:SetDrawSwipe(true)
+		Cooldown:SetSwipeColor(0, 0, 0, 0.9)
 		parent._chargeStyle = true
 	end
 end)
