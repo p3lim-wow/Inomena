@@ -5,7 +5,7 @@ function E:PLAYER_LOGIN()
 		return
 	end
 
-	local LDB = LibStub('LibDataBroker-1.1')
+	local LDB = LibStub('LibDataBroker-1.1', true)
 	if(not LDB) then
 		return
 	end
