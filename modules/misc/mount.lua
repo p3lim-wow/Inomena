@@ -35,6 +35,9 @@ local function Update()
 		macro = '/cast Traveler\'s Tundra Mammoth'
 	elseif(IsShiftKeyDown()) then
 		macro = '/cast Azure Water Strider'
+	elseif(IsControlKeyDown()) then
+		-- This one is very specific to what mounts I own
+		macro = '/cast [flyable] Sandstone Drake; Mechano-Hog'
 	else
 		local spellName = HasCorralOutpost()
 		if(spellName) then
