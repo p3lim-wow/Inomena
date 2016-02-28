@@ -4,6 +4,7 @@ local buttonName = (...) .. 'MountButton'
 local bindingString = string.format('CLICK %s:LeftButton', buttonName)
 
 local DISMOUNT = [[
+/stopcasting
 /cancelform
 /leavevehicle
 /dismount
