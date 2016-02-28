@@ -16,6 +16,8 @@ local buffs = {
 local ScanTooltip = CreateFrame('GameTooltip', 'ScanTooltip' .. GetTime(), nil, 'GameTooltipTemplate')
 ScanTooltip:SetOwner(WorldFrame, 'ANCHOR_NONE')
 
+local tooltipName = ScanTooltip:GetName()
+
 local function GetCaster(buffID)
 	for index = 1, 40 do
 		local _, _, _, _, _, _, _, caster, _, _, spellID = UnitBuff('player', index)
@@ -27,7 +29,7 @@ local function GetCaster(buffID)
 					ScanTooltip:ClearLines()
 					ScanTooltip:SetUnit(caster)
 
-					local line = RaidBuffsTooltipTextLeft2:GetText()
+					local line = _G[tooltipName .. 'TextLeft2']:GetText()
 					if(line) then
 						local owner = string.split('\'', line)
 						if(owner and UnitIsPlayer(owner)) then
