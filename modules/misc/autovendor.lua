@@ -1,7 +1,12 @@
 local E, F = unpack(select(2, ...))
 
 local lastNumItems = 0
+local atMerchant
 local function SellJunk()
+	if(not atMerchant) then
+		return
+	end
+
 	lastNumItems = 0
 
 	for bag = 0, 4 do
@@ -15,7 +20,13 @@ local function SellJunk()
 	end
 end
 
+function E:MERCHANT_CLOSED()
+	atMerchant = false
+end
+
 function E:MERCHANT_SHOW()
+	atMerchant = true
+
 	if(not IsShiftKeyDown()) then
 		SellJunk()
 	end
