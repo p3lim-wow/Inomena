@@ -13,7 +13,7 @@ local Button = CreateFrame('Button', buttonName, nil, 'SecureActionButtonTemplat
 Button:SetAttribute('type', 'macro')
 
 local function HasCorralOutpost()
-	if(HasDraenorZoneAbility()) then
+	if(HasDraenorZoneAbility() and not IsFlyableArea()) then
 		local ability = GetSpellInfo(161691)
 		local _, _, _, _, _, _, spellID = GetSpellInfo(ability)
 		if(spellID == 164222 or spellID == 165803) then
