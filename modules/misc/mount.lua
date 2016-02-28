@@ -54,6 +54,21 @@ local function Update()
 	Button:SetAttribute('macrotext', macro)
 end
 
+local function UpdateFavorites(event, newLevel)
+	local taughtRiding = IsSpellKnown(33388)
+	for index = 1, C_MountJournal.GetNumMounts() do
+		local _, spellID, _, _, _, _, _, _, _, _, collected = C_MountJournal.GetMountInfo(index)
+		if(spellID == 179244 and collected) then
+			C_MountJournal.SetIsFavorite(index, not taughtRiding)
+			break
+		end
+	end
+
+	if(taughtRiding) then
+		return true
+	end
+end
+
 local function SetBindings()
 	ClearOverrideBindings(Button)
 
@@ -71,5 +86,7 @@ E.UPDATE_BINDINGS = SetBindings
 E.PLAYER_ENTERING_WORLD = SetBindings
 E.PLAYER_REGEN_DISABLED = Update
 E.PLAYER_REGEN_ENABLED = Update
+E.PLAYER_LOGIN = UpdateFavorites
+E.SPELLS_CHANGED = UpdateFavorites
 
 Button:SetScript('PreClick', Update)
