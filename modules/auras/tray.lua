@@ -1,5 +1,9 @@
 local E, F, C = unpack(select(2, ...))
 
+if(C.isBetaClient) then
+	return
+end
+
 local buttons = {}
 local buffs = {
 	{'spell_nature_regeneration', {[2] = 20217, [3] = 160206, [10] = {116781, 115921}, [11] = 1126}},

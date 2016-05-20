@@ -12,3 +12,5 @@ C.EdgeBackdrop = {
 }
 
 C.Font = [[Interface\AddOns\Inomena\assets\semplice.ttf]]
+
+C.isBetaClient = select(4, GetBuildInfo()) >= 70000
