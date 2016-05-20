@@ -9,12 +9,16 @@ function E:PLAYER_REGEN_DISABLED()
 	UIErrorsFrame:AddMessage('+ Combat', 1, 1, 1)
 end
 
--- Set default tab in guild window
 function E:ADDON_LOADED(addon)
 	if(addon == 'Blizzard_GuildUI') then
+		-- Set default tab in guild window
 		GuildFrame:HookScript('OnShow', function()
 			GuildFrameTab2:Click()
 		end)
+	elseif(addon == 'Blizzard_OrderHallUI') then
+		-- Hide the Class Hall bar
+		OrderHallCommandBar:Hide()
+		OrderHallCommandBar.Show = F.noop
 	end
 end
 
