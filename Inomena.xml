@@ -5,6 +5,7 @@
 	<Script file='modules/core/utils.lua'/>
 	<Script file='modules/core/output.lua'/>
 	<Script file='modules/core/cvars.lua'/>
+	<Script file='modules/core/scaling.lua'/>
 
 	<Script file='modules/actionbars/blizzard.lua'/>
 	<Script file='modules/actionbars/actionbutton.lua'/>
@@ -33,7 +34,6 @@
 	<Script file='modules/misc/misc.lua'/>
 	<Script file='modules/misc/mount.lua'/>
 	<Script file='modules/misc/professiontabs.lua'/>
-	<Script file='modules/misc/scaling.lua'/>
 	<Script file='modules/misc/staticpopup.lua'/>
 	<Script file='modules/misc/tracking.lua'/>
 </Ui>
