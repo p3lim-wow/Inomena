@@ -1,5 +1,7 @@
 local E, F, C = unpack(select(2, ...))
 
+C.SizeMultiplier = 1
+
 function E:PLAYER_LOGIN()
 	local resolution = select(GetCurrentResolution(), GetScreenResolutions())
 	local resolutionHeight = string.match(resolution, '%d+x(%d+)')
@@ -10,6 +12,8 @@ function E:PLAYER_LOGIN()
 		SetCVar('useuiscale', 1)
 		SetCVar('uiscale', 1)
 		UIParent:SetScale(768 / resolutionHeight)
+
+		C.SizeMultiplier = resolutionHeight / 768
 	end
 end
 
