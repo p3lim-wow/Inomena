@@ -67,16 +67,7 @@ local cvars = {
 	UnitNameEnemyTotemName = 0,
 
 	-- Floating Combat Text
-	CombatDamage = 1,
-	CombatLogPeriodicSpells = 1,
-	PetMeleeDamage = 1,
-	CombatHealing = 1,
-	CombatHealingAbsorbTarget = 1,
-	fctSpellMechanics = 0,
-	CombatDamageStyle = 2,
-	enableCombatText = 0,
 	showArenaEnemyFrames = 0,
-	enablePetBattleCombatText = 1,
 
 	-- Battle.net
 	showToastOnline = 0,
@@ -116,7 +107,6 @@ local cvars = {
 	Sound_EnableAmbience = 0,
 	Sound_EnableSoundWhenGameIsInBG = 1,
 	Sound_EnableReverb = 0,
-	Sound_EnableSoftwareHRTF = 0,
 	Sound_EnableDSPEffects = 0,
 	Sound_NumChannels = 24,
 
@@ -125,6 +115,22 @@ local cvars = {
 	screenshotQuality = 10,
 	screenshotFormat = 'png',
 }
+
+if(not C.isBetaClient) then
+	-- Floating Combat Text
+	cvars.CombatDamage = 1
+	cvars.CombatLogPeriodicSpells = 1
+	  cvars.PetMeleeDamage = 1
+	cvars.CombatHealing = 1
+	cvars.CombatHealingAbsorbTarget = 1
+	cvars.fctSpellMechanics = 0
+	cvars.CombatDamageStyle = 2
+	cvars.enableCombatText = 0
+	cvars.enablePetBattleCombatText = 1
+
+	-- Sound
+	cvars.Sound_EnableSoftwareHRTF = 0
+end
 
 local function Initialize()
 	for key, value in next, cvars do
