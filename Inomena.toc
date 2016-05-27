@@ -4,8 +4,12 @@
 ## Title: Inomena
 ## Notes: Personal UI
 ## SavedVariablesPerCharacter: InomenaCVars
+## SavedVariables: InomenaLastGM
 
 Fonts.xml
 Templates.xml
+
+embeds\LibStub\LibStub.lua
+embeds\LibChatAnims\LibChatAnims\LibChatAnims.lua
 
 Inomena.xml
