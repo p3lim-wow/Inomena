@@ -13,7 +13,8 @@ function E:PLAYER_LOGIN()
 		SetCVar('uiscale', 1)
 		UIParent:SetScale(768 / resolutionHeight)
 
-		C.SizeMultiplier = resolutionHeight / 768
+		-- Multiplier to mimic 1080p scaling
+		C.SizeMultiplier = 1080 / 768
 	end
 end
 
