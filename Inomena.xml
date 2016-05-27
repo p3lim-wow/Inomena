@@ -7,6 +7,8 @@
 	<Script file='modules/core/cvars.lua'/>
 	<Script file='modules/core/scaling.lua'/>
 
+	<Script file='modules/settings/init.lua'/>
+	<Script file='modules/settings/chat.lua'/>
 	<Script file='modules/settings/cvars.lua'/>
 
 	<Script file='modules/actionbars/blizzard.lua'/>

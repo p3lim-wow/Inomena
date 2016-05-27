@@ -3,8 +3,8 @@
 ## Version: Alpha
 ## Title: Inomena
 ## Notes: Personal UI
-## SavedVariablesPerCharacter: InomenaCVars
 ## SavedVariables: InomenaLastGM
+## SavedVariablesPerCharacter: InomenaSettings
 
 Fonts.xml
 Templates.xml

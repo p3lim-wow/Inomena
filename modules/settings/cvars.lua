@@ -1,5 +1,4 @@
 local E, F, C = unpack(select(2, ...))
-if(not C.ApplyCVars) then return end
 
 local cvars = {
 	-- Controls
@@ -46,6 +45,14 @@ local cvars = {
 	-- Social
 	chatBubbles = 1,
 	chatBubblesParty = 0,
+	profanityFilter = 0,
+	spamFilter = 0,
+	removeChatDelay = 1,
+	guildMemberNotify = 1,
+	chatMouseScroll = 1,
+	chatStyle = 'classic',
+	showTimestamps = 'none',
+	whisperMode = 'inline',
 
 	-- Names
 	UnitNameOwn = 0,
@@ -120,7 +127,7 @@ if(not C.isBetaClient) then
 	-- Floating Combat Text
 	cvars.CombatDamage = 1
 	cvars.CombatLogPeriodicSpells = 1
-	  cvars.PetMeleeDamage = 1
+	cvars.PetMeleeDamage = 1
 	cvars.CombatHealing = 1
 	cvars.CombatHealingAbsorbTarget = 1
 	cvars.fctSpellMechanics = 0
@@ -128,38 +135,18 @@ if(not C.isBetaClient) then
 	cvars.enableCombatText = 0
 	cvars.enablePetBattleCombatText = 1
 
+	-- Social
+	cvars.bnWhisperMode = 'inline'
+	cvars.conversationMode = 'inline'
+
 	-- Sound
 	cvars.Sound_EnableSoftwareHRTF = 0
 end
 
-local function Initialize()
+table.insert(C.Settings, function()
 	for key, value in next, cvars do
 		SetCVar(key, value)
 	end
 
 	SetAutoDeclineGuildInvites(true)
-	InomenaCVars = true
-
-	F:Print('Successfully initialized settings')
-end
-
-local function Decline()
-	F:Print('Settings not initialized, you can do so later with /init')
-end
-
-StaticPopupDialogs.INOMENA_INITIALIZE = {
-	text = '|cffff6000Inomena:|r Load settings?',
-	button1 = YES,
-	button2 = NO,
-	OnAccept = Initialize,
-	OnCancel = Decline,
-	timeout = 0
-}
-
-function E:PLAYER_LOGIN()
-	if(not InomenaCVars) then
-		StaticPopup_Show('INOMENA_INITIALIZE')
-	end
-end
-
-F:RegisterSlash('/init', Initialize)
+end)
