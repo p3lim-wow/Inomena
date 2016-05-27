@@ -30,6 +30,31 @@ local function MerchantClick(self)
 	MerchantUpdate(nil, self.category)
 end
 
+local function CreateButton(parent, click, texture)
+	local Button = CreateFrame('CheckButton', nil, parent)
+	Button:SetSize(26, 26)
+	Button:SetScript('OnEnter', OnEnter)
+	Button:SetScript('OnLeave', GameTooltip_Hide)
+	Button:SetScript('OnClick', click)
+
+	local Icon = Button:CreateTexture(nil, 'BACKGROUND')
+	Icon:SetAllPoints()
+	Icon:SetTexture(texture)
+	Icon:SetTexCoord(4/64, 60/64, 4/64, 60/64)
+
+	local Normal = Button:CreateTexture()
+	Normal:SetTexture([=[Interface\Buttons\UI-Quickslot2]=])
+	Normal:SetSize(46, 46)
+	Normal:SetPoint('CENTER')
+
+	Button:SetNormalTexture(Normal)
+	Button:SetPushedTexture([=[Interface\Buttons\UI-Quickslot-Depress]=])
+	Button:SetHighlightTexture([=[Interface\Buttons\ButtonHilight-Square]=])
+	Button:SetCheckedTexture([=[Interface\Buttons\CheckButtonHilight]=])
+
+	return Button
+end
+
 function E:MERCHANT_SHOW()
 	for index = 1, GetNumSpecializations() do
 		local _, name, _, texture = GetSpecializationInfo(index)
