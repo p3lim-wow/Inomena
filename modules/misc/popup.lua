@@ -18,3 +18,10 @@ StaticPopupDialogs.DELETE_GOOD_ITEM = StaticPopupDialogs.DELETE_ITEM
 
 -- Use the enter key to purchase items from currencies
 StaticPopupDialogs.CONFIRM_PURCHASE_TOKEN_ITEM.enterClicksFirstButton = true
+
+hooksecurefunc('StaticPopup_Show', function(which, _, _, data)
+	if(which == 'CONFIRM_LEARN_SPEC' and (not data.previewSpecCost or data.previewSpecCost <= 0)) then
+		StaticPopup_Hide(which)
+		SetSpecialization(data.previewSpec, data.isPet)
+	end
+end)
