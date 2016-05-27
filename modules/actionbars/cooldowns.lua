@@ -1,3 +1,7 @@
+local E, F, C = unpack(select(2, ...))
+
+local func = C.isBetaClient and 'CooldownFrame_Set' or 'CooldownFrame_SetTimer'
+
 local function TimerCallback(self)
 	local parent = self.parent
 	parent.icon:SetAlpha(1)
@@ -5,7 +9,7 @@ local function TimerCallback(self)
 end
 
 local hooked = {}
-hooksecurefunc('CooldownFrame_SetTimer', function(self, start, duration, enabled, forceShowDrawEdge)
+hooksecurefunc(func, function(self, start, duration, enabled, forceShowDrawEdge)
 	local parent = self:GetParent()
 	if(not hooked[parent]) then
 		return
