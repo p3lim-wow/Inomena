@@ -7,6 +7,8 @@
 	<Script file='modules/core/cvars.lua'/>
 	<Script file='modules/core/scaling.lua'/>
 
+	<Script file='modules/settings/cvars.lua'/>
+
 	<Script file='modules/actionbars/blizzard.lua'/>
 	<Script file='modules/actionbars/actionbutton.lua'/>
 	<Script file='modules/actionbars/bindings.lua'/>
@@ -19,21 +21,22 @@
 	<Script file='modules/auras/buffs.lua'/>
 	<Script file='modules/auras/tray.lua'/>
 
+	<Script file='modules/automation/invites.lua'/>
+	<Script file='modules/automation/loot.lua'/>
+	<Script file='modules/automation/repair.lua'/>
+	<Script file='modules/automation/shipment.lua'/>
+	<Script file='modules/automation/tracking.lua'/>
+	<Script file='modules/automation/vendor.lua'/>
+
+	<Script file='modules/elements/guild.lua'/>
+	<Script file='modules/elements/mail.lua'/>
+	<Script file='modules/elements/map.lua'/>
+	<Script file='modules/elements/merchant.lua'/>
+	<Script file='modules/elements/minimap.lua'/>
+	<Script file='modules/elements/professions.lua'/>
+
 	<Script file='modules/misc/alerts.lua'/>
-	<Script file='modules/misc/autoinvites.lua'/>
-	<Script file='modules/misc/autoloot.lua'/>
-	<Script file='modules/misc/autorepair.lua'/>
-	<Script file='modules/misc/autoshipment.lua'/>
-	<Script file='modules/misc/autovendor.lua'/>
-	<Script file='modules/misc/broker.lua'/>
-	<Script file='modules/misc/coordinates.lua'/>
-	<Script file='modules/misc/cvars.lua'/>
-	<Script file='modules/misc/filterbuttons.lua'/>
-	<Script file='modules/misc/mail.lua'/>
-	<Script file='modules/misc/minimap.lua'/>
-	<Script file='modules/misc/misc.lua'/>
+	<Script file='modules/misc/tweaks.lua'/>
 	<Script file='modules/misc/mount.lua'/>
-	<Script file='modules/misc/professiontabs.lua'/>
-	<Script file='modules/misc/staticpopup.lua'/>
-	<Script file='modules/misc/tracking.lua'/>
+	<Script file='modules/misc/popup.lua'/>
 </Ui>

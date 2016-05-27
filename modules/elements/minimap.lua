@@ -87,11 +87,48 @@ function E:PLAYER_LOGIN()
 		end
 	end
 
-	if(C.ApplyCVars) then
-		SetCVar('rotateMinimap', 0)
-	end
+	SetCVar('rotateMinimap', 0)
 
 	E:UPDATE_INVENTORY_DURABILITY()
+
+	if(not LibStub) then return end
+
+	local LDB = LibStub('LibDataBroker-1.1', true)
+	if(not LDB) then
+		return
+	end
+
+	local data = LDB:GetDataObjectByName('BugSack')
+	if(data) then
+		local Bugsack = CreateFrame('Button', nil, Minimap)
+		Bugsack:SetPoint('BOTTOMRIGHT', -5, 5)
+		Bugsack:SetSize(20, 20)
+		Bugsack:SetScript('OnClick', data.OnClick)
+		Bugsack:SetScript('OnLeave', GameTooltip_Hide)
+		Bugsack:SetScript('OnEnter', function(self)
+			GameTooltip:SetOwner(self, 'ANCHOR_LEFT')
+			GameTooltip:SetClampedToScreen(true)
+			pcall(data.OnTooltipShow, GameTooltip)
+			GameTooltip:Show()
+		end)
+
+		if(not string.find(data.icon, 'red')) then
+			Bugsack:SetAlpha(0)
+		end
+
+		local Icon = Bugsack:CreateTexture(nil, 'OVERLAY')
+		Icon:SetTexture([[Interface\CharacterFrame\UI-Player-PlayTimeUnhealthy]])
+		Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+		Icon:SetAllPoints()
+
+		LDB.RegisterCallback(Bugsack, 'LibDataBroker_AttributeChanged_BugSack', function()
+			if(string.find(data.icon, 'red')) then
+				Bugsack:SetAlpha(1)
+			else
+				Bugsack:SetAlpha(0)
+			end
+		end)
+	end
 end
 
 function GetMinimapShape()
