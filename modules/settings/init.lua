@@ -31,5 +31,3 @@ function E:PLAYER_LOGIN()
 end
 
 F:RegisterSlash('/init', Initialize)
-
-_G.XX = C.Settings
