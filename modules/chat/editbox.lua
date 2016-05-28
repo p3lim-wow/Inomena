@@ -76,3 +76,59 @@ function ChatEdit_UpdateHeader(self)
 	self:SetTextColor(info.r, info.g, info.b)
 	self:SetTextInsets(header:GetWidth(), 0, 0, 0)
 end
+
+local function NavigateHistory(self, key)
+	if(key ~= 'UP' and key ~= 'DOWN') then
+		return
+	end
+
+	local history = self.history
+	if(#history == 0) then
+		return
+	end
+
+	local index = self.historyIndex + (key == 'UP' and -1 or 1)
+	if(index < 1) then
+		index = #history
+	elseif(index > #history) then
+		index = 1
+	end
+
+	self.historyIndex = index
+	self:SetText(history[index])
+end
+
+local function AddHistory(self, text)
+	if(not text or text == '') then
+		return
+	end
+
+	local command = string.match(text, '^(/%S+)')
+	if(command and IsSecureCmd(command)) then
+		return
+	end
+
+	local history = self.history
+	for index = 1, #history do
+		if(history[index] == text) then
+			self.historyIndex = index + 1
+			return
+		end
+	end
+
+	table.insert(history, text)
+
+	if(#history > self:GetHistoryLines()) then
+		table.remove(history, 1)
+	end
+
+	self.historyIndex = #history + 1
+end
+
+for index = 1, NUM_CHAT_WINDOWS do
+	local EditBox = _G['ChatFrame' .. index .. 'EditBox']
+	EditBox.history = {}
+	EditBox.historyIndex = 0
+	EditBox:HookScript('OnArrowPressed', NavigateHistory)
+	hooksecurefunc(EditBox, 'AddHistoryLine', AddHistory)
+end
