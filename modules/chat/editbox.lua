@@ -79,6 +79,7 @@ end
 
 local history = {}
 local historyIndex = 0
+local maxHistory = 50
 
 local function NavigateHistory(self, key)
 	if(key ~= 'UP' and key ~= 'DOWN') then
@@ -119,7 +120,7 @@ local function AddHistory(self, text)
 
 	table.insert(history, text)
 
-	if(#history > self:GetHistoryLines()) then
+	if(#history > maxHistory) then
 		table.remove(history, 1)
 	end
 
