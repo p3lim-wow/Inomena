@@ -6,12 +6,16 @@ local function Scroll(self, direction)
 			self:ScrollToTop()
 		elseif(IsControlKeyDown()) then
 			self:PageUp()
+		else
+			self:ScrollUp()
 		end
 	elseif(direction < 0) then
 		if(IsShiftKeyDown()) then
 			self:ScrollToBottom()
 		elseif(IsControlKeyDown()) then
 			self:PageDown()
+		else
+			self:ScrollDown()
 		end
 	end
 end
@@ -42,7 +46,8 @@ function F.SkinChatWindow(index)
 	Frame:SetShadowOffset(0, 0)
 	Frame:SetClampRectInsets(0, 0, 0, 0)
 	Frame:SetSpacing(1.4)
-	Frame:HookScript('OnMouseWheel', Scroll)
+	Frame:SetScript('OnMouseWheel', Scroll)
+	Frame:EnableMouseWheel(true)
 	Frame.buttonFrame:Hide()
 
 	local EditBox = _G['ChatFrame' .. index .. 'EditBox']
