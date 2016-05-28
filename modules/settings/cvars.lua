@@ -50,7 +50,7 @@ local cvars = {
 	removeChatDelay = 1,
 	guildMemberNotify = 1,
 	chatMouseScroll = 1,
-	chatStyle = 'classic',
+	chatStyle = 'im',
 	showTimestamps = 'none',
 	whisperMode = 'inline',
 
