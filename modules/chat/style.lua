@@ -51,6 +51,7 @@ function F.SkinChatWindow(index)
 	EditBox:SetPoint('TOPLEFT', Frame, 'BOTTOMLEFT', 0, 5)
 	EditBox:SetFont(font, size, outline)
 	EditBox:SetShadowOffset(0, 0)
+	EditBox:SetAltArrowKeyMode(false)
 
 	EditBox.focusLeft:SetTexture(nil)
 	EditBox.focusMid:SetTexture(nil)
