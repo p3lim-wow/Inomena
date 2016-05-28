@@ -31,6 +31,7 @@
 	<Script file='modules/automation/vendor.lua'/>
 
 	<Script file='modules/chat/abbreviate.lua'/>
+	<Script file='modules/chat/editbox.lua'/>
 	<Script file='modules/chat/gm.lua'/>
 	<Script file='modules/chat/sounds.lua'/>
 	<Script file='modules/chat/style.lua'/>

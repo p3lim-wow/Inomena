@@ -62,11 +62,6 @@ function F.SkinChatWindow(index)
 	EditBox.header:SetFont(font, size, outline)
 	EditBox.header:SetShadowOffset(0, 0)
 
-	local orig = EditBox.SetTextInsets
-	EditBox.SetTextInsets = function(self)
-		orig(self, self.header:GetWidth(), 0, 0, 0)
-	end
-
 	_G['ChatFrame' .. index .. 'EditBoxLeft']:SetTexture(nil)
 	_G['ChatFrame' .. index .. 'EditBoxMid']:SetTexture(nil)
 	_G['ChatFrame' .. index .. 'EditBoxRight']:SetTexture(nil)
