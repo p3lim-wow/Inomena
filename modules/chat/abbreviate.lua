@@ -35,16 +35,9 @@ local function FormatPlayer(info, name)
 end
 
 local function FormatBNPlayer(info)
-	local presenceID = match(info, '(%d+):')
-	local _, _, battleTag, _, toon, _, client = BNGetFriendInfoByID(presenceID)
-	if(client == BNET_CLIENT_WOW) then
-		local _, _, _, _, _, _, _, localizedClass = BNGetFriendGameAccountInfo(BNGetFriendIndex(presenceID), 1)
-		local colors = RAID_CLASS_COLORS[classes[localizedClass]]
-		return format('|HBNplayer:%s|h|c%s%s|r|h', info, colors.colorStr, toon)
-	else
-		local color = C.ClientColors[client] or '22aaff'
-		return format('|HBNplayer:%s|h|cff%s%s|r|h', info, color, match(battleTag, '(%w+)#%d+'))
-	end
+	local _, _, battleTag, _, _, _, client = BNGetFriendInfoByID(match(info, '(%d+):'))
+	local color = C.ClientColors[client] or '22aaff'
+	return format('|HBNplayer:%s|h|cff%s%s|r|h', info, color, match(battleTag, '(%w+)#%d+'))
 end
 
 local hooks = {}
