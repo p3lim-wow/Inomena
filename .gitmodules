@@ -1,6 +1,6 @@
 [submodule "embeds/LibStub"]
 	path = embeds/LibStub
-	url = https://github.com/p3lim-wow/LibStub
+	url = https://github.com/wowace-mirror/LibStub
 [submodule "embeds/LibChatAnims"]
 	path = embeds/LibChatAnims
-	url = https://github.com/p3lim-wow/LibChatAnims
+	url = https://github.com/wowace-mirror/LibChatAnims
