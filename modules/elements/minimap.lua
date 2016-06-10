@@ -14,6 +14,15 @@ local function OnMouseWheel(self, direction)
 	self:SetZoom(self:GetZoom() + (self:GetZoom() == 0 and direction < 0 and 0 or direction))
 end
 
+local function GetBrokerData()
+	if(not LibStub) then return end
+
+	local LDB = LibStub('LibDataBroker-1.1', true)
+	if(LDB) then
+		return LDB:GetDataObjectByName('BugSack'), LDB
+	end
+end
+
 function E:UPDATE_INVENTORY_DURABILITY()
 	local alert = 0
 	for index in next, INVENTORY_ALERT_STATUS_SLOTS do
@@ -91,21 +100,18 @@ function E:PLAYER_LOGIN()
 
 	E:UPDATE_INVENTORY_DURABILITY()
 
-	if(not LibStub) then return end
+	local Debug = CreateFrame('Button', nil, Minimap)
+	Debug:SetPoint('BOTTOMRIGHT', -5, 5)
+	Debug:SetSize(20, 20)
 
-	local LDB = LibStub('LibDataBroker-1.1', true)
-	if(not LDB) then
-		return
-	end
-
-	local data = LDB:GetDataObjectByName('BugSack')
-	if(data) then
-		local Bugsack = CreateFrame('Button', nil, Minimap)
-		Bugsack:SetPoint('BOTTOMRIGHT', -5, 5)
-		Bugsack:SetSize(20, 20)
-		Bugsack:SetScript('OnClick', data.OnClick)
-		Bugsack:SetScript('OnLeave', GameTooltip_Hide)
-		Bugsack:SetScript('OnEnter', function(self)
+	local data, LDB = GetBrokerData()
+	if(not data) then
+		Debug:SetAlpha(0)
+		Debug:SetScript('OnClick', ReloadUI)
+	else
+		Debug:SetScript('OnClick', data.OnClick)
+		Debug:SetScript('OnLeave', GameTooltip_Hide)
+		Debug:SetScript('OnEnter', function(self)
 			GameTooltip:SetOwner(self, 'ANCHOR_LEFT')
 			GameTooltip:SetClampedToScreen(true)
 			pcall(data.OnTooltipShow, GameTooltip)
@@ -113,19 +119,19 @@ function E:PLAYER_LOGIN()
 		end)
 
 		if(not string.find(data.icon, 'red')) then
-			Bugsack:SetAlpha(0)
+			Debug:SetAlpha(0)
 		end
 
-		local Icon = Bugsack:CreateTexture(nil, 'OVERLAY')
+		local Icon = Debug:CreateTexture(nil, 'OVERLAY')
 		Icon:SetTexture([[Interface\CharacterFrame\UI-Player-PlayTimeUnhealthy]])
 		Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 		Icon:SetAllPoints()
 
-		LDB.RegisterCallback(Bugsack, 'LibDataBroker_AttributeChanged_BugSack', function()
+		LDB.RegisterCallback(Debug, 'LibDataBroker_AttributeChanged_BugSack', function()
 			if(string.find(data.icon, 'red')) then
-				Bugsack:SetAlpha(1)
+				Debug:SetAlpha(1)
 			else
-				Bugsack:SetAlpha(0)
+				Debug:SetAlpha(0)
 			end
 		end)
 	end
