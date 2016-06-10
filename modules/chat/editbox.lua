@@ -127,8 +127,13 @@ local function AddHistory(self, text)
 	historyIndex = #history + 1
 end
 
+local function ResetHistoryIndex()
+	historyIndex = 0
+end
+
 for index = 1, NUM_CHAT_WINDOWS do
 	local EditBox = _G['ChatFrame' .. index .. 'EditBox']
+	EditBox:HookScript('OnEscapePressed', ResetHistoryIndex)
 	EditBox:HookScript('OnArrowPressed', NavigateHistory)
 	hooksecurefunc(EditBox, 'AddHistoryLine', AddHistory)
 end
