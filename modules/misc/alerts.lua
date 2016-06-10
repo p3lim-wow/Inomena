@@ -1,9 +1,13 @@
 local E, F = unpack(select(2, ...))
 
+local lastAlert = 0
 local soundFile = [[Sound\Interface\ReadyCheck.ogg]]
 local function Alert()
-	PlaySoundFile(soundFile, 'Master')
-	FlashClientIcon()
+	if(GetTime() >= lastAlert + 10) then
+		PlaySoundFile(soundFile, 'Master')
+		FlashClientIcon()
+		lastAlert = GetTime()
+	end
 end
 
 function E:UPDATE_BATTLEFIELD_STATUS()
