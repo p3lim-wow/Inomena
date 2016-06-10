@@ -31,6 +31,8 @@ local function CreateChatFrame(name, ...)
 end
 
 table.insert(C.Settings, function()
+	FCF_ResetChatWindows()
+
 	for index = 2, NUM_CHAT_WINDOWS do
 		FCF_Close(_G['ChatFrame' .. index])
 	end
