@@ -1,4 +1,4 @@
-local E, F = unpack(select(2, ...))
+local E, F, C = unpack(select(2, ...))
 
 -- Display combat state changes
 function E:PLAYER_REGEN_ENABLED()
@@ -45,8 +45,10 @@ end
 -- Disable queue status sounds
 QueueStatusMinimapButton.EyeHighlightAnim:SetScript('OnLoop', nil)
 
--- Disable error messages
-UIErrorsFrame:UnregisterEvent('UI_ERROR_MESSAGE')
+if(not C.isBetaClient) then
+	-- Disable error messages
+	UIErrorsFrame:UnregisterEvent('UI_ERROR_MESSAGE')
+end
 
 -- Hide the vehicle seat indicator
 VehicleSeatIndicator:UnregisterAllEvents()
