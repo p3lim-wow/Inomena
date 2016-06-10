@@ -30,6 +30,12 @@ local function MerchantClick(self)
 	MerchantUpdate(nil, self.category)
 end
 
+local function OnEnter(self)
+	GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
+	GameTooltip:AddLine(self.tooltip)
+	GameTooltip:Show()
+end
+
 local function CreateButton(parent, click, texture)
 	local Button = CreateFrame('CheckButton', nil, parent)
 	Button:SetSize(26, 26)
