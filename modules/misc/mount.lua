@@ -1,5 +1,8 @@
 local E, F, C = unpack(select(2, ...))
 
+local MOD_ALTERNATE = '[mod:shift]'
+local MOD_VENDOR = '[mod:alt]'
+
 local Button = CreateFrame('Button', (...) .. 'MountButton', nil, 'SecureActionButtonTemplate')
 Button:SetAttribute('type', 'macro')
 
@@ -30,6 +33,16 @@ if(C.isBetaClient) then
 		vendor = {},
 		water = {},
 	}
+
+	local function CorralOutpostMount()
+		if(HasZoneAbility()) then
+			local ability = GetSpellInfo(161691)
+			local _, _, _, _, _, _, spellID = GetSpellInfo(ability)
+			if(spellID == 164222 or spellID == 165803) then
+				return ability
+			end
+		end
+	end
 
 	local lastNumMounts = 0
 	function UpdateMountsList()
@@ -78,9 +91,9 @@ if(C.isBetaClient) then
 		local macro
 		if(not select(13, GetAchievementInfo(891)) and ownedMounts.chauferrued) then
 			macro = string.format(summonMacro, ownedMounts.chauferrued)
-		elseif(IsAltKeyDown()) then
+		elseif(SecureCmdOptionParse(MOD_VENDOR)) then
 			macro = string.format(summonMacro, ownedMounts.vendor[math.random(#ownedMounts.vendor)])
-		elseif(IsShiftKeyDown()) then
+		elseif(SecureCmdOptionParse(MOD_ALTERNATE)) then
 			macro = string.format(summonMacro, ownedMounts.water[math.random(#ownedMounts.water)])
 		else
 			macro = string.format(summonMacro, 0)
@@ -95,8 +108,8 @@ else
 /dismount [mounted]
 ]]
 
-	local function HasCorralOutpost()
-		if(HasDraenorZoneAbility() and not IsFlyableArea()) then
+	local function CorralOutpostMount()
+		if(HasDraenorZoneAbility()) then
 			local ability = GetSpellInfo(161691)
 			local _, _, _, _, _, _, spellID = GetSpellInfo(ability)
 			if(spellID == 164222 or spellID == 165803) then
@@ -128,20 +141,17 @@ else
 		end
 
 		local macro
-		if(IsAltKeyDown()) then
+		if(SecureCmdOptionParse(MOD_VENDOR)) then
 			macro = '/cast Traveler\'s Tundra Mammoth'
-		elseif(IsShiftKeyDown()) then
-			macro = '/cast Azure Water Strider'
-		elseif(IsControlKeyDown()) then
-			-- This one is very specific to what mounts I own
-			macro = '/cast [flyable] Sandstone Drake; Mechano-Hog'
-		else
-			local spellName = HasCorralOutpost()
-			if(spellName) then
-				macro = '/cast ' .. spellName
+		elseif(SecureCmdOptionParse(MOD_ALTERNATE)) then
+			local corralOutpostMountSpell = CorralOutpostMount()
+			if(corralOutpostMountSpell and not IsSubmerged()) then
+				macro = '/cast ' .. corralOutpostMountSpell
 			else
-				macro = '/run C_MountJournal.Summon(0)'
+				macro = '/cast Azure Water Strider'
 			end
+		else
+			macro = '/run C_MountJournal.Summon(0)'
 		end
 
 		if(SecureCmdOptionParse('[nomod:shift]')) then
