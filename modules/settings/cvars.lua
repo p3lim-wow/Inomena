@@ -46,7 +46,7 @@ local cvars = {
 	-- Names
 	UnitNameOwn = 0,
 	UnitNameNPC = 0,
-	UnitNameHostleNPC = 1,
+	UnitNameHostleNPC = 0,
 	UnitNameFriendlySpecialNPCName = 1,
 	UnitNameInteractiveNPC = 0,
 	UnitNameNonCombatCreatureName = 0,
@@ -68,7 +68,7 @@ local cvars = {
 
 	-- Camera
 	cameraWaterCollision = 0,
-	cameraDistanceMaxFactor = 4, -- 1,9 or 2 is default max
+	cameraDistanceMaxFactor = 1.9, -- 1,9 is default max
 	cameraSmoothStyle = 0,
 
 	-- Mouse
