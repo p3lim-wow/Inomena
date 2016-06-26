@@ -26,6 +26,7 @@
 	<Script file='modules/automation/invites.lua'/>
 	<Script file='modules/automation/loot.lua'/>
 	<Script file='modules/automation/repair.lua'/>
+	<Script file='modules/automation/roguehall.lua'/>
 	<Script file='modules/automation/shipment.lua'/>
 	<Script file='modules/automation/tracking.lua'/>
 	<Script file='modules/automation/vendor.lua'/>
