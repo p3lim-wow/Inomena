@@ -59,7 +59,7 @@ if(C.isBetaClient) then
 			[449] = true, -- Azure Water Strider
 			[488] = true, -- Crimson Water Strider
 		},
-		chauferrued = {
+		chauffeured = {
 			[678] = true, -- Chauffeured Mechano-Hog (Horde)
 			[679] = true, -- Chauffeured Mekgineer's Chopper (Alliance)
 		}
@@ -98,7 +98,7 @@ else
 			[118089] = true, -- Azure Water Strider
 			[127271] = true, -- Crimson Water Strider
 		},
-		chauferrued = {
+		chauffeured = {
 			[179244] = true, -- Chauffeured Mechano-Hog (Horde)
 			[179245] = true, -- Chauffeured Mekgineer's Chopper (Alliance)
 		}
@@ -158,8 +158,8 @@ local function PreClick(...)
 	end
 
 	local macro, mountID, spellID
-	if(not select(13, GetAchievementInfo(891)) and #ownedMounts.chauferrued > 0) then
-		mountID =  ownedMounts.chauferrued[1]
+	if(not select(13, GetAchievementInfo(891)) and #ownedMounts.chauffeured > 0) then
+		mountID =  ownedMounts.chauffeured[1]
 	elseif(SecureCmdOptionParse(MOD_VENDOR) and #ownedMounts.vendor > 0) then
 		mountID = ownedMounts.vendor[math.random(#ownedMounts.vendor)]
 	elseif(SecureCmdOptionParse(MOD_ALTERNATE)) then
