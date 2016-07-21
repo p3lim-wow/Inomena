@@ -25,3 +25,8 @@ hooksecurefunc('StaticPopup_Show', function(which, _, _, data)
 		SetSpecialization(data.previewSpec, data.isPet)
 	end
 end)
+
+function E:MERCHANT_CONFIRM_TRADE_TIMER_REMOVAL()
+	StaticPopup_Hide('CONFIRM_MERCHANT_TRADE_TIMER_REMOVAL')
+	SellCursorItem()
+end
