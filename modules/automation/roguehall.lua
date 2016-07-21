@@ -11,6 +11,7 @@ end
 local secretNPCs = {
 	[97004] = true, -- "Red" Jack Findle
 	[96782] = true, -- Lucian Trias
+	[93188] = true, -- Mongar
 }
 
 function E:GOSSIP_SHOW()
