@@ -45,11 +45,6 @@ end
 -- Disable queue status sounds
 QueueStatusMinimapButton.EyeHighlightAnim:SetScript('OnLoop', nil)
 
-if(not C.isBetaClient) then
-	-- Disable error messages
-	UIErrorsFrame:UnregisterEvent('UI_ERROR_MESSAGE')
-end
-
 -- Hide the vehicle seat indicator
 VehicleSeatIndicator:UnregisterAllEvents()
 VehicleSeatIndicator:Hide()

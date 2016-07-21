@@ -1,6 +1,6 @@
 local E, F, C = unpack(select(2, ...))
 
-if(C.playerClass ~= 'ROGUE' or not C.isBetaClient) then
+if(C.playerClass ~= 'ROGUE') then
 	return
 end
 

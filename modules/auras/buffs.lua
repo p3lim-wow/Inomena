@@ -40,13 +40,6 @@ Header:SetAttribute('xOffset', 33)
 Header:SetAttribute('wrapYOffset', -33)
 Header:SetAttribute('wrapAfter', 15)
 
-if(not C.isBetaClient) then
-	-- We use our own special tray
-	Header:SetAttribute('consolidateHeader', CreateFrame('Frame'))
-	Header:SetAttribute('consolidateTo', 1)
-	Header:SetAttribute('consolidateDuration', -1)
-end
-
 Header:HookScript('OnAttributeChanged', function(self, name, Button)
 	if(not string.match(name, '^child')) then
 		return

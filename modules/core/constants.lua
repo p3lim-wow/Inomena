@@ -12,8 +12,7 @@ C.EdgeBackdrop = {
 }
 
 C.Font = [[Interface\AddOns\Inomena\assets\semplice.ttf]]
-
-C.isBetaClient = select(4, GetBuildInfo()) >= 70000
+C.playerClass = select(2, UnitClass('player'))
 
 C.ClientColors = {
 	[BNET_CLIENT_WOW] = '5cc400',

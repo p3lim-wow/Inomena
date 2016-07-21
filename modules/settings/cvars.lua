@@ -118,10 +118,6 @@ local uvars = {
 }
 
 table.insert(C.Settings, function()
-	if(not C.isBetaClient) then
-		return
-	end
-
 	for key, value in next, cvars do
 		SetCVar(key, value)
 	end

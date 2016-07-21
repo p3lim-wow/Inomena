@@ -1,7 +1,5 @@
 local E, F, C = unpack(select(2, ...))
 
-local textureMethod = C.isBetaClient and 'SetColorTexture' or 'SetTexture'
-
 function E:PLAYER_LOGIN()
 	if(not C.ApplyCVars) then return end
 
@@ -48,7 +46,7 @@ function F:SkinActionButton(Button, petButton, leaveButton)
 
 		hooksecurefunc(Button, 'SetNormalTexture', PersistentNormalTexture)
 
-		CheckedTexture[textureMethod](CheckedTexture, 0, 1/2, 1, 1/3)
+		CheckedTexture:SetColorTexture(0, 1/2, 1, 1/3)
 		CheckedTexture:ClearAllPoints()
 		CheckedTexture:SetPoint('TOPRIGHT', -1, -1)
 		CheckedTexture:SetPoint('BOTTOMLEFT', 1, 1)
@@ -86,19 +84,19 @@ function F:SkinActionButton(Button, petButton, leaveButton)
 	Icon:SetAllPoints()
 
 	local PushedTexture = Button:GetPushedTexture()
-	PushedTexture[textureMethod](PushedTexture, 1, 1, 2/5, 1/5)
+	PushedTexture:SetColorTexture(1, 1, 2/5, 1/5)
 	PushedTexture:ClearAllPoints()
 	PushedTexture:SetPoint('TOPRIGHT', -1, -1)
 	PushedTexture:SetPoint('BOTTOMLEFT', 1, 1)
 
 	local HighlightTexture = Button:GetHighlightTexture()
-	HighlightTexture[textureMethod](HighlightTexture, 0, 3/5, 1, 1/5)
+	HighlightTexture:SetColorTexture(0, 3/5, 1, 1/5)
 	HighlightTexture:ClearAllPoints()
 	HighlightTexture:SetPoint('TOPRIGHT', -1, -1)
 	HighlightTexture:SetPoint('BOTTOMLEFT', 1, 1)
 
 	local Flash = Button.Flash
-	Flash[textureMethod](Flash, 1, 0, 0, 1/3)
+	Flash:SetColorTexture(1, 0, 0, 1/3)
 	Flash:ClearAllPoints()
 	Flash:SetPoint('TOPRIGHT', -1, -1)
 	Flash:SetPoint('BOTTOMLEFT', 1, 1)
