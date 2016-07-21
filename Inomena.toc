@@ -6,9 +6,6 @@
 ## SavedVariables: InomenaLastGM
 ## SavedVariablesPerCharacter: InomenaSettings
 
-Fonts.xml
-Templates.xml
-
 embeds\LibStub\LibStub.lua
 embeds\LibChatAnims\LibChatAnims\LibChatAnims.lua
 
