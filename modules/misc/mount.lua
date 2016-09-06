@@ -87,11 +87,9 @@ local function UpdateMountsList()
 end
 
 local mountMacro = '/run C_MountJournal.SummonByID(%s)'
-local function PreClick(...)
+local function PreClick()
 	if(InCombatLockdown()) then
 		return
-	elseif(UnitOnTaxi('player')) then
-		return TaxiRequestEarlyLanding()
 	end
 
 	local macro, mountID, spellID
@@ -142,4 +140,11 @@ E.MOUNT_JOURNAL_USABILITY_CHANGED = UpdateMountsList
 
 E.ZONE_CHANGED_NEW_AREA = PreClick
 E.PLAYER_REGEN_ENABLED = PreClick
-Button:SetScript('PreClick', PreClick)
+
+Button:SetScript('PreClick', function()
+	if(UnitOnTaxi('player')) then
+		return TaxiRequestEarlyLanding()
+	end
+
+	PreClick()
+end)
