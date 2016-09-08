@@ -83,6 +83,7 @@
 	<Script file='modules/elements/professions.lua'/>
 
 	<Script file='modules/misc/alerts.lua'/>
+	<Script file='modules/misc/bindings.lua'/>
 	<Script file='modules/misc/tweaks.lua'/>
 	<Script file='modules/misc/mount.lua'/>
 	<Script file='modules/misc/popup.lua'/>
