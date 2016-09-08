@@ -115,6 +115,9 @@ local uvars = {
 	scriptErrors = 1,
 	taintLog = 1,
 	trackQuestSorting = 'proximity',
+
+	nameplateOtherTopInset = -1,
+	nameplateOtherBottomInset = -1,
 }
 
 table.insert(C.Settings, function()
