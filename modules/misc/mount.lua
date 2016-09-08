@@ -130,16 +130,16 @@ local function PreClick()
 	Button:SetAttribute('macrotext', strtrim(strjoin('\n', DISMOUNT, macro)))
 end
 
-E.UPDATE_BINDINGS = SetBindings
-E.PLAYER_ENTERING_WORLD = SetBindings
+E:RegisterEvent('UPDATE_BINDINGS', SetBindings)
+E:RegisterEvent('PLAYER_ENTERING_WORLD', SetBindings)
 
-E.PLAYER_LOGIN = UpdateMountsList
-E.COMPANION_LEARNED = UpdateMountsList
-E.COMPANION_UNLEARNED = UpdateMountsList
-E.MOUNT_JOURNAL_USABILITY_CHANGED = UpdateMountsList
+E:RegisterEvent('PLAYER_LOGIN', UpdateMountsList)
+E:RegisterEvent('COMPANION_LEARNED', UpdateMountsList)
+E:RegisterEvent('COMPANION_UNLEARNED', UpdateMountsList)
+E:RegisterEvent('MOUNT_JOURNAL_USABILITY_CHANGED', UpdateMountsList)
 
-E.ZONE_CHANGED_NEW_AREA = PreClick
-E.PLAYER_REGEN_ENABLED = PreClick
+E:RegisterEvent('ZONE_CHANGED_NEW_AREA', PreClick)
+E:RegisterEvent('PLAYER_REGEN_ENABLED', PreClick)
 
 Button:SetScript('PreClick', function()
 	if(UnitOnTaxi('player')) then
