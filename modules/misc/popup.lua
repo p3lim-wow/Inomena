@@ -30,3 +30,8 @@ function E:MERCHANT_CONFIRM_TRADE_TIMER_REMOVAL()
 	StaticPopup_Hide('CONFIRM_MERCHANT_TRADE_TIMER_REMOVAL')
 	SellCursorItem()
 end
+
+function E:EQUIP_BIND_TRADEABLE_CONFIRM(slot)
+	EquipPendingItem(slot)
+	StaticPopup_Hide('EQUIP_BIND_TRADEABLE')
+end
