@@ -9,6 +9,8 @@ local function AddMessage(body, outgoing)
 			FCF_SelectDockFrame(SELECTED_CHAT_FRAME)
 
 			F.SkinChatWindow(Frame:GetID())
+			local Tab = _G['ChatFrame' .. Frame:GetID() .. 'Tab']
+			Tab:RegisterForClicks('LeftButtonUp', 'RightButtonUp', 'MiddleButtonUp')
 		end
 
 		if(SELECTED_CHAT_FRAME ~= Frame) then
