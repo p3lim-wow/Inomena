@@ -3,7 +3,7 @@ local E, F = unpack(select(2, ...))
 local Profession = CreateFrame('Button', math.random(GetTime()), nil, 'SecureActionButtonTemplate')
 Profession:SetAttribute('type', 'spell')
 function E:SKILL_LINES_CHANGED()
-	if(not InCombatLockdown()) then
+	if(not InCombatLockdown() and GetProfessions()) then
 		Profession:SetAttribute('spell', GetProfessionInfo(GetProfessions()))
 	end
 end
