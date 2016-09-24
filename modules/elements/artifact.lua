@@ -96,32 +96,6 @@ local function OnTabClick(self)
 	self:SetChecked(not self:GetChecked())
 end
 
-local function ArtifactUpdate(event, newItem)
-	if(ArtifactFrame:IsVisible() and newItem) then
-		local show = not C_ArtifactUI.IsAtForge()
-		local artifactLocations = GetArtifactLocations()
-
-		local artifactSpecIndex
-		local mainID, offID = C_ArtifactUI.GetArtifactInfo()
-		if(artifactSpecs[mainID]) then
-			artifactSpecIndex = artifactSpecs[mainID]
-		elseif(artifactSpecs[offID]) then
-			artifactSpecIndex = artifactSpecs[offID]
-		end
-
-		for index, Tab in next, tabs do
-			Tab:SetShown(show)
-
-			if(show) then
-				local artifactOwned = artifactLocations[index]
-				Tab:SetChecked(artifactSpecIndex == index)
-				Tab:GetNormalTexture():SetDesaturated(not artifactOwned)
-				Tab:GetHighlightTexture():SetTexture(artifactOwned and HIGHLIGHT_TEXTURE or nil)
-			end
-		end
-	end
-end
-
 local function CreateArtifactTab(index, name, texture)
 	local Tab = CreateFrame('CheckButton', 'ARTTAB' .. index, ArtifactFrame, 'SpellBookSkillLineTabTemplate')
 	Tab:SetPoint('TOPLEFT', ArtifactFrame, 'TOPRIGHT', 12, -36 - (49 * #tabs))
@@ -168,8 +142,6 @@ function E:ADDON_LOADED(addon)
 			CreateArtifactTab(0, PROFESSIONS_FISHING, (GetSpellTexture(7620)))
 		end
 
-		E:RegisterEvent('ARTIFACT_UPDATE', ArtifactUpdate)
-
 		origArtifactTraitOnClick = ArtifactPowerButtonMixin.OnClick
 		ArtifactPowerButtonMixin.OnClick = ArtifactTraitOnClick
 
@@ -178,4 +150,31 @@ function E:ADDON_LOADED(addon)
 
 		return true
 	end
+end
+
+function E:ARTIFACT_UPDATE(newItem)
+	if(ArtifactFrame:IsVisible() and newItem) then
+		local show = not C_ArtifactUI.IsAtForge()
+		local artifactLocations = GetArtifactLocations()
+
+		local artifactSpecIndex
+		local mainID, offID = C_ArtifactUI.GetArtifactInfo()
+		if(artifactSpecs[mainID]) then
+			artifactSpecIndex = artifactSpecs[mainID]
+		elseif(artifactSpecs[offID]) then
+			artifactSpecIndex = artifactSpecs[offID]
+		end
+
+		for index, Tab in next, tabs do
+			Tab:SetShown(show)
+
+			if(show) then
+				local artifactOwned = artifactLocations[index]
+				Tab:SetChecked(artifactSpecIndex == index)
+				Tab:GetNormalTexture():SetDesaturated(not artifactOwned)
+				Tab:GetHighlightTexture():SetTexture(artifactOwned and HIGHLIGHT_TEXTURE or nil)
+			end
+		end
+	end
+end
 end
