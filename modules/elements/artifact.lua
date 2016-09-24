@@ -130,7 +130,6 @@ local function ArtifactRelicOnClick(self, slot)
 	end
 end
 
-local origArtifactSetPoints
 local function ArtifactSetPoints(self, value)
 	self.PointsRemainingLabel:SetText(value)
 end
@@ -153,7 +152,6 @@ function E:ADDON_LOADED(addon)
 		origArtifactRelicOnClick = ArtifactTitleTemplateMixin.OnRelicSlotClicked
 		ArtifactFrame.PerksTab.TitleContainer.OnRelicSlotClicked = ArtifactRelicOnClick
 
-		origArtifactSetPoints = ArtifactTitleTemplateMixin.SetPointsRemaining
 		ArtifactFrame.PerksTab.TitleContainer.SetPointsRemaining = ArtifactSetPoints
 
 		return true
