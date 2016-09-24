@@ -75,6 +75,7 @@
 	<Script file='modules/chat/tell.lua'/>
 
 	<Script file='modules/elements/archaeology.lua'/>
+	<Script file='modules/elements/artifact.lua'/>
 	<Script file='modules/elements/guild.lua'/>
 	<Script file='modules/elements/mail.lua'/>
 	<Script file='modules/elements/map.lua'/>
