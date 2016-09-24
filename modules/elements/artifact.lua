@@ -131,7 +131,7 @@ local function ArtifactRelicOnClick(self, slot)
 end
 
 local function ArtifactSetPoints(self, value)
-	self.PointsRemainingLabel:SetText(value)
+	self.PointsRemainingLabel:SetText(BreakUpLargeNumbers(value))
 end
 
 function E:ADDON_LOADED(addon)
