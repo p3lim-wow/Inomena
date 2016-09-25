@@ -24,3 +24,6 @@ C.ClientColors = {
 	[BNET_CLIENT_HEROES] = '6800c4',
 	[BNET_CLIENT_OVERWATCH] = 'dcdcef',
 }
+
+-- Expose (mainly for Inomena_Settings)
+_G[C.Name] = {E, F, C}
