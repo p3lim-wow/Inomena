@@ -14,7 +14,8 @@ C.EdgeBackdrop = {
 }
 
 C.Font = [[Interface\AddOns\Inomena\assets\semplice.ttf]]
-C.playerClass = select(2, UnitClass('player'))
+C.FontSize = 8
+C.FontFlags = 'OUTLINEMONOCHROME'
 
 C.ClientColors = {
 	[BNET_CLIENT_WOW] = '5cc400',
@@ -24,6 +25,8 @@ C.ClientColors = {
 	[BNET_CLIENT_HEROES] = '6800c4',
 	[BNET_CLIENT_OVERWATCH] = 'dcdcef',
 }
+
+C.playerClass = select(2, UnitClass('player'))
 
 -- Expose (mainly for Inomena_Settings)
 _G[C.Name] = {E, F, C}
