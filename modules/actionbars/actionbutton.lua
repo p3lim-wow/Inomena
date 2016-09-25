@@ -1,14 +1,5 @@
 local E, F, C = unpack(select(2, ...))
 
-function E:PLAYER_LOGIN()
-	if(not C.ApplyCVars) then return end
-
-	SetCVar('lockActionBars', 1)
-	SetCVar('alwaysShowActionBars', 0)
-	SetCVar('secureAbilityToggle', 1)
-	SetCVar('countdownForCooldowns', 0)
-end
-
 local function UpdateButton(self)
 	local Button = self:GetParent()
 	if(not IsUsableAction(Button.action)) then

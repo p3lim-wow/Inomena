@@ -96,7 +96,7 @@ function E:PLAYER_LOGIN()
 		end
 	end
 
-	SetCVar('rotateMinimap', 0)
+	SetCVar('rotateMinimap', 0) -- square minimaps look like shit with rotating enabled
 
 	E:UPDATE_INVENTORY_DURABILITY()
 
