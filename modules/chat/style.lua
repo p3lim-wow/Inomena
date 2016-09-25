@@ -121,9 +121,3 @@ function E:PLAYER_LOGIN()
 	hooksecurefunc('FCF_StartAlertFlash', UpdateTab)
 	hooksecurefunc('FCF_FadeOutChatFrame', UpdateTab)
 end
-
-function E:UPDATE_CHAT_COLOR_NAME_BY_CLASS(type, enabled)
-	if(not enabled) then
-		SetChatColorNameByClass(type, true)
-	end
-end
