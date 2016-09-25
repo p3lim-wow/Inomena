@@ -4,7 +4,6 @@
 ## Title: Inomena
 ## Notes: Personal UI
 ## SavedVariables: InomenaLastGM
-## SavedVariablesPerCharacter: InomenaSettings
 
 embeds\LibStub\LibStub.lua
 embeds\LibChatAnims\LibChatAnims\LibChatAnims.lua
