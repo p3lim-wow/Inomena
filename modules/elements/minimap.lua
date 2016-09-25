@@ -100,7 +100,7 @@ function E:PLAYER_LOGIN()
 
 	E:UPDATE_INVENTORY_DURABILITY()
 
-	local Debug = CreateFrame('Button', nil, Minimap)
+	local Debug = CreateFrame('Button', C.Name .. 'DebugButton', Minimap)
 	Debug:SetPoint('BOTTOMRIGHT', -5, 5)
 	Debug:SetSize(20, 20)
 
@@ -122,7 +122,7 @@ function E:PLAYER_LOGIN()
 			Debug:SetAlpha(0)
 		end
 
-		local Icon = Debug:CreateTexture(nil, 'OVERLAY')
+		local Icon = Debug:CreateTexture('$parentIcon', 'OVERLAY')
 		Icon:SetTexture([[Interface\CharacterFrame\UI-Player-PlayTimeUnhealthy]])
 		Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 		Icon:SetAllPoints()

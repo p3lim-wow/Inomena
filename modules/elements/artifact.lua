@@ -1,4 +1,4 @@
-local E = unpack(select(2, ...))
+local E, F, C = unpack(select(2, ...))
 
 -- http://www.wowhead.com/artifact-calc
 local artifactSpecs = {
@@ -97,7 +97,7 @@ local function OnTabClick(self)
 end
 
 local function CreateArtifactTab(index, name, texture)
-	local Tab = CreateFrame('CheckButton', 'ARTTAB' .. index, ArtifactFrame, 'SpellBookSkillLineTabTemplate')
+	local Tab = CreateFrame('CheckButton', C.Name .. 'ArtifactTab' .. index, ArtifactFrame, 'SpellBookSkillLineTabTemplate')
 	Tab:SetPoint('TOPLEFT', ArtifactFrame, 'TOPRIGHT', 12, -36 - (49 * #tabs))
 	Tab:SetNormalTexture(texture)
 	Tab:SetScript('OnClick', OnTabClick)

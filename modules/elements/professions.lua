@@ -1,4 +1,4 @@
-local E = unpack(select(2, ...))
+local E, F, C = unpack(select(2, ...))
 
 local tabs = {}
 local function OnTabClick()
@@ -14,11 +14,10 @@ function E:ADDON_LOADED(addonName)
 		for index, id in next, {GetProfessions()} do
 			if(id and index ~= 4 and index ~= 3) then -- ignore fishing and archaeology
 				local name, texture, rank, maxRank = GetProfessionInfo(id)
-				local Tab = CreateFrame('CheckButton', nil, TradeSkillFrame, 'SpellBookSkillLineTabTemplate, SecureActionButtonTemplate')
+				local Tab = CreateFrame('CheckButton', C.Name .. 'ProfessionTab' .. index, TradeSkillFrame, 'SpellBookSkillLineTabTemplate, SecureActionButtonTemplate')
 				Tab:SetAttribute('type', 'spell')
 				Tab:SetAttribute('spell', name)
 				Tab:SetNormalTexture(texture)
-				Tab:SetID(index)
 				Tab:SetMotionScriptsWhileDisabled(true)
 				Tab:HookScript('OnClick', OnTabClick)
 				Tab.name = name

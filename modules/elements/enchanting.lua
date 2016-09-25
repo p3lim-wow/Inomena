@@ -1,4 +1,4 @@
-local E = unpack(select(2, ...))
+local E, F, C = unpack(select(2, ...))
 
 local VellumButton
 local function OnRecipesRefresh(self)
@@ -32,7 +32,7 @@ local function OnCombatEnded()
 end
 
 local function CreateVellumButton()
-	VellumButton = CreateFrame('Button', 'VellumButton', TradeSkillFrame.DetailsFrame, 'SecureActionButtonTemplate, MagicButtonTemplate')
+	VellumButton = CreateFrame('Button', C.Name .. 'VellumButton', TradeSkillFrame.DetailsFrame, 'SecureActionButtonTemplate, MagicButtonTemplate')
 	VellumButton:SetPoint('TOPRIGHT', TradeSkillFrame.DetailsFrame.CreateButton, 'TOPLEFT')
 	VellumButton:SetSize(88, 22)
 	VellumButton.name = GetSpellInfo(162250)

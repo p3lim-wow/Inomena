@@ -1,5 +1,7 @@
 local E, F, C = unpack(select(2, ...))
 
+C.Name = ...
+
 C.PlainTexture = [[Interface\ChatFrame\ChatFrameBackground]]
 C.PlainBackdrop = {
 	bgFile = C.PlainTexture,

@@ -1,7 +1,7 @@
 local E, F, C = unpack(select(2, ...))
 
-local Parent = CreateFrame('Frame', (...) .. 'PetBar', UIParent, 'SecureHandlerStateTemplate')
-Parent:SetPoint('BOTTOM', _G[(...) .. 'ActionBar'], 'TOP')
+local Parent = CreateFrame('Frame', C.Name .. 'PetBarParent', UIParent, 'SecureHandlerStateTemplate')
+Parent:SetPoint('BOTTOM', _G[(...) .. 'ActionBarParent'], 'TOP')
 Parent:SetSize(290, 29)
 
 RegisterStateDriver(Parent, 'visibility', '[petbattle][overridebar][vehicleui][possessbar,@vehicle,exists] hide; [@pet,exists] show; hide')

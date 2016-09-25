@@ -7,7 +7,7 @@ local STOP_MACRO = '/stopmacro [nooutdoors][combat][mounted][vehicleui]'
 local CORRAL_MACRO = '/cast [outdoors,combat,nomounted,novehicleui] %s'
 local TOY_MACRO = '/usetoy [outdoors,nocombat,nomounted,novehicleui] %s'
 
-local Button = CreateFrame('Button', (...) .. 'MountButton', nil, 'SecureActionButtonTemplate')
+local Button = CreateFrame('Button', C.Name .. 'MountButton', nil, 'SecureActionButtonTemplate')
 Button:SetAttribute('type', 'macro')
 
 local bindingString = string.format('CLICK %s:LeftButton', Button:GetName())

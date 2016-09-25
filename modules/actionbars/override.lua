@@ -1,6 +1,6 @@
 local E, F, C = unpack(select(2, ...))
 
-local Parent = CreateFrame('Frame', (...) .. 'OverrideBar', UIParent, 'SecureHandlerStateTemplate')
+local Parent = CreateFrame('Frame', C.Name .. 'OverrideBarParent', UIParent, 'SecureHandlerStateTemplate')
 Parent:SetPoint('BOTTOM', 0, 80)
 Parent:SetSize(198, 33)
 

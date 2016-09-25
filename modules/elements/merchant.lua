@@ -15,17 +15,7 @@ local merchant = {
 	{LE_LOOT_FILTER_CLASS, [=[Interface\Glues\CharacterCreate\UI-CharacterCreate-Classes]=], UnitClass('player')},
 }
 
-local function MerchantUpdate(_, state)
-	if(not state) then
-		state = GetMerchantFilter()
-	end
-
-	for _, Button in next, merchant do
-		Button:SetChecked(Button.category == state)
-	end
-end
-
-local function MerchantClick(self)
+local function OnClick(self)
 	MerchantFrame_SetFilter(MerchantFrame, self.category)
 	MerchantUpdate(nil, self.category)
 end
@@ -36,57 +26,59 @@ local function OnEnter(self)
 	GameTooltip:Show()
 end
 
-local function CreateButton(parent, click, texture)
-	local Button = CreateFrame('CheckButton', nil, parent)
-	Button:SetSize(26, 26)
-	Button:SetScript('OnEnter', OnEnter)
-	Button:SetScript('OnLeave', GameTooltip_Hide)
-	Button:SetScript('OnClick', click)
-
-	local Icon = Button:CreateTexture(nil, 'BACKGROUND')
-	Icon:SetAllPoints()
-	Icon:SetTexture(texture)
-	Icon:SetTexCoord(4/64, 60/64, 4/64, 60/64)
-
-	local Normal = Button:CreateTexture()
-	Normal:SetTexture([=[Interface\Buttons\UI-Quickslot2]=])
-	Normal:SetSize(46, 46)
-	Normal:SetPoint('CENTER')
-
-	Button:SetNormalTexture(Normal)
-	Button:SetPushedTexture([=[Interface\Buttons\UI-Quickslot-Depress]=])
-	Button:SetHighlightTexture([=[Interface\Buttons\ButtonHilight-Square]=])
-	Button:SetCheckedTexture([=[Interface\Buttons\CheckButtonHilight]=])
-
-	return Button
-end
-
 function E:MERCHANT_SHOW()
 	for index = 1, GetNumSpecializations() do
 		local _, name, _, texture = GetSpecializationInfo(index)
 		merchant[index + 3] = {_G['LE_LOOT_FILTER_SPEC' .. index], texture, name}
 	end
 
-	for index = 1, #merchant do
-		local info = merchant[index]
-		local Button = CreateButton(MerchantFrame, MerchantClick, info[2])
+	for index, info in next, merchant do
+		local Button = CreateFrame('CheckButton', C.Name .. 'MerchantButton' .. index, MerchantFrame)
+		Button:SetSize(26, 26)
+		Button:SetScript('OnClick', OnClick)
+		Button:SetScript('OnEnter', OnEnter)
+		Button:SetScript('OnLeave', GameTooltip_Hide)
+
+		local Icon = Button:CreateTexture('$parentIcon', 'BACKGROUND')
+		Icon:SetAllPoints()
+		Icon:SetTexture(info[2])
+		Icon:SetTexCoord(4/64, 60/64, 4/64, 60/64)
+
+		local Normal = Button:CreateTexture('$parentNormalTexture')
+		Normal:SetTexture([=[Interface\Buttons\UI-Quickslot2]=])
+		Normal:SetSize(46, 46)
+		Normal:SetPoint('CENTER')
+
+		Button:SetNormalTexture(Normal)
+		Button:SetPushedTexture([=[Interface\Buttons\UI-Quickslot-Depress]=])
+		Button:SetHighlightTexture([=[Interface\Buttons\ButtonHilight-Square]=])
+		Button:SetCheckedTexture([=[Interface\Buttons\CheckButtonHilight]=])
+
 		Button.category = info[1]
 		Button.tooltip = info[3]
-
-		merchant[index] = Button
 
 		if(index == 1) then
 			Button:SetPoint('TOPRIGHT', -10, -32)
 		else
 			Button:SetPoint('RIGHT', merchant[index - 1], 'LEFT', -6, 0)
 		end
+
+		merchant[index] = Button
 	end
 
 	merchant[3]:GetRegions():SetTexCoord(unpack(CLASS_ICON_TCOORDS[select(2, UnitClass('player'))]))
 
 	MerchantFrameLootFilter:Hide()
 
-	E:RegisterEvent('MERCHANT_SHOW', MerchantUpdate)
-
 	return true
+end
+
+function E:MERCHANT_SHOW(state)
+	if(not state) then
+		state = GetMerchantFilter()
+	end
+
+	for _, Button in next, merchant do
+		Button:SetChecked(Button.category == state)
+	end
 end

@@ -25,7 +25,7 @@ local function OnAttributeChanged(self, attribute, value)
 	end
 end
 
-local Header = CreateFrame('Frame', nil, UIParent, 'SecureAuraHeaderTemplate')
+local Header = CreateFrame('Frame', C.Name .. 'AuraHeader', UIParent, 'SecureAuraHeaderTemplate')
 Header:SetAttribute('template', 'InomenaAuraTemplate')
 Header:SetAttribute('unit', 'player')
 Header:SetAttribute('filter', 'HELPFUL')
@@ -50,16 +50,16 @@ Header:HookScript('OnAttributeChanged', function(self, name, Button)
 	Button:SetScript('OnUpdate', OnUpdate)
 	Button:SetScript('OnAttributeChanged', OnAttributeChanged)
 
-	local Texture = Button:CreateTexture(nil, 'BORDER')
+	local Texture = Button:CreateTexture('$parentTexture', 'BORDER')
 	Texture:SetAllPoints()
 	Texture:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 	Button:SetNormalTexture(Texture)
 
-	local Duration = Button:CreateFontString(nil, nil, 'SempliceNormal')
+	local Duration = Button:CreateFontString('$parentDuration', nil, 'SempliceNormal')
 	Duration:SetPoint('TOPLEFT', 1, -1)
 	Button:SetFontString(Duration)
 
-	local Count = Button:CreateFontString(nil, nil, 'SempliceNormal')
+	local Count = Button:CreateFontString('$parentCount', nil, 'SempliceNormal')
 	Count:SetPoint('BOTTOMRIGHT', -1, 1)
 	Button.Count = Count
 end)

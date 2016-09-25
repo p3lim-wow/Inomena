@@ -1,6 +1,6 @@
-local E = unpack(select(2, ...))
+local E, F, C = unpack(select(2, ...))
 
-local handler = CreateFrame('Frame')
+local EventHandler = CreateFrame('Frame', C.Name .. 'EventHandler')
 local listeners = {}
 
 local function Register(event, func)
@@ -10,7 +10,7 @@ local function Register(event, func)
 
 	if(not listeners[event]) then
 		listeners[event] = {}
-		handler:RegisterEvent(event)
+		EventHandler:RegisterEvent(event)
 	end
 
 	listeners[event][func] = 1
@@ -27,7 +27,7 @@ local function Unregister(event, func)
 
 		if(not next(funcs)) then
 			listeners[event] = nil
-			handler:UnregisterEvent(event)
+			EventHandler:UnregisterEvent(event)
 		end
 	end
 end
@@ -36,14 +36,14 @@ local function Call(self, event, ...)
 	local funcs = listeners[event]
 	if(funcs) then
 		for func in next, funcs do
-			if(securecall(func, event, ...) and self == handler) then
+			if(securecall(func, event, ...) and self == EventHandler) then
 				Unregister(event, func)
 			end
 		end
 	end
 end
 
-handler:SetScript('OnEvent', Call)
+EventHandler:SetScript('OnEvent', Call)
 
 local methods = {}
 function methods:RegisterEvent(event, func)

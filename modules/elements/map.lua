@@ -1,4 +1,4 @@
-local E, F = unpack(select(2, ...))
+local E, F, C = unpack(select(2, ...))
 
 local CoordText
 local totalElapsed = 0
@@ -28,7 +28,7 @@ local function UpdateCoords(self, elapsed)
 end
 
 function E:PLAYER_LOGIN()
-	CoordText = WorldMapFrameCloseButton:CreateFontString(nil, nil, 'GameFontNormal')
+	CoordText = WorldMapFrameCloseButton:CreateFontString(C.Name .. 'Coordinates', nil, 'GameFontNormal')
 	CoordText:SetPoint('RIGHT', WorldMapFrameCloseButton, 'LEFT', -30, 0)
 
 	WorldMapDetailFrame:HookScript('OnUpdate', UpdateCoords)
