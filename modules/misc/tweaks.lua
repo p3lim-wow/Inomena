@@ -22,13 +22,6 @@ function E:ADDON_LOADED(addon)
 	end
 end
 
--- Auto-deposit reagents
-function E:BANKFRAME_OPENED()
-	if(not IsShiftKeyDown()) then
-		DepositReagentBank()
-	end
-end
-
 function E:PLAYER_LOGIN()
 	-- Move and resize the objective tracker
 	ObjectiveTrackerFrame:ClearAllPoints()
