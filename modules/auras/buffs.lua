@@ -29,14 +29,14 @@ local Header = CreateFrame('Frame', C.Name .. 'AuraHeader', UIParent, 'SecureAur
 Header:SetAttribute('template', 'InomenaAuraTemplate')
 Header:SetAttribute('unit', 'player')
 Header:SetAttribute('filter', 'HELPFUL')
-Header:SetPoint('TOPLEFT', 20, -20)
+Header:SetPoint('TOPRIGHT', Minimap, 'TOPLEFT', -20, 0)
 
 Header:SetAttribute('sortMethod', 'TIME')
 Header:SetAttribute('sortDirection', '+')
-Header:SetAttribute('point', 'TOPLEFT')
+Header:SetAttribute('point', 'TOPRIGHT')
 Header:SetAttribute('minWidth', 330)
 Header:SetAttribute('minHeight', 99)
-Header:SetAttribute('xOffset', 33)
+Header:SetAttribute('xOffset', -33)
 Header:SetAttribute('wrapYOffset', -33)
 Header:SetAttribute('wrapAfter', 15)
 
