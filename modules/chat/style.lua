@@ -115,7 +115,12 @@ function E:PLAYER_LOGIN()
 
 	ChatFrameMenuButton:SetAlpha(0)
 	ChatFrameMenuButton:EnableMouse(false)
-	FriendsMicroButton:Hide()
+
+	if(FriendsMicroButton) then
+		FriendsMicroButton:Hide()
+	elseif(QuickJoinToastButton) then
+		QuickJoinToastButton:Hide()
+	end
 
 	hooksecurefunc('FCFTab_UpdateColors', UpdateTab)
 	hooksecurefunc('FCF_StartAlertFlash', UpdateTab)
