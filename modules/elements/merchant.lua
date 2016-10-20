@@ -74,11 +74,13 @@ function E:MERCHANT_SHOW()
 end
 
 function E:MERCHANT_SHOW(state)
-	if(not state) then
-		state = GetMerchantFilter()
-	end
+	if(not MerchantFrameLootFilter:IsVisible()) then
+		if(not state) then
+			state = GetMerchantFilter()
+		end
 
-	for _, Button in next, merchant do
-		Button:SetChecked(Button.category == state)
+		for _, Button in next, merchant do
+			Button:SetChecked(Button.category == state)
+		end
 	end
 end
