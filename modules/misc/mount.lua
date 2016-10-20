@@ -5,7 +5,6 @@ local MOD_VENDOR = '[mod:alt]'
 
 local STOP_MACRO = '/stopmacro [nooutdoors][combat][mounted][vehicleui]'
 local CORRAL_MACRO = '/cast [outdoors,combat,nomounted,novehicleui] %s'
-local TOY_MACRO = '/usetoy [outdoors,nocombat,nomounted,novehicleui] %s'
 
 local Button = CreateFrame('Button', C.Name .. 'MountButton', nil, 'SecureActionButtonTemplate')
 Button:SetAttribute('type', 'macro')
@@ -128,12 +127,6 @@ local function PreClick()
 		macro = strtrim(strjoin('\n', macro, string.format(mountMacro, mountID or 0)))
 	end
 
-	-- Majestic Elderhorn Hoof, for Highmountain
-	local toyID, toyName, _, toyCollected = C_ToyBox.GetToyInfo(131900)
-	if(GetCurrentMapAreaID() == 1024 and toyCollected and (GetItemCooldown(toyID)) == 0) then
-		macro = strtrim(strjoin('\n', string.format(TOY_MACRO, toyName), macro))
-	end
-
 	Button:SetAttribute('macrotext', strtrim(strjoin('\n', DISMOUNT, macro)))
 end
 
@@ -145,7 +138,6 @@ E:RegisterEvent('COMPANION_LEARNED', UpdateMountsList)
 E:RegisterEvent('COMPANION_UNLEARNED', UpdateMountsList)
 E:RegisterEvent('MOUNT_JOURNAL_USABILITY_CHANGED', UpdateMountsList)
 
-E:RegisterEvent('ZONE_CHANGED_NEW_AREA', PreClick)
 E:RegisterEvent('PLAYER_REGEN_ENABLED', PreClick)
 
 Button:SetScript('PreClick', function()
