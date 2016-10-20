@@ -3,7 +3,7 @@
 ## Version: Alpha
 ## Title: Inomena
 ## Notes: Personal UI
-## SavedVariables: InomenaLastGM
+## SavedVariables: InomenaLastGM, InomenaSeenHeads
 
 embeds\LibStub\LibStub.lua
 embeds\LibChatAnims\LibChatAnims\LibChatAnims.lua
