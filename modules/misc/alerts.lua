@@ -32,21 +32,3 @@ end
 E.PARTY_INVITE_REQUEST = Alert
 E.LFG_PROPOSAL_SHOW = Alert
 ReadyCheckListenerFrame:SetScript('OnShow', Alert)
-
--- Warn when spotting a rare
-local recentlySpotted = {}
-function E:VIGNETTE_ADDED(id)
-	if(id and not recentlySpotted[id] and not C_Garrison.IsOnGarrisonMap()) then
-		local x, y, name, iconID = C_Vignettes.GetVignetteInfoFromInstanceID(id)
-		if(iconID == 40) then
-			return
-		end
-
-		name = name or 'Unknown Rare'
-
-		RaidNotice_AddMessage(RaidWarningFrame, name .. ' spotted!', ChatTypeInfo.RAID_WARNING)
-		Alert()
-
-		recentlySpotted[id] = true
-	end
-end
