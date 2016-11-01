@@ -183,4 +183,3 @@ function E:ARTIFACT_UPDATE(newItem)
 		end
 	end
 end
-end
