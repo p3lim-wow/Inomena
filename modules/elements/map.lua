@@ -17,8 +17,13 @@ local function UpdateCoords(self, elapsed)
 			CoordText:SetTextColor(0, 1, 0)
 		else
 			local x, y = GetPlayerMapPosition('player')
-			CoordText:SetFormattedText('%.2f, %.2f', x * 100, y * 100)
-			CoordText:SetTextColor(1, 1, 0)
+			if(not x or not y) then
+				CoordText:SetText(UNAVAILABLE)
+				CoordText:SetTextColor(1, 0, 0)
+			else
+				CoordText:SetFormattedText('%.2f, %.2f', x * 100, y * 100)
+				CoordText:SetTextColor(1, 1, 0)
+			end
 		end
 
 		totalElapsed = 0
