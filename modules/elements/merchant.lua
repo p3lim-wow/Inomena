@@ -1,4 +1,4 @@
-local E, F = unpack(select(2, ...))
+local E, F, C = unpack(select(2, ...))
 
 local factionTexture
 if(UnitFactionGroup('player') == 'Alliance') then
