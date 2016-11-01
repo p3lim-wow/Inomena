@@ -4,7 +4,6 @@ local MOD_ALTERNATE = '[mod:shift]'
 local MOD_VENDOR = '[mod:alt]'
 
 local STOP_MACRO = '/stopmacro [nooutdoors][combat][mounted][vehicleui]'
-local CORRAL_MACRO = '/cast [outdoors,combat,nomounted,novehicleui] %s'
 
 local Button = CreateFrame('Button', C.Name .. 'MountButton', nil, 'SecureActionButtonTemplate')
 Button:SetAttribute('type', 'macro')
@@ -34,16 +33,6 @@ local function WaterWalkingSpell()
 		return 546 -- Shaman - Water Walking
 	elseif(IsSpellKnown(3714)) then
 		return 3714 -- Death Knight - Path of Frost
-	end
-end
-
-local function CorralOutpostAbility()
-	if((HasDraenorZoneAbility or HasZoneAbility)()) then
-		local ability = GetSpellInfo(161691)
-		local _, _, _, _, _, _, spellID = GetSpellInfo(ability)
-		if(spellID == 164222 or spellID == 165803) then
-			return ability
-		end
 	end
 end
 
@@ -98,27 +87,17 @@ local function PreClick()
 	elseif(SecureCmdOptionParse(MOD_VENDOR) and ownedMounts.vendor) then
 		mountID = ownedMounts.vendor
 	elseif(SecureCmdOptionParse(MOD_ALTERNATE)) then
-		local corralOutpostAbility = CorralOutpostAbility()
-		if(corralOutpostAbility and not IsSubmerged()) then
-			macro = '/cast ' .. corralOutpostAbility
-		else
-			spellID =  WaterWalkingSpell()
+		spellID =  WaterWalkingSpell()
 
-			if(spellID) then
-				mountID = 0
-			elseif(#ownedMounts[269] > 0) then
-				mountID = ownedMounts[269][math.random(#ownedMounts[269])]
-			end
+		if(spellID) then
+			mountID = 0
+		elseif(#ownedMounts[269] > 0) then
+			mountID = ownedMounts[269][math.random(#ownedMounts[269])]
 		end
 	end
 
 	if(not macro) then
-		local corralOutpostAbility = CorralOutpostAbility()
-		if(corralOutpostAbility) then
-			macro = string.format(CORRAL_MACRO, corralOutpostAbility)
-		end
-
-		macro = strtrim(strjoin('\n', macro or '', STOP_MACRO))
+		macro = STOP_MACRO
 
 		if(spellID) then
 			macro = strtrim(strjoin('\n', macro, '/cast ' .. GetSpellInfo(spellID)))
