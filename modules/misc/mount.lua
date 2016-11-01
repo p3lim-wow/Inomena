@@ -36,6 +36,11 @@ local function WaterWalkingSpell()
 	end
 end
 
+local function IsHalloween()
+	local _, month, day = CalendarGetDate()
+	return month == 10 and day >= 18 or month == 11 and day == 1
+end
+
 local ownedMounts = {}
 local vendorMounts = {
 	[280] = 2, -- Traveler's Tundra Mammoth (Alliance)
@@ -103,7 +108,12 @@ local function PreClick()
 			macro = strtrim(strjoin('\n', macro, '/cast ' .. GetSpellInfo(spellID)))
 		end
 
-		macro = strtrim(strjoin('\n', macro, string.format(mountMacro, mountID or 0)))
+		if(IsHalloween() and GetItemCount(37011) > 0) then
+			-- Magic Broom time!
+			macro = strtrim(strjoin('\n', macro, '/use item:37011'))
+		else
+			macro = strtrim(strjoin('\n', macro, string.format(mountMacro, mountID or 0)))
+		end
 	end
 
 	Button:SetAttribute('macrotext', strtrim(strjoin('\n', DISMOUNT, macro)))
