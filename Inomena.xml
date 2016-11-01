@@ -70,6 +70,7 @@
 	<Script file='modules/elements/artifact.lua'/>
 	<Script file='modules/elements/enchanting.lua'/>
 	<Script file='modules/elements/guild.lua'/>
+	<Script file='modules/elements/info.lua'/>
 	<Script file='modules/elements/mail.lua'/>
 	<Script file='modules/elements/map.lua'/>
 	<Script file='modules/elements/merchant.lua'/>
