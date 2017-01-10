@@ -13,7 +13,15 @@ function E:ADDON_LOADED(addonName)
 	if(addonName == 'Blizzard_TradeSkillUI') then
 		for index, id in next, {GetProfessions()} do
 			if(id and index ~= 4 and index ~= 3) then -- ignore fishing and archaeology
-				local name, texture, rank, maxRank = GetProfessionInfo(id)
+				local name, texture, rank, maxRank, numSpells, spellOffset = GetProfessionInfo(id)
+
+				if(numSpells > 1) then
+					if(id == 7) then
+						-- Herbalism
+						name = GetSpellBookItemName(index + spellOffset, 'professions')
+					end
+				end
+
 				local Tab = CreateFrame('CheckButton', C.Name .. 'ProfessionTab' .. index, TradeSkillFrame, 'SpellBookSkillLineTabTemplate, SecureActionButtonTemplate')
 				Tab:SetAttribute('type', 'spell')
 				Tab:SetAttribute('spell', name)
