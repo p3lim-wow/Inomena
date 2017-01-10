@@ -9,12 +9,20 @@ function E:PLAYER_REGEN_DISABLED()
 	UIErrorsFrame:AddMessage('+ Combat', 1, 1, 1)
 end
 
+local whitelistedHeads = {
+	[69294] = true, -- 'Look out!' in Suramar scenario
+}
+
 local function OnTalkingHeadShow(self)
 	if(not InomenaSeenHeads) then
 		InomenaSeenHeads = {}
 	end
 
 	local _, _, voiceOverID = C_TalkingHead.GetCurrentLineInfo()
+	if(whitelistedHeads[voiceOverID]) then
+		return
+	end
+
 	if(InomenaSeenHeads[voiceOverID]) then
 		TalkingHeadFrame_CloseImmediately()
 	elseif(voiceOverID) then
