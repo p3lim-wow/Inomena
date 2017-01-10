@@ -17,7 +17,7 @@ local function OnTalkingHeadShow(self)
 	local _, _, voiceOverID = C_TalkingHead.GetCurrentLineInfo()
 	if(InomenaSeenHeads[voiceOverID]) then
 		TalkingHeadFrame_CloseImmediately()
-	else
+	elseif(voiceOverID) then
 		InomenaSeenHeads[voiceOverID] = true
 	end
 end
