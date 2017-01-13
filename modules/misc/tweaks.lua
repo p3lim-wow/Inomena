@@ -65,3 +65,13 @@ QueueStatusMinimapButton.EyeHighlightAnim:SetScript('OnLoop', nil)
 -- Hide the vehicle seat indicator
 VehicleSeatIndicator:UnregisterAllEvents()
 VehicleSeatIndicator:Hide()
+
+-- Show the group finder button on every world quest
+function QuestUtils_CanUseAutoGroupFinder(questID, isDropdownRequest)
+	if(not IsQuestComplete(questID)) then
+		local _, _, worldQuestType = GetQuestTagInfo(questID)
+		if(worldQuestType ~= nil and C_LFGList.GetActivityIDForQuestID(questID)) then
+			return true
+		end
+	end
+end
