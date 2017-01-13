@@ -81,6 +81,7 @@
 	<Script file='modules/misc/tweaks.lua'/>
 	<Script file='modules/misc/mount.lua'/>
 	<Script file='modules/misc/popup.lua'/>
+	<Script file='modules/misc/barrels.lua'/>
 
 	<Script file='modules/tooltip/style.lua'/>
 	<Script file='modules/tooltip/data.lua'/>
