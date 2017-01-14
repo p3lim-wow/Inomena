@@ -86,8 +86,8 @@ function E:PLAYER_LOGIN()
 	MiniMapMailFrame:SetPoint('TOPLEFT')
 	MiniMapMailIcon:SetTexture([[Interface\Minimap\Tracking\Mailbox]])
 
-	MiniMapInstanceDifficulty:Hide()
 	MiniMapInstanceDifficulty:UnregisterAllEvents()
+	MiniMapInstanceDifficulty:Hide()
 	MinimapCluster:EnableMouse(false)
 	DurabilityFrame:SetAlpha(0)
 
