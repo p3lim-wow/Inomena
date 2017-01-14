@@ -22,7 +22,7 @@ local function AddCurrencyLine(name, texture)
 	for index = 1, GetCurrencyListSize() do
 		local listName, isHeader, isExpanded, _, _, _, listTexture = GetCurrencyListInfo(index)
 		if(isHeader and not isExpanded) then
-			ExpandCurrencyList(index, true)
+			ExpandCurrencyList(index, 1)
 			return AddCurrencyLine(name, texture)
 		elseif(listName == name and listTexture == texture) then
 			local currencyLink = GetCurrencyListLink(index)
