@@ -159,7 +159,7 @@ function E:ADDON_LOADED(addon)
 end
 
 function E:ARTIFACT_UPDATE(newItem)
-	if(ArtifactFrame:IsVisible() and newItem) then
+	if(ArtifactFrame and ArtifactFrame:IsVisible() and newItem) then
 		local show = not C_ArtifactUI.IsAtForge()
 		local artifactLocations = GetArtifactLocations()
 
