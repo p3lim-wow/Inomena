@@ -59,7 +59,7 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 			else
 				local creatureText
 				if(UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit)) then
-					level = UnitBattlePetLevel(unit)
+					levelText = UnitBattlePetLevel(unit)
 					levelColor = '|cffffff00'
 
 					creatureText = _G['BATTLE_PET_NAME_' .. UnitBattlePetType(unit)]
