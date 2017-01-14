@@ -14,12 +14,30 @@ local function OnMouseWheel(self, direction)
 	self:SetZoom(self:GetZoom() + (self:GetZoom() == 0 and direction < 0 and 0 or direction))
 end
 
-local function GetBrokerData()
-	if(not LibStub) then return end
+local function OnDataBrokerEnter(self)
+	GameTooltip:SetOwner(self, 'ANCHOR_LEFT')
+	GameTooltip:SetClampedToScreen(true)
+	pcall(self.data.OnTooltipShow, GameTooltip)
+	GameTooltip:Show()
+end
 
-	local LDB = LibStub('LibDataBroker-1.1', true)
-	if(LDB) then
-		return LDB:GetDataObjectByName('BugSack'), LDB
+local function CreateDataBrokerButton(LDB, name)
+	local data = LDB:GetDataObjectByName(name)
+	if(data) then
+		local Button = CreateFrame('Button', C.Name .. name .. 'Button', Minimap)
+		Button:SetSize(20, 20)
+		Button:SetScript('OnClick', data.OnClick)
+		Button:SetScript('OnLeave', GameTooltip_Hide)
+		Button:SetScript('OnEnter', OnDataBrokerEnter)
+		Button:RegisterForClicks('AnyUp')
+		Button.data = data
+
+		local Icon = Button:CreateTexture('$parentIcon', 'OVERLAY')
+		Icon:SetAllPoints()
+		Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+		Button:SetNormalTexture(Icon)
+
+		return Button
 	end
 end
 
@@ -100,40 +118,21 @@ function E:PLAYER_LOGIN()
 
 	E:UPDATE_INVENTORY_DURABILITY()
 
-	local Debug = CreateFrame('Button', C.Name .. 'DebugButton', Minimap)
-	Debug:SetPoint('BOTTOMRIGHT', -5, 5)
-	Debug:SetSize(20, 20)
+	local LDB = LibStub and LibStub('LibDataBroker-1.1', true)
+	if(LDB) then
+		local BugSack = CreateDataBrokerButton(LDB, 'BugSack')
+		if(BugSack) then
+			BugSack:SetPoint('BOTTOMRIGHT', -5, 5)
+			BugSack:GetNormalTexture():SetTexture([[Interface\CharacterFrame\UI-Player-PlayTimeUnhealthy]])
 
-	local data, LDB = GetBrokerData()
-	if(not data) then
-		Debug:SetAlpha(0)
-		Debug:SetScript('OnClick', ReloadUI)
-	else
-		Debug:SetScript('OnClick', data.OnClick)
-		Debug:SetScript('OnLeave', GameTooltip_Hide)
-		Debug:SetScript('OnEnter', function(self)
-			GameTooltip:SetOwner(self, 'ANCHOR_LEFT')
-			GameTooltip:SetClampedToScreen(true)
-			pcall(data.OnTooltipShow, GameTooltip)
-			GameTooltip:Show()
-		end)
-
-		if(not string.find(data.icon, 'red')) then
-			Debug:SetAlpha(0)
-		end
-
-		local Icon = Debug:CreateTexture('$parentIcon', 'OVERLAY')
-		Icon:SetTexture([[Interface\CharacterFrame\UI-Player-PlayTimeUnhealthy]])
-		Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-		Icon:SetAllPoints()
-
-		LDB.RegisterCallback(Debug, 'LibDataBroker_AttributeChanged_BugSack', function()
-			if(string.find(data.icon, 'red')) then
-				Debug:SetAlpha(1)
-			else
-				Debug:SetAlpha(0)
+			if(not string.find(BugSack.data.icon, 'red')) then
+				BugSack:SetAlpha(0)
 			end
-		end)
+
+			LDB.RegisterCallback(BugSack, 'LibDataBroker_AttributeChanged_BugSack', function()
+				BugSack:SetAlpha(string.find(BugSack.data.icon, 'red') and 1 or 0)
+			end)
+		end
 	end
 end
 
