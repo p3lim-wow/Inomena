@@ -75,3 +75,16 @@ function QuestUtils_CanUseAutoGroupFinder(questID, isDropdownRequest)
 		end
 	end
 end
+
+-- Reduce the size of RCLootCouncil's frames
+function E:ADDON_LOADED(addon)
+	if(addon == 'RCLootCouncil') then
+		local RC = LibStub('AceAddon-3.0'):GetAddon('RCLootCouncil', true)
+		if(RC) then
+			local LootFrame = RC:GetModule('RCLootFrame', true)
+			hooksecurefunc(LootFrame, 'GetFrame', function()
+				DefaultRCLootFrame:SetScale(0.6)
+			end)
+		end
+	end
+end
