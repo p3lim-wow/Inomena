@@ -49,8 +49,8 @@ end
 function E:PLAYER_LOGIN()
 	-- Move and resize the objective tracker
 	ObjectiveTrackerFrame:ClearAllPoints()
-	ObjectiveTrackerFrame:SetPoint('TOPLEFT', 50, -142)
-	ObjectiveTrackerFrame:SetHeight(700)
+	ObjectiveTrackerFrame:SetPoint('TOPLEFT', 50, -30)
+	ObjectiveTrackerFrame:SetHeight(1000)
 
 	ObjectiveTrackerFrame.ClearAllPoints = F.noop
 	ObjectiveTrackerFrame.SetPoint = F.noop
