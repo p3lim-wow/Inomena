@@ -9,6 +9,26 @@ local function OnTabClick()
 	end
 end
 
+local function CreateTab(name, texture, tooltip)
+	local Tab = CreateFrame('CheckButton', C.Name .. 'ProfessionTab' .. (#tabs + 1), TradeSkillFrame, 'SpellBookSkillLineTabTemplate, SecureActionButtonTemplate')
+	Tab:SetAttribute('type', 'spell')
+	Tab:SetAttribute('spell', name)
+	Tab:SetNormalTexture(texture)
+	Tab:SetMotionScriptsWhileDisabled(true)
+	Tab:HookScript('OnClick', OnTabClick)
+	Tab.name = name
+	Tab.tooltip = tooltip
+	Tab:Show()
+
+	if(#tabs == 0) then
+		Tab:SetPoint('TOPLEFT', TradeSkillFrame, 'TOPRIGHT', 0, -36)
+	else
+		Tab:SetPoint('TOPLEFT', tabs[#tabs], 'BOTTOMLEFT', 0, -17)
+	end
+
+	tabs[#tabs + 1] = Tab
+end
+
 function E:ADDON_LOADED(addonName)
 	if(addonName == 'Blizzard_TradeSkillUI') then
 		for index, id in next, {GetProfessions()} do
@@ -20,23 +40,16 @@ function E:ADDON_LOADED(addonName)
 					name = GetSpellBookItemName(index + spellOffset, 'professions')
 				end
 
-				local Tab = CreateFrame('CheckButton', C.Name .. 'ProfessionTab' .. index, TradeSkillFrame, 'SpellBookSkillLineTabTemplate, SecureActionButtonTemplate')
-				Tab:SetAttribute('type', 'spell')
-				Tab:SetAttribute('spell', name)
-				Tab:SetNormalTexture(texture)
-				Tab:SetMotionScriptsWhileDisabled(true)
-				Tab:HookScript('OnClick', OnTabClick)
-				Tab.name = name
-				Tab.tooltip = string.format(ITEM_SET_NAME, name, rank, maxRank)
+				local tooltip = string.format(ITEM_SET_NAME, name, rank, maxRank)
+				CreateTab(name, texture, tooltip)
+			end
+		end
 
-				if(#tabs == 0) then
-					Tab:SetPoint('TOPLEFT', TradeSkillFrame, 'TOPRIGHT', 0, -36)
-				else
-					Tab:SetPoint('TOPLEFT', tabs[#tabs], 'BOTTOMLEFT', 0, -17)
-				end
-				Tab:Show()
-
-				tabs[#tabs + 1] = Tab
+		if(select(2, UnitClass('player')) == 'DEATHKNIGHT') then
+			-- Runeforging
+			if(IsSpellKnown(53428)) then
+				local name, _, texture = GetSpellInfo(53428)
+				CreateTab(name, texture, name)
 			end
 		end
 
