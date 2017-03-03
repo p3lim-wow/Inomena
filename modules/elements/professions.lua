@@ -15,11 +15,9 @@ function E:ADDON_LOADED(addonName)
 			if(id and index ~= 4 and index ~= 3) then -- ignore fishing and archaeology
 				local name, texture, rank, maxRank, numSpells, spellOffset = GetProfessionInfo(id)
 
-				if(numSpells > 1) then
-					if(id == 7) then
-						-- Herbalism
-						name = GetSpellBookItemName(index + spellOffset, 'professions')
-					end
+				if(id == 6) then
+					-- Herbalism
+					name = GetSpellBookItemName(index + spellOffset, 'professions')
 				end
 
 				local Tab = CreateFrame('CheckButton', C.Name .. 'ProfessionTab' .. index, TradeSkillFrame, 'SpellBookSkillLineTabTemplate, SecureActionButtonTemplate')
