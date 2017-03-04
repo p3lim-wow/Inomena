@@ -29,18 +29,24 @@ local function CreateTab(name, texture, tooltip)
 	tabs[#tabs + 1] = Tab
 end
 
+local offsetProfessions = {
+	[182] = 1, -- Herbalism
+	[186] = 1, -- Mining
+}
+
 function E:ADDON_LOADED(addonName)
 	if(addonName == 'Blizzard_TradeSkillUI') then
 		for index, id in next, {GetProfessions()} do
-			if(id and index ~= 4 and index ~= 3) then -- ignore fishing and archaeology
-				local name, texture, rank, maxRank, numSpells, spellOffset = GetProfessionInfo(id)
+			if(index ~= 4 and index ~= 3) then -- ignore fishing and archaeology
+				local name, texture, rank, maxRank, numSpells, spellOffset, skillID = GetProfessionInfo(id)
+				local tooltip = string.format(ITEM_SET_NAME, name, rank, maxRank)
 
-				if(id == 6) then
-					-- Herbalism
-					name = GetSpellBookItemName(index + spellOffset, 'professions')
+				local offset = offsetProfessions[skillID]
+				if(offset) then
+					name = GetSpellBookItemName(spellOffset + offset, 'professions')
+					texture = GetSpellBookItemTexture(spellOffset + offset, 'professions')
 				end
 
-				local tooltip = string.format(ITEM_SET_NAME, name, rank, maxRank)
 				CreateTab(name, texture, tooltip)
 			end
 		end
