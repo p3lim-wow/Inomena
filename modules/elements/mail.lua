@@ -1,91 +1,32 @@
 local E, F = unpack(select(2, ...))
 
-do
-	local lastReceipient
-	function E:MAIL_SEND_SUCCESS()
-		if(lastReceipient) then
-			SendMailNameEditBox:SetText(lastReceipient)
-			SendMailNameEditBox:ClearFocus()
-		end
+-- remember last recipient
+local lastReceipient
+function E:MAIL_SEND_SUCCESS()
+	if(lastReceipient) then
+		SendMailNameEditBox:SetText(lastReceipient)
+		SendMailNameEditBox:ClearFocus()
 	end
-
-	hooksecurefunc('SendMail', function(name)
-		lastReceipient = name
-	end)
 end
 
-function E:UI_ERROR_MESSAGE(msg)
-	if(msg == ERR_MAIL_INVALID_ATTACHMENT_SLOT) then
+hooksecurefunc('SendMail', function(name)
+	lastReceipient = name
+end)
+
+-- auto send when attachment limit reached
+function E:UI_ERROR_MESSAGE(messageID)
+	if(messageID == 610) then
 		SendMailMailButton:Click()
 	end
 end
 
-do
-	local function OnTextChanged(self)
-		if(self:GetText() ~= '' and SendMailSubjectEditBox:GetText() == '') then
-			SendMailSubjectEditBox:SetText(MONEY)
-		end
+-- auto set subject when sending/requesting money
+local function OnTextChanged(self)
+	if(self:GetText() ~= '' and SendMailSubjectEditBox:GetText() == '') then
+		SendMailSubjectEditBox:SetText(MONEY)
 	end
-
-	SendMailMoneyGold:HookScript('OnTextChanged', OnTextChanged)
-	SendMailMoneySilver:HookScript('OnTextChanged', OnTextChanged)
-	SendMailMoneyCopper:HookScript('OnTextChanged', OnTextChanged)
 end
 
-do
-	local totalElapsed = 0
-	InboxFrame:HookScript('OnUpdate', function(self, elapsed)
-		if(totalElapsed < 10) then
-			totalElapsed = totalElapsed + elapsed
-		else
-			totalElapsed = 0
-
-			CheckInbox()
-		end
-	end)
-end
-
-do
-	local Button = CreateFrame('Button', nil, InboxFrame, 'UIPanelButtonTemplate')
-	Button:SetPoint('BOTTOM', -28, 100)
-	Button:SetSize(90, 25)
-	Button:SetText(QUICKBUTTON_NAME_EVERYTHING)
-
-	local lastIndex
-	local function GetMail()
-		if(GetInboxNumItems() - lastIndex <= 0) then
-			Button:GetScript('OnHide')(Button)
-			return
-		end
-
-		local index = lastIndex + 1
-		local _, _, sender, _, money, cod, _, numItems, isRead, _, _, _, numStacks = GetInboxHeaderInfo(index)
-
-		if(money > 0) then
-			TakeInboxMoney(index)
-		end
-
-		if(numItems or numStacks) then
-			AutoLootMailItem(index)
-		end
-
-		if(sender == 'The Postmaster' and not numItems and money == 0) then
-			DeleteInboxItem(index)
-		elseif(isRead or cod > 0) then
-			lastIndex = index
-		end
-
-		C_Timer.After(1/2, GetMail)
-	end
-
-	Button:SetScript('OnClick', function(self)
-		self:Disable()
-		lastIndex = 0
-		GetMail()
-	end)
-
-	Button:SetScript('OnHide', function(self)
-		self:UnregisterEvent('MAIL_INBOX_UPDATE')
-		self:Enable()
-	end)
-end
+SendMailMoneyGold:HookScript('OnTextChanged', OnTextChanged)
+SendMailMoneySilver:HookScript('OnTextChanged', OnTextChanged)
+SendMailMoneyCopper:HookScript('OnTextChanged', OnTextChanged)

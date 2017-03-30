@@ -45,7 +45,11 @@ hooksecurefunc(GameTooltip, 'SetAction', function(self)
 end)
 
 hooksecurefunc(GameTooltip, 'SetArtifactPowerByID', function(self, powerID)
-	AddLine(SPELL, C_ArtifactUI.GetPowerInfo(powerID))
+	local info = C_ArtifactUI.GetPowerInfo(powerID)
+	if(info and info.spellID) then
+		AddLine(SPELL, info.spellID)
+		AddLine(ARTIFACT_POWER, powerID)
+	end
 end)
 
 hooksecurefunc(GameTooltip, 'SetAuctionItem', function(self, type, index)

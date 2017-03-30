@@ -24,7 +24,6 @@ for _, frame in next, {
 	'CollectionsMicroButton',
 	'EJMicroButton',
 	'MainMenuMicroButton',
-	'HelpMicroButton',
 	'MainMenuBarBackpackButton',
 	'CharacterBag0Slot',
 	'CharacterBag1Slot',

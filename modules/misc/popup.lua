@@ -9,8 +9,8 @@ function E:REPLACE_ENCHANT()
 end
 
 -- Make summon and invite popups escape-proof
-StaticPopupDialogs.PARTY_INVITE.hideOnEscape = 0
-StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = 0
+StaticPopupDialogs.PARTY_INVITE.hideOnEscape = false
+StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = false
 
 -- Remove the editbox for deleting "good" items
 StaticPopupDialogs.DELETE_ITEM.enterClicksFirstButton = true
