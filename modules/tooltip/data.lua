@@ -12,24 +12,8 @@ local currencyMatch = 'currency:(%d+)'
 
 local lineFormat = '%s ' .. ID .. ': |cff93ccea%s|r'
 local function AddLine(type, id)
-	GameTooltip:AddLine(string.format(lineFormat, type, id))
+	GameTooltip:AddLine(string.format(lineFormat, type, id or UNKNOWN))
 	GameTooltip:Show()
-end
-
-local function AddCurrencyLine(name, texture)
-	-- IDs of currencies can only be obtained by looking at the currencies already
-	-- obtained by the player, then matching the textures. Good job Blizzard!
-	for index = 1, GetCurrencyListSize() do
-		local listName, isHeader, isExpanded, _, _, _, listTexture = GetCurrencyListInfo(index)
-		if(isHeader and not isExpanded) then
-			ExpandCurrencyList(index, 1)
-			return AddCurrencyLine(name, texture)
-		elseif(listName == name and listTexture == texture) then
-			local currencyLink = GetCurrencyListLink(index)
-			AddLine(CURRENCY, string.match(currencyLink, currencyMatch))
-			return true
-		end
-	end
 end
 
 hooksecurefunc(GameTooltip, 'SetAction', function(self)
@@ -152,12 +136,13 @@ hooksecurefunc(GameTooltip, 'SetItemByID', function(self, itemID)
 end)
 
 hooksecurefunc(GameTooltip, 'SetLFGDungeonReward', function(self, dungeonID, index)
-	local itemLink = GetLFGDungeonRewardLink(dungeonID, index)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local _, _, _, _, rewardType, rewardID = GetLFGDungeonRewardInfo(dungeonID, index)
+	if(rewardType == 'currency') then
+		AddLine(rewardID)
 	else
-		if(not AddCurrencyLine(GetLFGDungeonRewardInfo(dungeonID, index))) then
-			AddLine(CURRENCY, UNKNOWN) -- currency has not been obtained by player yet
+		local itemLink = GetLFGDungeonRewardLink(dungeonID, index)
+		if(itemLink) then
+			AddLine(ITEM, string.match(itemLink, itemMatch))
 		end
 	end
 end)
@@ -191,13 +176,11 @@ hooksecurefunc(GameTooltip, 'SetLootRollItem', function(self, index)
 end)
 
 hooksecurefunc(GameTooltip, 'SetMerchantCostItem', function(self, index, currencyIndex)
-	local texture, _, itemLink, name = GetMerchantItemCostItem(index, currencyIndex)
+	local _, _, itemLink, _, currencyID = GetMerchantItemCostItem(index, currencyIndex)
 	if(itemLink) then
 		AddLine(ITEM, string.match(itemLink, itemMatch))
 	else
-		if(not AddCurrencyLine(name, texture)) then
-			AddLine(CURRENCY, UNKNOWN) -- currency has not been obtained by player yet
-		end
+		AddLine(CURRENCY, currencyID)
 	end
 end)
 
@@ -234,9 +217,7 @@ hooksecurefunc(GameTooltip, 'SetPvpTalent', function(self, id, isInspect, _, ins
 end)
 
 hooksecurefunc(GameTooltip, 'SetQuestCurrency', function(self, type, index)
-	if(not AddCurrencyLine(GetQuestCurrencyInfo(type, index))) then
-		AddLine(CURRENCY, UNKNOWN) -- currency has not been obtained by player yet
-	end
+	AddLine(CURRENCY, GetQuestCurrencyID(type, index))
 end)
 
 hooksecurefunc(GameTooltip, 'SetQuestItem', function(self, type, index)
@@ -248,9 +229,8 @@ end)
 
 hooksecurefunc(GameTooltip, 'SetQuestLogCurrency', function(self, type, index)
 	if(type == 'reward') then
-		if(not AddCurrencyLine(GetQuestLogRewardCurrencyInfo(index))) then
-			AddLine(CURRENCY, UNKNOWN) -- currency has not been obtained by player yet
-		end
+		local _, _, _, currencyID = GetQuestLogRewardCurrencyInfo(index)
+		AddLine(CURRENCY, currencyID)
 	end
 end)
 
@@ -406,3 +386,70 @@ hooksecurefunc(GameTooltip, 'SetUnitAura', function(self, unit, index, filter)
 		AddLine(SPELL, spellID)
 	end
 end)
+
+
+-- polyfills
+
+local function GetCurrencyID(name, texture)
+	-- IDs of currencies can only be obtained by looking at the currencies already
+	-- obtained by the player, then matching the textures. Good job Blizzard!
+	-- This is used as a polyfill until 7.2.5 for:
+	-- - GetQuestLogRewardCurrencyInfo
+	-- - GetLFGDungeonRewardInfo
+	-- - GetQuestCurrencyID
+
+	for index = 1, GetCurrencyListSize() do
+		local listName, isHeader, isExpanded, _, _, _, listTexture = GetCurrencyListInfo(index)
+		if(isHeader and not isExpanded) then
+			ExpandCurrencyList(index, 1)
+			return GetCurrencyID(name, texture)
+		elseif(listName == name and listTexture == texture) then
+			local currencyLink = GetCurrencyListLink(index)
+			return string.match(currencyLink, currencyMatch)
+		end
+	end
+end
+
+local _GetQuestLogRewardCurrencyInfo = GetQuestLogRewardCurrencyInfo
+function GetQuestLogRewardCurrencyInfo(...) -- Will be implemented in 7.2.5
+	local name, texture, numItems, currencyID = _GetQuestLogRewardCurrencyInfo(...)
+	if(currencyID) then -- 7.2.5
+		return name, texture, numItems, currencyID
+	else
+		return name, texture, numItems, GetCurrencyID(name, texture)
+	end
+end
+
+local _GetMerchantItemCostItem = GetMerchantItemCostItem
+function GetMerchantItemCostItem(...)
+	local texture, value, itemLink, name, currencyID = GetMerchantItemCostItem(...)
+	if(not itemLink) then
+		-- currencyID does not exist, please Dan!
+		currencyID = GetCurrencyID(name, texture)
+	end
+
+	return texture, value, itemLink, name, currencyID
+end
+
+local _GetLFGDungeonRewardInfo = GetLFGDungeonRewardInfo
+function GetLFGDungeonRewardInfo(...)
+	local name, texture, numItems, isBonus, rewardType, rewardID = _GetLFGDungeonRewardInfo(...)
+	if(not rewardType) then -- 7.2.0
+		local itemLink = GetLFGDungeonRewardLink(...)
+		if(itemLink) then
+			rewardType = 'item'
+			rewardID = string.match(itemLink, itemMatch)
+		else
+			rewardType = 'currency'
+			rewardID = GetCurrencyID(name, texture)
+		end
+	end
+
+	return name, texture, numItems, isBonus, rewardType, rewardID
+end
+
+if(not GetQuestCurrencyID) then
+	function GetQuestCurrencyID(...) -- Will be implemented in 7.2.5
+		return GetCurrencyID(GetQuestCurrencyInfo(...))
+	end
+end
