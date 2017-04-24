@@ -422,7 +422,7 @@ end
 
 local _GetMerchantItemCostItem = GetMerchantItemCostItem
 function GetMerchantItemCostItem(...)
-	local texture, value, itemLink, name, currencyID = GetMerchantItemCostItem(...)
+	local texture, value, itemLink, name, currencyID = _GetMerchantItemCostItem(...)
 	if(not itemLink) then
 		-- currencyID does not exist, please Dan!
 		currencyID = GetCurrencyID(name, texture)
