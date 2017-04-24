@@ -58,6 +58,84 @@ function E:UPDATE_INVENTORY_DURABILITY()
 	end
 end
 
+local function OnGarrisonEnter(self)
+	GameTooltip:SetOwner(self, 'ANCHOR_BOTTOMLEFT')
+	GameTooltip:SetText(self.title, 1, 1, 1)
+
+	local garrisonType = C_Garrison.GetLandingPageGarrisonType()
+	if(garrisonType == LE_GARRISON_TYPE_7_0) then
+		GameTooltip:AddLine(' ')
+
+		for _, containerID in next, C_Garrison.GetLooseShipments(garrisonType) do
+			local name, texture, cap, ready, _, _, _, timeLeft = C_Garrison.GetLandingPageShipmentInfoByContainerID(containerID)
+
+			local r, g, b
+			if(ready > 0) then
+				r, g, b = 0, 1, 0
+			end
+
+			GameTooltip:AddDoubleLine(ready .. '/' .. cap .. ' - ' .. name, timeLeft, r, g, b)
+		end
+
+		for _, data in next, C_Garrison.GetTalentTrees(garrisonType, select(3, UnitClass('player')))[1] do
+			if(data.isBeingResearched) then
+				GameTooltip:AddDoubleLine('Upgrade: ' .. data.name, SecondsToTime(data.researchTimeRemaining))
+			end
+		end
+
+		GameTooltip:AddLine(' ')
+
+		local missions = C_Garrison.GetLandingPageItems(garrisonType)
+		local completed, ongoing = {}, {}
+
+		for index, data in next, missions do
+			if(data.timeLeftSeconds == 0) then
+				table.insert(completed, data)
+			else
+				table.insert(ongoing, data)
+			end
+		end
+
+		if(#completed > 0) then
+			GameTooltip:AddLine('Missions Completed', 1, 1, 1)
+
+			for _, data in next, completed do
+				GameTooltip:AddLine('- ' .. data.name, 0, 1, 0)
+			end
+
+			GameTooltip:AddLine(' ')
+		end
+
+		if(#ongoing > 0) then
+			GameTooltip:AddLine('Missions In Progress', 1, 1, 1)
+
+			for _, data in next, ongoing do
+				GameTooltip:AddDoubleLine('- ' .. data.name, SecondsToTime(data.timeLeftSeconds))
+			end
+
+			GameTooltip:AddLine(' ')
+		end
+
+		local available = C_Garrison.GetAvailableMissions(GetPrimaryGarrisonFollowerType(garrisonType))
+		if(#available > 0) then
+			GameTooltip:AddLine('Missions Available', 1, 1, 1)
+
+			for _, data in next, available do
+				if(not data.offerEndTime) then
+					-- print(data.name)
+				else
+					GameTooltip:AddDoubleLine('- ' .. data.name, SecondsToTime(data.offerEndTime - GetTime()))
+				end
+			end
+
+			GameTooltip:AddLine(' ')
+		end
+	end
+
+	GameTooltip:AddLine(self.description, 1/2, 1/2, 1/2)
+	GameTooltip:Show()
+end
+
 function E:PLAYER_LOGIN()
 	Minimap:ClearAllPoints()
 	Minimap:SetParent(UIParent)
@@ -75,6 +153,7 @@ function E:PLAYER_LOGIN()
 	GarrisonLandingPageMinimapButton:SetParent(Minimap)
 	GarrisonLandingPageMinimapButton:SetPoint('BOTTOMLEFT')
 	GarrisonLandingPageMinimapButton:SetSize(32, 32)
+	GarrisonLandingPageMinimapButton:SetScript('OnEnter', OnGarrisonEnter)
 
 	QueueStatusMinimapButton:ClearAllPoints()
 	QueueStatusMinimapButton:SetParent(Minimap)
