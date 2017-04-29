@@ -66,16 +66,6 @@ QueueStatusMinimapButton.EyeHighlightAnim:SetScript('OnLoop', nil)
 VehicleSeatIndicator:UnregisterAllEvents()
 VehicleSeatIndicator:Hide()
 
--- Show the group finder button on every world quest
-function QuestUtils_CanUseAutoGroupFinder(questID, isDropdownRequest)
-	if(not IsQuestComplete(questID)) then
-		local _, _, worldQuestType = GetQuestTagInfo(questID)
-		if(worldQuestType ~= nil and C_LFGList.GetActivityIDForQuestID(questID)) then
-			return true
-		end
-	end
-end
-
 -- Reduce the size of RCLootCouncil's frames
 function E:ADDON_LOADED(addon)
 	if(addon == 'RCLootCouncil') then
