@@ -236,8 +236,10 @@ StaticPopupDialogs.INOMENA_LEAVE_QUEST_GROUP = {
 	whileDead = true,
 }
 
+local _ERR_RAID_YOU_JOINED = ERR_RAID_YOU_JOINED:gsub('|c', '\n|c')
+
 StaticPopupDialogs.INOMENA_LEAVE_RAID_QUEST_GROUP = {
-	text = string.format('|cffff0000%s|r', ERR_PARTY_CONVERTED_TO_RAID), -- "Party converted to Raid"
+	text = _ERR_RAID_YOU_JOINED,
 	button1 = CHAT_LEAVE, -- "Leave"
 	button2 = PET_WAIT, -- "Stay"
 	OnAccept = function()
