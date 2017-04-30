@@ -176,10 +176,12 @@ function E:QUEST_TURNED_IN(questID)
 end
 
 -- Popup to warn when joined a raid for non-raid quests
+local warned
 local function RaidWarning()
 	local questID = select(11, C_LFGList.GetActiveEntryInfo())
 	if(questID and QuestUtils_IsQuestWorldQuest(questID)) then
 		if(IsInRaid(LE_PARTY_CATEGORY_HOME) and not raidQuests[questID]) then
+			warned = true
 			StaticPopup_Show('INOMENA_LEAVE_RAID_QUEST_GROUP')
 		end
 	end
@@ -187,6 +189,10 @@ end
 
 E:RegisterEvent('GROUP_JOINED', RaidWarning)
 E:RegisterEvent('GROUP_ROSTER_UPDATE', RaidWarning)
+
+function E:GROUP_LEFT()
+	warned = false
+end
 
 -- Hide auto-convert popups
 hooksecurefunc('StaticPopup_Show', function(which)
@@ -237,7 +243,6 @@ StaticPopupDialogs.INOMENA_LEAVE_RAID_QUEST_GROUP = {
 	OnAccept = function()
 		LeaveParty()
 	end,
-	timeout = 10,
 	hideOnEscape = 0,
 	whileDead = true,
 }
