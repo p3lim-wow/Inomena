@@ -170,7 +170,7 @@ local raidQuests = {
 
 -- Popup to leave group after WQ finished
 function E:QUEST_TURNED_IN(questID)
-	if(IsInGroup(LE_PARTY_CATEGORY_HOME) and QuestUtils_IsQuestWorldQuest(questID)) then
+	if(IsInGroup(LE_PARTY_CATEGORY_HOME) and QuestUtils_IsQuestWorldQuest(questID) and not (IsInInstance())) then
 		StaticPopup_Show('INOMENA_LEAVE_QUEST_GROUP')
 	end
 end
