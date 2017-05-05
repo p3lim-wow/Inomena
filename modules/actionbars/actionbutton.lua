@@ -57,6 +57,11 @@ function F:SkinActionButton(Button, petButton, leaveButton)
 		if(NewActionTexture) then
 			NewActionTexture:SetTexture(nil)
 		end
+
+		local AutoCastable = Button.AutoCastable
+		if(AutoCastable) then
+			AutoCastable:SetTexture(nil)
+		end
 	end
 
 	local Count = Button.Count
@@ -107,6 +112,22 @@ function F:SkinActionButton(Button, petButton, leaveButton)
 
 	Button.Skinned = true
 end
+
+local function UpdateBorder(self)
+	local action = self.action
+	if(C_ActionBar.IsEnabledAutoCastPetAction(action)) then
+		AutoCastShine_AutoCastStop(self.AutoCastShine)
+
+		self:SetBackdropBorderColor(1, 1, 0)
+	elseif(IsCurrentAction(action)--[[or IsAutoRepeatAction(action)]]) then
+		self:SetBackdropBorderColor(0, 1/2, 1)
+	else
+		self:SetBackdropBorderColor(0, 0, 0)
+	end
+end
+
+hooksecurefunc('ActionButton_UpdateFlash', UpdateBorder)
+hooksecurefunc('ActionButton_UpdateState', UpdateBorder)
 
 C.actionButtons = {
 	'ActionButton',
