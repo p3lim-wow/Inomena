@@ -32,17 +32,16 @@ function F:SkinActionButton(Button, petButton, leaveButton)
 	StringParent:SetFrameLevel(20)
 
 	local CheckedTexture = not leaveButton and Button:GetCheckedTexture()
+	if(CheckedTexture) then
+		CheckedTexture:SetTexture(nil)
+	end
+
 	if(petButton) then
 		Button.HotKey:SetAlpha(0)
 
 		hooksecurefunc(Button, 'SetNormalTexture', PersistentNormalTexture)
 
-		CheckedTexture:SetColorTexture(0, 1/2, 1, 1/3)
-		CheckedTexture:ClearAllPoints()
-		CheckedTexture:SetPoint('TOPRIGHT', -1, -1)
-		CheckedTexture:SetPoint('BOTTOMLEFT', 1, 1)
-
-		_G[name .. 'AutoCastable']:SetAlpha(0)
+		_G[name .. 'AutoCastable']:SetTexture(nil)
 	else
 		local HotKey = Button.HotKey
 		HotKey:SetParent(StringParent)
@@ -53,10 +52,6 @@ function F:SkinActionButton(Button, petButton, leaveButton)
 		local NormalTexture = Button.NormalTexture
 		NormalTexture:SetTexture(nil)
 		hooksecurefunc(NormalTexture, 'SetVertexColor', UpdateButton)
-
-		if(CheckedTexture) then
-			CheckedTexture:SetTexture(nil)
-		end
 
 		local NewActionTexture = Button.NewActionTexture
 		if(NewActionTexture) then

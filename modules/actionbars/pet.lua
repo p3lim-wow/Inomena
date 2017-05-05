@@ -6,6 +6,21 @@ Parent:SetSize(290, 29)
 
 RegisterStateDriver(Parent, 'visibility', '[petbattle][overridebar][vehicleui][possessbar,@vehicle,exists] hide; [@pet,exists] show; hide')
 
+local function UpdateBorder(self)
+	local index = self:GetID()
+
+	local _, _, _, _, isActive, _, autoCastEnabled = GetPetActionInfo(index)
+	if(autoCastEnabled) then
+		AutoCastShine_AutoCastStop(_G[self:GetName() .. 'Shine'])
+
+		self:SetBackdropBorderColor(1, 1, 0)
+	elseif(isActive) then
+		self:SetBackdropBorderColor(0, 1/2, 1)
+	else
+		self:SetBackdropBorderColor(0, 0, 0)
+	end
+end
+
 for index = 1, NUM_PET_ACTION_SLOTS do
 	local Button = _G['PetActionButton' .. index]
 	Button:ClearAllPoints()
@@ -16,6 +31,8 @@ for index = 1, NUM_PET_ACTION_SLOTS do
 		Button:SetPoint('LEFT', _G['PetActionButton' .. index - 1], 'RIGHT', 5, 0)
 	end
 
+	hooksecurefunc(Button, 'SetChecked', UpdateBorder)
+
 	F:SkinActionButton(Button, true)
 end
 
@@ -24,15 +41,6 @@ PetActionBarFrame:EnableMouse(false)
 
 hooksecurefunc('PetActionBar_Update', function(self)
 	for index = 1, NUM_PET_ACTION_SLOTS do
-		local Button = _G['PetActionButton' .. index]
-
-		local _, _, _, _, _, _, autoCastEnabled = GetPetActionInfo(index)
-		if(autoCastEnabled) then
-			AutoCastShine_AutoCastStop(_G['PetActionButton' .. index .. 'Shine'])
-
-			Button:SetBackdropBorderColor(1, 1, 0)
-		else
-			Button:SetBackdropBorderColor(0, 0, 0)
-		end
+		UpdateBorder(_G['PetActionButton' .. index])
 	end
 end)
