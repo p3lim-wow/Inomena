@@ -180,7 +180,7 @@ local warned
 local function RaidWarning()
 	local questID = select(11, C_LFGList.GetActiveEntryInfo())
 	if(questID and QuestUtils_IsQuestWorldQuest(questID)) then
-		if(IsInRaid(LE_PARTY_CATEGORY_HOME) and not raidQuests[questID]) then
+		if(IsInRaid(LE_PARTY_CATEGORY_HOME) and not raidQuests[questID] and not warned) then
 			warned = true
 			StaticPopup_Show('INOMENA_LEAVE_RAID_QUEST_GROUP')
 		end
