@@ -77,9 +77,12 @@ local function OnGarrisonEnter(self)
 			GameTooltip:AddDoubleLine(ready .. '/' .. cap .. ' - ' .. name, timeLeft, r, g, b)
 		end
 
-		for _, data in next, C_Garrison.GetTalentTrees(garrisonType, select(3, UnitClass('player')))[1] do
-			if(data.isBeingResearched) then
-				GameTooltip:AddDoubleLine('Upgrade: ' .. data.name, SecondsToTime(data.researchTimeRemaining))
+		local talentTreeID = C_Garrison.GetTalentTreeIDsByClassID(garrisonType, select(3, UnitClass('player')))
+		if(talentTreeID and talentTreeID[1]) then
+			for _, talent in next, (select(3, C_Garrison.GetTalentTreeInfoForID(garrisonType, talentTreeID[1]))) do
+				if(talent.isBeingResearched) then
+					GameTooltip:AddDoubleLine('Upgrade: ' .. data.name, SecondsToTime(data.researchTimeRemaining))
+				end
 			end
 		end
 
