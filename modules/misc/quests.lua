@@ -165,8 +165,8 @@ local raidQuests = {
 	[42270] = true, -- Scourge of the Skies
 	[43512] = true, -- Ana-Mouz
 	[43985] = true, -- A Dark Tide
+	[46947] = true, -- Brutallus
 }
-
 
 -- Popup to leave group after WQ finished
 function E:QUEST_TURNED_IN(questID)
