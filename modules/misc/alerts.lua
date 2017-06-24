@@ -10,8 +10,8 @@ local function Alert()
 	end
 end
 
-function E:UPDATE_BATTLEFIELD_STATUS()
-	if(StaticPopup_Visible('CONFIRM_BATTLEFIELD_ENTRY')) then
+function E:UPDATE_BATTLEFIELD_STATUS(index)
+	if((GetBattlefieldStatus(index)) == 'confirm') then
 		Alert()
 	end
 end
