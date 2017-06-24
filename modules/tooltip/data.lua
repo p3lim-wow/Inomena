@@ -21,9 +21,9 @@ hooksecurefunc(GameTooltip, 'SetAction', function(self)
 	if(spellID) then
 		AddLine(SPELL, spellID)
 	else
-		local _, itemLink = self:GetItem()
-		if(itemLink) then
-			AddLine(ITEM, string.match(itemLink, itemMatch))
+		local _, link = self:GetItem()
+		if(link) then
+			AddLine(ITEM, GetItemCreationContext(link))
 		end
 	end
 end)
@@ -37,19 +37,16 @@ hooksecurefunc(GameTooltip, 'SetArtifactPowerByID', function(self, powerID)
 end)
 
 hooksecurefunc(GameTooltip, 'SetAuctionItem', function(self, type, index)
-	local itemLink = GetAuctionItemLink(type, index)
-	if(itemLink) then
-		local itemID = string.match(itemLink, itemMatch)
-		if(itemID) then
-			AddLine(ITEM, itemID)
-		end
+	local link = GetAuctionItemLink(type, index)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
 hooksecurefunc(GameTooltip, 'SetAuctionSellItem', function(self)
-	local _, itemLink = self:GetItem()
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local _, link = self:GetItem()
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
@@ -66,9 +63,9 @@ hooksecurefunc(GameTooltip, 'SetBagItem', function(self, container, slot)
 end)
 
 hooksecurefunc(GameTooltip, 'SetBuybackItem', function(self, slot)
-	local itemLink = GetBuybackItemLink(slot)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetBuybackItemLink(slot)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
@@ -77,9 +74,9 @@ hooksecurefunc(GameTooltip, 'SetCurrencyByID', function(self, currencyID)
 end)
 
 hooksecurefunc(GameTooltip, 'SetCurrencyToken', function(self, listIndex)
-	local itemLink = GetCurrencyListLink(listIndex)
-	if(itemLink) then
-		AddLine(CURRENCY, string.match(itemLink, currencyMatch))
+	local link = GetCurrencyListLink(listIndex)
+	if(link) then
+		AddLine(CURRENCY, string.match(link, currencyMatch))
 	end
 end)
 
@@ -88,16 +85,16 @@ hooksecurefunc(GameTooltip, 'SetCurrencyTokenByID', function(self, currencyID)
 end)
 
 hooksecurefunc(GameTooltip, 'SetExistingSocketGem', function(self, slot)
-	local itemLink = GetExistingSocketLink(slot)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetExistingSocketLink(slot)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
 hooksecurefunc(GameTooltip, 'SetGuildBankItem', function(self, tab, slot)
-	local itemLink = GetGuildBankItemLink(tab, slot)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetGuildBankItemLink(tab, slot)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
@@ -106,7 +103,7 @@ hooksecurefunc(GameTooltip, 'SetHeirloomByItemID', function(self, itemID)
 end)
 
 hooksecurefunc(GameTooltip, 'SetHyperlink', function(self, link)
-	local itemID = string.match(link, itemMatch)
+	local itemID = GetItemInfoFromHyperlink(link)
 	if(itemID) then
 		AddLine(ITEM, itemID)
 	else
@@ -118,9 +115,9 @@ hooksecurefunc(GameTooltip, 'SetHyperlink', function(self, link)
 end)
 
 hooksecurefunc(GameTooltip, 'SetInboxItem', function(self, index, slot)
-	local itemLink = GetInboxItemLink(index, slot or 1)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetInboxItemLink(index, slot or 1)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
@@ -138,56 +135,56 @@ end)
 hooksecurefunc(GameTooltip, 'SetLFGDungeonReward', function(self, dungeonID, index)
 	local _, _, _, _, rewardType, rewardID = GetLFGDungeonRewardInfo(dungeonID, index)
 	if(rewardType == 'currency') then
-		AddLine(rewardID)
-	else
-		local itemLink = GetLFGDungeonRewardLink(dungeonID, index)
-		if(itemLink) then
-			AddLine(ITEM, string.match(itemLink, itemMatch))
-		end
+		AddLine(CURRENCY, rewardID)
+	elseif(link) then
+		AddLine(ITEM, GetItemCreationContext(GetLFGDungeonRewardLink(dungeonID, index)))
 	end
 end)
 
 hooksecurefunc(GameTooltip, 'SetLFGDungeonShortageReward', function(self, dungeonID, shortage, index)
-	local itemLink = GetLFGDungeonShortageRewardLink(dungeonID, shortage, index)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetLFGDungeonShortageRewardLink(dungeonID, shortage, index)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
 hooksecurefunc(GameTooltip, 'SetLootCurrency', function(self, slot)
-	local itemLink = GetLootSlotLink(slot)
-	if(itemLink) then
-		AddLine(CURRENCY, string.match(itemLink, currencyMatch))
+	local link = GetLootSlotLink(slot)
+	if(link) then
+		AddLine(CURRENCY, string.match(link, currencyMatch))
 	end
 end)
 
 hooksecurefunc(GameTooltip, 'SetLootItem', function(self, slot)
-	local itemLink = GetLootSlotLink(slot)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetLootSlotLink(slot)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
 hooksecurefunc(GameTooltip, 'SetLootRollItem', function(self, index)
-	local itemLink = GetLootRollItemLink(index)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetLootRollItemLink(index)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
 hooksecurefunc(GameTooltip, 'SetMerchantCostItem', function(self, index, currencyIndex)
-	local _, _, itemLink, _, currencyID = GetMerchantItemCostItem(index, currencyIndex)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
-	else
-		AddLine(CURRENCY, currencyID)
+	local _, _, link = GetMerchantItemCostItem(index, currencyIndex)
+	if(link) then
+		local itemID = GetItemInfoFromHyperlink(link)
+		if(itemID) then
+			AddLine(ITEM, itemID)
+		else
+			AddLine(CURRENCY, string.match(link, currencyMatch))
+		end
 	end
 end)
 
 hooksecurefunc(GameTooltip, 'SetMerchantItem', function(self, slot)
-	local itemLink = GetMerchantItemLink(slot)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetMerchantItemLink(slot)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
@@ -235,9 +232,9 @@ hooksecurefunc(GameTooltip, 'SetQuestLogCurrency', function(self, type, index)
 end)
 
 hooksecurefunc(GameTooltip, 'SetQuestLogItem', function(self, type, index)
-	local itemLink = GetQuestLogItemLink(type, index)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetQuestLogItemLink(type, index)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
@@ -249,9 +246,9 @@ hooksecurefunc(GameTooltip, 'SetQuestLogRewardSpell', function(self)
 end)
 
 hooksecurefunc(GameTooltip, 'SetQuestLogSpecialItem', function(self, questIndex)
-	local itemLink = GetQuestLogSpecialItemInfo(questIndex)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetQuestLogSpecialItemInfo(questIndex)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
@@ -263,9 +260,9 @@ hooksecurefunc(GameTooltip, 'SetQuestRewardSpell', function(self)
 end)
 
 hooksecurefunc(GameTooltip, 'SetRecipeReagentItem', function(self, spellID, index)
-	local itemLink = C_TradeSkillUI.GetRecipeReagentItemLink(spellID, index)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = C_TradeSkillUI.GetRecipeReagentItemLink(spellID, index)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
@@ -274,9 +271,9 @@ hooksecurefunc(GameTooltip, 'SetRecipeResultItem', function(self, spellID)
 end)
 
 hooksecurefunc(GameTooltip, 'SetSendMailItem', function(self, slot)
-	local itemLink = GetSendMailItemLink(slot)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetSendMailItemLink(slot)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
@@ -286,9 +283,9 @@ hooksecurefunc(GameTooltip, 'SetShapeshift', function(self, index)
 end)
 
 hooksecurefunc(GameTooltip, 'SetSocketGem', function(self, slot)
-	local itemLink = GetNewSocketLink(slot)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetNewSocketLink(slot)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
@@ -320,16 +317,16 @@ hooksecurefunc(GameTooltip, 'SetToyByItemID', function(self, itemID)
 end)
 
 hooksecurefunc(GameTooltip, 'SetTradePlayerItem', function(self, slot)
-	local itemLink = GetTradePlayerItemLink(slot)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetTradePlayerItemLink(slot)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
 hooksecurefunc(GameTooltip, 'SetTradeTargetItem', function(self, slot)
-	local itemLink = GetTradeTargetItemLink(slot)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetTradeTargetItemLink(slot)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
@@ -339,9 +336,9 @@ hooksecurefunc(GameTooltip, 'SetTrainerService', function(self, index)
 		AddLine(SPELL, spellID)
 	end
 
-	local itemLink = GetTrainerServiceItemLink(index)
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local link = GetTrainerServiceItemLink(index)
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
@@ -353,9 +350,9 @@ hooksecurefunc(GameTooltip, 'SetTransmogrifyItem', function(self, slot)
 end)
 
 hooksecurefunc(GameTooltip, 'SetUpgradeItem', function(self)
-	local _, itemLink = self:GetItem()
-	if(itemLink) then
-		AddLine(ITEM, string.match(itemLink, itemMatch))
+	local _, link = self:GetItem()
+	if(link) then
+		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
 
@@ -386,70 +383,3 @@ hooksecurefunc(GameTooltip, 'SetUnitAura', function(self, unit, index, filter)
 		AddLine(SPELL, spellID)
 	end
 end)
-
-
--- polyfills
-
-local function GetCurrencyID(name, texture)
-	-- IDs of currencies can only be obtained by looking at the currencies already
-	-- obtained by the player, then matching the textures. Good job Blizzard!
-	-- This is used as a polyfill until 7.2.5 for:
-	-- - GetQuestLogRewardCurrencyInfo
-	-- - GetLFGDungeonRewardInfo
-	-- - GetQuestCurrencyID
-
-	for index = 1, GetCurrencyListSize() do
-		local listName, isHeader, isExpanded, _, _, _, listTexture = GetCurrencyListInfo(index)
-		if(isHeader and not isExpanded) then
-			ExpandCurrencyList(index, 1)
-			return GetCurrencyID(name, texture)
-		elseif(listName == name and listTexture == texture) then
-			local currencyLink = GetCurrencyListLink(index)
-			return string.match(currencyLink, currencyMatch)
-		end
-	end
-end
-
-local _GetQuestLogRewardCurrencyInfo = GetQuestLogRewardCurrencyInfo
-function GetQuestLogRewardCurrencyInfo(...) -- Will be implemented in 7.2.5
-	local name, texture, numItems, currencyID = _GetQuestLogRewardCurrencyInfo(...)
-	if(currencyID) then -- 7.2.5
-		return name, texture, numItems, currencyID
-	else
-		return name, texture, numItems, GetCurrencyID(name, texture)
-	end
-end
-
-local _GetMerchantItemCostItem = GetMerchantItemCostItem
-function GetMerchantItemCostItem(...)
-	local texture, value, itemLink, name, currencyID = _GetMerchantItemCostItem(...)
-	if(not itemLink) then
-		-- currencyID does not exist, please Dan!
-		currencyID = GetCurrencyID(name, texture)
-	end
-
-	return texture, value, itemLink, name, currencyID
-end
-
-local _GetLFGDungeonRewardInfo = GetLFGDungeonRewardInfo
-function GetLFGDungeonRewardInfo(...)
-	local name, texture, numItems, isBonus, rewardType, rewardID = _GetLFGDungeonRewardInfo(...)
-	if(not rewardType) then -- 7.2.0
-		local itemLink = GetLFGDungeonRewardLink(...)
-		if(itemLink) then
-			rewardType = 'item'
-			rewardID = string.match(itemLink, itemMatch)
-		else
-			rewardType = 'currency'
-			rewardID = GetCurrencyID(name, texture)
-		end
-	end
-
-	return name, texture, numItems, isBonus, rewardType, rewardID
-end
-
-if(not GetQuestCurrencyID) then
-	function GetQuestCurrencyID(...) -- Will be implemented in 7.2.5
-		return GetCurrencyID(GetQuestCurrencyInfo(...))
-	end
-end
