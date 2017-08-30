@@ -5,7 +5,7 @@ function E:MERCHANT_SHOW()
 		local cost, canRepair = GetRepairAllCost()
 		if(canRepair) then
 			RepairAllItems(CanGuildBankRepair() and CanWithdrawGuildBankMoney() and GetGuildBankMoney() >= cost and GetGuildBankWithdrawMoney() >= cost)
-			PlaySound('ITEM_REPAIR')
+			PlaySound(SOUNDKIT.ITEM_REPAIR)
 		end
 	end
 end

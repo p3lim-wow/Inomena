@@ -1,10 +1,9 @@
 local E, F = unpack(select(2, ...))
 
 local lastAlert = 0
-local soundFile = [[Sound\Interface\ReadyCheck.ogg]]
 local function Alert()
 	if(GetTime() >= lastAlert + 10) then
-		PlaySoundFile(soundFile, 'Master')
+		PlaySound(SOUNDKIT.READY_CHECK, 'master')
 		FlashClientIcon()
 		lastAlert = GetTime()
 	end
