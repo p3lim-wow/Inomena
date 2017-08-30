@@ -133,8 +133,3 @@ function E:ADDON_LOADED(addon)
 		return true
 	end
 end
-
-function E:PLAYER_LOGIN()
-	RegisterStyle()
-	return true
-end
