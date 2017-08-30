@@ -13,7 +13,7 @@ function E:PARTY_INVITE_REQUEST(name, l, f, g)
 
 	for index = 1, select(2, BNGetNumFriends()) do
 		local _, _, _, _, toonName, _, client = BNGetFriendInfo(index)
-		if(client == BNET_CLIENT_WOW and name:match(toonName, name)) then
+		if(client == BNET_CLIENT_WOW and name:match(toonName)) then
 			return AcceptGroup()
 		end
 	end
