@@ -33,5 +33,15 @@ C.ClientColors = {
 
 C.playerClass = select(2, UnitClass('player'))
 
+-- Colors
+C.BLACK = CreateColor(0, 0, 0)
+C.YELLOW = YELLOW_FONT_COLOR
+C.BLUE = LIGHTBLUE_FONT_COLOR
+
 -- Expose (mainly for Inomena_Settings)
 _G[C.Name] = {E, F, C}
+
+local LSM = LibStub('LibSharedMedia-3.0')
+if(LSM) then
+	LSM:Register(LSM.MediaType.STATUSBAR, 'ChatFrameBackground', C.PlainTexture)
+end
