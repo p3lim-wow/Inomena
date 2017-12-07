@@ -26,7 +26,7 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 	end
 
 	local color = GetColor(unit) or WHITE
-	GameTooltipTextLeft1:SetFormattedText('%s%s', ConvertRGBtoColorString(color), GetUnitName(unit, true))
+	GameTooltipTextLeft1:SetFormattedText('%s%s', ConvertRGBtoColorString(color), GetUnitName(unit, true) or '')
 
 	local guildName = GetGuildInfo(unit)
 
