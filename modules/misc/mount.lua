@@ -3,7 +3,7 @@ local E, F, C = unpack(select(2, ...))
 local MOD_ALTERNATE = '[mod:shift]'
 local MOD_VENDOR = '[mod:alt]'
 
-local STOP_MACRO = '/stopmacro [nooutdoors][combat][mounted][vehicleui]'
+local STOP_MACRO = '/stopmacro [nooutdoors][mounted][vehicleui]'
 
 local Button = CreateFrame('Button', C.Name .. 'MountButton', nil, 'SecureActionButtonTemplate')
 Button:SetAttribute('type', 'macro')
@@ -93,10 +93,7 @@ local function PreClick()
 		mountID = ownedMounts.vendor
 	elseif(SecureCmdOptionParse(MOD_ALTERNATE)) then
 		spellID =  WaterWalkingSpell()
-
-		if(spellID) then
-			mountID = 0
-		elseif(#ownedMounts[269] > 0) then
+		if(not spellId and #ownedMounts[269] > 0) then
 			mountID = ownedMounts[269][math.random(#ownedMounts[269])]
 		end
 	end
