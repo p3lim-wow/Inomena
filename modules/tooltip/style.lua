@@ -144,6 +144,6 @@ for _, name in next, {
 	'GameTooltipTextSmall', -- shoppingtooltip
 } do
 	local Text = _G[name]
-	Text:SetFont(C.Font, C.FontSize, C.FontFlags)
+	Text:SetFontObject('PixelFontNormal')
 	Text:SetShadowOffset(0, 0)
 end
