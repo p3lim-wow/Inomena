@@ -120,8 +120,6 @@ local function UpdateBorder(self)
 		AutoCastShine_AutoCastStop(self.AutoCastShine)
 
 		self:SetBackdropBorderColor(1, 1, 0)
-	elseif(IsCurrentAction(action)--[[or IsAutoRepeatAction(action)]]) then
-		self:SetBackdropBorderColor(0, 1/2, 1)
 	else
 		self:SetBackdropBorderColor(0, 0, 0)
 	end
