@@ -80,21 +80,31 @@ function E:ADDON_LOADED(addon)
 end
 
 -- Add movement speed back to the CharacterFrame
-function PaperDollFrame_SetMovementSpeed(self, unit)
-	self.wasSwimming = nil
-	self.unit = unit
-	MovementSpeed_OnUpdate(self)
+if(tonumber((select(2, GetBuildInfo()))) < 25632) then
+	function PaperDollFrame_SetMovementSpeed(self, unit)
+		if(unit ~= 'player') then
+			self:Hide()
+			return
+		end
 
-	self.onEnterFunc = MovementSpeed_OnEnter
-	self:SetScript('OnUpdate', MovementSpeed_OnUpdate)
-	self:Show()
+		self.wasSwimming = nil
+		self.unit = unit
+		self:Show()
+		MovementSpeed_OnUpdate(self)
+
+		self.onEnterFunc = MovementSpeed_OnEnter
+		self:SetScript('OnUpdate', MovementSpeed_OnUpdate)
+	end
+
+	CharacterStatsPane.statsFramePool.resetterFunc = function(pool, frame)
+		frame:SetScript('OnUpdate', nil)
+		frame.onEnterFunc = nil
+		frame.UpdateTooltip = nil
+		FramePool_HideAndClearAnchors(pool, frame)
+	end
+
+	table.insert(PAPERDOLL_STATCATEGORIES[1].stats, {stat = 'MOVESPEED'})
+else
+	PAPERDOLL_STATCATEGORIES[2][7].hideAt = nil
 end
 
-CharacterStatsPane.statsFramePool.resetterFunc = function(pool, frame)
-	frame:SetScript('OnUpdate', nil)
-	frame.onEnterFunc = nil
-	frame.UpdateTooltip = nil
-	FramePool_HideAndClearAnchors(pool, frame)
-end
-
-table.insert(PAPERDOLL_STATCATEGORIES[1].stats, {stat = 'MOVESPEED'})
