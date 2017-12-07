@@ -4,6 +4,7 @@
 ## Title: Inomena
 ## Notes: Personal UI
 ## SavedVariables: InomenaLastGM, InomenaSeenHeads
+## RequiredDeps: PixelFont
 
 embeds\LibStub\LibStub.lua
 embeds\LibChatAnims\LibChatAnims\LibChatAnims.lua

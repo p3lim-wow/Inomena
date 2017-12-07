@@ -55,11 +55,11 @@ Header:HookScript('OnAttributeChanged', function(self, name, Button)
 	Texture:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 	Button:SetNormalTexture(Texture)
 
-	local Duration = Button:CreateFontString('$parentDuration', nil, 'SempliceNormal')
+	local Duration = Button:CreateFontString('$parentDuration', nil, 'PixelFontNormal')
 	Duration:SetPoint('TOPLEFT', 1, -1)
 	Button:SetFontString(Duration)
 
-	local Count = Button:CreateFontString('$parentCount', nil, 'SempliceNormal')
+	local Count = Button:CreateFontString('$parentCount', nil, 'PixelFontNormal')
 	Count:SetPoint('BOTTOMRIGHT', -1, 1)
 	Button.Count = Count
 end)

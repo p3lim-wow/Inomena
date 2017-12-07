@@ -47,7 +47,7 @@ function F:SkinActionButton(Button, petButton, leaveButton)
 		HotKey:SetParent(StringParent)
 		HotKey:ClearAllPoints()
 		HotKey:SetPoint('BOTTOMRIGHT', Button, 0, 1)
-		HotKey:SetFontObject('SempliceNormal')
+		HotKey:SetFontObject('PixelFontNormal')
 
 		local NormalTexture = Button.NormalTexture
 		NormalTexture:SetTexture(nil)
@@ -68,7 +68,8 @@ function F:SkinActionButton(Button, petButton, leaveButton)
 	Count:SetParent(StringParent)
 	Count:ClearAllPoints()
 	Count:SetPoint('TOPLEFT', Button, 3, -3)
-	Count:SetFontObject('SempliceLeft')
+	Count:SetFontObject('PixelFontNormal')
+	Count:SetJustifyH('LEFT')
 
 	local Icon = Button.icon
 	Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)

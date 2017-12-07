@@ -39,11 +39,9 @@ local function UpdateTab(self)
 	end
 end
 
-local font, size, outline = SempliceNormal:GetFont()
 function F.SkinChatWindow(index)
 	local Frame = _G['ChatFrame' .. index]
-	Frame:SetFont(font, size, outline)
-	Frame:SetShadowOffset(0, 0)
+	Frame:SetFontObject('PixelFontNormal')
 	Frame:SetClampRectInsets(0, 0, 0, 0)
 	Frame:SetSpacing(1.4)
 	Frame:SetScript('OnMouseWheel', Scroll)
@@ -54,8 +52,7 @@ function F.SkinChatWindow(index)
 	EditBox:ClearAllPoints()
 	EditBox:SetPoint('TOPRIGHT', Frame, 'BOTTOMRIGHT', 0, 5)
 	EditBox:SetPoint('TOPLEFT', Frame, 'BOTTOMLEFT', 0, 5)
-	EditBox:SetFont(font, size, outline)
-	EditBox:SetShadowOffset(0, 0)
+	EditBox:SetFontObject('PixelFontNormal')
 	EditBox:SetAltArrowKeyMode(false)
 
 	EditBox.focusLeft:SetTexture(nil)
@@ -64,8 +61,7 @@ function F.SkinChatWindow(index)
 
 	EditBox.header:ClearAllPoints()
 	EditBox.header:SetPoint('LEFT')
-	EditBox.header:SetFont(font, size, outline)
-	EditBox.header:SetShadowOffset(0, 0)
+	EditBox.header:SetFontObject('PixelFontNormal')
 
 	_G['ChatFrame' .. index .. 'EditBoxLeft']:SetTexture(nil)
 	_G['ChatFrame' .. index .. 'EditBoxMid']:SetTexture(nil)
@@ -79,8 +75,7 @@ function F.SkinChatWindow(index)
 	Tab:SetScript('OnDragStart', nil)
 
 	Tab.fontString = Tab:GetFontString()
-	Tab.fontString:SetFont(font, size, outline)
-	Tab.fontString:SetShadowOffset(0, 0)
+	Tab.fontString:SetFontObject('PixelFontNormal')
 
 	Tab.leftTexture:SetTexture(nil)
 	Tab.middleTexture:SetTexture(nil)
