@@ -81,27 +81,9 @@ end
 
 -- Add movement speed back to the CharacterFrame
 if(tonumber((select(2, GetBuildInfo()))) < 25632) then
-	function PaperDollFrame_SetMovementSpeed(self, unit)
-		if(unit ~= 'player') then
-			self:Hide()
-			return
-		end
-
-		self.wasSwimming = nil
-		self.unit = unit
+	hooksecurefunc('PaperDollFrame_SetMovementSpeed', function(self)
 		self:Show()
-		MovementSpeed_OnUpdate(self)
-
-		self.onEnterFunc = MovementSpeed_OnEnter
-		self:SetScript('OnUpdate', MovementSpeed_OnUpdate)
-	end
-
-	CharacterStatsPane.statsFramePool.resetterFunc = function(pool, frame)
-		frame:SetScript('OnUpdate', nil)
-		frame.onEnterFunc = nil
-		frame.UpdateTooltip = nil
-		FramePool_HideAndClearAnchors(pool, frame)
-	end
+	end)
 
 	table.insert(PAPERDOLL_STATCATEGORIES[1].stats, {stat = 'MOVESPEED'})
 else
