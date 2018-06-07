@@ -6,7 +6,6 @@
 ## SavedVariables: InomenaLastGM, InomenaSeenHeads
 ## RequiredDeps: PixelFont
 
-embeds\LibStub\LibStub.lua
-embeds\LibChatAnims\LibChatAnims\LibChatAnims.lua
+libs\LibStub\LibStub.lua
 
 Inomena.xml
