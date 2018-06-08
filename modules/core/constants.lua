@@ -38,6 +38,9 @@ C.BLACK = CreateColor(0, 0, 0)
 C.YELLOW = YELLOW_FONT_COLOR
 C.BLUE = LIGHTBLUE_FONT_COLOR
 
+-- Temp
+C.BfA = select(4, GetBuildInfo()) >= 80000
+
 -- Expose (mainly for Inomena_Settings)
 _G[C.Name] = {E, F, C}
 

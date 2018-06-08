@@ -37,7 +37,15 @@ local function WaterWalkingSpell()
 end
 
 local function IsHalloween()
-	local _, month, day = CalendarGetDate()
+	local month, day, _
+	if(C.BfA) then
+		_ = C_Calendar.GetDate()
+		month = _.month
+		day = _.monthDay
+	else
+		_, month, day = CalendarGetDate()
+	end
+
 	return month == 10 and day >= 18 or month == 11 and day == 1
 end
 

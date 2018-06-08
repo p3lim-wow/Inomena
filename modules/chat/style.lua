@@ -25,7 +25,7 @@ local function UpdateTab(self)
 		self = _G[self:GetName() .. 'Tab']
 	end
 
-	local Tab = self.fontString
+	local Tab = self.Text
 	if(Tab) then
 		if(self:IsMouseOver()) then
 			Tab:SetTextColor(0, 0.6, 1)
@@ -74,25 +74,14 @@ function F.SkinChatWindow(index)
 	Tab:HookScript('OnLeave', UpdateTab)
 	Tab:SetScript('OnDragStart', nil)
 
-	Tab.fontString = Tab:GetFontString()
-	Tab.fontString:SetFontObject('PixelFontNormal')
+	local font, size, flags = PixelFontNormal:GetFont()
+	Tab.Text:SetFont(font, size, flags) -- setting fontobject breaks the font when mousing over :S
+	Tab.Text:SetShadowOffset(0, 0)
 
-	Tab.leftTexture:SetTexture(nil)
-	Tab.middleTexture:SetTexture(nil)
-	Tab.rightTexture:SetTexture(nil)
-
-	Tab.leftHighlightTexture:SetTexture(nil)
-	Tab.middleHighlightTexture:SetTexture(nil)
-	Tab.rightHighlightTexture:SetTexture(nil)
-
-	Tab.leftSelectedTexture:SetTexture(nil)
-	Tab.middleSelectedTexture:SetTexture(nil)
-	Tab.rightSelectedTexture:SetTexture(nil)
-
-	Tab.glow:SetTexture(nil)
-
-	if(Tab.conversationIcon) then
-		Tab.conversationIcon:SetTexture(nil)
+	for _, region in next, {Tab:GetRegions()} do
+		if(region:GetObjectType() == 'Texture') then
+			region:SetTexture(nil)
+		end
 	end
 
 	UpdateTab(Tab)
@@ -113,13 +102,16 @@ function E:PLAYER_LOGIN()
 		F.SkinChatWindow(index)
 	end
 
-	ChatFrameMenuButton:SetAlpha(0)
-	ChatFrameMenuButton:EnableMouse(false)
-
-	if(FriendsMicroButton) then
-		FriendsMicroButton:Hide()
-	elseif(QuickJoinToastButton) then
-		QuickJoinToastButton:Hide()
+	for _, button in next, {
+		'QuickJoinToastButton',
+		'ChatFrameChannelButton',
+		'ChatFrameToggleVoiceDeafenButton',
+		'ChatFrameToggleVoiceMuteButton',
+		'ChatFrameMenuButton',
+	} do
+		if(_G[button]) then
+			_G[button]:Hide()
+		end
 	end
 
 	hooksecurefunc('FCFTab_UpdateColors', UpdateTab)

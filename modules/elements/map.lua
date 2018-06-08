@@ -2,7 +2,7 @@ local E, F, C = unpack(select(2, ...))
 
 local CoordText
 local function UpdateCoords(self)
-	if(WorldMapScrollFrame:IsMouseOver()) then
+	if(self:IsMouseOver()) then
 		local scale = self:GetEffectiveScale()
 		local centerX, centerY = self:GetCenter()
 		local width, height = self:GetSize()
@@ -14,7 +14,16 @@ local function UpdateCoords(self)
 		CoordText:SetFormattedText('%.2f, %.2f', x * 100, y * 100)
 		CoordText:SetTextColor(0, 1, 0)
 	else
-		local x, y = GetPlayerMapPosition('player')
+		local x, y
+		if(C.BfA) then
+			local position = C_Map.GetPlayerMapPosition(WorldMapFrame:GetMapID(), 'player')
+			if(position) then
+				x, y = position:GetXY()
+			end
+		else
+			x, y = GetPlayerMapPosition('player')
+		end
+
 		if(not x or not y) then
 			CoordText:SetText(UNAVAILABLE)
 			CoordText:SetTextColor(1, 0, 0)
@@ -29,7 +38,6 @@ local totalElapsed = 0
 local function OnUpdate(self, elapsed)
 	if(totalElapsed > 0.05) then
 		UpdateCoords(self)
-		-- UpdateLine(self)
 
 		totalElapsed = 0
 	else
@@ -41,5 +49,5 @@ function E:PLAYER_LOGIN()
 	CoordText = WorldMapFrameCloseButton:CreateFontString(C.Name .. 'Coordinates', nil, 'GameFontNormal')
 	CoordText:SetPoint('RIGHT', WorldMapFrameCloseButton, 'LEFT', -30, 0)
 
-	WorldMapDetailFrame:HookScript('OnUpdate', OnUpdate)
+	WorldMapFrame.ScrollContainer.Child:HookScript('OnUpdate', OnUpdate)
 end

@@ -80,13 +80,8 @@ function E:ADDON_LOADED(addon)
 end
 
 -- Add movement speed back to the CharacterFrame
-if(tonumber((select(2, GetBuildInfo()))) < 25632) then
-	hooksecurefunc('PaperDollFrame_SetMovementSpeed', function(self)
-		self:Show()
-	end)
+hooksecurefunc('PaperDollFrame_SetMovementSpeed', function(self)
+	self:Show()
+end)
 
-	table.insert(PAPERDOLL_STATCATEGORIES[1].stats, {stat = 'MOVESPEED'})
-else
-	PAPERDOLL_STATCATEGORIES[2][7].hideAt = nil
-end
-
+table.insert(PAPERDOLL_STATCATEGORIES[1].stats, {stat = 'MOVESPEED'})
