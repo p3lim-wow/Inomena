@@ -1,21 +1,26 @@
 local E, F, C = unpack(select(2, ...))
 
+local BfA = C.BfA
+
 local CoordText
 local function UpdateCoords(self)
+	local x, y, r, g, b
 	if(self:IsMouseOver()) then
-		local scale = self:GetEffectiveScale()
-		local centerX, centerY = self:GetCenter()
-		local width, height = self:GetSize()
-		local x, y = GetCursorPosition()
+		if(BfA) then
+			x, y = self:GetParent():GetNormalizedCursorPosition()
+		else
+			local scale = self:GetEffectiveScale()
+			local centerX, centerY = self:GetCenter()
+			local width, height = self:GetSize()
+			local x, y = GetCursorPosition()
 
-		x = ((x / scale) - (centerX - (width / 2))) / width
-		y = (centerY + (height / 2) - (y / scale)) / height
+			x = ((x / scale) - (centerX - (width / 2))) / width
+			y = (centerY + (height / 2) - (y / scale)) / height
+		end
 
-		CoordText:SetFormattedText('%.2f, %.2f', x * 100, y * 100)
-		CoordText:SetTextColor(0, 1, 0)
+		r, g, b = 0, 1, 0
 	else
-		local x, y
-		if(C.BfA) then
+		if(BfA) then
 			local position = C_Map.GetPlayerMapPosition(WorldMapFrame:GetMapID(), 'player')
 			if(position) then
 				x, y = position:GetXY()
@@ -24,13 +29,15 @@ local function UpdateCoords(self)
 			x, y = GetPlayerMapPosition('player')
 		end
 
-		if(not x or not y) then
-			CoordText:SetText(UNAVAILABLE)
-			CoordText:SetTextColor(1, 0, 0)
-		else
-			CoordText:SetFormattedText('%.2f, %.2f', x * 100, y * 100)
-			CoordText:SetTextColor(1, 1, 0)
-		end
+		r, g, b = 1, 1, 0
+	end
+
+	if(x and y) then
+		CoordText:SetFormattedText('%.2f, %.2f', x * 100, y * 100)
+		CoordText:SetTextColor(r, g, b)
+	else
+		CoordText:SetText(UNAVAILABLE)
+		CoordText:SetTextColor(1, 0, 0)
 	end
 end
 
