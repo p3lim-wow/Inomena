@@ -44,7 +44,7 @@ C.BfA = select(4, GetBuildInfo()) >= 80000
 -- Expose (mainly for Inomena_Settings)
 _G[C.Name] = {E, F, C}
 
-local LSM = LibStub('LibSharedMedia-3.0')
+local LSM = LibStub('LibSharedMedia-3.0', true)
 if(LSM) then
 	LSM:Register(LSM.MediaType.STATUSBAR, 'ChatFrameBackground', C.PlainTexture)
 end
