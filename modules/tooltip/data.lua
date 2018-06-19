@@ -51,6 +51,7 @@ hooksecurefunc(GameTooltip, 'SetAuctionSellItem', function(self)
 end)
 
 hooksecurefunc(GameTooltip, 'SetBackpackToken', function(self, index)
+	-- https://www.townlong-yak.com/framexml/beta/CurrencyContainer.lua
 	local _, _, _, currencyID = GetBackpackCurrencyInfo(index)
 	AddLine(CURRENCY, currencyID)
 end)
@@ -70,10 +71,12 @@ hooksecurefunc(GameTooltip, 'SetBuybackItem', function(self, slot)
 end)
 
 hooksecurefunc(GameTooltip, 'SetCurrencyByID', function(self, currencyID)
+	-- https://www.townlong-yak.com/framexml/beta/CurrencyContainer.lua
 	AddLine(CURRENCY, currencyID)
 end)
 
 hooksecurefunc(GameTooltip, 'SetCurrencyToken', function(self, listIndex)
+	-- https://www.townlong-yak.com/framexml/beta/CurrencyContainer.lua
 	local link = GetCurrencyListLink(listIndex)
 	if(link) then
 		AddLine(CURRENCY, string.match(link, currencyMatch))
@@ -81,6 +84,7 @@ hooksecurefunc(GameTooltip, 'SetCurrencyToken', function(self, listIndex)
 end)
 
 hooksecurefunc(GameTooltip, 'SetCurrencyTokenByID', function(self, currencyID)
+	-- https://www.townlong-yak.com/framexml/beta/CurrencyContainer.lua
 	AddLine(CURRENCY, currencyID)
 end)
 
@@ -133,6 +137,7 @@ hooksecurefunc(GameTooltip, 'SetItemByID', function(self, itemID)
 end)
 
 hooksecurefunc(GameTooltip, 'SetLFGDungeonReward', function(self, dungeonID, index)
+	-- https://www.townlong-yak.com/framexml/beta/CurrencyContainer.lua
 	local _, _, _, _, rewardType, rewardID = GetLFGDungeonRewardInfo(dungeonID, index)
 	if(rewardType == 'currency') then
 		AddLine(CURRENCY, rewardID)
@@ -149,6 +154,7 @@ hooksecurefunc(GameTooltip, 'SetLFGDungeonShortageReward', function(self, dungeo
 end)
 
 hooksecurefunc(GameTooltip, 'SetLootCurrency', function(self, slot)
+	-- https://www.townlong-yak.com/framexml/beta/CurrencyContainer.lua
 	local link = GetLootSlotLink(slot)
 	if(link) then
 		AddLine(CURRENCY, string.match(link, currencyMatch))
@@ -170,6 +176,7 @@ hooksecurefunc(GameTooltip, 'SetLootRollItem', function(self, index)
 end)
 
 hooksecurefunc(GameTooltip, 'SetMerchantCostItem', function(self, index, currencyIndex)
+	-- https://www.townlong-yak.com/framexml/beta/CurrencyContainer.lua
 	local _, _, link = GetMerchantItemCostItem(index, currencyIndex)
 	if(link) then
 		local itemID = GetItemInfoFromHyperlink(link)
@@ -214,6 +221,7 @@ hooksecurefunc(GameTooltip, 'SetPvpTalent', function(self, id, isInspect, _, ins
 end)
 
 hooksecurefunc(GameTooltip, 'SetQuestCurrency', function(self, type, index)
+	-- https://www.townlong-yak.com/framexml/beta/CurrencyContainer.lua
 	AddLine(CURRENCY, GetQuestCurrencyID(type, index))
 end)
 
@@ -225,6 +233,7 @@ hooksecurefunc(GameTooltip, 'SetQuestItem', function(self, type, index)
 end)
 
 hooksecurefunc(GameTooltip, 'SetQuestLogCurrency', function(self, type, index)
+	-- https://www.townlong-yak.com/framexml/beta/CurrencyContainer.lua
 	if(type == 'reward') then
 		local _, _, _, currencyID = GetQuestLogRewardCurrencyInfo(index)
 		AddLine(CURRENCY, currencyID)
