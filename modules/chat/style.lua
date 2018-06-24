@@ -25,7 +25,7 @@ local function UpdateTab(self)
 		self = _G[self:GetName() .. 'Tab']
 	end
 
-	local Tab = self.Text
+	local Tab = C.BfA and self.Text or self:GetFontString()
 	if(Tab) then
 		if(self:IsMouseOver()) then
 			Tab:SetTextColor(0, 0.6, 1)
@@ -75,8 +75,9 @@ function F.SkinChatWindow(index)
 	Tab:SetScript('OnDragStart', nil)
 
 	local font, size, flags = PixelFontNormal:GetFont()
-	Tab.Text:SetFont(font, size, flags) -- setting fontobject breaks the font when mousing over :S
-	Tab.Text:SetShadowOffset(0, 0)
+	local Text = C.BfA and Tab.Text or Tab:GetFontString()
+	Text:SetFont(font, size, flags) -- setting fontobject breaks the font when mousing over :S
+	Text:SetShadowOffset(0, 0)
 
 	for _, region in next, {Tab:GetRegions()} do
 		if(region:GetObjectType() == 'Texture') then

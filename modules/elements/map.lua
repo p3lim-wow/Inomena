@@ -5,7 +5,7 @@ local BfA = C.BfA
 local CoordText
 local function UpdateCoords(self)
 	local x, y, r, g, b
-	if(self:IsMouseOver()) then
+	if((BfA and self or WorldMapScrollFrame):IsMouseOver()) then
 		if(BfA) then
 			x, y = self:GetParent():GetNormalizedCursorPosition()
 		else
@@ -56,5 +56,9 @@ function E:PLAYER_LOGIN()
 	CoordText = WorldMapFrameCloseButton:CreateFontString(C.Name .. 'Coordinates', nil, 'GameFontNormal')
 	CoordText:SetPoint('RIGHT', WorldMapFrameCloseButton, 'LEFT', -30, 0)
 
-	WorldMapFrame.ScrollContainer.Child:HookScript('OnUpdate', OnUpdate)
+	if(C.BfA) then
+		WorldMapFrame.ScrollContainer.Child:HookScript('OnUpdate', OnUpdate)
+	else
+		WorldMapDetailFrame:HookScript('OnUpdate', OnUpdate)
+	end
 end
