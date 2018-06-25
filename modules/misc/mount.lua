@@ -1,9 +1,41 @@
 local E, F, C = unpack(select(2, ...))
 
-local MOD_ALTERNATE = '[mod:shift]'
+local MOD_WATER = '[mod:shift]'
 local MOD_VENDOR = '[mod:alt]'
 
-local STOP_MACRO = '/stopmacro [nooutdoors][mounted][vehicleui]'
+local MACRO_USE = '/use item:%d'
+local MACRO_CAST = '/cast %s'
+local MACRO_MOUNT = '/run C_MountJournal.SummonByID(%d)'
+local MACRO_STOP = '/stopmacro [nooutdoors][mounted][vehicleui]'
+local MACRO_START = [[
+/cancelform [form]
+/leavevehicle [canexitvehicle]
+/dismount [mounted]
+]]
+
+local MAGIC_BROOM = 37011
+local IS_HALLOWEEN = false
+do
+	local date
+	if(C.BfA) then
+		date = C_Calendar.GetDate()
+	else
+		local _, month, day = CalendarGetDate()
+		date = {month = month, monthDay = day}
+	end
+
+	if((date.month == 10 and date.monthDay >= 18) or (date.month == 11 and date.monthDay == 1)) then
+		IS_HALLOWEEN = true
+	end
+end
+
+local MOUNT_TYPE_LAND = 230
+local MOUNT_TYPE_FLYING = 248
+local MOUNT_TYPE_TURTLE = 231
+local MOUNT_TYPE_WATER = 254
+local MOUNT_TYPE_WATER_WALKING = 269
+local MOUNT_TYPE_HEIRLOOM = 284
+
 
 local Button = CreateFrame('Button', C.Name .. 'MountButton', nil, 'SecureActionButtonTemplate')
 Button:SetAttribute('type', 'macro')
@@ -22,120 +54,112 @@ local function SetBindings()
 	end
 end
 
-local DISMOUNT = [[
-/cancelform [form]
-/leavevehicle [canexitvehicle]
-/dismount [mounted]
-]]
-
-local function WaterWalkingSpell()
-	if(IsSpellKnown(546)) then
-		return 546 -- Shaman - Water Walking
-	elseif(IsSpellKnown(3714)) then
-		return 3714 -- Death Knight - Path of Frost
-	end
-end
-
-local function IsHalloween()
-	local month, day, _
-	if(C.BfA) then
-		_ = C_Calendar.GetDate()
-		month = _.month
-		day = _.monthDay
-	else
-		_, month, day = CalendarGetDate()
-	end
-
-	return month == 10 and day >= 18 or month == 11 and day == 1
-end
-
-local ownedMounts = {}
-local vendorMounts = {
-	[280] = 2, -- Traveler's Tundra Mammoth (Alliance)
-	[284] = 2, -- Traveler's Tundra Mammoth (Horde)
-	[460] = 1, -- Grand Expedition Yak
+local mounts = {
+	water = {},
+	waterwalking = {},
+	heirloom = {},
 }
 
-local lastNumMounts = 0
-local function UpdateMountsList()
-	if(#ownedMounts > 0) then
-		for _, list in next, ownedMounts do
-			table.wipe(list)
+local vendorMounts = {
+	[280] = 3, -- Traveler's Tundra Mammoth (Alliance)
+	[284] = 3, -- Traveler's Tundra Mammoth (Horde)
+	[460] = 2, -- Grand Expedition Yak
+	[1039] = 1, -- Mighty Caravan Brutosaur
+}
+
+local function UpdateMounts()
+	for _, value in next, mounts do
+		if(type(value) == 'table') then
+			table.wipe(value)
 		end
 	end
 
 	for mountID, priority in next, vendorMounts do
 		local _, _, _, _, _, _, _, _, _, ineligible, collected = C_MountJournal.GetMountInfoByID(mountID)
 		if(collected and not ineligible) then
-			if(not ownedMounts.vendor or vendorMounts[ownedMounts.vendor] > priority) then
-				ownedMounts.vendor = mountID
+			if(not mounts.vendor or vendorMounts[mounts.vendor] > priority) then
+				mounts.vendor = mountID
 			end
 		end
 	end
 
 	for _, mountID in next, C_MountJournal.GetMountIDs() do
-		local _, _, _, _, mountType = C_MountJournal.GetMountInfoExtraByID(mountID)
-		if(mountType == 284 or mountType == 269) then
-			if(not ownedMounts[mountType]) then
-				ownedMounts[mountType] = {}
-			end
-
-			local _, _, _, _, _, _, _, _, _, ineligible, collected = C_MountJournal.GetMountInfoByID(mountID)
-			if(collected and not ineligible) then
-				table.insert(ownedMounts[mountType], mountID)
+		local _, _, _, _, _, _, _, _, _, ineligible, collected = C_MountJournal.GetMountInfoByID(mountID)
+		if(collected and not ineligible) then
+			local _, _, _, _, mountType = C_MountJournal.GetMountInfoExtraByID(mountID)
+			if(mountType == MOUNT_TYPE_WATER or mountType == MOUNT_TYPE_TURTLE) then
+				table.insert(mounts.water, mountID)
+			elseif(mountType == MOUNT_TYPE_WATER_WALKING) then
+				table.insert(mounts.waterwalking, mountID)
+			elseif(mountType == MOUNT_TYPE_HEIRLOOM) then
+				table.insert(mounts.heirloom, mountID)
 			end
 		end
 	end
 end
 
-local mountMacro = '/run C_MountJournal.SummonByID(%s)'
+local function GetRandomMount(mountTable)
+	return mountTable[math.random(#mountTable)]
+end
+
 local function PreClick()
 	if(InCombatLockdown()) then
 		return
 	end
 
-	local macro, mountID, spellID
-	if(not select(13, GetAchievementInfo(891)) and #ownedMounts[284] > 0) then
-		mountID =  ownedMounts[284][1]
-	elseif(SecureCmdOptionParse(MOD_VENDOR) and ownedMounts.vendor) then
-		mountID = ownedMounts.vendor
-	elseif(SecureCmdOptionParse(MOD_ALTERNATE)) then
-		spellID =  WaterWalkingSpell()
-		if(not spellId and #ownedMounts[269] > 0) then
-			mountID = ownedMounts[269][math.random(#ownedMounts[269])]
-		end
-	end
-
-	if(not macro) then
-		macro = STOP_MACRO
-
-		if(spellID) then
-			macro = strtrim(strjoin('\n', macro, '/cast ' .. GetSpellInfo(spellID)))
-		end
-
-		if(IsHalloween() and GetItemCount(37011) > 0) then
-			-- Magic Broom time!
-			macro = strtrim(strjoin('\n', macro, '/use item:37011'))
+	local mountID, spellID, itemID
+	if(not select(13, GetAchievementInfo(891))) then
+		-- Giddy Up!
+		mountID = GetRandomMount(mounts.heirloom)
+	elseif(SecureCmdOptionParse(MOD_VENDOR) and mounts.vendor) then
+		mountID = mounts.vendor
+	elseif(SecureCmdOptionParse(MOD_WATER)) then
+		if(IsSwimming() and #mounts.water > 0) then
+			-- TODO: handle Vashj'ir
+			mountID = GetRandomMount(mounts.water)
 		else
-			macro = strtrim(strjoin('\n', macro, string.format(mountMacro, mountID or 0)))
+			if(IsSpellKnown(546)) then
+				-- Shaman - Water Walking
+				spellID = 546
+			elseif(IsSpellKnown(3714)) then
+				-- Death Knight - Path of Frost
+				spellID = 3714
+			elseif(#mounts.waterwalking > 0) then
+				mountID = GetRandomMount(mounts.waterwalking)
+			end
 		end
+	elseif(IS_HALLOWEEN and GetItemCount(MAGIC_BROOM) > 0) then
+		itemID = MAGIC_BROOM
 	end
 
-	Button:SetAttribute('macrotext', strtrim(strjoin('\n', DISMOUNT, macro)))
+	macro = MACRO_STOP
+
+	if(spellID) then
+		macro = strtrim(strjoin('\n', macro, MACRO_CAST:format(GetSpellInfo(spellID))))
+	end
+
+	if(itemID) then
+		macro = strtrim(strjoin('\n', macro, MACRO_USE:format(itemID)))
+	else
+		macro = strtrim(strjoin('\n', macro, MACRO_MOUNT:format(mountID or 0)))
+	end
+
+	Button:SetAttribute('macrotext', strtrim(strjoin('\n', MACRO_START, macro)))
 end
 
 E:RegisterEvent('UPDATE_BINDINGS', SetBindings)
 E:RegisterEvent('PLAYER_ENTERING_WORLD', SetBindings)
 
-E:RegisterEvent('PLAYER_LOGIN', UpdateMountsList)
-E:RegisterEvent('COMPANION_LEARNED', UpdateMountsList)
-E:RegisterEvent('COMPANION_UNLEARNED', UpdateMountsList)
-E:RegisterEvent('MOUNT_JOURNAL_USABILITY_CHANGED', UpdateMountsList)
+E:RegisterEvent('PLAYER_LOGIN', UpdateMounts)
+E:RegisterEvent('COMPANION_LEARNED', UpdateMounts)
+E:RegisterEvent('COMPANION_UNLEARNED', UpdateMounts)
+E:RegisterEvent('MOUNT_JOURNAL_USABILITY_CHANGED', UpdateMounts)
 
 E:RegisterEvent('PLAYER_REGEN_ENABLED', PreClick)
 
 Button:SetScript('PreClick', function()
 	if(UnitOnTaxi('player')) then
+		UIErrorsFrame:AddMessage('Requesting early landing.', 1, 1, 0)
 		return TaxiRequestEarlyLanding()
 	end
 
