@@ -116,6 +116,12 @@ local function PreClick()
 	elseif(SecureCmdOptionParse(MOD_WATER)) then
 		if(IsSwimming() and #mounts.water > 0) then
 			-- TODO: handle Vashj'ir
+			-- normal swimming mounts are 135% speed in normal waters
+			-- normal swimming mounts are 270% speed in vashj'ir
+			-- druid travel form is 135% speed in normal waters
+			-- vashj'ir seahorse is 371% in vashj'ir
+			-- druid travel form is 607% in vashj'ir
+			-- don't know about the Subdued Seahorse, don't have it
 			mountID = GetRandomMount(mounts.water)
 		else
 			if(IsSpellKnown(546)) then
