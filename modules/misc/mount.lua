@@ -16,14 +16,7 @@ local MACRO_START = [[
 local MAGIC_BROOM = 37011
 local IS_HALLOWEEN = false
 do
-	local date
-	if(C.BfA) then
-		date = C_Calendar.GetDate()
-	else
-		local _, month, day = CalendarGetDate()
-		date = {month = month, monthDay = day}
-	end
-
+	local date = C_Calendar.GetDate()
 	if((date.month == 10 and date.monthDay >= 18) or (date.month == 11 and date.monthDay == 1)) then
 		IS_HALLOWEEN = true
 	end

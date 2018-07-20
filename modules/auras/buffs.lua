@@ -17,13 +17,7 @@ local function OnAttributeChanged(self, attribute, value)
 		return
 	end
 
-	local name, texture, count, expiration, _
-	if(C.BfA) then
-		name, texture, count, _, _, expiration = UnitAura(self:GetParent():GetAttribute('unit'), value, 'HELPFUL')
-	else
-		name, _, texture, count, _, _, expiration = UnitAura(self:GetParent():GetAttribute('unit'), value, 'HELPFUL')
-	end
-
+	local name, texture, count, _, _, expiration = UnitAura(self:GetParent():GetAttribute('unit'), value, 'HELPFUL')
 	if(name) then
 		self:SetNormalTexture(texture)
 		self.Count:SetText(count > 1 and count or '')

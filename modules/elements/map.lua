@@ -5,28 +5,13 @@ local BfA = C.BfA
 local CoordText
 local function UpdateCoords(self)
 	local x, y, r, g, b
-	if((BfA and self or WorldMapScrollFrame):IsMouseOver()) then
-		if(BfA) then
-			x, y = self:GetParent():GetNormalizedCursorPosition()
-		else
-			local scale = self:GetEffectiveScale()
-			local centerX, centerY = self:GetCenter()
-			local width, height = self:GetSize()
-			local x, y = GetCursorPosition()
-
-			x = ((x / scale) - (centerX - (width / 2))) / width
-			y = (centerY + (height / 2) - (y / scale)) / height
-		end
-
+	if(self:IsMouseOver()) then
+		x, y = self:GetParent():GetNormalizedCursorPosition()
 		r, g, b = 0, 1, 0
 	else
-		if(BfA) then
-			local position = C_Map.GetPlayerMapPosition(WorldMapFrame:GetMapID(), 'player')
-			if(position) then
-				x, y = position:GetXY()
-			end
-		else
-			x, y = GetPlayerMapPosition('player')
+		local position = C_Map.GetPlayerMapPosition(WorldMapFrame:GetMapID(), 'player')
+		if(position) then
+			x, y = position:GetXY()
 		end
 
 		r, g, b = 1, 1, 0
@@ -56,9 +41,5 @@ function E:PLAYER_LOGIN()
 	CoordText = WorldMapFrameCloseButton:CreateFontString(C.Name .. 'Coordinates', nil, 'GameFontNormal')
 	CoordText:SetPoint('RIGHT', WorldMapFrameCloseButton, 'LEFT', -30, 0)
 
-	if(C.BfA) then
-		WorldMapFrame.ScrollContainer.Child:HookScript('OnUpdate', OnUpdate)
-	else
-		WorldMapDetailFrame:HookScript('OnUpdate', OnUpdate)
-	end
+	WorldMapFrame.ScrollContainer.Child:HookScript('OnUpdate', OnUpdate)
 end

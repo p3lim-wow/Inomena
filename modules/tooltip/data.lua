@@ -387,13 +387,7 @@ hooksecurefunc(GameTooltip, 'SetVoidWithdrawalItem', function(self, slot)
 end)
 
 hooksecurefunc(GameTooltip, 'SetUnitAura', function(self, unit, index, filter)
-	local spellID, _
-	if(C.BfA) then
-		_, _, _, _, _, _, _, _, _, spellID = UnitAura(unit, index, filter)
-	else
-		_, _, _, _, _, _, _, _, _, _, spellID = UnitAura(unit, index, filter)
-	end
-
+	local _, _, _, _, _, _, _, _, _, spellID = UnitAura(unit, index, filter)
 	if(spellID) then
 		AddLine(SPELL, spellID)
 	end

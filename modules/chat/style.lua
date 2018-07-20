@@ -79,9 +79,8 @@ function F.SkinChatWindow(index)
 	Tab:SetScript('OnDragStart', nil)
 
 	local font, size, flags = PixelFontNormal:GetFont()
-	local Text = C.BfA and Tab.Text or Tab:GetFontString()
-	Text:SetFont(font, size, flags) -- setting fontobject breaks the font when mousing over :S
-	Text:SetShadowOffset(0, 0)
+	Tab.Text:SetFont(font, size, flags)
+	Tab.Text:SetShadowOffset(0, 0)
 
 	for _, region in next, {Tab:GetRegions()} do
 		if(region:GetObjectType() == 'Texture') then
