@@ -39,9 +39,13 @@ local function UpdateTab(self)
 	end
 end
 
+local function UpdateFont(Frame)
+	Frame:SetFontObject('PixelFontNormal')
+end
+
 function F.SkinChatWindow(index)
 	local Frame = _G['ChatFrame' .. index]
-	Frame:SetFontObject('PixelFontNormal')
+	UpdateFont(Frame)
 	Frame:SetClampRectInsets(0, 0, 0, 0)
 	Frame:SetSpacing(1.4)
 	Frame:SetScript('OnMouseWheel', Scroll)
@@ -86,6 +90,12 @@ function F.SkinChatWindow(index)
 	end
 
 	UpdateTab(Tab)
+end
+
+function E:UPDATE_CHAT_WINDOWS()
+	for index = 1, NUM_CHAT_WINDOWS do
+		UpdateFont(_G['ChatFrame' .. index])
+	end
 end
 
 function E:PLAYER_LOGIN()
