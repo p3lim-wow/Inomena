@@ -1,57 +1,74 @@
 local E, F, C = unpack(select(2, ...))
 
-local Parent = CreateFrame('Frame', C.Name .. 'ActionBarParent', UIParent, 'SecureHandlerStateTemplate')
+local SPACING = C.BUTTON_SPACING
+local SIZE = C.BUTTON_SIZE
+
+local Parent = CreateFrame('Frame', C.Name .. 'ActionParent', UIParent, 'SecureHandlerStateTemplate')
 Parent:SetPoint('BOTTOM', 0, 50)
-Parent:SetSize(396, 33)
+Parent:SetWidth((NUM_ACTIONBAR_BUTTONS * (SIZE + SPACING)) - SPACING)
 
-RegisterStateDriver(Parent, 'visibility', '[petbattle][overridebar][vehicleui][possessbar,@vehicle,exists] hide; show')
-
-local visibleButtons = {}
-for _, button in next, C.actionButtons do
-	visibleButtons[button] = true
-
-	for index = 1, NUM_ACTIONBAR_BUTTONS do
-		F:SkinActionButton(_G[button .. index])
-	end
-end
-
-local function UpdatePosition()
-	local barIndex = 1
-	for _, buttonName in next, C.actionButtons do
-		if(visibleButtons[buttonName]) then
-			for index = 1, NUM_ACTIONBAR_BUTTONS do
-				local Button = _G[buttonName .. index]
-				Button:ClearAllPoints()
-
-				if(index == 1) then
-					Button:SetPoint('BOTTOMLEFT', Parent, 2, 33 * (barIndex - 1))
-				else
-					Button:SetPoint('LEFT', _G[buttonName .. index - 1], 'RIGHT', 5, 0)
-				end
-			end
-
-			Parent:SetHeight(33 * barIndex)
-			barIndex = barIndex + 1
-		end
-	end
-end
-
-for _, frame in next, {
-	'MainMenuBarArtFrame',
-	'MultiBarBottomLeft',
-	'MultiBarBottomRight',
-	'MultiBarRight',
-	'MultiBarLeft',
+local bars = {}
+for row, buttonName in next, {
+	'ActionButton',
+	'MultiBarBottomLeftButton',
+	'MultiBarBottomRightButton',
+	'MultiBarRightButton',
+	'MultiBarLeftButton',
 } do
-	_G[frame]:SetParent(Parent)
-	_G[frame]:EnableMouse(false)
+	local Bar = CreateFrame('Frame', '$parentBar' .. row, Parent)
+	Bar:SetWidth(Parent:GetWidth())
+	bars[row] = Bar
+
+	for col = 1, NUM_ACTIONBAR_BUTTONS do
+		local Button = _G[buttonName .. col]
+		F:SkinActionButton(Button)
+
+		Button:ClearAllPoints()
+		Button:SetPoint('BOTTOMLEFT', Bar, (Button:GetHeight() + SPACING) * (col - 1), 0)
+		Bar:SetHeight(Button:GetHeight())
+	end
+end
+
+bars[1]:SetPoint('BOTTOM', Parent)
+
+local function PositionBar(barIndex, prevIndex)
+	local Bar = bars[barIndex]
+	Bar:ClearAllPoints()
+	Bar:SetPoint('BOTTOM', bars[prevIndex], 'TOP', 0, SPACING)
 end
 
 hooksecurefunc('SetActionBarToggles', function(bar2, bar3, bar4, bar5)
-	visibleButtons.MultiBarBottomLeftButton = bar2
-	visibleButtons.MultiBarBottomRightButton = bar3
-	visibleButtons.MultiBarRightButton = bar4
-	visibleButtons.MultiBarLeftButton = bar5 and bar4
+	-- this is so messy
+	local prevBar = 1
+	local numBars = 1
 
-	UpdatePosition()
+	if(bar2) then
+		PositionBar(2, prevBar)
+		prevBar = 2
+		numBars = numBars + 1
+	end
+
+	if(bar3) then
+		PositionBar(3, prevBar)
+		prevBar = 3
+		numBars = numBars + 1
+	end
+
+	if(bar4) then
+		PositionBar(4, prevBar)
+		prevBar = 4
+		numBars = numBars + 1
+	end
+
+	if(bar5) then
+		PositionBar(5, prevBar)
+		prevBar = 5
+		numBars = numBars + 1
+	end
+
+	if(not bar4 and bar5) then
+		numBars = numBars - 1
+	end
+
+	Parent:SetHeight(((SIZE + SPACING) * numBars) - SPACING)
 end)

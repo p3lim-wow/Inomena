@@ -16,9 +16,17 @@ end
 
 local actionButtons = C.actionButtons
 local function UpdateBindings()
-	for _, name in next, actionButtons do
+	for _, buttonName in next, {
+		'ActionButton',
+		'MultiBarBottomLeftButton',
+		'MultiBarBottomRightButton',
+		'MultiBarRightButton',
+		'MultiBarLeftButton',
+		'OverrideActionBarButton',
+		'PetActionButton',
+	} do
 		for index = 1, NUM_ACTIONBAR_BUTTONS do
-			local Button = _G[name .. index]
+			local Button = _G[buttonName .. index]
 			if(Button) then
 				local HotKey = Button.HotKey
 				if(HotKey) then

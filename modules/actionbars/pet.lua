@@ -1,19 +1,22 @@
 local E, F, C = unpack(select(2, ...))
 
-local Parent = CreateFrame('Frame', C.Name .. 'PetBarParent', UIParent, 'SecureHandlerStateTemplate')
-Parent:SetPoint('BOTTOM', _G[(...) .. 'ActionBarParent'], 'TOP')
-Parent:SetSize(290, 29)
+local SPACING = C.BUTTON_SPACING
+local SIZE = C.BUTTON_SIZE - 5
 
-RegisterStateDriver(Parent, 'visibility', '[petbattle][overridebar][vehicleui][possessbar,@vehicle,exists] hide; [@pet,exists] show; hide')
+local Parent = CreateFrame('Frame', C.Name .. 'PetBarParent', UIParent, 'SecureHandlerStateTemplate')
+Parent:SetPoint('BOTTOM', _G[(...) .. 'ActionParent'], 'TOP', 0, SPACING)
+Parent:SetSize((NUM_PET_ACTION_SLOTS * (SIZE + SPACING)) - SPACING, SIZE)
+
+RegisterStateDriver(Parent, 'visibility', '[petbattle][overridebar][vehicleui][possessbar] hide; [@pet,exists] show; hide')
 
 local function UpdateBorder(self)
 	local index = self:GetID()
 
-	local _, _, _, _, isActive, _, autoCastEnabled = GetPetActionInfo(index)
+	local _, _, _, isActive, autoCastAllowed, autoCastEnabled = GetPetActionInfo(index)
 	if(autoCastEnabled) then
-		AutoCastShine_AutoCastStop(_G[self:GetName() .. 'Shine'])
-
 		self:SetBackdropBorderColor(1, 1, 0)
+	elseif(autoCastAllowed) then
+		self:SetBackdropBorderColor(1/3, 1/3, 1/3)
 	elseif(isActive) then
 		self:SetBackdropBorderColor(0, 1/2, 1)
 	else
@@ -23,24 +26,14 @@ end
 
 for index = 1, NUM_PET_ACTION_SLOTS do
 	local Button = _G['PetActionButton' .. index]
-	Button:ClearAllPoints()
+	F:SkinActionButton(Button, true)
 
-	if(index == 1) then
-		Button:SetPoint('BOTTOMLEFT', Parent, 2, 0)
-	else
-		Button:SetPoint('LEFT', _G['PetActionButton' .. index - 1], 'RIGHT', 5, 0)
-	end
+	Button:SetParent(Parent)
+	Button:ClearAllPoints()
+	Button:SetPoint('BOTTOMLEFT', Parent, (Button:GetWidth() + C.BUTTON_SPACING) * (index - 1), 0)
 
 	hooksecurefunc(Button, 'SetChecked', UpdateBorder)
-
-	F:SkinActionButton(Button, true)
 end
 
 PetActionBarFrame:SetParent(Parent)
 PetActionBarFrame:EnableMouse(false)
-
-hooksecurefunc('PetActionBar_Update', function(self)
-	for index = 1, NUM_PET_ACTION_SLOTS do
-		UpdateBorder(_G['PetActionButton' .. index])
-	end
-end)

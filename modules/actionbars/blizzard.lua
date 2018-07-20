@@ -1,16 +1,18 @@
 local E, F, C = unpack(select(2, ...))
 
-local Hider = CreateFrame('Frame')
-Hider:Hide()
+local Hidden = CreateFrame('Frame', nil, UIParent, 'SecureFrameTemplate')
+Hidden:Hide()
 
-local frames = {
-	'ActionBarDownButton',
+for _, frame in next, {
+	-- frames
+	'MainMenuBarArtFrameBackground',
+	'MicroButtonAndBagsBar',
 	'ActionBarUpButton',
-	'OverrideActionBarExpBar',
-	'OverrideActionBarHealthBar',
-	'OverrideActionBarPowerBar',
-	'OverrideActionBarPitchFrame',
-	'OverrideActionBarLeaveFrame',
+	'ActionBarDownButton',
+	'PossessBarFrame',
+	'StanceBarFrame',
+
+	-- micro buttons
 	'CharacterMicroButton',
 	'SpellbookMicroButton',
 	'TalentMicroButton',
@@ -18,79 +20,41 @@ local frames = {
 	'QuestLogMicroButton',
 	'GuildMicroButton',
 	'LFDMicroButton',
-	'StoreMicroButton',
 	'CollectionsMicroButton',
 	'EJMicroButton',
+	'StoreMicroButton',
 	'MainMenuMicroButton',
-	'StanceBarFrame',
-}
 
-if(C.BfA) then
-	table.insert(frames, 'MicroButtonAndBagsBar')
-	table.insert(frames, 'MainMenuBarArtFrameBackground')
-else
-	table.insert(frames, 'MainMenuBar')
-	table.insert(frames, 'MainMenuBarPageNumber')
-	table.insert(frames, 'MainMenuBarBackpackButton')
-	table.insert(frames, 'CharacterBag0Slot')
-	table.insert(frames, 'CharacterBag1Slot')
-	table.insert(frames, 'CharacterBag2Slot')
-	table.insert(frames, 'CharacterBag3Slot')
-end
+	-- pet bar frames
+	'SlidingActionBarTexture0',
+	'SlidingActionBarTexture1',
 
-for _, frame in next, frames do
-	_G[frame]:SetParent(Hider)
+	-- override bar frames
+	'OverrideActionBarHealthBar',
+	'OverrideActionBarPowerBar',
+	'OverrideActionBarExpBar',
+	'OverrideActionBarPitchFrame',
+	'OverrideActionBarLeaveFrame',
+} do
+	_G[frame]:SetParent(Hidden)
 	_G[frame].SetParent = nop
 end
 
-for _, texture in next, {
-	'_BG',
-	'EndCapL',
-	'EndCapR',
-	'_Border',
-	'Divider1',
-	'Divider2',
-	'Divider3',
-	'ExitBG',
-	'MicroBGL',
-	'MicroBGR',
-	'_MicroBGMid',
-	'ButtonBGL',
-	'ButtonBGR',
-	'_ButtonBGMid',
+for _, region in next, {OverrideActionBar:GetRegions()} do
+	region:SetAlpha(0)
+end
+
+for _, region in next, {MainMenuBarArtFrame:GetRegions()} do
+	region:SetAlpha(0)
+end
+
+for _, animParents in next, {
+	'MainMenuBar',
+	'OverrideActionBar',
 } do
-	OverrideActionBar[texture]:SetAlpha(0)
+	-- disable sliding
+	(_G[animParents].slideOut:GetAnimations()):SetOffset(0, 0)
 end
 
-if(C.BfA) then
-	for _, child in next, {
-		'RightEndCap',
-		'LeftEndCap',
-		'PageNumber',
-	} do
-		MainMenuBarArtFrame[child]:SetParent(Hider)
-		MainMenuBarArtFrame[child].SetParent = nop
-	end
-
-	StatusTrackingBarManager.UpdateBarsShown = nop
-	StatusTrackingBarManager:UnregisterAllEvents()
-	StatusTrackingBarManager:HideStatusBars()
-else
-	for _, texture in next, {
-		'StanceBarLeft',
-		'StanceBarMiddle',
-		'StanceBarRight',
-		'SlidingActionBarTexture0',
-		'SlidingActionBarTexture1',
-		'PossessBackground1',
-		'PossessBackground2',
-		'MainMenuBarTexture0',
-		'MainMenuBarTexture1',
-		'MainMenuBarTexture2',
-		'MainMenuBarTexture3',
-		'MainMenuBarLeftEndCap',
-		'MainMenuBarRightEndCap',
-	} do
-		_G[texture]:SetTexture(nil)
-	end
-end
+StatusTrackingBarManager:UnregisterAllEvents()
+StatusTrackingBarManager:Hide()

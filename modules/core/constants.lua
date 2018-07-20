@@ -39,7 +39,9 @@ C.YELLOW = YELLOW_FONT_COLOR
 C.BLUE = LIGHTBLUE_FONT_COLOR
 
 -- Temp
+C.BUTTON_SPACING = 5
 C.BfA = select(4, GetBuildInfo()) >= 80000
+C.BUTTON_SIZE = 28
 
 -- Expose (mainly for Inomena_Settings)
 _G[C.Name] = {E, F, C}

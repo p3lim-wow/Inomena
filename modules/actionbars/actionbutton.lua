@@ -40,8 +40,8 @@ function F:SkinActionButton(Button, petButton, leaveButton)
 		Button.HotKey:SetAlpha(0)
 
 		hooksecurefunc(Button, 'SetNormalTexture', PersistentNormalTexture)
-
 		_G[name .. 'AutoCastable']:SetTexture(nil)
+		_G[name .. 'Shine']:Hide()
 	else
 		local HotKey = Button.HotKey
 		HotKey:SetParent(StringParent)
@@ -128,10 +128,3 @@ end
 hooksecurefunc('ActionButton_UpdateFlash', UpdateBorder)
 hooksecurefunc('ActionButton_UpdateState', UpdateBorder)
 
-C.actionButtons = {
-	'ActionButton',
-	'MultiBarBottomLeftButton',
-	'MultiBarBottomRightButton',
-	'MultiBarRightButton',
-	'MultiBarLeftButton',
-}

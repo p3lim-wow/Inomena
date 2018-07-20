@@ -1,31 +1,24 @@
 local E, F, C = unpack(select(2, ...))
 
-local Parent = CreateFrame('Frame', C.Name .. 'OverrideBarParent', UIParent, 'SecureHandlerStateTemplate')
-Parent:SetPoint('BOTTOM', 0, 80)
-Parent:SetSize(198, 33)
+local SPACING = C.BUTTON_SPACING
+local SIZE = C.BUTTON_SIZE
 
-RegisterStateDriver(Parent, 'visibility', '[petbattle] hide; [overridebar][vehicleui][possessbar,@vehicle,exists] show; hide')
-RegisterStateDriver(OverrideActionBar, 'visibility', '[overridebar][vehicleui][possessbar,@vehicle,exists] show; hide')
+local Parent = CreateFrame('Frame', C.Name .. 'OverrideBarParent', UIParent, 'SecureHandlerStateTemplate')
+Parent:SetPoint('BOTTOMLEFT', _G[(...) .. 'ActionParent'])
+Parent:SetSize(((NUM_OVERRIDE_BUTTONS + 1) * (SIZE + SPACING)) - SPACING, SIZE)
+
+RegisterStateDriver(Parent, 'visibility', '[overridebar][vehicleui][possessbar,@vehicle,exists] show; hide')
 
 for index = 1, NUM_OVERRIDE_BUTTONS do
 	local Button = _G['OverrideActionBarButton' .. index]
-	Button:ClearAllPoints()
-
-	if(index == 1) then
-		Button:SetPoint('BOTTOMLEFT', Parent, 2, 0)
-	else
-		Button:SetPoint('LEFT', _G['OverrideActionBarButton' .. index - 1], 'RIGHT', 5, 0)
-	end
-
 	F:SkinActionButton(Button)
+
+	Button:ClearAllPoints()
+	Button:SetPoint('BOTTOMLEFT', Parent, (Button:GetWidth() + SPACING) * (index - 1), 0)
 end
 
-OverrideActionBar:SetParent(Parent)
-OverrideActionBar:EnableMouse(false)
-OverrideActionBar:SetScript('OnShow', nil)
-
 local LeaveButton = CreateFrame('Button', Parent:GetName() .. 'Leave', Parent, 'ActionButtonTemplate, SecureActionButtonTemplate')
-LeaveButton:SetPoint('LEFT', _G['OverrideActionBarButton' .. NUM_OVERRIDE_BUTTONS], 'RIGHT', 5, 0)
+LeaveButton:SetPoint('BOTTOMRIGHT', Parent)
 LeaveButton:SetAttribute('type', 'macro')
 LeaveButton:SetAttribute('macrotext', '/leavevehicle')
 
