@@ -55,7 +55,6 @@
 	<Script file='modules/elements/map.lua'/>
 	<Script file='modules/elements/merchant.lua'/>
 	<Script file='modules/elements/minimap.lua'/>
-	<Script file='modules/elements/missions.lua'/>
 	<Script file='modules/elements/professions.lua'/>
 
 	<Script file='modules/misc/alerts.lua'/>
