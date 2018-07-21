@@ -119,9 +119,7 @@ function E:PLAYER_LOGIN()
 		'ChatFrameToggleVoiceMuteButton',
 		'ChatFrameMenuButton',
 	} do
-		if(_G[button]) then
-			_G[button]:Hide()
-		end
+		_G[button]:SetParent(C.Hidden)
 	end
 
 	hooksecurefunc('FCFTab_UpdateColors', UpdateTab)

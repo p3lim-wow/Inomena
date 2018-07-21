@@ -23,3 +23,7 @@ end
 
 function F:noop()
 end
+
+local Hidden = CreateFrame('Frame')
+Hidden:Hide()
+C.Hidden = Hidden
