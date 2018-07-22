@@ -32,6 +32,7 @@ end
 local offsetProfessions = {
 	[182] = 1, -- Herbalism
 	[186] = 1, -- Mining
+	[393] = 1, -- Skinning
 }
 
 function E:ADDON_LOADED(addonName)
