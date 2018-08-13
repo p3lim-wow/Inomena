@@ -38,7 +38,7 @@ end)
 
 hooksecurefunc(GameTooltip, 'SetAuctionItem', function(self, type, index)
 	local link = GetAuctionItemLink(type, index)
-	if(link) then
+	if(link and not link:find('battlepet')) then
 		AddLine(ITEM, GetItemCreationContext(link))
 	end
 end)
