@@ -9,6 +9,7 @@ else
 	factionTexture = [=[Interface\Icons\achievement_guild_classypanda]=]
 end
 
+local merchantButtons = {}
 local merchant = {
 	{LE_LOOT_FILTER_ALL, factionTexture, ALL},
 	{LE_LOOT_FILTER_BOE, [=[Interface\Icons\Inv_Misc_Coin_02]=], ITEM_BIND_ON_EQUIP},
@@ -18,7 +19,7 @@ local merchant = {
 local function OnClick(self)
 	MerchantFrame_SetFilter(MerchantFrame, self.category)
 
-	for _, Button in next, merchant do
+	for _, Button in next, merchantButtons do
 		Button:SetChecked(false)
 	end
 
@@ -65,13 +66,13 @@ function E:MERCHANT_SHOW()
 		if(index == 1) then
 			Button:SetPoint('TOPRIGHT', -10, -32)
 		else
-			Button:SetPoint('RIGHT', merchant[index - 1], 'LEFT', -6, 0)
+			Button:SetPoint('RIGHT', merchantButtons[index - 1], 'LEFT', -6, 0)
 		end
 
-		merchant[index] = Button
+		merchantButtons[index] = Button
 	end
 
-	merchant[3]:GetRegions():SetTexCoord(unpack(CLASS_ICON_TCOORDS[select(2, UnitClass('player'))]))
+	merchantButtons[3]:GetRegions():SetTexCoord(unpack(CLASS_ICON_TCOORDS[select(2, UnitClass('player'))]))
 
 	MerchantFrameLootFilter:Hide()
 
@@ -83,7 +84,7 @@ function E:MERCHANT_SHOW(state)
 		state = GetMerchantFilter()
 	end
 
-	for _, Button in next, merchant do
+	for _, Button in next, merchantButtons do
 		Button:SetChecked(Button.category == state)
 	end
 end
