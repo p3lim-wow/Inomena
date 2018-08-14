@@ -136,6 +136,10 @@ function E:PLAYER_LOGIN()
 	end
 end
 
+hooksecurefunc('GarrisonLandingPageMinimapButton_UpdateIcon', function()
+	GarrisonLandingPageMinimapButton:SetSize(32, 32)
+end)
+
 function GetMinimapShape()
 	return 'SQUARE'
 end
