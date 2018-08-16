@@ -66,5 +66,6 @@
 	<Script file='modules/misc/opie.lua'/>
 
 	<Script file='modules/tooltip/style.lua'/>
+	<Script file='modules/tooltip/heart.lua'/>
 	<Script file='modules/tooltip/data.lua'/>
 </Ui>
