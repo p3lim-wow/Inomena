@@ -3,7 +3,7 @@ local r, g, b = 2/7, 5/7, 1
 local VALUE_FORMAT = '%.2f%% (%d / %d)'
 GameTooltip:HookScript('OnTooltipSetItem', function(self)
 	local _, itemLink = self:GetItem()
-	if((GetItemInfoFromHyperlink(itemLink)) == 158075) then
+	if(itemLink and (GetItemInfoFromHyperlink(itemLink)) == 158075) then
 		local itemLocation = C_AzeriteItem.FindActiveAzeriteItem()
 		if(itemLocation) then
 			local cur, max = C_AzeriteItem.GetAzeriteItemXPInfo(itemLocation)
