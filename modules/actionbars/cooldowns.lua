@@ -24,10 +24,12 @@ hooksecurefunc('CooldownFrame_Set', function(self, start, duration, enabled, for
 			_timer:Cancel()
 		end
 
-		_timer = C_Timer.NewTimer(math.max(0, start - GetTime() + duration), TimerCallback)
-		_timer.parent = parent
+		if(start <= GetTime()) then
+			_timer = C_Timer.NewTimer(math.max(0, start - GetTime() + duration), TimerCallback)
+			_timer.parent = parent
 
-		parent._timer = _timer
+			parent._timer = _timer
+		end
 	elseif(_timer) then
 		_timer:Cancel()
 		parent.icon:SetAlpha(1)
