@@ -15,11 +15,13 @@ local MACRO_START = [[
 
 local MAGIC_BROOM = 37011
 local IS_HALLOWEEN = false
-do
+local function UpdateHalloween()
 	local date = C_Calendar.GetDate()
 	if((date.month == 10 and date.monthDay >= 18) or (date.month == 11 and date.monthDay == 1)) then
 		IS_HALLOWEEN = true
 	end
+
+	return true
 end
 
 local MOUNT_TYPE_LAND = 230
@@ -149,6 +151,7 @@ end
 E:RegisterEvent('UPDATE_BINDINGS', SetBindings)
 E:RegisterEvent('PLAYER_ENTERING_WORLD', SetBindings)
 
+E:RegisterEvent('PLAYER_LOGIN', UpdateHalloween)
 E:RegisterEvent('PLAYER_LOGIN', UpdateMounts)
 E:RegisterEvent('COMPANION_LEARNED', UpdateMounts)
 E:RegisterEvent('COMPANION_UNLEARNED', UpdateMounts)
