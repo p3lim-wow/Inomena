@@ -54,6 +54,10 @@ function methods:UnregisterEvent(event, func)
 	Unregister(event, func)
 end
 
+function methods:IsEventRegistered(event, func)
+	return not not (listeners[event] and listeners[event][func])
+end
+
 methods.Call = Call
 
 local mt = getmetatable(E)
