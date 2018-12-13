@@ -1,14 +1,5 @@
 local E, F, C = unpack(select(2, ...))
 
--- Display combat state changes
-function E:PLAYER_REGEN_ENABLED()
-	UIErrorsFrame:AddMessage('- Combat', 1, 1, 1)
-end
-
-function E:PLAYER_REGEN_DISABLED()
-	UIErrorsFrame:AddMessage('+ Combat', 1, 1, 1)
-end
-
 local whitelistedHeads = {
 	[69294] = true, -- 'Look out!' in Suramar scenario
 }

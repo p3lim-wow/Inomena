@@ -28,6 +28,15 @@ function E:CHAT_MSG_RAID_BOSS_WHISPER(msg, name)
 	end
 end
 
+-- Display combat state changes
+function E:PLAYER_REGEN_ENABLED()
+	UIErrorsFrame:AddMessage('- Combat', 1, 1, 1)
+end
+
+function E:PLAYER_REGEN_DISABLED()
+	UIErrorsFrame:AddMessage('+ Combat', 1, 1, 1)
+end
+
 E.PARTY_INVITE_REQUEST = Alert
 E.LFG_PROPOSAL_SHOW = Alert
 ReadyCheckListenerFrame:SetScript('OnShow', Alert)
