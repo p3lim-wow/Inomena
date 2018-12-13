@@ -117,6 +117,7 @@ local function PreClick()
 			-- vashj'ir seahorse is 371% in vashj'ir
 			-- druid travel form is 607% in vashj'ir
 			-- don't know about the Subdued Seahorse, don't have it
+			-- don't know about the Saltwater Seahorse, don't have it
 			mountID = GetRandomMount(mounts.water)
 		else
 			if(IsSpellKnown(546)) then
