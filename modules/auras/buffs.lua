@@ -45,6 +45,10 @@ Header:HookScript('OnAttributeChanged', function(self, name, Button)
 		return
 	end
 
+	if(BackdropTemplateMixin) then
+		Mixin(Button, BackdropTemplateMixin)
+	end
+
 	Button:SetBackdrop(C.PlainBackdrop)
 	Button:SetBackdropColor(0, 0, 0)
 	Button:SetScript('OnUpdate', OnUpdate)

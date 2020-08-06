@@ -59,6 +59,10 @@ function E:UPDATE_INVENTORY_DURABILITY()
 end
 
 function E:PLAYER_LOGIN()
+	if(BackdropTemplateMixin) then
+		Mixin(Minimap, BackdropTemplateMixin)
+	end
+
 	Minimap:ClearAllPoints()
 	Minimap:SetParent(UIParent)
 	Minimap:SetPoint('TOPRIGHT', -20, -20)

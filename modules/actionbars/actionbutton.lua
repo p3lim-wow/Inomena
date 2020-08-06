@@ -19,6 +19,10 @@ function F:SkinActionButton(Button, petButton, leaveButton)
 	local name = Button:GetName()
 	local buttonSize = petButton and 24 or 28
 
+	if(BackdropTemplateMixin) then
+		Mixin(Button, BackdropTemplateMixin)
+	end
+
 	Button:SetSize(buttonSize, buttonSize)
 	Button:SetBackdrop(C.EdgeBackdrop)
 	Button:SetBackdropBorderColor(0, 0, 0)
