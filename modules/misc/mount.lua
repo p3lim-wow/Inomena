@@ -31,7 +31,6 @@ local MOUNT_TYPE_WATER = 254
 local MOUNT_TYPE_WATER_WALKING = 269
 local MOUNT_TYPE_HEIRLOOM = 284
 
-
 local Button = CreateFrame('Button', C.Name .. 'MountButton', nil, 'SecureActionButtonTemplate')
 Button:SetAttribute('type', 'macro')
 
@@ -49,17 +48,23 @@ local function SetBindings()
 	end
 end
 
+local vendorMounts = {
+	-- priority system, smaller number = preferred
+	[1039] = 1, -- Mighty Caravan Brutosaur
+	[460] = 2, -- Grand Expedition Yak
+	[284] = 3, -- Traveler's Tundra Mammoth (Horde)
+	[280] = 3, -- Traveler's Tundra Mammoth (Alliance)
+}
+
+local waterwalkingEquipment = {
+	[168416] = true, -- Angler's Water Striders
+	[168417] = true, -- Inflatable Mount Shoes
+}
+
 local mounts = {
 	water = {},
 	waterwalking = {},
 	heirloom = {},
-}
-
-local vendorMounts = {
-	[280] = 3, -- Traveler's Tundra Mammoth (Alliance)
-	[284] = 3, -- Traveler's Tundra Mammoth (Horde)
-	[460] = 2, -- Grand Expedition Yak
-	[1039] = 1, -- Mighty Caravan Brutosaur
 }
 
 local function UpdateMounts()
@@ -97,17 +102,12 @@ local function GetRandomMount(mountTable)
 	return mountTable[math.random(#mountTable)]
 end
 
-local function PreClick()
-	if(InCombatLockdown()) then
-		return
-	end
-
-	local mountID, spellID, itemID
+local function GetConditionalMount()
 	if(not select(13, GetAchievementInfo(891))) then
 		-- Giddy Up!
-		mountID = GetRandomMount(mounts.heirloom)
+		return GetRandomMount(mounts.heirloom)
 	elseif(SecureCmdOptionParse(MOD_VENDOR) and mounts.vendor) then
-		mountID = mounts.vendor
+		return mounts.vendor
 	elseif(SecureCmdOptionParse(MOD_WATER)) then
 		if(IsSwimming() and #mounts.water > 0) then
 			-- TODO: handle Vashj'ir
@@ -116,25 +116,33 @@ local function PreClick()
 			-- druid travel form is 135% speed in normal waters
 			-- vashj'ir seahorse is 371% in vashj'ir
 			-- druid travel form is 607% in vashj'ir
+			-- don't know about the Surf Jelly, don't have it
 			-- don't know about the Subdued Seahorse, don't have it
 			-- don't know about the Saltwater Seahorse, don't have it
-			mountID = GetRandomMount(mounts.water)
-		else
+			return GetRandomMount(mounts.water)
+		elseif(not waterwalkingEquipment[C_MountJournal.GetAppliedMountEquipmentID() or 0]) then
 			if(IsSpellKnown(546)) then
 				-- Shaman - Water Walking
-				spellID = 546
+				return nil, 546
 			elseif(IsSpellKnown(3714)) then
 				-- Death Knight - Path of Frost
-				spellID = 3714
+				return nil, 3714
 			elseif(#mounts.waterwalking > 0) then
-				mountID = GetRandomMount(mounts.waterwalking)
+				return GetRandomMount(mounts.waterwalking)
 			end
 		end
 	elseif(IS_HALLOWEEN and GetItemCount(MAGIC_BROOM) > 0) then
-		itemID = MAGIC_BROOM
+		return nil, nil, MAGIC_BROOM
+	end
+end
+
+local function PreClick()
+	if(InCombatLockdown()) then
+		return
 	end
 
-	macro = MACRO_STOP
+	local mountID, spellID, itemID = GetConditionalMount()
+	local macro = MACRO_STOP
 
 	if(spellID) then
 		macro = strtrim(strjoin('\n', macro, MACRO_CAST:format(GetSpellInfo(spellID))))
