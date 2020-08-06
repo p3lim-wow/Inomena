@@ -36,19 +36,19 @@ hooksecurefunc(GameTooltip, 'SetArtifactPowerByID', function(self, powerID)
 	end
 end)
 
-hooksecurefunc(GameTooltip, 'SetAuctionItem', function(self, type, index)
-	local link = GetAuctionItemLink(type, index)
-	if(link and not link:find('battlepet')) then
-		AddLine(ITEM, GetItemCreationContext(link))
-	end
-end)
+-- hooksecurefunc(GameTooltip, 'SetAuctionItem', function(self, type, index)
+-- 	local link = GetAuctionItemLink(type, index)
+-- 	if(link and not link:find('battlepet')) then
+-- 		AddLine(ITEM, GetItemCreationContext(link))
+-- 	end
+-- end)
 
-hooksecurefunc(GameTooltip, 'SetAuctionSellItem', function(self)
-	local _, link = self:GetItem()
-	if(link) then
-		AddLine(ITEM, GetItemCreationContext(link))
-	end
-end)
+-- hooksecurefunc(GameTooltip, 'SetAuctionSellItem', function(self)
+-- 	local _, link = self:GetItem()
+-- 	if(link) then
+-- 		AddLine(ITEM, GetItemCreationContext(link))
+-- 	end
+-- end)
 
 hooksecurefunc(GameTooltip, 'SetBackpackToken', function(self, index)
 	-- https://www.townlong-yak.com/framexml/beta/CurrencyContainer.lua
