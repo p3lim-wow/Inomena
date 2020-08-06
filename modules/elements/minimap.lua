@@ -41,7 +41,7 @@ local function CreateDataBrokerButton(LDB, name)
 	end
 end
 
-function E:UPDATE_INVENTORY_DURABILITY()
+local function UpdateDurability()
 	local alert = 0
 	for index in next, INVENTORY_ALERT_STATUS_SLOTS do
 		local status = GetInventoryAlertStatus(index)
@@ -120,7 +120,8 @@ function E:PLAYER_LOGIN()
 
 	SetCVar('rotateMinimap', 0) -- square minimaps look like shit with rotating enabled
 
-	E:UPDATE_INVENTORY_DURABILITY()
+	E.UPDATE_INVENTORY_DURABILITY = UpdateDurability
+	UpdateDurability()
 
 	local LDB = LibStub and LibStub('LibDataBroker-1.1', true)
 	if(LDB) then
