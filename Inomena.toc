@@ -5,6 +5,7 @@
 ## Notes: Personal UI
 ## SavedVariables: InomenaLastGM, InomenaSeenHeads
 ## RequiredDeps: PixelFont
+## OptionalDeps: LibStub
 
 libs\LibStub\LibStub.lua
 
