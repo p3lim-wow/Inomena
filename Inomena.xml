@@ -38,6 +38,7 @@
 	<Script file='modules/automation/repair.lua'/>
 	<Script file='modules/automation/shipment.lua'/>
 	<Script file='modules/automation/tracking.lua'/>
+	<Script file='modules/automation/vendor.lua'/>
 
 	<Script file='modules/chat/abbreviate.lua'/>
 	<Script file='modules/chat/editbox.lua'/>
