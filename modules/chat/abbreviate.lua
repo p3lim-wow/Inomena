@@ -35,9 +35,10 @@ local function FormatPlayer(info, name)
 end
 
 local function FormatBNPlayer(info)
-	local _, _, battleTag, _, _, _, client = BNGetFriendInfoByID(match(info, '(%d+):'))
-	local color = C.ClientColors[client] or '22aaff'
-	return format('|HBNplayer:%s|h|cff%s%s|r|h', info, color, match(battleTag, '(%w+)#%d+'))
+	-- local _, _, battleTag, _, _, _, client = C_BattleNet.GetAccountInfoByID(match(info, '(%d+):'))
+	local account = C_BattleNet.GetAccountInfoByID(match(info, '(%d+):'))
+	local color = C.ClientColors[account.gameAccountInfo.clientProgram] or '22aaff'
+	return format('|HBNplayer:%s|h|cff%s%s|r|h', info, color, match(account.battleTag, '(%w+)#%d+'))
 end
 
 local hooks = {}
