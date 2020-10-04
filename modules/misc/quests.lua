@@ -203,7 +203,7 @@ hooksecurefunc('StaticPopup_Show', function(which)
 
 			if(raidQuests[questID]) then
 				-- Auto convert for raid quests
-				ConvertToRaid()
+				C_PartyInfo.ConvertToRaid()
 			end
 		end
 	end
@@ -226,7 +226,7 @@ StaticPopupDialogs.INOMENA_LEAVE_QUEST_GROUP = {
 		self.timeleft = 10
 	end,
 	OnCancel = function()
-		LeaveParty()
+		C_PartyInfo.LeaveParty()
 	end,
 	OnUpdate = function(self, elapsed)
 		self.text:SetFormattedText(LEAVE_GROUP, self.timeleft + 1)
@@ -243,7 +243,7 @@ StaticPopupDialogs.INOMENA_LEAVE_RAID_QUEST_GROUP = {
 	button1 = CHAT_LEAVE, -- "Leave"
 	button2 = PET_WAIT, -- "Stay"
 	OnAccept = function()
-		LeaveParty()
+		C_PartyInfo.LeaveParty()
 	end,
 	hideOnEscape = 0,
 	whileDead = true,
