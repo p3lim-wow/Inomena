@@ -129,6 +129,3 @@ local function UpdateBorder(self)
 	end
 end
 
-hooksecurefunc('ActionButton_UpdateFlash', UpdateBorder)
-hooksecurefunc('ActionButton_UpdateState', UpdateBorder)
-
