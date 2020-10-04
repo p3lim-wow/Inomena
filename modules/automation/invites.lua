@@ -12,14 +12,15 @@ function E:PARTY_INVITE_REQUEST(name, l, f, g)
 	end
 
 	for index = 1, select(2, BNGetNumFriends()) do
-		local _, _, _, _, toonName, _, client = BNGetFriendInfo(index)
-		if(client == BNET_CLIENT_WOW and name:match(toonName)) then
+		local friend = C_BattleNet.GetFriendAccountInfo(index)
+		if(friend.gameAccountInfo.clientProgram == BNET_CLIENT_WOW and friend.gameAccountInfo.characterName:match(name)) then
 			return AcceptGroup()
 		end
 	end
 
-	for index = 1, GetNumFriends() do
-		if(GetFriendInfo(index) == name) then
+	for index = 1, C_FriendList.GetNumFriends() do
+		local friend = C_FriendList.GetFriendInfoByIndex(index)
+		if(friend and friend.name == name) then
 			return AcceptGroup()
 		end
 	end
