@@ -63,3 +63,17 @@ hooksecurefunc('PaperDollFrame_SetMovementSpeed', function(self)
 end)
 
 table.insert(PAPERDOLL_STATCATEGORIES[1].stats, {stat = 'MOVESPEED'})
+
+F:RegisterSlash('/mapid', function()
+	print('Map ID:', C_Map.GetBestMapForUnit('player'))
+end)
+
+local NPC_ID_PATTERN = '%w+%-.-%-.-%-.-%-.-%-(.-)%-'
+F:RegisterSlash('/npcid', function()
+	if UnitExists('target') then
+		local npcGUID = UnitGUID('target')
+		if npcGUID then
+			print('NPC ID:', tonumber(npcGUID:match(NPC_ID_PATTERN)))
+		end
+	end
+end)
