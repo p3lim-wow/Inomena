@@ -1,7 +1,7 @@
 local E, F, C = unpack(select(2, ...))
 
 function F:RegisterSlash(...)
-	local name = C.Name .. 'Slash' .. math.floor(GetTime())
+	local name = C.Name .. 'Slash' .. math.random()
 
 	local numArgs = select('#', ...)
 	local func = select(numArgs, ...)
