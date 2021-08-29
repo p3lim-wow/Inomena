@@ -79,7 +79,7 @@ end
 -- we need to fix abbreviations in the editbox too
 local editBoxHooks = {}
 function editBoxHooks.WHISPER(editBox)
-	-- TODO: class colors
+	-- TODO: class colors (no API for this)
 	editBox.header:SetFormattedText('|cffa1a1a1@|r%s: ', editBox:GetAttribute('tellTarget'))
 end
 
