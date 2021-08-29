@@ -37,6 +37,10 @@ local hidden = CreateFrame('Frame')
 hidden:Hide()
 
 function addon:Hide(object)
+	if type(object) == 'string' then
+		object = _G[object]
+	end
+
 	object:SetParent(hidden)
 
 	if object.UnregisterAllEvents then

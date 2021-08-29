@@ -40,8 +40,16 @@ modules/chat/history.lua
 modules/chat/sounds.lua
 modules/chat/style.lua
 
+modules/misc/alerts.lua
+modules/misc/minimap.lua
+modules/misc/hide.lua
+modules/misc/popups.lua
+modules/misc/talents.lua
+modules/misc/tracker.lua
+
 modules/settings/cvars.lua
 modules/settings/details.lua
+modules/settings/scale.lua
 modules/settings/opie.lua
 
 modules/tooltip/data.lua
