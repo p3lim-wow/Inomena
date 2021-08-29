@@ -31,11 +31,4 @@
 	<Script file='modules/elements/merchant.lua'/>
 	<Script file='modules/elements/minimap.lua'/>
 	<Script file='modules/elements/professions.lua'/>
-
-	<Script file='modules/misc/alerts.lua'/>
-	<Script file='modules/misc/tweaks.lua'/>
-	<Script file='modules/misc/mount.lua'/>
-	<Script file='modules/misc/popup.lua'/>
-	<Script file='modules/misc/bigwigs.lua'/>
-	<Script file='modules/misc/quests.lua'/>
 </Ui>
