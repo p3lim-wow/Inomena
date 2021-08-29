@@ -21,3 +21,15 @@ function addon:FormatShortTime(seconds)
 	return output
 end
 
+function addon:HookAddOn(addonName, callback)
+	self:RegisterEvent('ADDON_LOADED', function(self, name)
+		if name == addonName then
+			callback()
+			return true
+		elseif name == addon.NAME and IsAddOnLoaded(addonName) then
+			callback()
+			return true
+		end
+	end)
+end
+

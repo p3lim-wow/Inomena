@@ -88,3 +88,5 @@ addon = setmetatable(addon, {
 		end
 	end,
 })
+
+Mixin(addon, eventMixin)
