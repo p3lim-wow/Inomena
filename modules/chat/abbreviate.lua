@@ -42,6 +42,18 @@ local function formatChannel(info, name)
 	end
 end
 
+local FORMAT_WAYPOINT_FAR = '|Hworldmap:%d:%d:%d|h[%s: %.2f, %.2f]|h'
+local FORMAT_WAYPOINT_NEAR = '|Hworldmap:%d:%d:%d|h[%.2f, %.2f]|h'
+local function formatWaypoint(mapID, x, y, name)
+	local playerMapID = C_Map.GetBestMapForUnit('player')
+	if tonumber(mapID) ~= playerMapID then
+		local mapInfo = C_Map.GetMapInfo(mapID)
+		return FORMAT_WAYPOINT_FAR:format(mapID, x, y, mapInfo.name, x / 100, y / 100)
+	else
+		return FORMAT_WAYPOINT_NEAR:format(mapID, x, y, x / 100, y / 100)
+	end
+end
+
 local chatFrameHooks = {}
 local function addMessage(chatFrame, msg, ...)
 	msg = msg:gsub('|Hplayer:(.-)|h%[(.-)%]|h', formatPlayer)
@@ -50,6 +62,7 @@ local function addMessage(chatFrame, msg, ...)
 	msg = msg:gsub('^%w- (|H)', '|cffa1a1a1@|r%1')
 	msg = msg:gsub('^(.-|h) %w-:', '%1:')
 	msg = msg:gsub('^%[' .. RAID_WARNING .. '%]', 'w')
+	msg = msg:gsub('|Hworldmap:(.-):(.-):(.-)|h%[(.-)%]|h', formatWaypoint)
 
 	return chatFrameHooks[chatFrame](chatFrame, msg, ...)
 end
