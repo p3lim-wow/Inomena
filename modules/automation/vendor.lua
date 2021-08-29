@@ -1,9 +1,6 @@
-local E, F = unpack(select(2, ...))
+local _, addon = ...
 
-local BACKPACK_CONTAINER = BACKPACK_CONTAINER or 0
-local NUM_BAG_SLOTS = NUM_BAG_SLOTS or 4
--- local Enum.ItemQuality.Poor = Enum.ItemQuality.Poor or 0
-
+-- sell trash items when visiting vendor
 local lastNumItems = 0
 local function VendorGrayItems(merchantVisit)
 	if not (merchantVisit or lastNumItems > 0) then
@@ -28,7 +25,7 @@ local function VendorGrayItems(merchantVisit)
 	end
 end
 
-function E:MERCHANT_SHOW(recursive)
+function addon:MERCHANT_SHOW(recursive)
 	if IsShiftKeyDown() then
 		return
 	end
@@ -36,6 +33,6 @@ function E:MERCHANT_SHOW(recursive)
 	VendorGrayItems(true)
 end
 
-function E:BAG_UPDATE_DELAYED()
+function addon:BAG_UPDATE_DELAYED()
 	VendorGrayItems()
 end

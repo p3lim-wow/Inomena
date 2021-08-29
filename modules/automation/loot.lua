@@ -1,13 +1,14 @@
-local E = unpack(select(2, ...))
+local _, addon = ...
 
-function E:CONFIRM_LOOT_ROLL(id, type)
-	if(type > 0) then
-		ConfirmLootRoll(id, type)
+-- accept loot rolls
+function addon:CONFIRM_LOOT_ROLL(rollID, rollType)
+	if rollType > 0 then
+		ConfirmLootRoll(rollID, rollType)
 	end
 end
 
-function E:CONFIRM_DISENCHANT_ROLL(id, type)
-	if(type > 0) then
-		ConfirmLootRoll(id, type)
+function addon:CONFIRM_DISENCHANT_ROLL(rollID, rollType)
+	if rollType > 0 then
+		ConfirmLootRoll(rollID, rollType)
 	end
 end

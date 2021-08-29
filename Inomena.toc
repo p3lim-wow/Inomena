@@ -19,4 +19,10 @@ mixins/aura.lua
 
 modules/auras/buffs.lua
 
+modules/automation/invites.lua
+modules/automation/loot.lua
+modules/automation/mail.lua
+modules/automation/repair.lua
+modules/automation/vendor.lua
+
 Inomena.xml
