@@ -7,6 +7,7 @@ local function refreshDetailsRows(instance)
 
 	local font, size = _G[addon.FONT]:GetFont()
 	for _, row in next, instance.barras do
+		-- Details don't allow setting outline nor shadow color
 		row.lineText1:SetFont(font, size, 'MONOCHROMEOUTLINE')
 		row.lineText2:SetFont(font, size, 'MONOCHROMEOUTLINE')
 		row.lineText3:SetFont(font, size, 'MONOCHROMEOUTLINE')
