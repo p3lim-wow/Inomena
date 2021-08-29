@@ -31,8 +31,6 @@
 	<Script file='modules/actionbars/override.lua'/>
 	<Script file='modules/actionbars/pet.lua'/>
 
-	<Script file='modules/auras/buffs.lua'/>
-
 	<Script file='modules/automation/invites.lua'/>
 	<Script file='modules/automation/loot.lua'/>
 	<Script file='modules/automation/repair.lua'/>
