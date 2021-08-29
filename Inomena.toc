@@ -17,6 +17,8 @@ mixins/backdrop.lua
 mixins/widget.lua
 mixins/aura.lua
 
+modules/actionbars/hide.lua
+
 modules/auras/buffs.lua
 
 modules/automation/invites.lua
