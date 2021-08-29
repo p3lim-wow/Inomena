@@ -56,4 +56,7 @@ modules/settings/scale.lua
 modules/tooltip/data.lua
 modules/tooltip/style.lua
 
+modules/widgets/money.lua
+
+
 Inomena.xml

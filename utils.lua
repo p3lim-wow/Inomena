@@ -21,6 +21,14 @@ function addon:FormatShortTime(seconds)
 	return output
 end
 
+function addon:FormatShortMoney(money)
+	local output
+	output = string.format('|cffffff66%s|r', FormatLargeNumber(math.floor(money / COPPER_PER_GOLD)))
+	output = string.format('%s.|cffc0c0c0%d|r', output, (money / SILVER_PER_GOLD) % COPPER_PER_SILVER)
+	output = string.format('%s.|cffcc9900%d|r', output, money % COPPER_PER_SILVER)
+	return output
+end
+
 function addon:HookAddOn(addonName, callback)
 	self:RegisterEvent('ADDON_LOADED', function(self, name)
 		if name == addonName then
