@@ -63,7 +63,6 @@ local ENCHANT_IDS = {
 	[6252] = 334456, -- Searing Armor
 }
 
-local shortTime = addon.utils.ShortTime
 local function onEnter(self)
 	GameTooltip:SetOwner(self, 'ANCHOR_BOTTOMLEFT')
 
@@ -74,7 +73,7 @@ local function onEnter(self)
 	else
 		GameTooltip:AddSpellByID(self.enchantSpellID)
 		GameTooltip:AddLine(' ')
-		GameTooltip:AddLine(shortTime(self.expiration) .. ' remaining')
+		GameTooltip:AddLine(addon:FormatShortTime(self.expiration) .. ' remaining')
 		GameTooltip:Show() -- render
 	end
 end

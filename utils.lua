@@ -1,7 +1,6 @@
 local _, addon = ...
 
-local utils = {}
-function utils.ShortTime(seconds)
+function addon:FormatShortTime(seconds)
 	-- copy from SharedXML/TimeUtil.lua with modifications to return whole time in compact format
 	local output = ''
 	if seconds >= 86400 then
@@ -22,4 +21,3 @@ function utils.ShortTime(seconds)
 	return output
 end
 
-addon.utils = utils

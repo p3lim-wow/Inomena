@@ -2,7 +2,6 @@ local _, addon = ...
 
 local MAX_DISPLAY_DURATION = 90
 
-local shortTime = addon.utils.ShortTime
 local function onEnter(self)
 	if GameTooltip:GetOwner() ~= self then
 		return
@@ -12,7 +11,7 @@ local function onEnter(self)
 	for index = 1, GameTooltip:NumLines() do
 		local line = _G['GameTooltipTextLeft' .. index]
 		if line:GetText():match('remaining$') then -- TODO: multi-locale support
-			line:SetFormattedText('%s remaining', shortTime(self.expiration))
+			line:SetFormattedText('%s remaining', addon:FormatShortTime(self.expiration))
 			break
 		end
 	end
