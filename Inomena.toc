@@ -53,4 +53,8 @@ modules/tooltip/data.lua
 modules/tooltip/style.lua
 
 modules/widgets/money.lua
+modules/widgets/coordinates.lua
+modules/widgets/tradeskill.lua
+modules/widgets/speed.lua
+modules/widgets/stats.lua
 

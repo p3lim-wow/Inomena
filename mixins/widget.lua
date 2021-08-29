@@ -36,3 +36,8 @@ function addon:CreateButton(suffix, ...)
 	local button = CreateFrame('Button', addon.NAME .. suffix, ...)
 	return Mixin(button, widgetMixin, addon.mixins.event)
 end
+
+function addon:CreateCheckButton(suffix, ...)
+	local button = CreateFrame('CheckButton', addon.NAME .. suffix, ...)
+	return Mixin(button, widgetMixin, addon.mixins.event)
+end
