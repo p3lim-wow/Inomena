@@ -3,6 +3,7 @@
 ## Title: Inomena
 ## Notes: Personal UI
 ## RequiredDeps: PixelFont
+## SavedVariables: InomenaMoney
 
 addon.lua
 utils.lua
