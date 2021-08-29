@@ -1,13 +1,8 @@
 ## Interface: 90100
 ## Author: p3lim
-## Version: Alpha
 ## Title: Inomena
 ## Notes: Personal UI
-## SavedVariables: InomenaLastGM, InomenaSeenHeads
 ## RequiredDeps: PixelFont
-## OptionalDeps: LibStub
-
-libs\LibStub\LibStub.lua
 
 addon.lua
 utils.lua
@@ -58,5 +53,3 @@ modules/tooltip/style.lua
 
 modules/widgets/money.lua
 
-
-Inomena.xml
