@@ -168,3 +168,7 @@ buffs:Show() -- no clue why it's hidden by default
 
 -- show vehicle buffs
 RegisterAttributeDriver(buffs, 'unit', '[vehicleui] vehicle; player')
+
+-- hide blizzard auras
+addon:Hide(TemporaryEnchantFrame)
+addon:Hide(BuffFrame)

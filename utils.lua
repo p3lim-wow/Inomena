@@ -33,3 +33,14 @@ function addon:HookAddOn(addonName, callback)
 	end)
 end
 
+local hidden = CreateFrame('Frame')
+hidden:Hide()
+
+function addon:Hide(object)
+	object:SetParent(hidden)
+
+	if object.UnregisterAllEvents then
+		object:UnregisterAllEvents()
+	end
+end
+
