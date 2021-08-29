@@ -43,7 +43,6 @@
 	<Script file='modules/elements/garrison.lua'/>
 	<Script file='modules/elements/guild.lua'/>
 	<Script file='modules/elements/info.lua'/>
-	<Script file='modules/elements/mail.lua'/>
 	<Script file='modules/elements/map.lua'/>
 	<Script file='modules/elements/merchant.lua'/>
 	<Script file='modules/elements/minimap.lua'/>
