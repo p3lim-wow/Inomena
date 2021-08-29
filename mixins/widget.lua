@@ -29,10 +29,10 @@ addon.mixins.widget = widgetMixin
 
 function addon:CreateFrame(suffix, ...)
 	local frame = CreateFrame('Frame', addon.NAME .. suffix, ...)
-	return Mixin(frame, widgetMixin)
+	return Mixin(frame, widgetMixin, addon.mixins.event)
 end
 
 function addon:CreateButton(suffix, ...)
 	local button = CreateFrame('Button', addon.NAME .. suffix, ...)
-	return Mixin(button, widgetMixin)
+	return Mixin(button, widgetMixin, addon.mixins.event)
 end

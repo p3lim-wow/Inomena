@@ -28,6 +28,12 @@ modules/automation/repair.lua
 modules/automation/vendor.lua
 modules/automation/keystone.lua
 
+modules/binding/eject.lua
+modules/binding/hearthstone.lua
+modules/binding/mount.lua
+modules/binding/profession.lua
+modules/binding/reload.lua
+
 modules/settings/cvars.lua
 modules/settings/details.lua
 modules/settings/opie.lua
