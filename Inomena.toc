@@ -29,6 +29,7 @@ modules/automation/vendor.lua
 modules/automation/keystone.lua
 
 modules/settings/cvars.lua
+modules/settings/details.lua
 modules/settings/opie.lua
 
 
