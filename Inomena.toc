@@ -57,4 +57,5 @@ modules/widgets/coordinates.lua
 modules/widgets/tradeskill.lua
 modules/widgets/speed.lua
 modules/widgets/stats.lua
+modules/widgets/bagslots.lua
 
