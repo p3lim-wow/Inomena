@@ -1,8 +1,8 @@
 local _, addon = ...
 
 local BACKDROP = {
-	bgFile = [[Interface\ChatFrame\ChatFrameBackground]],
-	edgeFile = [[Interface\ChatFrame\ChatFrameBackground]],
+	bgFile = addon.TEXTURE,
+	edgeFile = addon.TEXTURE,
 	edgeSize = 1,
 }
 

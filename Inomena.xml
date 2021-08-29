@@ -45,8 +45,4 @@
 	<Script file='modules/misc/popup.lua'/>
 	<Script file='modules/misc/bigwigs.lua'/>
 	<Script file='modules/misc/quests.lua'/>
-
-	<Script file='modules/tooltip/style.lua'/>
-	<Script file='modules/tooltip/heart.lua'/>
-	<Script file='modules/tooltip/data.lua'/>
 </Ui>

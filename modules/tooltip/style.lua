@@ -1,6 +1,5 @@
-local E, F, C = unpack(select(2, ...))
+local _, addon = ...
 
-local TOOLTIP_LEVEL = TOOLTIP_UNIT_LEVEL:gsub('%%s', '.+')
 local CLASSIFICATION_TEXT = {
 	worldboss = ' Boss|r',
 	rareelite = '+|r Rare',
@@ -8,141 +7,118 @@ local CLASSIFICATION_TEXT = {
 	elite = '+|r',
 }
 
-local BACKDROP = CopyTable(C.InsetBackdrop)
-BACKDROP.backdropColor = CreateColor(0, 0, 0, 0.6)
-BACKDROP.backdropColor.GetRGB = ColorMixin.GetRGBA
-GAME_TOOLTIP_BACKDROP_STYLE_DEFAULT = BACKDROP
-
+-- convencience table
 local REACTION_COLORS = {}
 for index, color in next, FACTION_BAR_COLORS do
 	REACTION_COLORS[index] = CreateColor(color.r, color.g, color.b)
 end
 
-local function GetUnitColor(unit)
-	local color
-	if(UnitIsPlayer(unit) and not UnitHasVehicleUI(unit)) then
-		local _, classToken = UnitClass(unit)
-		color = RAID_CLASS_COLORS[classToken]
-	else
-		color = REACTION_COLORS[UnitReaction(unit, 'player')]
-	end
-
-	return color or HIGHLIGHT_FONT_COLOR
-end
-
-local function UpdateStyle(self)
-	self:SetBackdrop(BACKDROP)
-	self:SetBackdropColor(BACKDROP.backdropColor:GetRGBA())
-end
-
-local function UpdateUnit(self)
+GameTooltip:HookScript('OnTooltipSetUnit', function(self)
 	local _, unit = self:GetUnit()
-	if(not unit) then
+	if not unit then
 		return
 	end
 
-	local tooltipName = self:GetName()
-	local guildName = GetGuildInfo(unit)
+	-- start fresh
+	GameTooltip:ClearLines()
 
-	local color = GetUnitColor(unit)
-	_G[tooltipName .. 'TextLeft1']:SetFormattedText('|c%s%s|r', color:GenerateHexColor(), GetUnitName(unit, true) or '')
+	if UnitIsPlayer(unit) then
+		self.color = RAID_CLASS_COLORS[UnitClassBase(unit)]
+		GameTooltip:AddLine(self.color:WrapTextInColorCode(GetUnitName(unit, true)))
 
-	for index = 2, self:NumLines() do
-		local line = _G[tooltipName .. 'TextLeft' .. index]
-		local lineText = line:GetText()
-
-		if(guildName and lineText:find(guildName)) then
-			if(UnitIsInMyGuild(unit)) then
-				line:SetFormattedText('|cff0090ff<%s>|r', guildName)
+		local guildName = GetGuildInfo(unit)
+		if guildName then
+			if UnitIsInMyGuild(unit) then
+				GameTooltip:AddLine('<' .. guildName .. '>', 0, 0.55, 1)
 			else
-				line:SetFormattedText('|cff00ff10<%s>|r', guildName)
+				GameTooltip:AddLine('<' .. guildName .. '>', 0, 1, 0.1)
 			end
 		end
 
-		if(lineText:find(TOOLTIP_LEVEL)) then
-			local level = UnitLevel(unit)
+		local level = UnitLevel(unit)
+		if UnitIsFriend(unit, 'player') then
+			GameTooltip:AddLine(string.format('|cffffd000%s|r %s', level, UnitRace(unit)), 1, 1, 1)
+		else
+			local levelColor = GetDifficultyColor(C_PlayerInfo.GetContentDifficultyCreatureForPlayer(unit))
 			local levelText = level > 0 and level or '??'
-			local levelDifficulty = UnitIsFriend(unit, 'player') and UnitLevel('player') or level > 0 and level or 9999
-			local levelColor = ConvertRGBtoColorString((GetCreatureDifficultyColor(levelDifficulty)))
+			GameTooltip:AddLine(string.format('%s |cffff3300%s|r', levelText, UnitRace(unit)), levelColor.r, levelColor.g, levelColor.b)
+		end
+	else
+		self.color = REACTION_COLORS[UnitReaction(unit, 'player')]
+		GameTooltip:AddLine(self.color:WrapTextInColorCode(UnitName(unit)))
 
-			if(UnitIsPlayer(unit)) then
-				local flags = UnitIsAFK(unit) and CHAT_FLAG_AFK or
-							  UnitIsDND(unit) and CHAT_FLAG_DND
+		-- TODO: title (no API for this)
 
-				local factionColor
-				if(UnitFactionGroup(unit) ~= UnitFactionGroup('player')) then
-					factionColor = 'ffff3300'
-				else
-					factionColor = 'ffffffff'
-				end
+		if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
+			GameTooltip:AddLine(string.format('|cffffff00%s|r %s', UnitBattlePetLevel(unit), _G['BATTLE_PET_NAME_' .. UnitBattlePetType(unit)]))
+		else
+			local level = UnitLevel(unit)
+			local levelColor = GetDifficultyColor(C_PlayerInfo.GetContentDifficultyCreatureForPlayer(unit))
 
-				line:SetFormattedText('%s%s|r |c%s%s|r %s', levelColor, levelText, factionColor, UnitRace(unit), flags or '')
-			else
-				local creatureText
-				if(UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit)) then
-					levelText = UnitBattlePetLevel(unit)
-					levelColor = '|cffffff00'
+			local levelText = level > 0 and level or '??'
+			local rarityText = CLASSIFICATION_TEXT[UnitClassification(unit)] or '|r'
+			local creatureText = UnitCreatureFamily(unit) or UnitCreatureType(unit) or ''
 
-					creatureText = _G['BATTLE_PET_NAME_' .. UnitBattlePetType(unit)]
-				else
-					creatureText = UnitCreatureFamily(unit) or UnitCreatureType(unit) or ''
-				end
-
-				local classification = CLASSIFICATION_TEXT[UnitClassification(unit)] or '|r'
-				line:SetFormattedText('%s%s%s %s', levelColor, levelText, classification, creatureText)
-			end
+			GameTooltip:AddLine(string.format('%s%s |cffffffff%s|r', levelText, rarityText, creatureText), levelColor.r, levelColor.g, levelColor.b)
 		end
 
-		if(lineText:find(PVP) or lineText:find(FACTION_ALLIANCE) or lineText:find(FACTION_HORDE)) then
-			line:Hide()
-		end
+		-- TODO: faction (no API for this)
 	end
 
-	if(not UnitIsDeadOrGhost(unit)) then
+	if not UnitIsDeadOrGhost(unit) then
 		GameTooltipStatusBar:ClearAllPoints()
 		GameTooltipStatusBar:SetPoint('BOTTOMLEFT', 2, 2)
 		GameTooltipStatusBar:SetPoint('BOTTOMRIGHT', -2, 2)
-		GameTooltipStatusBar:SetStatusBarColor(color:GetRGB())
-		GameTooltipStatusBar.color = color
-	else
-		GameTooltipStatusBar:Hide()
+		GameTooltipStatusBar:SetStatusBarColor(self.color:GetRGB())
+		GameTooltipStatusBar:Show()
 	end
 
 	self:Show()
+end)
+
+-- set a new backdrop
+local function updateStyle(self)
+	self:CreateBackdrop(0.7, 0)
 end
 
-GameTooltip:HookScript('OnShow', UpdateStyle)
-GameTooltip:HookScript('OnUpdate', UpdateStyle) -- because of the damn object tooltips blue color
-GameTooltip:HookScript('OnTooltipSetUnit', UpdateUnit)
+Mixin(GameTooltip, addon.mixins.backdrop)
+GameTooltip:HookScript('OnShow', updateStyle)
+GameTooltip:HookScript('OnTooltipSetItem', updateStyle)
 
 for _, shoppingTooltip in next, GameTooltip.shoppingTooltips do
-	shoppingTooltip:HookScript('OnTooltipSetItem', UpdateStyle)
+	Mixin(shoppingTooltip, addon.mixins.backdrop)
+	shoppingTooltip:HookScript('OnTooltipSetItem', updateStyle)
 end
 
+-- set a new font
 for _, name in next, {
 	'GameTooltipHeaderText',
 	'GameTooltipText',
 	'GameTooltipTextSmall', -- shoppingtooltips
 } do
 	local Text = _G[name]
-	Text:SetFontObject('PixelFontNormal')
+	Text:SetFontObject(addon.FONT)
 	Text:SetShadowOffset(0, 0)
 end
 
+-- set a new position
 hooksecurefunc('GameTooltip_SetDefaultAnchor', function(self, parent)
 	self:SetOwner(parent, 'ANCHOR_NONE')
 	self:ClearAllPoints()
 	self:SetPoint('BOTTOMRIGHT', -50, 50)
 end)
 
+-- style the health bar
 GameTooltipStatusBar:SetHeight(3)
-GameTooltipStatusBar:SetStatusBarTexture(C.PlainTexture)
-GameTooltipStatusBar:HookScript('OnValueChanged', function(self)
-	if(self.color) then
-		self:SetStatusBarColor(self.color:GetRGB())
+GameTooltipStatusBar:SetStatusBarTexture(addon.TEXTURE)
+
+local background = GameTooltipStatusBar:CreateTexture('$parentBackground', 'BACKGROUND')
+background:SetAllPoints()
+background:SetColorTexture(1/4, 1/4, 1/4)
+
+-- make sure the status bar isn't shown for non-units
+GameTooltip:HookScript('OnSizeChanged', function(self)
+	if not UnitExists('mouseover') then
+		GameTooltipStatusBar:Hide()
 	end
 end)
-
-local Background = GameTooltipStatusBar:CreateTexture('$parentBackground', 'BACKGROUND')
-Background:SetAllPoints()
-Background:SetColorTexture(1/4, 1/4, 1/4)

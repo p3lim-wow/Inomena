@@ -38,5 +38,7 @@ modules/settings/cvars.lua
 modules/settings/details.lua
 modules/settings/opie.lua
 
+modules/tooltip/data.lua
+modules/tooltip/style.lua
 
 Inomena.xml
