@@ -195,6 +195,10 @@ function addon:PLAYER_LOGIN()
 	addon:Hide(QuickJoinToastButton)
 	addon:Hide(ChatFrameChannelButton)
 	addon:Hide(ChatFrameMenuButton)
+
+	for index = 1, NUM_CHAT_WINDOWS do
+		addon:Hide('ChatFrame' .. index .. 'ButtonFrame')
+	end
 end
 
 function addon:PLAYER_ENTERING_WORLD()
