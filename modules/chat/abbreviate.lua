@@ -63,6 +63,8 @@ local function addMessage(chatFrame, msg, ...)
 	msg = msg:gsub('^(.-|h) %w-:', '%1:')
 	msg = msg:gsub('^%[' .. RAID_WARNING .. '%]', 'w')
 	msg = msg:gsub('|Hworldmap:(.-):(.-):(.-)|h%[(.-)%]|h', formatWaypoint)
+	msg = msg:gsub(CHAT_FLAG_AFK, '')
+	msg = msg:gsub(CHAT_FLAG_DND, '')
 
 	return chatFrameHooks[chatFrame](chatFrame, msg, ...)
 end
