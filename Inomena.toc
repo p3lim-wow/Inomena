@@ -60,4 +60,5 @@ modules/widgets/stats.lua
 modules/widgets/bagslots.lua
 modules/widgets/mailbutton.lua
 modules/widgets/paste.lua
+modules/widgets/supertracking.lua
 
