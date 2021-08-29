@@ -22,13 +22,6 @@
 	<Script file='modules/core/utils.lua'/>
 	<Script file='modules/core/output.lua'/>
 
-	<Script file='modules/chat/abbreviate.lua'/>
-	<Script file='modules/chat/editbox.lua'/>
-	<Script file='modules/chat/gm.lua'/>
-	<Script file='modules/chat/sounds.lua'/>
-	<Script file='modules/chat/style.lua'/>
-	<Script file='modules/chat/tell.lua'/>
-
 	<Script file='modules/elements/archaeology.lua'/>
 	<Script file='modules/elements/enchanting.lua'/>
 	<Script file='modules/elements/garrison.lua'/>

@@ -1,9 +1,10 @@
-local E, F, C = unpack(select(2, ...))
+local _, addon = ...
 
-function E:CHAT_MSG_WHISPER()
+-- play these on the master channel
+function addon:CHAT_MSG_WHISPER()
 	PlaySound(SOUNDKIT.TELL_MESSAGE, 'master')
 end
 
-function E:CHAT_MSG_BN_WHISPER()
+function addon:CHAT_MSG_BN_WHISPER()
 	PlaySound(SOUNDKIT.TELL_MESSAGE, 'master')
 end

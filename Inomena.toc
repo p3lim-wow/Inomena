@@ -34,6 +34,12 @@ modules/binding/mount.lua
 modules/binding/profession.lua
 modules/binding/reload.lua
 
+modules/chat/abbreviate.lua
+modules/chat/commands.lua
+modules/chat/history.lua
+modules/chat/sounds.lua
+modules/chat/style.lua
+
 modules/settings/cvars.lua
 modules/settings/details.lua
 modules/settings/opie.lua

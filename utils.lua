@@ -44,3 +44,31 @@ function addon:Hide(object)
 	end
 end
 
+function addon:RegisterSlash(...)
+	local name = addon.NAME .. 'Slash' .. math.random()
+
+	local numArgs = select('#', ...)
+	local callback = select(numArgs, ...)
+	if type(callback) ~= 'function' or numArgs < 2 then
+		error('Syntax: RegisterSlash("/slash1"[, "/slash2"], slashFunction)')
+	end
+
+	for index = 1, numArgs - 1 do
+		local str = select(index, ...)
+		if type(str) ~= 'string' then
+			error('Syntax: RegisterSlash("/slash1"[, "/slash2"], slashFunction)')
+		end
+
+		_G['SLASH_' .. name .. index] = str
+	end
+
+	SlashCmdList[name] = callback
+end
+
+local NPC_ID_PATTERN = '%w+%-.-%-.-%-.-%-.-%-(.-)%-'
+function addon:GetNPCID(unit)
+	if unit and UnitExists(unit) then
+		local npcGUID = UnitGUID(unit)
+		return npcGUID and (tonumber(npcGUID:match(NPC_ID_PATTERN)))
+	end
+end
