@@ -2,7 +2,9 @@ local _, addon = ...
 
 -- automatically select the talent tab
 local function talentTreeTab()
-	PlayerTalentTab_OnClick(_G['PlayerTalentFrameTab' .. TALENTS_TAB])
+	if not InCombatLockdown() then
+		PlayerTalentTab_OnClick(_G['PlayerTalentFrameTab' .. TALENTS_TAB])
+	end
 end
 
 addon:HookAddOn('Blizzard_TalentUI', function()
