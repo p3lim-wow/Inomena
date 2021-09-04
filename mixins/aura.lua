@@ -60,6 +60,7 @@ function addon:CreateAura(button)
 	else
 		button.duration:SetParent(button:CreateTextParent())
 		button.duration:ClearAllPoints()
+		button.duration:SetFontObject(addon.FONT)
 	end
 	button.duration:SetPoint('TOPLEFT', button, 0, -1)
 
@@ -69,6 +70,7 @@ function addon:CreateAura(button)
 	else
 		button.count:SetParent(button:CreateTextParent())
 		button.count:ClearAllPoints()
+		button.duration:SetFontObject(addon.FONT)
 	end
 	button.count:SetPoint('BOTTOMRIGHT', button, -1, 1)
 

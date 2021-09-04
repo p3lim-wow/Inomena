@@ -14,15 +14,18 @@ function textMixin:SetValue(value)
 	self:SetText(value > 1 and value or '')
 end
 
-function widgetMixin:CreateText(fontType)
-	if not self.stringParent then
-		-- to avoid clipping
-		self.stringParent = CreateFrame('Frame', nil, self)
-		self.stringParent:SetFrameLevel(20)
-	end
-
-	local text = self.stringParent:CreateFontString(nil, 'OVERLAY', 'PixelFont' .. (fontType or 'Normal'))
+function widgetMixin:CreateText()
+	local text = self:CreateTextParent():CreateFontString(nil, 'OVERLAY', addon.FONT)
 	return Mixin(text, textMixin)
+end
+
+function widgetMixin:CreateTextParent()
+	if not self.textParent then
+		-- to avoid clipping
+		self.textParent = CreateFrame('Frame', nil, self)
+		self.textParent:SetFrameLevel(20)
+	end
+	return self.textParent
 end
 
 addon.mixins.widget = widgetMixin
