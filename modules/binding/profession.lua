@@ -16,11 +16,9 @@ profession:RegisterEvent('SKILL_LINES_CHANGED', function(self)
 	end
 
 	local primary, secondary = GetProfessions()
-	local professionID = 1
 	if not primary then
 		-- this should not happen
 		primary = secondary
-		professionID = 2
 	end
 
 	if primary then
