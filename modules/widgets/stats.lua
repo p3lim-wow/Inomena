@@ -4,7 +4,7 @@ local framerate, localLatency, worldLatency
 local function createDisplayString(align)
 	local text = UIParent:CreateFontString(nil, 'OVERLAY')
 	text:SetPoint('BOTTOM' .. (align or ''), Minimap, 'TOP' .. (align or ''), 0, 5)
-	text:SetFontObject('PixelFontNormal')
+	text:SetFontObject(addon.FONT)
 	text:SetJustifyH(align or 'CENTER')
 	text:SetAlpha(0.8)
 
