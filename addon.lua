@@ -5,6 +5,6 @@ addon.mixins = {}
 
 -- constants
 addon.NAME = addonName
-addon.FONT = 'PixelFontNormal' -- TODO: remove dependency
+addon.FONT = addonName .. 'FontNormal'
 addon.TEXTURE = [[Interface\ChatFrame\ChatFrameBackground]]
 addon.CLASS = UnitClassBase('player')

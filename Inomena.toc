@@ -2,8 +2,9 @@
 ## Author: p3lim
 ## Title: Inomena
 ## Notes: Personal UI
-## RequiredDeps: PixelFont
 ## SavedVariables: InomenaMoney
+
+font.xml
 
 addon.lua
 utils.lua

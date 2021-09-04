@@ -1,0 +1,25 @@
+<Ui xmlns='http://www.blizzard.com/wow/ui/'>
+	<FontFamily name='InomenaFont' virtual='true'>
+		<Member alphabet='roman'>
+			<Font font='Interface\AddOns\InomenaFont\assets\fonts\semplice.ttf' height='8' outline='NORMAL' monochrome='true'/>
+		</Member>
+		<Member alphabet='russian'>
+			<Font font='Interface\AddOns\InomenaFont\assets\fonts\homespun.ttf' height='10' outline='NORMAL' monochrome='true'/>
+		</Member>
+		<!-- no fonts for the following alphabets, please do suggest! -->
+		<Member alphabet='korean'>
+			<Font font='Fonts\2002.ttf' height='11' outline='NORMAL' monochrome='true'/>
+		</Member>
+		<Member alphabet='simplifiedchinese'>
+			<Font font='Fonts\ARKai_T.ttf' height='10' outline='NORMAL' monochrome='true'/>
+		</Member>
+		<Member alphabet='traditionalchinese'>
+			<Font font='Fonts\blei00d.ttf' height='10' outline='NORMAL' monochrome='true'/>
+		</Member>
+	</FontFamily>
+	<Font name='InomenaFontNormal' inherits='InomenaFont' virtual='true'>
+		<Shadow>
+			<Offset x='0' y='0'/>
+		</Shadow>
+	</Font>
+</Ui>
