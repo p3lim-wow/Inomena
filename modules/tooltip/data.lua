@@ -1,11 +1,9 @@
 local SPELL = STAT_CATEGORY_SPELL
 local ITEM = HELPFRAME_ITEM_TITLE
-local INSTANCE = INSTANCE
 local CURRENCY = CURRENCY
 local MOUNT = MOUNT
 
 local spellMatch = 'spell:(%d+)'
-local itemMatch = 'item:(%d+)'
 local currencyMatch = 'currency:(%d+)'
 
 local lineFormat = '%s ' .. ID .. ': |cff93ccea%s|r'
@@ -133,8 +131,8 @@ hooksecurefunc(GameTooltip, 'SetLFGDungeonReward', function(self, dungeonID, ind
 	local _, _, _, _, rewardType, rewardID = GetLFGDungeonRewardInfo(dungeonID, index)
 	if rewardType == 'currency' then
 		AddLine(CURRENCY, rewardID)
-	elseif link then
-		AddLine(ITEM, GetItemCreationContext(GetLFGDungeonRewardLink(dungeonID, index)))
+	-- elseif link then
+	-- 	AddLine(ITEM, GetItemCreationContext(GetLFGDungeonRewardLink(dungeonID, index)))
 	end
 end)
 
@@ -208,7 +206,7 @@ hooksecurefunc(GameTooltip, 'SetPetAction', function(self)
 	end
 end)
 
-hooksecurefunc(GameTooltip, 'SetPvpTalent', function(self, id, isInspect, _, inspectUnit, classID)
+hooksecurefunc(GameTooltip, 'SetPvpTalent', function(self, id, isInspect)
 	local _, _, _, _, _, spellID = GetPvpTalentInfoByID(id, nil, isInspect, isInspect and 'target')
 	if spellID then
 		AddLine(SPELL, spellID)
@@ -303,7 +301,7 @@ hooksecurefunc(GameTooltip, 'SetSpellByID', function(self, spellID)
 	AddLine(SPELL, spellID)
 end)
 
-hooksecurefunc(GameTooltip, 'SetTalent', function(self, spellID, isInspect, talentGroup)
+hooksecurefunc(GameTooltip, 'SetTalent', function(self, spellID)
 	AddLine(SPELL, spellID)
 end)
 

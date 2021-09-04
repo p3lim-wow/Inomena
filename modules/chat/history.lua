@@ -2,7 +2,7 @@ local history = {}
 local historyIndex = 0
 local maxHistory = 50
 
-local function addHistory(editBox, line)
+local function addHistory(self, line)
 	if not line or line == '' then
 		return
 	end
@@ -28,7 +28,7 @@ local function addHistory(editBox, line)
 	historyIndex = #history + 1
 end
 
-local function navigateHistory(editBox, key)
+local function navigateHistory(self, key)
 	if key ~= 'UP' and key ~= 'DOWN' then
 		return
 	end
@@ -45,7 +45,7 @@ local function navigateHistory(editBox, key)
 	end
 
 	historyIndex = index
-	editBox:SetText(history[index])
+	self:SetText(history[index])
 end
 
 local function resetHistoryIndex()

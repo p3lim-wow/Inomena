@@ -23,7 +23,7 @@ submit:SetPoint('BOTTOM', -25, 5)
 submit:SetSize(50, 20)
 submit:SetText('Paste')
 submit:SetScript('OnClick', function()
-	for _, line in ipairs({strsplit('\n', editbox:GetText())}) do
+	for _, line in ipairs({string.split('\n', editbox:GetText())}) do
 		ChatFrame_OpenChat('')
 		local editBox = ChatEdit_GetActiveWindow()
 		editBox:SetText(line)

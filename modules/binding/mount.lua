@@ -47,7 +47,7 @@ local specialMounts = {
 local function updateMounts()
 	specialMounts.vendor = nil
 	for _, tbl in next, specialMounts do
-		if type(value) == 'table' then
+		if type(tbl) == 'table' then
 			table.wipe(tbl)
 		end
 	end
@@ -149,6 +149,8 @@ mount:RegisterEvent('PLAYER_LOGIN', function(self)
 	return true
 end)
 
+local string_trim = string.trim
+local string_join = string.join
 mount:SetScript('PreClick', function(self)
 	if UnitOnTaxi('player') then
 		UIErrorsFrame:AddMessage('Requesting early landing.', 1, 1, 0)
@@ -165,14 +167,14 @@ mount:SetScript('PreClick', function(self)
 	local macro = MACRO_STOP
 
 	if spellID then
-		macro = strtrim(strjoin('\n', macro, MACRO_CAST:format(GetSpellInfo(spellID))))
+		macro = string_trim(string_join('\n', macro, MACRO_CAST:format(GetSpellInfo(spellID))))
 	end
 
 	if itemID then
-		macro = strtrim(strjoin('\n', macro, MACRO_ITEM:format(itemID)))
+		macro = string_trim(string_join('\n', macro, MACRO_ITEM:format(itemID)))
 	else
-		macro = strtrim(strjoin('\n', macro, MACRO_MOUNT:format(mountID or 0)))
+		macro = string_trim(string_join('\n', macro, MACRO_MOUNT:format(mountID or 0)))
 	end
 
-	self:SetAttribute('macrotext', strtrim(strjoin('\n', MACRO_START, macro)))
+	self:SetAttribute('macrotext', string_trim(string_join('\n', MACRO_START, macro)))
 end)

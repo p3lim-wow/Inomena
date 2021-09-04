@@ -17,7 +17,7 @@ local PROFESSION_IGNORED_INDEX = {
 
 local tabs = {}
 local function updateTabs()
-	for index, tab in next, tabs do
+	for _, tab in next, tabs do
 		local current = IsCurrentSpell(tab.name)
 		tab:SetChecked(current)
 		tab:SetButtonState(current and 'DISABLED' or 'NORMAL')

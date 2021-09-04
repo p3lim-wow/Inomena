@@ -27,17 +27,19 @@ local function updateLatency()
 	worldLatency:SetFormattedText('%s%d', getLatencyColor(worldMs), worldMs)
 end
 
-local function updateFramerate()
-	local fps, color = GetFramerate()
+local function getFramerateColor(fps)
 	if fps < 40 then
-		color = RED_FONT_COLOR_CODE
+		return RED_FONT_COLOR_CODE
 	elseif fps < 60 then
-		color = YELLOW_FONT_COLOR_CODE
+		return YELLOW_FONT_COLOR_CODE
 	else
-		color = GREEN_FONT_COLOR_CODE
+		return GREEN_FONT_COLOR_CODE
 	end
+end
 
-	framerate:SetFormattedText('%s%d', color, GetFramerate())
+local function updateFramerate()
+	local fps = GetFramerate()
+	framerate:SetFormattedText('%s%d', getFramerateColor(fps), fps)
 end
 
 function addon:PLAYER_LOGIN()

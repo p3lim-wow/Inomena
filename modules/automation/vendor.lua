@@ -25,7 +25,7 @@ local function VendorGrayItems(merchantVisit)
 	end
 end
 
-function addon:MERCHANT_SHOW(recursive)
+function addon:MERCHANT_SHOW()
 	if IsShiftKeyDown() then
 		return
 	end

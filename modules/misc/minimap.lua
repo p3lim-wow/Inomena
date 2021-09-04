@@ -115,7 +115,7 @@ addon:HookAddOn('Blizzard_HybridMinimap', function()
 	canvasBackdrop:CreateBackdrop(1, 0)
 end)
 
-function GetMinimapShape()
+function _G.GetMinimapShape()
 	-- other addons depend on this, it's a standard
 	return 'SQUARE'
 end

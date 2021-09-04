@@ -30,7 +30,7 @@ function addon:FormatShortMoney(money)
 end
 
 function addon:HookAddOn(addonName, callback)
-	self:RegisterEvent('ADDON_LOADED', function(self, name)
+	self:RegisterEvent('ADDON_LOADED', function(_, name)
 		if name == addonName then
 			callback()
 			return true

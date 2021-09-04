@@ -22,8 +22,7 @@ function addon:UPDATE_INVENTORY_DURABILITY()
 	end
 
 	for index = 1, GetNumTrackingTypes() do
-		local name, _, active = GetTrackingInfo(index)
-		if name == MINIMAP_TRACKING_REPAIR then
+		if GetTrackingInfo(index) == MINIMAP_TRACKING_REPAIR then
 			return SetTracking(index, alert > 0)
 		end
 	end

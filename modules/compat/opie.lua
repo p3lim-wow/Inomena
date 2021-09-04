@@ -97,7 +97,7 @@ function methods:SetHighlighted(highlight)
 	self.highlight:SetShown(highlight)
 end
 
-local function constructor(name, parent, size, ...)
+local function constructor(name, parent, size)
 	local button = CreateFrame('CheckButton', name, parent, 'ActionButtonTemplate')
 	button:SetSize(size, size)
 	button:EnableMouse(false)

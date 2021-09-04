@@ -124,17 +124,17 @@ local UVARS = {
 }
 
 function addon:PLAYER_LOGIN()
-	if GetCVarBool('autoLootDefault') then
+	if C_CVar.GetCVarBool('autoLootDefault') then
 		-- we'll use this one to check if we're set, since it's off by default
 		return
 	end
 
 	for key, value in next, CVARS do
-		SetCVar(key, value)
+		C_CVar.SetCVar(key, tostring(value))
 	end
 
 	for key, value in next, UVARS do
-		SetCVar(key, value)
+		C_CVar.SetCVar(key, tostring(value))
 	end
 
 	-- need to update the nameplate driver for cvars to take effect

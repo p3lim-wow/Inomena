@@ -1,29 +1,29 @@
 local _, addon = ...
 
 function addon:PLAYER_LOGIN()
-	if not InomenaMoney then
-		InomenaMoney = {}
+	if not _G.InomenaMoney then
+		_G.InomenaMoney = {}
 	end
 
 	local realm = GetRealmID()
-	if not InomenaMoney[realm] then
-		InomenaMoney[realm] = {}
+	if not _G.InomenaMoney[realm] then
+		_G.InomenaMoney[realm] = {}
 	end
 
 	local character = UnitName('player') .. ':' .. (UnitClassBase('player'))
-	if not InomenaMoney[realm][character] then
-		InomenaMoney[realm][character] = GetMoney()
+	if not _G.InomenaMoney[realm][character] then
+		_G.InomenaMoney[realm][character] = GetMoney()
 	end
 end
 
 function addon:PLAYER_MONEY()
 	local character = UnitName('player') .. ':' .. (UnitClassBase('player'))
-	InomenaMoney[GetRealmID()][character] = GetMoney()
+	_G.InomenaMoney[GetRealmID()][character] = GetMoney()
 end
 
 -- I'd go nuts if this data wasn't sorted
 -- http://lua-users.org/wiki/SortedIteration
-local function orderedNext(tbl, n)
+local function orderedNext(tbl)
 	-- get the first object in the original table
 	local key = tbl[tbl.__next]
 	if not key then
@@ -64,7 +64,7 @@ tooltip:SetScript('OnEnter', function(self)
 	GameTooltip:SetPoint('BOTTOMRIGHT', self, 'TOPRIGHT')
 
 	local total = 0
-	for character, money in orderedPairs(InomenaMoney[GetRealmID()]) do
+	for character, money in orderedPairs(_G.InomenaMoney[GetRealmID()]) do
 		local name, class = string.split(':', character)
 
 		local color = RAID_CLASS_COLORS[class]

@@ -27,7 +27,7 @@ local function formatPlayer(info, name)
 end
 
 local FORMAT_BN_PLAYER = '|HBNplayer:%s|h|cff%s%s|r|h'
-local function formatBNPlayer(info, name)
+local function formatBNPlayer(info)
 	-- replace the colors with a client color
 	local color, tag = getClientColorAndTag(info:match('(%d+):'))
 	return FORMAT_BN_PLAYER:format(info, color, tag)
@@ -44,7 +44,7 @@ end
 
 local FORMAT_WAYPOINT_FAR = '|Hworldmap:%d:%d:%d|h[%s: %.2f, %.2f]|h'
 local FORMAT_WAYPOINT_NEAR = '|Hworldmap:%d:%d:%d|h[%.2f, %.2f]|h'
-local function formatWaypoint(mapID, x, y, name)
+local function formatWaypoint(mapID, x, y)
 	local playerMapID = C_Map.GetBestMapForUnit('player')
 	if tonumber(mapID) ~= playerMapID then
 		local mapInfo = C_Map.GetMapInfo(mapID)
