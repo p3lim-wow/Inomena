@@ -2,14 +2,14 @@ local _, addon = ...
 
 -- replace bags by dragging to the bag icon
 local function putInBag(self)
-	local id = self:GetParent():GetID() + 19
+	local id = ContainerIDToInventoryID(self:GetParent():GetID())
 	if CursorHasItem() and not PutItemInBag(id) then
 		ClearCursor()
 	end
 end
 
 local function pickUpBag(self)
-	local id = self:GetParent():GetID() + 19
+	local id = ContainerIDToInventoryID(self:GetParent():GetID())
 	if not CursorHasItem() then
 		PickupBagFromSlot(id)
 	end
@@ -17,7 +17,7 @@ end
 
 local function onMouseUp(self, button)
 	if button == 'LeftButton' then
-		local id = self:GetParent():GetID() + 19
+		local id = ContainerIDToInventoryID(self:GetParent():GetID())
 		if CursorHasItem() and not PutItemInBag(id) then
 			ClearCursor()
 		elseif not CursorHasItem() then
@@ -30,7 +30,11 @@ end
 
 local function onEnter(self)
 	local parent = self:GetParent()
-	parent:GetScript('OnEnter')(parent)
+	local id = ContainerIDToInventoryID(parent:GetID())
+	GameTooltip:SetOwner(self, 'ANCHOR_LEFT')
+	GameTooltip:SetInventoryItem('player', id)
+	GameTooltip:Show()
+	parent.Highlight:Show()
 end
 
 local function onLeave(self)
@@ -38,7 +42,7 @@ local function onLeave(self)
 	parent:GetScript('Onleave')(parent)
 end
 
-for index = 2, 5 do
+for index = 2, 12 do
 	local parent = _G['ContainerFrame' .. index .. 'PortraitButton']
 	local button = addon:CreateButton('BagButton' .. index, parent)
 	button:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
