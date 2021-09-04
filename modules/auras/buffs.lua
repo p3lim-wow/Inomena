@@ -145,7 +145,7 @@ for attribute, value in next, {
 end
 
 buffs:HookScript('OnAttributeChanged', function(self, attribute, child)
-	if not attribute:match('^child') or attribute:match('^tempenchant') then
+	if not (attribute:match('^child') or attribute:match('^tempenchant')) then
 		return
 	end
 
