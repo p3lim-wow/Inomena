@@ -12,7 +12,7 @@ local function isPlayerKnown(playerName)
 	-- is it a battlenet friend?
 	for index = 1, select(2, BNGetNumFriends()) do
 		local friend = C_BattleNet.GetFriendAccountInfo(index).gameAccountInfo
-		if friend.clientProgram == BNET_CLIENT_WOW then
+		if friend.clientProgram == BNET_CLIENT_WOW and friend.realmName then
 			-- character names do not contain realm
 			local characterName = friend.characterName .. '-' .. friend.realmName
 			if characterName == playerName then
