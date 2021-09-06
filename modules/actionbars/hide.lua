@@ -57,3 +57,20 @@ PetBattleFrame:SetFrameStrata('HIGH')
 -- send the microbuttons off the screen to avoid the help popups
 MicroButtonAndBagsBar:ClearAllPoints()
 MicroButtonAndBagsBar:SetPoint('BOTTOMRIGHT', UIParent, 9999, 0)
+
+-- sometimes I want to show the bars anyways
+local show = CreateFrame('CheckButton', nil, MainMenuBarArtFrame, 'InterfaceOptionsCheckButtonTemplate')
+show:SetPoint('CENTER', MainMenuBarArtFrame.RightEndCap)
+show:SetSize(30, 30)
+show:SetScript('OnClick', function(self)
+	if InCombatLockdown() then
+		self:SetChecked(not self:GetChecked())
+		return
+	end
+
+	if self:GetChecked() then
+		MainMenuBar:SetParent(UIParent)
+	else
+		MainMenuBar:SetParent(parent)
+	end
+end)
