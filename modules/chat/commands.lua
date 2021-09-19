@@ -21,7 +21,14 @@ addon:RegisterSlash('/complete', function(msg)
 end)
 
 addon:RegisterSlash('/mapid', function()
-	print('Map ID:', C_Map.GetBestMapForUnit('player'))
+	local mapID
+	if WorldMapFrame:IsShown() then
+		mapID = WorldMapFrame:GetMapID()
+	else
+		mapID = C_Map.GetBestMapForUnit('player')
+	end
+
+	print('Map ID:', mapID, 'for', C_Map.GetMapInfo(mapID).name)
 end)
 
 addon:RegisterSlash('/npcid', function()
