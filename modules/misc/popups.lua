@@ -39,3 +39,18 @@ function addon:EQUIP_BIND_TRADEABLE_CONFIRM(slot)
 	EquipPendingItem(slot)
 	StaticPopup_Hide('EQUIP_BIND_TRADEABLE')
 end
+
+addon:HookAddOn('Blizzard_TalkingHeadUI', function()
+	TalkingHeadFrame:HookScript('OnShow', function()
+		if not InomenaHeads then
+			InomenaHeads = {}
+		end
+
+		local _, _, voiceOverID = C_TalkingHead.GetCurrentLineInfo()
+		if InomenaHeads[voiceOverID] then
+			TalkingHeadFrame_CloseImmediately()
+		else
+			InomenaHeads[voiceOverID] = true
+		end
+	end)
+end)
