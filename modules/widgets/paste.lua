@@ -1,12 +1,12 @@
 local _, addon = ...
 
-local paste = Mixin(addon:CreateFrame('Paste', UIParent, 'BackdropTemplate'), addon.mixins.backdrop)
+local paste = Mixin(addon:CreateFrame('Paste', UIParent), addon.mixins.backdrop)
 paste:SetPoint('CENTER')
 paste:SetSize(600, 400)
 paste:Hide()
 paste:CreateBackdrop()
 
-local editbox = Mixin(CreateFrame('EditBox', nil, paste, 'BackdropTemplate'), addon.mixins.backdrop)
+local editbox = Mixin(CreateFrame('EditBox', nil, paste), addon.mixins.backdrop)
 editbox:SetPoint('TOPLEFT', 5, -5)
 editbox:SetPoint('BOTTOMRIGHT', -5, 30)
 editbox:SetFontObject(ChatFontNormal)
@@ -33,6 +33,12 @@ submit:SetScript('OnClick', function()
 
 	editbox:SetText('')
 	paste:Hide()
+end)
+
+editbox:SetScript('OnEnterPressed', function()
+	if IsControlKeyDown() then
+		submit:Click()
+	end
 end)
 
 local close = CreateFrame('Button', nil, paste, 'UIPanelButtonTemplate')
