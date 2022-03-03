@@ -145,8 +145,12 @@ for attribute, value in next, {
 end
 
 buffs:HookScript('OnAttributeChanged', function(self, attribute, child)
-	if not (attribute:match('^child') or attribute:match('^tempenchant')) then
+	if not (attribute:match('^frameref%-child') or attribute:match('^tempenchant')) then
 		return
+	end
+
+	if type(child) == 'userdata' then
+		child = GetFrameHandleFrame(child)
 	end
 
 	child:SetScript('OnEnter', onEnter)
