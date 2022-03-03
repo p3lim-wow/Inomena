@@ -36,8 +36,13 @@ end
 
 -- don't prompt to equip shareable items
 function addon:EQUIP_BIND_TRADEABLE_CONFIRM(slot)
-	EquipPendingItem(slot)
-	StaticPopup_Hide('EQUIP_BIND_TRADEABLE')
+	if not InCombatLockdown() then
+		-- for whatever reason, this non-framexml-API will taint the bags,
+		-- which makes absolutely no sense since you can't equip items in combat anyways,
+		-- and this popup wouldn't show
+		EquipPendingItem(slot)
+		StaticPopup_Hide('EQUIP_BIND_TRADEABLE')
+	end
 end
 
 addon:HookAddOn('Blizzard_TalkingHeadUI', function()
