@@ -24,11 +24,6 @@ QueueStatusMinimapButton:ClearAllPoints()
 QueueStatusMinimapButton:SetPoint('TOPRIGHT')
 QueueStatusMinimapButton:SetHighlightTexture(nil)
 
-MiniMapMailFrame:SetParent(Minimap)
-MiniMapMailFrame:ClearAllPoints()
-MiniMapMailFrame:SetPoint('TOPLEFT')
-MiniMapMailIcon:SetTexture([[Interface\Minimap\Tracking\Mailbox]])
-
 local backdrop = Mixin(addon:CreateFrame('MinimapBackdrop', Minimap), addon.mixins.backdrop)
 backdrop:SetPoint('TOPRIGHT', 1, 1)
 backdrop:SetPoint('BOTTOMLEFT', -1, -1)
@@ -45,6 +40,8 @@ for _, obj in next, {
 	'MinimapZoomOut',
 	'MinimapZoneTextButton',
 	'MiniMapWorldMapButton',
+	'MiniMapMailFrame',
+	'MiniMapMailIcon',
 	'MiniMapMailBorder',
 	'MiniMapInstanceDifficulty',
 	'MiniMapTracking',

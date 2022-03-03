@@ -10,20 +10,39 @@ local function getCooldownRemaining(start, duration)
 	return start > 0 and start - GetTime() + duration
 end
 
-local mail = addon:CreateButton('MailButton', MiniMapMailFrame, 'SecureActionButtonTemplate')
-mail:SetAllPoints()
+local function getMailboxToy()
+	for itemID in next, TOYS do
+		if not getCooldownRemaining(GetItemCooldown(itemID)) and C_ToyBox.IsToyUsable(itemID) then
+			return itemID
+		end
+	end
+end
+
+local mail = addon:CreateButton('MailButton', Minimap, 'SecureActionButtonTemplate')
+mail:SetPoint('TOPLEFT')
+mail:SetSize(33, 33)
 mail:SetAttribute('type', 'macro')
+MiniMapMailFrame:UnregisterAllEvents()
+
+local icon = mail:CreateTexture(nil, 'OVERLAY')
+icon:SetPoint('CENTER')
+icon:SetAtlas('mailbox', true)
+icon:SetScale(0.6)
+
+mail:RegisterEvent('UPDATE_PENDING_MAIL', function()
+	icon:SetAlpha(HasNewMail() and 1 or 0)
+end)
+
 mail:SetScript('PreClick', function(self)
 	if InCombatLockdown() then
 		return
 	end
 
-	for itemID in next, TOYS do
-		if not getCooldownRemaining(GetItemCooldown(itemID)) and C_ToyBox.IsToyUsable(itemID) then
-			self:SetAttribute('macrotext', '/cast item:' .. itemID)
-			return
-		end
+	local itemID = getMailboxToy()
+	if not itemID then
+		return
 	end
+	self:SetAttribute('macrotext', '/cast item:' .. itemID)
 
 	if IsSpellKnown(255661) and not getCooldownRemaining(GetSpellCooldown(255661)) then
 		-- Nightborne, use Cantrips
@@ -75,13 +94,31 @@ mail:SetScript('PostClick', function(self)
 end)
 
 mail:SetScript('OnEnter', function(self)
-	self:GetParent():GetScript('OnEnter')(self)
+	GameTooltip:SetOwner(self, 'ANCHOR_BOTTOMLEFT')
 
-	GameTooltip:AddLine(' ')
-	GameTooltip:AddLine('Click to summon a mailbox', 1, 1, 1)
+	local sender1, sender2, sender3 = GetLatestThreeSenders()
+	if sender1 then
+		GameTooltip:AddLine(HAVE_MAIL_FROM)
+		GameTooltip:AddLine(sender1)
+	elseif HasNewMail() then
+		GameTooltip:AddLine(HAVE_MAIL)
+	else
+		GameTooltip:AddLine(MINIMAP_TRACKING_MAILBOX)
+	end
+
+	if sender2 then
+		GameTooltip:AddLine(sender2)
+	end
+	if sender3 then
+		GameTooltip:AddLine(sender3)
+	end
+
+	if getMailboxToy() then
+		GameTooltip:AddLine(' ')
+		GameTooltip:AddLine('Click to summon a mailbox', 1, 1, 1)
+	end
+
 	GameTooltip:Show()
 end)
 
-mail:SetScript('OnLeave', function(self)
-	self:GetParent():GetScript('OnLeave')(self)
-end)
+mail:SetScript('OnLeave', GameTooltip_Hide)
