@@ -4,10 +4,10 @@ import re
 import sys
 from urllib.request import urlopen
 
-# https://www.wowhead.com/items?filter=107:195:216;0:2:1;innkeeper:0:0
+# https://ptr.wowhead.com/items?filter=107:195:216;0:2:1;innkeeper:0:0
 
 def scrape(path, pattern):
-	page = urlopen(f'https://www.wowhead.com/{path}')
+	page = urlopen(f'https://ptr.wowhead.com/{path}')
 	html = page.read().decode('utf-8')
 	return re.findall(pattern, html)
 
