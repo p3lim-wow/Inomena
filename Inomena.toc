@@ -3,6 +3,7 @@
 ## Title: Inomena
 ## Notes: Personal UI
 ## SavedVariables: InomenaMoney, InomenaHeads
+## SavedVariablesPerCharacter: InomenaCovenants
 
 font.xml
 

@@ -23,14 +23,16 @@ local HEARTHSTONE_TOYS = {
 	182773,
 	183716,
 	184353,
+	188952,
+	190196,
+	190237,
 }
 
 local COVENANT_REQUIREMENT = {
-	-- hopefully this goes away in 9.1.5
+	[184353] = 1, -- kyrian
+	[183716] = 2, -- venthyr
 	[180290] = 3, -- night fae
 	[182773] = 4, -- necrolord
-	[183716] = 2, -- venthyr
-	[184353] = 1, -- kyrian
 }
 
 local function getCooldownRemaining(start, duration)
@@ -40,12 +42,19 @@ end
 local hearthstone = addon:CreateButton('BindHearthstone', nil, 'SecureActionButtonTemplate')
 hearthstone:SetAttribute('type', 'macro')
 hearthstone:RegisterEvent('PLAYER_LOGIN', function(self)
+	InomenaCovenants = InomenaCovenants or {}
+	InomenaCovenants[C_Covenants.GetActiveCovenantID()] = C_CovenantSanctumUI.GetRenownLevel()
+
 	SetBindingClick('SHIFT-BACKSPACE', self:GetName())
 
 	-- set the default toy
 	self:GetScript('PreClick')(self)
 
 	return true
+end)
+
+hearthstone:RegisterEvent('COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED', function(self)
+	InomenaCovenants[C_Covenants.GetActiveCovenantID()] = C_CovenantSanctumUI.GetRenownLevel()
 end)
 
 hearthstone:SetScript('PreClick', function(self)
@@ -59,7 +68,7 @@ hearthstone:SetScript('PreClick', function(self)
 	for _, itemID in next, HEARTHSTONE_TOYS do
 		if PlayerHasToy(itemID) and C_ToyBox.IsToyUsable(itemID) then
 			local covenantRequired = COVENANT_REQUIREMENT[itemID]
-			if covenantRequired and covenantRequired == covenant then
+			if covenantRequired and (covenantRequired == covenant or InomenaCovenants[covenantRequired] == 80) then
 				table.insert(toys, itemID)
 			elseif not covenantRequired then
 				table.insert(toys, itemID)
