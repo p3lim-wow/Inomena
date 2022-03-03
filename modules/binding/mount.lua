@@ -16,6 +16,7 @@ local MAW = {
 }
 local MAW_MOUNTS = {
 	[1304] = true, -- Mawsworn Soulhunter
+	[1441] = true, -- Bound Shadehound
 	[1442] = true, -- Corridor Creeper
 }
 local WATERWALKING_EQUIPMENT = {
