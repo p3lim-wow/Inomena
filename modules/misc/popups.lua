@@ -52,6 +52,10 @@ addon:HookAddOn('Blizzard_TalkingHeadUI', function()
 		end
 
 		local _, _, voiceOverID = C_TalkingHead.GetCurrentLineInfo()
+		if not voiceOverID then
+			return
+		end
+
 		if InomenaHeads[voiceOverID] then
 			TalkingHeadFrame_CloseImmediately()
 		else
