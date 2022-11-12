@@ -21,9 +21,10 @@ function addon:UPDATE_INVENTORY_DURABILITY()
 		end
 	end
 
-	for index = 1, GetNumTrackingTypes() do
-		if GetTrackingInfo(index) == MINIMAP_TRACKING_REPAIR then
-			return SetTracking(index, alert > 0)
+	for index = 1, C_Minimap.GetNumTrackingTypes() do
+		if C_Minimap.GetTrackingInfo(index) == MINIMAP_TRACKING_REPAIR then
+			C_Minimap.SetTracking(index, alert > 0)
+			break
 		end
 	end
 end
