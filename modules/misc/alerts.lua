@@ -3,18 +3,20 @@ local _, addon = ...
 local lastAlertTime = 0
 local function alert()
 	if GetTime() >= lastAlertTime + 10 then -- avoid spam
-		PlaySound(SOUNDKIT.READY_CHECK, 'master')
+		PlaySound(8960, 'master') -- SOUNDKIT.READY_CHECK
 		-- FlashClientIcon()
 		lastAlertTime = GetTime()
 	end
 end
 
+-- battleground queue pop
 function addon:UPDATE_BATTLEFIELD_STATUS(index)
 	if GetBattlefieldStatus(index) == 'confirm' then
 		alert()
 	end
 end
 
+-- lfg queue pop
 function addon:LFG_LIST_APPLICATION_STATUS_UPDATED(_, status)
 	if status == 'invited' then
 		alert()
@@ -37,13 +39,16 @@ function addon:PLAYER_REGEN_DISABLED()
 	UIErrorsFrame:AddMessage('+ Combat', 1, 1, 1)
 end
 
+-- afk logout popup
 function addon:CHAT_MSG_SYSTEM(msg)
 	if msg == IDLE_MESSAGE then
 		alert()
 	end
 end
 
+-- readychecks
 ReadyCheckListenerFrame:SetScript('OnShow', alert)
 
+-- invites
 addon:RegisterEvent('PARTY_INVITE_REQUEST', alert)
 addon:RegisterEvent('LFG_PROPOSAL_SHOW', alert)
