@@ -33,19 +33,20 @@ local function isPlayerKnown(playerName)
 	end
 end
 
--- invite players when asked
-function addon:CHAT_MSG_WHISPER(text, playerName)
-	text = text:lower():trim()
-	if text == 'inv'  or text == 'invite' then
+-- invite known player when asked
+function addon:CHAT_MSG_WHISPER(msg, playerName)
+	msg = msg:lower():trim()
+
+	if msg == 'inv'  or msg == 'invite' then
 		if isPlayerKnown(playerName) then
 			C_PartyInfo.InviteUnit(playerName)
 		end
 	end
 end
 
--- accept invite from players
+-- accept invite from known player
 function addon:PARTY_INVITE_REQUEST(playerName, l, f, g)
-	if QueueStatusMinimapButton:IsShown() then
+	if QueueStatusButton:IsVisible() then
 		-- don't accept if in a queue
 		return
 	end
