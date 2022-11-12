@@ -1,25 +1,5 @@
 local _, addon = ...
 
-local function onMouseWheel(chatFrame, direction)
-	if direction > 0 then
-		if IsShiftKeyDown() then
-			chatFrame:ScrollToTop()
-		elseif IsControlKeyDown() then
-			chatFrame:PageUp()
-		else
-			chatFrame:ScrollUp()
-		end
-	else
-		if IsShiftKeyDown() then
-			chatFrame:ScrollToBottom()
-		elseif IsControlKeyDown() then
-			chatFrame:PageDown()
-		else
-			chatFrame:ScrollDown()
-		end
-	end
-end
-
 local function updateChatTab(chatTab)
 	if chatTab:GetObjectType() ~= 'Button' then
 		-- one of the FCF hooks triggered this, we need to get the tab
@@ -41,7 +21,6 @@ end
 local function updateChatFrame(chatFrame)
 	chatFrame:SetClampRectInsets(0, 0, 0, 0)
 	chatFrame:SetSpacing(1.4)
-	chatFrame:SetScript('OnMouseWheel', onMouseWheel)
 
 	addon:Hide(chatFrame.ScrollBar)
 
