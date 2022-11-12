@@ -94,13 +94,4 @@ function addon:PLAYER_LOGIN()
 	-- hook into functions that would reset chat tab colors
 	hooksecurefunc('FCFTab_UpdateColors', updateChatTab)
 	hooksecurefunc('FCF_StartAlertFlash', updateChatTab)
-
-	-- remove some buttons
-	addon:Hide(QuickJoinToastButton)
-	addon:Hide(ChatFrameChannelButton)
-	addon:Hide(ChatFrameMenuButton)
-
-	for index = 1, NUM_CHAT_WINDOWS do
-		addon:Hide('ChatFrame' .. index .. 'ButtonFrame')
-	end
 end
