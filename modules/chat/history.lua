@@ -56,5 +56,6 @@ for index = 1, NUM_CHAT_WINDOWS do
 	local editBox = _G['ChatFrame' .. index .. 'EditBox']
 	editBox:HookScript('OnEscapePressed', resetHistoryIndex)
 	editBox:HookScript('OnArrowPressed', navigateHistory)
+	editBox:SetAltArrowKeyMode(false) -- don't require alt to scroll history
 	hooksecurefunc(editBox, 'AddHistoryLine', addHistory)
 end
