@@ -11,3 +11,4 @@ modules/automation/loot.lua
 modules/automation/mail.lua
 modules/automation/repair.lua
 modules/automation/trash.lua
+modules/automation/rogueclasshall.lua
