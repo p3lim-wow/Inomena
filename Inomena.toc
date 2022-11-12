@@ -31,3 +31,5 @@ modules/compat/opie/skin.lua
 modules/compat/opie/rings.lua
 modules/compat/opie/settings.lua
 modules/compat/tomtom.lua
+
+modules/misc/hide.lua
