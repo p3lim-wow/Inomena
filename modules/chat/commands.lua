@@ -25,7 +25,7 @@ addon:RegisterSlash('/mapid', function()
 	if WorldMapFrame:IsShown() then
 		mapID = WorldMapFrame:GetMapID()
 	else
-		mapID = C_Map.GetBestMapForUnit('player')
+		mapID = addon:GetPlayerMapID()
 	end
 
 	print('Map ID:', mapID, 'for', C_Map.GetMapInfo(mapID).name)
