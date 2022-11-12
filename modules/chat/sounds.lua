@@ -1,10 +1,10 @@
 local _, addon = ...
 
--- play these on the master channel
+-- whisper notifications on the master channel
 function addon:CHAT_MSG_WHISPER()
-	PlaySound(SOUNDKIT.TELL_MESSAGE, 'master')
+	PlaySound(3081, 'master') -- SOUNDKIT.TELL_MESSAGE
 end
 
 function addon:CHAT_MSG_BN_WHISPER()
-	PlaySound(SOUNDKIT.TELL_MESSAGE, 'master')
+	PlaySound(3081, 'master') -- SOUNDKIT.TELL_MESSAGE
 end

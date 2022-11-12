@@ -23,6 +23,7 @@ modules/binding/worldmarker.lua
 modules/chat/format.lua
 modules/chat/commands.lua
 modules/chat/history.lua
+modules/chat/sounds.lua
 
 modules/compat/opie/skin.lua
 modules/compat/opie/rings.lua
