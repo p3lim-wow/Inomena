@@ -66,6 +66,24 @@ function addon:PARTY_INVITE_REQUEST(playerName, l, f, g)
 	end
 end
 
+-- accept invite request from known player
+function addon:REQUEST_INVITE_CONFIRMATION(playerName, _, l, f, g)
+	if not playerName:find('-') then
+		-- for consistency, native realm invite requests don't contain the realm name
+		playerName = playerName .. '-' .. GetRealmName()
+	end
+
+	if isPlayerKnown(playerName) then
+		C_PartyInfo.ConfirmRequestInviteFromUnit(playerName, l, f, g)
+	end
+end
+
+-- accept invite requests from known bnet player
+function addon:BNET_REQUEST_INVITE_CONFIRMATION(gameAccountID, _, l, f, g)
+	-- if it's a bnet invite we must already know the player
+	ConfirmBNRequestInviteFriend(gameAccountID, l, f, g)
+end
+
 -- whenever we accept an invite we need to hide the popups
 function addon:PARTY_LEADER_CHANGED()
 	if StaticPopup_Visible('PARTY_INVITE') then
