@@ -18,3 +18,4 @@ modules/automation/rogueclasshall.lua
 modules/binding/eject.lua
 modules/binding/mount.lua
 modules/binding/reload.lua
+modules/binding/worldmarker.lua
