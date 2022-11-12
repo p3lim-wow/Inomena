@@ -6,7 +6,7 @@ function addon:MERCHANT_SHOW()
 		local cost, canRepair = GetRepairAllCost()
 		if canRepair then
 			RepairAllItems(CanGuildBankRepair() and CanWithdrawGuildBankMoney() and GetGuildBankMoney() >= cost and GetGuildBankWithdrawMoney() >= cost)
-			PlaySound(SOUNDKIT.ITEM_REPAIR)
+			PlaySound(7994) -- SOUNDKIT.ITEM_REPAIR
 		end
 	end
 end
