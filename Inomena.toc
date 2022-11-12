@@ -25,6 +25,7 @@ modules/chat/commands.lua
 modules/chat/history.lua
 modules/chat/sounds.lua
 modules/chat/scrolling.lua
+modules/chat/settings.lua
 
 modules/compat/opie/skin.lua
 modules/compat/opie/rings.lua
