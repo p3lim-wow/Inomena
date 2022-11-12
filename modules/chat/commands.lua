@@ -16,7 +16,11 @@ end)
 addon:RegisterSlash('/complete', function(msg)
 	local questID = tonumber(msg)
 	if questID then
-		print('Quest', questID, 'is', C_QuestLog.IsQuestFlaggedCompleted(questID) and 'COMPLETE' or 'NOT complete')
+		if C_QuestLog.IsQuestFlaggedCompleted(questID) then
+			addon:Printf('Quest %s is |cff00ff00COMPLETE|r', questID)
+		else
+			addon:Printf('Quest %s is |cffff0000NOT complete|r', questID)
+		end
 	end
 end)
 
