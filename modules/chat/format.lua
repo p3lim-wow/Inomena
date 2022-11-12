@@ -1,3 +1,5 @@
+local _, addon = ...
+
 local ABBREVIATIONS = {
 	OFFICER = 'o',
 	GUILD = 'g',
@@ -6,21 +8,18 @@ local ABBREVIATIONS = {
 	INSTANCE_CHAT = 'i',
 }
 
-local CLIENT_DEFAULT_COLOR = '22aaff'
 local CLIENT_COLORS = {
+	[BNET_CLIENT_APP] = '22aaff',
 	[BNET_CLIENT_WOW] = '5cc400',
-	[BNET_CLIENT_D3] = 'b71709',
-	[BNET_CLIENT_SC2] = '00b6ff',
-	[BNET_CLIENT_WTCG] = 'd37000',
-	[BNET_CLIENT_HEROES] = '6800c4',
-	[BNET_CLIENT_OVERWATCH] = 'dcdcef',
 }
 
 local function getClientColorAndTag(accountID)
 	local account = C_BattleNet.GetAccountInfoByID(accountID)
 	local accountClient = account.gameAccountInfo.clientProgram
-	return CLIENT_COLORS[accountClient] or CLIENT_DEFAULT_COLOR, account.battleTag:match('(%w+)#%d+')
+	local color = CLIENT_COLORS[accountClient] or CLIENT_COLORS[BNET_CLIENT_APP]
+	return color, account.battleTag:match('(%w+)#%d+')
 end
+
 local FORMAT_PLAYER = '|Hplayer:%s|h%s|h'
 local function formatPlayer(info, name)
 	return FORMAT_PLAYER:format(info, name:gsub('%-[^|]+', ''))
@@ -77,38 +76,3 @@ for index = 1, NUM_CHAT_WINDOWS do
 		chatFrame.AddMessage = addMessage
 	end
 end
-
--- we need to fix abbreviations in the editbox too
-local editBoxHooks = {}
-function editBoxHooks.WHISPER(editBox)
-	-- TODO: class colors (no API for this)
-	editBox.header:SetFormattedText('|cffa1a1a1@|r%s: ', editBox:GetAttribute('tellTarget'))
-end
-
-function editBoxHooks.BN_WHISPER(editBox)
-	local color, tag = getClientColorAndTag(GetAutoCompletePresenceID(editBox:GetAttribute('tellTarget')))
-	editBox.header:SetFormattedText('|cffa1a1a1@|r|cff%s%s|r: ', color, tag)
-end
-
-function editBoxHooks.CHANNEL(editBox)
-	local _, channelName, instanceID = GetChannelName(editBox:GetAttribute('channelTarget'))
-	if channelName then
-		channelName = channelName:match('%w+')
-		if instanceID > 0 then
-			channelName = channelName .. instanceID
-		end
-
-		editBox.header:SetFormattedText('%s: ', channelName)
-	end
-end
-
-hooksecurefunc('ChatEdit_UpdateHeader', function(editBox)
-	local chatType = editBox:GetAttribute('chatType')
-	if not chatType then
-		return
-	end
-
-	if editBoxHooks[chatType] then
-		editBoxHooks[chatType](editBox)
-	end
-end)
