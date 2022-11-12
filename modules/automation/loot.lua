@@ -1,6 +1,6 @@
 local _, addon = ...
 
--- accept loot rolls
+-- confirm loot rolls
 function addon:CONFIRM_LOOT_ROLL(rollID, rollType)
 	if rollType > 0 then
 		ConfirmLootRoll(rollID, rollType)
