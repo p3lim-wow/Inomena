@@ -1,68 +1,7 @@
-## Interface: 90200
+## Interface: 100000
 ## Author: p3lim
 ## Title: Inomena
 ## Notes: Personal UI
-## SavedVariables: InomenaMoney, InomenaHeads
-## SavedVariablesPerCharacter: InomenaCovenants
+## SavedVariables: InomenaMoney
 
-font.xml
-
-addon.lua
-utils.lua
-
-mixins/event.lua
-mixins/backdrop.lua
-mixins/widget.lua
-mixins/aura.lua
-
-modules/actionbars/hide.lua
-modules/actionbars/cooldown.lua
-modules/actionbars/covenant.lua
-
-modules/auras/buffs.lua
-
-modules/automation/invites.lua
-modules/automation/loot.lua
-modules/automation/mail.lua
-modules/automation/repair.lua
-modules/automation/vendor.lua
-modules/automation/keystone.lua
-
-modules/binding/eject.lua
-modules/binding/hearthstone.lua
-modules/binding/mount.lua
-modules/binding/profession.lua
-modules/binding/reload.lua
-
-modules/chat/abbreviate.lua
-modules/chat/commands.lua
-modules/chat/history.lua
-modules/chat/sounds.lua
-modules/chat/style.lua
-
-modules/compat/details.lua
-modules/compat/opie.lua
-
-modules/misc/alerts.lua
-modules/misc/minimap.lua
-modules/misc/hide.lua
-modules/misc/popups.lua
-modules/misc/talents.lua
-modules/misc/tracker.lua
-
-modules/settings/cvars.lua
-modules/settings/scale.lua
-
-modules/tooltip/data.lua
-modules/tooltip/style.lua
-
-modules/widgets/money.lua
-modules/widgets/coordinates.lua
-modules/widgets/tradeskill.lua
-modules/widgets/speed.lua
-modules/widgets/stats.lua
-modules/widgets/bagslots.lua
-modules/widgets/mailbutton.lua
-modules/widgets/paste.lua
-modules/widgets/supertracking.lua
-modules/widgets/repairbutton.lua
+../Dashi/embed.xml
