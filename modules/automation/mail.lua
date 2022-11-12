@@ -25,7 +25,7 @@ end)
 
 -- auto send when attachment limit reached
 function addon:UI_ERROR_MESSAGE(messageID)
-	if messageID == 629 then
+	if messageID == 654 then
 		SendMailMailButton:Click()
 	end
 end
