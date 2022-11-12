@@ -1,16 +1,20 @@
 local _, addon = ...
 
+local GetContainerItemInfo = _G.GetContainerItemInfo or C_Container.GetContainerItemInfo -- BETA
+local GetContainerNumSlots = _G.GetContainerNumSlots or C_Container.GetContainerNumSlots -- BETA
+local UseContainerItem = _G.UseContainerItem or C_Container.UseContainerItem -- BETA
+
 -- sell trash items when visiting vendor
 local lastNumItems = 0
-local function VendorGrayItems(merchantVisit)
-	if not (merchantVisit or lastNumItems > 0) then
+local function sellTrash(isInitialTrigger)
+	if not (isInitialTrigger or lastNumItems > 0) then
 		return
 	end
 
 	lastNumItems = 0
 	for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 		for slotID = 1, GetContainerNumSlots(bagID) do
-			if not MerchantFrame:IsShown() then
+			if not isInitialTrigger and not MerchantFrame:IsShown() then
 				-- this can take some time to iterate, and the player might close
 				-- the window before it finishes
 				return
@@ -30,9 +34,9 @@ function addon:MERCHANT_SHOW()
 		return
 	end
 
-	VendorGrayItems(true)
+	sellTrash(true)
 end
 
 function addon:BAG_UPDATE_DELAYED()
-	VendorGrayItems()
+	sellTrash()
 end
