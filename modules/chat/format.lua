@@ -76,3 +76,107 @@ for index = 1, NUM_CHAT_WINDOWS do
 		chatFrame.AddMessage = addMessage
 	end
 end
+
+local friendClasses = {}
+function addon:FRIENDLIST_UPDATE()
+	table.wipe(friendClasses)
+
+	for index = 1, C_FriendList.GetNumFriends() do
+		local friend = C_FriendList.GetFriendInfoByIndex(index)
+		if friend and friend.connected then
+			friendClasses[friend.name] = friend.className -- TODO: is this className localized or not?
+		end
+	end
+end
+
+local guildClasses = {}
+function addon:GUILD_ROSTER_UPDATE()
+	table.wipe(guildClasses)
+
+	for index = 1, (GetNumGuildMembers()) do
+		local characterName, _, _, _, _, _, _, _, isOnline, _, characterClass = GetGuildRosterInfo(index)
+		if isOnline then
+			characterName = string.split('-', characterName)
+			guildClasses[characterName] = characterClass
+		end
+	end
+end
+
+local groupClasses = {}
+function addon:GROUP_ROSTER_UPDATE()
+	table.wipe(groupClasses)
+
+	if IsInGroup() then
+		local prefix = IsInRaid() and 'raid' or 'party'
+		local groupSize = IsInRaid() and 40 or 5
+
+		for index = 1, groupSize do
+			if UnitExists(prefix .. index) and not UnitIsUnit('player', prefix .. index) then
+				local name, realm = UnitName(prefix .. index)
+				if realm then
+					name = name .. '-' .. realm
+				end
+
+				groupClasses[name] = UnitClassBase(prefix .. index)
+			end
+		end
+	end
+end
+
+local targetClasses = {}
+function addon:PLAYER_TARGET_CHANGED()
+	if UnitExists('target') then
+		targetClasses[GetUnitName('target')] = UnitClassBase('target')
+	end
+end
+
+function addon:PLAYER_LOGIN()
+	-- these two don't seem to trigger on login
+	self:FRIENDLIST_UPDATE()
+	self:GROUP_ROSTER_UPDATE()
+	return true
+end
+
+-- adjust abbreviations in the edit box
+local editBoxHooks = {}
+function editBoxHooks.WHISPER(editBox)
+	local characterName = editBox:GetAttribute('tellTarget')
+	local characterClass = friendClasses[characterName] or guildClasses[characterName] or groupClasses[characterName] or targetClasses[characterName]
+	if characterClass then
+		local classColor = C_ClassColor.GetClassColor(characterClass)
+		editBox.header:SetFormattedText('|cffa1a1a1@|r%s: ', classColor:WrapTextInColorCode(characterName))
+	else
+		editBox.header:SetFormattedText('|cffa1a1a1@|r%s: ', characterName)
+	end
+end
+
+function editBoxHooks.BN_WHISPER(editBox)
+	local color, tag = getClientColorAndTag(GetAutoCompletePresenceID(editBox:GetAttribute('tellTarget')))
+	editBox.header:SetFormattedText('|cffa1a1a1@|r|cff%s%s|r: ', color, tag)
+end
+
+function editBoxHooks.CHANNEL(editBox)
+	local _, channelName, instanceID = GetChannelName(editBox:GetAttribute('channelTarget'))
+	if channelName then
+		channelName = channelName:match('%w+')
+		if instanceID > 0 then
+			channelName = channelName .. instanceID
+		end
+
+		editBox.header:SetFormattedText('%s: ', channelName)
+	end
+end
+
+hooksecurefunc('ChatEdit_UpdateHeader', function(editBox)
+	local chatType = editBox:GetAttribute('chatType')
+	if not chatType then
+		return
+	end
+
+	if editBoxHooks[chatType] then
+		editBoxHooks[chatType](editBox)
+	end
+
+	-- since we're re-formatting the editbox header we'll need to adjust its insets
+	editBox:SetTextInsets(editBox.header:GetWidth() + 13, 13, 0, 0)
+end)

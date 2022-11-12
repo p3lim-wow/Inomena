@@ -20,6 +20,8 @@ modules/binding/mount.lua
 modules/binding/reload.lua
 modules/binding/worldmarker.lua
 
+modules/chat/format.lua
+
 modules/compat/opie/skin.lua
 modules/compat/opie/rings.lua
 modules/compat/opie/settings.lua
