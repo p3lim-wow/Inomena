@@ -77,35 +77,28 @@ for index = 1, NUM_CHAT_WINDOWS do
 	end
 end
 
-local friendClasses = {}
+local playerClass = {}
 function addon:FRIENDLIST_UPDATE()
-	table.wipe(friendClasses)
-
 	for index = 1, C_FriendList.GetNumFriends() do
 		local friend = C_FriendList.GetFriendInfoByIndex(index)
 		if friend and friend.connected then
-			friendClasses[friend.name] = friend.className -- TODO: is this className localized or not?
+			playerClass[friend.name] = friend.className -- TODO: is this className localized or not?
 		end
 	end
 end
 
-local guildClasses = {}
 function addon:GUILD_ROSTER_UPDATE()
-	table.wipe(guildClasses)
-
 	for index = 1, (GetNumGuildMembers()) do
 		local characterName, _, _, _, _, _, _, _, isOnline, _, characterClass = GetGuildRosterInfo(index)
 		if isOnline then
+			-- guildies are always on the same server (for now)
 			characterName = string.split('-', characterName)
-			guildClasses[characterName] = characterClass
+			playerClass[characterName] = characterClass
 		end
 	end
 end
 
-local groupClasses = {}
 function addon:GROUP_ROSTER_UPDATE()
-	table.wipe(groupClasses)
-
 	if IsInGroup() then
 		local prefix = IsInRaid() and 'raid' or 'party'
 		local groupSize = IsInRaid() and 40 or 5
@@ -117,16 +110,15 @@ function addon:GROUP_ROSTER_UPDATE()
 					name = name .. '-' .. realm
 				end
 
-				groupClasses[name] = UnitClassBase(prefix .. index)
+				playerClass[name] = UnitClassBase(prefix .. index)
 			end
 		end
 	end
 end
 
-local targetClasses = {}
 function addon:PLAYER_TARGET_CHANGED()
 	if UnitExists('target') then
-		targetClasses[GetUnitName('target')] = UnitClassBase('target')
+		playerClass[GetUnitName('target')] = UnitClassBase('target')
 	end
 end
 
@@ -141,7 +133,7 @@ end
 local editBoxHooks = {}
 function editBoxHooks.WHISPER(editBox)
 	local characterName = editBox:GetAttribute('tellTarget')
-	local characterClass = friendClasses[characterName] or guildClasses[characterName] or groupClasses[characterName] or targetClasses[characterName]
+	local characterClass = playerClass[characterName]
 	if characterClass then
 		local classColor = C_ClassColor.GetClassColor(characterClass)
 		editBox.header:SetFormattedText('|cffa1a1a1@|r%s: ', classColor:WrapTextInColorCode(characterName))
