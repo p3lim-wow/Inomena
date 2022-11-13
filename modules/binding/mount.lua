@@ -29,12 +29,8 @@ local function updateCollectedSpecialMounts()
 	end
 
 	for _, mountID in next, C_MountJournal.GetMountIDs() do
-		local n, _, _, _, _, _, _, _, _, ineligible, collected = C_MountJournal.GetMountInfoByID(mountID)
+		local _, _, _, _, _, _, _, _, _, ineligible, collected = C_MountJournal.GetMountInfoByID(mountID)
 		if collected and not ineligible then
-			-- if n:match('Otter') then
-			-- 	print(n, mountID)
-			-- end
-
 			local specialMountType = SPECIAL_MOUNTS[mountID]
 			if specialMountType then
 				if not collectedSpecialMounts[specialMountType] then
