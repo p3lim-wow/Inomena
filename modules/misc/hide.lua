@@ -6,6 +6,7 @@ addon:Hide('DurabilityFrame')
 addon:Hide('VehicleSeatIndicator')
 addon:Hide('StanceBar')
 addon:Hide('MainMenuBarVehicleLeaveButton')
+addon:Hide('MicroButtonAndBagsBar')
 
 -- order hall bar
 addon:HookAddOn('Blizzard_OrderHallUI', function()
