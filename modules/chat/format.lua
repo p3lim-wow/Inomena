@@ -122,6 +122,13 @@ function addon:PLAYER_TARGET_CHANGED()
 	end
 end
 
+function addon:CHAT_MSG_WHISPER(_, playerName, _, _, _, _, _, _, _, _, _, playerGUID)
+	if not playerClass[playerName] then
+		local _, className = GetPlayerInfoByGUID(playerGUID)
+		playerClass[playerName] = className
+	end
+end
+
 function addon:PLAYER_LOGIN()
 	-- these two don't seem to trigger on login
 	self:FRIENDLIST_UPDATE()
