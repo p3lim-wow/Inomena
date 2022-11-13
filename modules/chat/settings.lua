@@ -56,7 +56,7 @@ local function setupChatFrames()
 	C_EditMode.SetActiveLayout(1) -- set one of the base layouts first
 	C_EditMode.SetActiveLayout(layoutInfo.activeLayout)
 
-	-- addon:Print('Chat frames reset')
+	addon:Print('Chat frames reset, everything is tainted, you should /reload')
 end
 
 -- add a quick slash to reset in case something is wrong
