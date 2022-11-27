@@ -34,3 +34,5 @@ modules/compat/tomtom.lua
 
 modules/misc/alerts.lua
 modules/misc/hide.lua
+
+modules/tooltip/data.lua
