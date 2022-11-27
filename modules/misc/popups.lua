@@ -28,7 +28,7 @@ end
 
 -- don't prompt when replacing enchants when professions window is open
 function StaticPopupDialogs.REPLACE_ENCHANT:OnShow()
-	if TradeSkillFrame and TradeSkillFrame:IsShown() then
+	if ProfessionsFrame and ProfessionsFrame:IsShown() then
 		StaticPopupDialogs[self.which].OnAccept()
 		StaticPopup_Hide(self.which)
 	end
