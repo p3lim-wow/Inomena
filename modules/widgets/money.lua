@@ -1,4 +1,12 @@
-local _, addon = ...
+local addonName, addon = ...
+
+local function formatShortMoney(money)
+	local output
+	output = string.format('|cffffff66%s|r', FormatLargeNumber(math.floor(money / COPPER_PER_GOLD)))
+	output = string.format('%s.|cffc0c0c0%02d|r', output, (money / SILVER_PER_GOLD) % COPPER_PER_SILVER)
+	output = string.format('%s.|cffcc9900%02d|r', output, money % COPPER_PER_SILVER)
+	return output
+end
 
 function addon:PLAYER_LOGIN()
 	if not _G.InomenaMoney then
@@ -55,7 +63,7 @@ local function orderedPairs(tbl)
 	return orderedNext, keys
 end
 
-local tooltip = addon:CreateButton('Money', ContainerFrame1MoneyFrame)
+local tooltip = addon:CreateButton('Button', addonName .. 'Money', ContainerFrame1MoneyFrame)
 tooltip:SetAllPoints()
 tooltip:SetFrameStrata('HIGH')
 tooltip:SetScript('OnLeave', GameTooltip_Hide)
@@ -65,16 +73,18 @@ tooltip:SetScript('OnEnter', function(self)
 
 	local total = 0
 	for character, money in orderedPairs(_G.InomenaMoney[GetRealmID()]) do
-		local name, class = string.split(':', character)
+		if money > 10000 then -- ignore characters with less than 1 gold, they're probably deleted
+			local name, class = string.split(':', character)
 
-		local color = RAID_CLASS_COLORS[class]
-		GameTooltip:AddDoubleLine(color:WrapTextInColorCode(name), addon:FormatShortMoney(money))
+			local color = C_ClassColor.GetClassColor(class)
+			GameTooltip:AddDoubleLine(color:WrapTextInColorCode(name), formatShortMoney(money))
 
-		total = total + money
+			total = total + money
+		end
 	end
 
 	GameTooltip:AddLine(' ')
-	GameTooltip:AddDoubleLine('Total', addon:FormatShortMoney(total))
+	GameTooltip:AddDoubleLine('Total', formatShortMoney(total))
 
 	GameTooltip:Show()
 end)
