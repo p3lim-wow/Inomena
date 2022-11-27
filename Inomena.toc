@@ -36,3 +36,4 @@ modules/misc/alerts.lua
 modules/misc/hide.lua
 
 modules/tooltip/data.lua
+modules/tooltip/style.lua

@@ -1,124 +1,107 @@
 local _, addon = ...
 
-local CLASSIFICATION_TEXT = {
-	worldboss = ' Boss|r',
-	rareelite = '+|r Rare',
-	rare = '|r Rare',
-	elite = '+|r',
+local DIFFICULTY_COLOR = { -- copied from QuestDifficultyColors to work with enums
+	[Enum.RelativeContentDifficulty.Trivial] = CreateColor(0.5, 0.5, 0.5),
+	[Enum.RelativeContentDifficulty.Easy] = CreateColor(0.25, 0.75, 0.25),
+	[Enum.RelativeContentDifficulty.Fair] = CreateColor(1, 0.82, 0),
+	[Enum.RelativeContentDifficulty.Difficult] = CreateColor(1, 0.5, 0.25),
+	[Enum.RelativeContentDifficulty.Impossible] = CreateColor(1, 0.1, 0.1),
 }
 
--- convencience table
-local REACTION_COLORS = {}
-for index, color in next, FACTION_BAR_COLORS do
-	REACTION_COLORS[index] = CreateColor(color.r, color.g, color.b)
+local REACTION_COLOR = {} -- copy of FACTION_BAR_COLORS to use ColorMixin
+for key, color in next, FACTION_BAR_COLORS do
+	REACTION_COLOR[key] = CreateColor(color.r, color.g, color.b)
 end
 
-GameTooltip:HookScript('OnTooltipSetUnit', function(self)
-	local _, unit = self:GetUnit()
-	if not unit then
+local TOOLTIP_LEVEL = '^' .. TOOLTIP_UNIT_LEVEL:gsub('%%s', '')
+local TOOLTIP_LEVEL_PET = '^' .. TOOLTIP_WILDBATTLEPET_LEVEL_CLASS:gsub(' %%s', '')
+
+local CLASSIFICATION_TEXT = {
+	worldboss = ' |cfff01919Boss|r',
+	rareelite = '|cffffff00+|r |cff0090ffRare|r',
+	rare = ' |cff0090ffRare|r',
+	elite = '|cffffff00+|r',
+}
+
+local REMOVE_LINES = {
+	[FACTION_ALLIANCE] = true,
+	[FACTION_HORDE] = true,
+	[PVP] = true,
+}
+
+-- we can finally after all these years actually prevent text from being added to the tooltip!
+TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.None, function(tooltip, data)
+	if not tooltip:IsForbidden() and tooltip:IsTooltipType(Enum.TooltipDataType.Unit) then
+		return REMOVE_LINES[data.leftText]
+	end
+end)
+
+TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitThreat, function(tooltip)
+	if not tooltip:IsForbidden() then
+		return true -- we never want to see threat on tooltips
+	end
+end)
+
+local function replaceLine(lineIndex, text, ...)
+	if ... then
+		_G['GameTooltipTextLeft' .. lineIndex]:SetText(text:format(...))
+	else
+		_G['GameTooltipTextLeft' .. lineIndex]:SetText(text)
+	end
+end
+
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function(tooltip, data)
+	if tooltip:IsForbidden() then
 		return
 	end
 
-	-- start fresh
-	GameTooltip:ClearLines()
-
-	if UnitIsPlayer(unit) then
-		self.color = RAID_CLASS_COLORS[UnitClassBase(unit)]
-		GameTooltip:AddLine(self.color:WrapTextInColorCode(GetUnitName(unit, true)))
+	local unit = UnitTokenFromGUID(data.guid)
+	if not unit then
+		replaceLine(1, '|cffff0000%s|r', SPELL_FAILED_BAD_TARGETS)
+	elseif UnitIsPlayer(unit) then
+		local classColor = C_ClassColor.GetClassColor((UnitClassBase(unit)))
+		replaceLine(1, classColor:WrapTextInColorCode(GetUnitName(unit, true)))
 
 		local guildName = GetGuildInfo(unit)
-		if guildName then
-			if UnitIsInMyGuild(unit) then
-				GameTooltip:AddLine('<' .. guildName .. '>', 0, 0.55, 1)
-			else
-				GameTooltip:AddLine('<' .. guildName .. '>', 0, 1, 0.1)
+		for _, line in next, data.lines do
+			if guildName and line.leftText:match(guildName) then
+				if UnitIsInMyGuild(unit) then
+					replaceLine(line.lineIndex, '|cff008cff<%s>|r', guildName)
+				else
+					replaceLine(line.lineIndex, '|cff00ff19<%s>|r', guildName)
+				end
+			elseif line.leftText:match(TOOLTIP_LEVEL) then
+				local level = UnitEffectiveLevel(unit)
+				if UnitIsFriend(unit, 'player') then
+					replaceLine(line.lineIndex, '|cffffd000%s|r %s', level, UnitRace(unit))
+				else
+					local difficulty = C_PlayerInfo.GetContentDifficultyCreatureForPlayer(unit)
+					local levelLine = DIFFICULTY_COLOR[difficulty]:WrapTextInColorCode(level > 0 and level or '??')
+					replaceLine(line.lineIndex, '%s |cffff3300%s|r', levelLine, UnitRace(unit))
+				end
 			end
 		end
-
-		local level = UnitLevel(unit)
-		if UnitIsFriend(unit, 'player') then
-			GameTooltip:AddLine(string.format('|cffffd000%s|r %s', level, UnitRace(unit)), 1, 1, 1)
-		else
-			local levelColor = GetDifficultyColor(C_PlayerInfo.GetContentDifficultyCreatureForPlayer(unit))
-			local levelText = level > 0 and level or '??'
-			GameTooltip:AddLine(string.format('%s |cffff3300%s|r', levelText, UnitRace(unit)), levelColor.r, levelColor.g, levelColor.b)
-		end
 	else
-		self.color = REACTION_COLORS[UnitReaction(unit, 'player')]
-		GameTooltip:AddLine(self.color:WrapTextInColorCode(UnitName(unit)))
+		local reactionColor = REACTION_COLOR[UnitReaction(unit, 'player')]
+		replaceLine(1, reactionColor:WrapTextInColorCode(UnitName(unit) or UNKNOWN))
 
-		-- TODO: title (no API for this)
-
-		if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
-			GameTooltip:AddLine(string.format('|cffffff00%s|r %s', UnitBattlePetLevel(unit), _G['BATTLE_PET_NAME_' .. UnitBattlePetType(unit)]))
-		else
-			local level = UnitLevel(unit)
-			local levelColor = GetDifficultyColor(C_PlayerInfo.GetContentDifficultyCreatureForPlayer(unit))
-
-			local levelText = level > 0 and level or '??'
-			local rarityText = CLASSIFICATION_TEXT[UnitClassification(unit)] or '|r'
-			local creatureText = UnitCreatureFamily(unit) or UnitCreatureType(unit) or ''
-
-			GameTooltip:AddLine(string.format('%s%s |cffffffff%s|r', levelText, rarityText, creatureText), levelColor.r, levelColor.g, levelColor.b)
+		for _, line in next, data.lines do
+			if line.type == Enum.TooltipDataLineType.UnitOwner then
+				replaceLine(line.lineIndex, '|cff7f7f7f%s|r', line.leftText)
+			elseif line.leftText:match(TOOLTIP_LEVEL) then
+				local difficulty = C_PlayerInfo.GetContentDifficultyCreatureForPlayer(unit)
+				local level = UnitEffectiveLevel(unit)
+				local levelLine = DIFFICULTY_COLOR[difficulty]:WrapTextInColorCode(level > 0 and level or '??')
+				local rarityText = CLASSIFICATION_TEXT[UnitClassification(unit)] or ''
+				local creatureText = UnitCreatureFamily(unit) or UnitCreatureType(unit) or ''
+				replaceLine(line.lineIndex, '%s%s %s', levelLine, rarityText, creatureText)
+			elseif line.leftText:match(TOOLTIP_LEVEL_PET) then
+				replaceLine(line.lineIndex, '|cffffff00%s|r %s', UnitBattlePetLevel(unit), _G['BATTLE_PET_NAME_' .. UnitBattlePetType(unit)])
+			elseif line.lineIndex == 2 then
+				-- typically the 2nd line is reserved for one of three things: level, owner, or npc title/guild,
+				-- so since we've already covered the first two then only title/guild can remain
+				replaceLine(line.lineIndex, '|cff8f8f8f%s|r', line.leftText)
+			end
 		end
-
-		-- TODO: faction (no API for this)
-	end
-
-	if not UnitIsDeadOrGhost(unit) then
-		GameTooltipStatusBar:ClearAllPoints()
-		GameTooltipStatusBar:SetPoint('BOTTOMLEFT', 2, 2)
-		GameTooltipStatusBar:SetPoint('BOTTOMRIGHT', -2, 2)
-		GameTooltipStatusBar:SetStatusBarColor(self.color:GetRGB())
-		GameTooltipStatusBar:Show()
-	end
-
-	self:Show()
-end)
-
--- set a new backdrop
-local function updateStyle(self)
-	self:CreateBackdrop(0.7, 0)
-end
-
-Mixin(GameTooltip, addon.mixins.backdrop)
-GameTooltip:HookScript('OnShow', updateStyle)
-GameTooltip:HookScript('OnTooltipSetItem', updateStyle)
-
-for _, shoppingTooltip in next, GameTooltip.shoppingTooltips do
-	Mixin(shoppingTooltip, addon.mixins.backdrop)
-	shoppingTooltip:HookScript('OnTooltipSetItem', updateStyle)
-end
-
--- set a new font
-for _, name in next, {
-	'GameTooltipHeaderText',
-	'GameTooltipText',
-	'GameTooltipTextSmall', -- shoppingtooltips
-} do
-	local Text = _G[name]
-	Text:SetFontObject(addon.FONT)
-	Text:SetShadowOffset(0, 0)
-end
-
--- set a new position
-hooksecurefunc('GameTooltip_SetDefaultAnchor', function(self, parent)
-	self:SetOwner(parent, 'ANCHOR_NONE')
-	self:ClearAllPoints()
-	self:SetPoint('BOTTOMRIGHT', -50, 50)
-end)
-
--- style the health bar
-GameTooltipStatusBar:SetHeight(3)
-GameTooltipStatusBar:SetStatusBarTexture(addon.TEXTURE)
-
-local background = GameTooltipStatusBar:CreateTexture('$parentBackground', 'BACKGROUND')
-background:SetAllPoints()
-background:SetColorTexture(1/4, 1/4, 1/4)
-
--- make sure the status bar isn't shown for non-units
-GameTooltip:HookScript('OnSizeChanged', function(self)
-	if not UnitExists('mouseover') then
-		GameTooltipStatusBar:Hide()
 	end
 end)
