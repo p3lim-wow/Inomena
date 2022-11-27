@@ -44,3 +44,8 @@ function addon:EQUIP_BIND_TRADEABLE_CONFIRM(slot)
 		StaticPopup_Hide('EQUIP_BIND_TRADEABLE')
 	end
 end
+
+-- hide all tutorials
+hooksecurefunc(HelpTip, 'Show', function(self, parent, info)
+	self:Acknowledge(parent, info.text)
+end)
