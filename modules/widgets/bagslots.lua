@@ -1,15 +1,15 @@
-local _, addon = ...
+local addonName, addon = ...
 
 -- replace bags by dragging to the bag icon
 local function putInBag(self)
-	local id = ContainerIDToInventoryID(self:GetParent():GetID())
+	local id = C_Container.ContainerIDToInventoryID(self:GetParent():GetID())
 	if CursorHasItem() and not PutItemInBag(id) then
 		ClearCursor()
 	end
 end
 
 local function pickUpBag(self)
-	local id = ContainerIDToInventoryID(self:GetParent():GetID())
+	local id = C_Container.ContainerIDToInventoryID(self:GetParent():GetID())
 	if not CursorHasItem() then
 		PickupBagFromSlot(id)
 	end
@@ -17,7 +17,7 @@ end
 
 local function onMouseUp(self, button)
 	if button == 'LeftButton' then
-		local id = ContainerIDToInventoryID(self:GetParent():GetID())
+		local id = C_Container.ContainerIDToInventoryID(self:GetParent():GetID())
 		if CursorHasItem() and not PutItemInBag(id) then
 			ClearCursor()
 		elseif not CursorHasItem() then
@@ -30,7 +30,7 @@ end
 
 local function onEnter(self)
 	local parent = self:GetParent()
-	local id = ContainerIDToInventoryID(parent:GetID())
+	local id = C_Container.ContainerIDToInventoryID(parent:GetID())
 	GameTooltip:SetOwner(self, 'ANCHOR_LEFT')
 	GameTooltip:SetInventoryItem('player', id)
 	GameTooltip:Show()
@@ -44,7 +44,7 @@ end
 
 for index = 2, 12 do
 	local parent = _G['ContainerFrame' .. index .. 'PortraitButton']
-	local button = addon:CreateButton('BagButton' .. index, parent)
+	local button = addon:CreateButton('Button', addonName .. 'BagButton' .. index, parent)
 	button:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
 	button:RegisterForDrag('LeftButton')
 	button:SetAllPoints()
