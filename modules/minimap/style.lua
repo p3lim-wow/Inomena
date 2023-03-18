@@ -81,3 +81,26 @@ hooksecurefunc(ExpansionLandingPageMinimapButton, 'UpdateIcon', function(self)
 		end
 	end
 end)
+
+-- move queue status back to the minimap
+QueueStatusButton:SetParent(Minimap)
+QueueStatusButton:ClearAllPoints()
+QueueStatusButton:SetPoint('TOPRIGHT', Minimap, -5, -6)
+QueueStatusButton:SetSize(28, 28)
+QueueStatusButton:SetFrameStrata('HIGH')
+
+-- disable eye animations by hiding all components
+addon:Hide('QueueStatusButton', 'Eye', 'texture')
+addon:Hide('QueueStatusButton', 'Eye', 'EyeInitial')
+addon:Hide('QueueStatusButton', 'Eye', 'EyeSearchingLoop')
+addon:Hide('QueueStatusButton', 'Eye', 'EyeMouseOver')
+addon:Hide('QueueStatusButton', 'Eye', 'EyeFoundInitial')
+addon:Hide('QueueStatusButton', 'Eye', 'EyeFoundLoop')
+addon:Hide('QueueStatusButton', 'Eye', 'GlowBackLoop')
+addon:Hide('QueueStatusButton', 'Eye', 'EyePokeInitial')
+addon:Hide('QueueStatusButton', 'Eye', 'EyePokeEnd')
+
+-- create our own static eye texture that is not tied to animation
+local eye = QueueStatusButton:CreateTexture(nil, 'ARTWORK')
+eye:SetAllPoints()
+eye:SetAtlas('groupfinder-eye-single')
