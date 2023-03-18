@@ -47,11 +47,14 @@ modules/compat/tomtom.lua
 
 modules/misc/alerts.lua
 modules/misc/hide.lua
+modules/misc/popups.lua
 
 modules/minimap/style.lua
 modules/minimap/durability.lua
 modules/minimap/mail.lua
 modules/minimap/repair.lua
+
+modules/settings/cvars.lua
 
 modules/tooltip/data.lua
 modules/tooltip/style.lua
