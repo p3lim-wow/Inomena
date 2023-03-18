@@ -13,12 +13,17 @@ utils/colors.lua
 utils/widgets.lua
 utils/bind.lua
 
+data/enchants.lua
+
+modules/auras/buffs.lua
+
 modules/automation/invites.lua
 modules/automation/loot.lua
 modules/automation/mail.lua
 modules/automation/repair.lua
 modules/automation/trash.lua
 modules/automation/rogueclasshall.lua
+modules/automation/keystone.lua
 
 modules/binding/eject.lua
 modules/binding/mount.lua
