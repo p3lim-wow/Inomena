@@ -15,9 +15,11 @@ local CLIENT_COLORS = {
 
 local function getClientColorAndTag(accountID)
 	local account = C_BattleNet.GetAccountInfoByID(accountID)
-	local accountClient = account.gameAccountInfo.clientProgram
-	local color = CLIENT_COLORS[accountClient] or CLIENT_COLORS[BNET_CLIENT_APP]
-	return color, account.battleTag:match('(%w+)#%d+')
+	if account then -- fails when bnet is offline
+		local accountClient = account.gameAccountInfo.clientProgram
+		local color = CLIENT_COLORS[accountClient] or CLIENT_COLORS[BNET_CLIENT_APP]
+		return color, account.battleTag:match('(%w+)#%d+')
+	end
 end
 
 local FORMAT_PLAYER = '|Hplayer:%s|h%s|h'
@@ -29,7 +31,7 @@ local FORMAT_BN_PLAYER = '|HBNplayer:%s|h|cff%s%s|r|h'
 local function formatBNPlayer(info)
 	-- replace the colors with a client color
 	local color, tag = getClientColorAndTag(info:match('(%d+):'))
-	return FORMAT_BN_PLAYER:format(info, color, tag)
+	return FORMAT_BN_PLAYER:format(info, color or 'ffffff', tag or UNKNOWN)
 end
 
 local FORMAT_CHANNEL = '|Hchannel:%s|h%s|h %s'
@@ -139,6 +141,10 @@ end
 -- adjust abbreviations in the edit box
 local editBoxHooks = {}
 function editBoxHooks.WHISPER(editBox)
+	if not editBox.header then
+		return
+	end
+
 	local characterName = editBox:GetAttribute('tellTarget')
 	local characterClass = playerClass[characterName]
 	if characterClass then
@@ -168,7 +174,7 @@ end
 
 hooksecurefunc('ChatEdit_UpdateHeader', function(editBox)
 	local chatType = editBox:GetAttribute('chatType')
-	if not chatType then
+	if not chatType or not editBox.header then
 		return
 	end
 
