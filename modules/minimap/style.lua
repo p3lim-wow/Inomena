@@ -1,5 +1,8 @@
 local addonName, addon = ...
 
+-- add custom border
+addon:AddBackdrop(Minimap)
+
 -- make the minimap square
 local MASK = [[Interface\BUTTONS\WHITE8X8]]
 Minimap:SetMaskTexture(MASK)
@@ -9,13 +12,6 @@ addon:HookAddOn('Blizzard_HybridMinimap', function()
 	HybridMinimap.CircleMask:SetTexture(MASK, 'CLAMPTOBLACKADDITIVE', 'CLAMPTOBLACKADDITIVE')
 	-- HybridMinimap.MapCanvas:SetMaskTexture(HybridMinimap.CircleMask)
 end)
-
--- add custom border texture made by lightspark to replace the compass
-local border = Minimap:CreateTexture(addonName .. 'MinimapBorder', 'BORDER', nil, 3)
-border:SetPoint('CENTER', 0, 0)
-border:SetTexture(([[Interface\AddOns\%s\assets\minimap]]):format(addonName))
-border:SetTexCoord(434 / 1024, 866 / 1024, 1 / 512, 433 / 512)
-border:SetSize(216, 216)
 
 -- remove blob outlines
 Minimap:SetArchBlobRingScalar(0)
