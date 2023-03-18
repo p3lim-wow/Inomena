@@ -76,3 +76,22 @@ function addon:PLAYER_REGEN_ENABLED()
 end
 
 addon:RegisterCombatEvent('SPELL_CAST_START', feastWrapper)
+
+-- party/raid member death alerts
+local DEATH_SOUND = ([[Interface\AddOns\%s\assets\crow.mp3]]):format(addonName)
+
+local function IsInDungeonOrRaid()
+	local inInstance, instanceType = IsInInstance()
+	return inInstance and (instanceType == 'party' or instanceType == 'raid')
+end
+
+addon:RegisterCombatEvent('UNIT_DIED', function(_, _, _, _, _, destGUID, destName, destFlags)
+	if destName and IsInDungeonOrRaid() and C_PlayerInfo.GUIDIsPlayer(destGUID) and not UnitIsFeignDeath(destName) then
+		local unit = UnitTokenFromGUID(destGUID)
+		if unit and (UnitInRaid(unit) or UnitInParty(unit)) then
+			-- TODO: if in raid and > 50% dead then don't call it
+			PlaySoundFile(DEATH_SOUND, 'master')
+			addon:Print(destName, 'Died')
+		end
+	end
+end)
