@@ -57,6 +57,10 @@ modules/minimap/repair.lua
 
 modules/settings/cvars.lua
 
+modules/widgets/money.lua
+modules/widgets/coordinates.lua
+modules/widgets/speed.lua
+modules/widgets/bagslots.lua
 modules/widgets/totems.lua
 modules/widgets/dressingroom.lua
 modules/widgets/clickcast.lua
