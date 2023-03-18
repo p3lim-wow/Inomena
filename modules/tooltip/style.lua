@@ -43,6 +43,11 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitThreat, functio
 end)
 
 local function replaceLine(lineIndex, text, ...)
+	if not lineIndex then
+		-- ???
+		return
+	end
+
 	if ... then
 		_G['GameTooltipTextLeft' .. lineIndex]:SetText(text:format(...))
 	else
@@ -55,9 +60,9 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function(tool
 		return
 	end
 
-	local unit = UnitTokenFromGUID(data.guid)
-	if not unit then
-		replaceLine(1, '|cffff0000%s|r', SPELL_FAILED_BAD_TARGETS)
+	local unit = data.guid and UnitTokenFromGUID(data.guid)
+	if not unit or not UnitIsUnit(unit, 'mouseover') then
+		-- replaceLine(1, '|cffff0000%s|r', SPELL_FAILED_BAD_TARGETS)
 	elseif UnitIsPlayer(unit) then
 		local classColor = C_ClassColor.GetClassColor((UnitClassBase(unit)))
 		replaceLine(1, classColor:WrapTextInColorCode(GetUnitName(unit, true)))
@@ -82,8 +87,14 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function(tool
 			end
 		end
 	else
-		local reactionColor = REACTION_COLOR[UnitReaction(unit, 'player')]
-		replaceLine(1, reactionColor:WrapTextInColorCode(UnitName(unit) or UNKNOWN))
+		if not UnitPlayerControlled(unit) and UnitIsTapDenied(unit) then
+			replaceLine(1, '|cff999999%s|r', UnitName(unit) or UNKNOWN)
+		else
+			local reactionColor = REACTION_COLOR[UnitReaction(unit, 'player')]
+			if reactionColor then -- can fail?
+				replaceLine(1, reactionColor:WrapTextInColorCode(UnitName(unit) or UNKNOWN))
+			end
+		end
 
 		for _, line in next, data.lines do
 			if line.type == Enum.TooltipDataLineType.UnitOwner then
