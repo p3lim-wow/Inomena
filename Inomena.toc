@@ -25,6 +25,7 @@ modules/automation/repair.lua
 modules/automation/trash.lua
 modules/automation/rogueclasshall.lua
 modules/automation/keystone.lua
+modules/automation/fishing.lua
 
 modules/binding/eject.lua
 modules/binding/mount.lua
