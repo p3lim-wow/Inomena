@@ -19,6 +19,7 @@ end
 local MAILBOX_SUMMON = {
 	{'toy', 40768}, -- MOLL-E
 	{'toy', 156833}, -- Katy's Stampwhistle
+	{'toy', 194885}, -- Ohuna Perch
 	{'spell', 255661}, -- Cantrips (Nightborne racial)
 }
 
