@@ -57,6 +57,7 @@ modules/minimap/repair.lua
 
 modules/settings/cvars.lua
 
+modules/widgets/dressingroom.lua
 modules/widgets/clickcast.lua
 modules/widgets/loot.lua
 
