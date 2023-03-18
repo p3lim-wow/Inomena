@@ -1,5 +1,8 @@
 local _, addon = ...
 
+local INVENTORY_ALERT_STATUS_SLOTS = _G.INVENTORY_ALERT_STATUS_SLOTS -- FrameXML/DurabilityFrame.lua
+local MINIMAP_TRACKING_REPAIR = _G.MINIMAP_TRACKING_REPAIR -- globalstring
+
 -- automatically repair at vendors
 function addon:MERCHANT_SHOW()
 	if CanMerchantRepair() and not IsShiftKeyDown() then

@@ -1,5 +1,8 @@
 local _, addon = ...
 
+local NUM_CHAT_WINDOWS = _G.NUM_CHAT_WINDOWS or 10 -- FrameXML/ChatFrame.lua
+local DEFAULT_CHAT_FRAME = _G.DEFAULT_CHAT_FRAME -- FrameXML/ChatFrame.lua
+
 local function createChatFrame(name, ...)
 	local chatFrame = name and FCF_OpenNewWindow(name, true) or DEFAULT_CHAT_FRAME
 

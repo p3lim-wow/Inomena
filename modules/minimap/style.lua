@@ -1,4 +1,4 @@
-local addonName, addon = ...
+local _, addon = ...
 
 -- add custom border
 addon:AddBackdrop(Minimap)
@@ -101,6 +101,6 @@ eye:SetAllPoints()
 eye:SetAtlas('groupfinder-eye-single')
 
 -- expose shape for LDBIcon-1.0
-function GetMinimapShape()
+function GetMinimapShape() -- luacheck: ignore
 	return 'SQUARE'
 end

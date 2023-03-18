@@ -1,4 +1,11 @@
-local _, addon = ...
+local FACTION_BAR_COLORS = _G.FACTION_BAR_COLORS -- SharedXML/SharedColorConstants.lua
+
+local TOOLTIP_UNIT_LEVEL = _G.TOOLTIP_UNIT_LEVEL -- globalstring
+local TOOLTIP_WILDBATTLEPET_LEVEL_CLASS = _G.TOOLTIP_WILDBATTLEPET_LEVEL_CLASS -- globalstring
+local FACTION_ALLIANCE = _G.FACTION_ALLIANCE -- globalstring
+local FACTION_HORDE = _G.FACTION_HORDE -- globalstring
+local PVP = _G.PVP -- globalstring
+local UNKNOWN = _G.UNKNOWN -- globalstring
 
 local DIFFICULTY_COLOR = { -- copied from QuestDifficultyColors to work with enums
 	[Enum.RelativeContentDifficulty.Trivial] = CreateColor(0.5, 0.5, 0.5),
@@ -63,6 +70,7 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function(tool
 	local unit = data.guid and UnitTokenFromGUID(data.guid)
 	if not unit or not UnitIsUnit(unit, 'mouseover') then
 		-- replaceLine(1, '|cffff0000%s|r', SPELL_FAILED_BAD_TARGETS)
+		return
 	elseif UnitIsPlayer(unit) then
 		local classColor = C_ClassColor.GetClassColor((UnitClassBase(unit)))
 		replaceLine(1, classColor:WrapTextInColorCode(GetUnitName(unit, true)))

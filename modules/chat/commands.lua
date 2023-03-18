@@ -1,5 +1,7 @@
 local _, addon = ...
 
+local SLASH_SMART_WHISPER1 = _G.SLASH_SMART_WHISPER1 -- globalstring
+
 hooksecurefunc('ChatEdit_OnSpacePressed', function(editBox)
 	if editBox:GetText():sub(1, 3) == '/tt' and (UnitCanCooperate('player', 'target') or UnitIsUnit('player', 'target')) then
 		editBox:SetText(SLASH_SMART_WHISPER1 .. ' ' .. GetUnitName('target', true):gsub(' ', '') .. ' ')

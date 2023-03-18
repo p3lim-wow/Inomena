@@ -1,5 +1,7 @@
 local _, addon = ...
 
+local BNET_CLIENT_WOW = _G.BNET_CLIENT_WOW or 'WoW' -- FrameXML/BNet.lua
+
 local function isPlayerKnown(playerName)
 	-- is it a guildie?
 	for index = 1, select(2, GetNumGuildMembers()) do

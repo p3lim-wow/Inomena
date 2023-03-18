@@ -1,5 +1,9 @@
 local addonName, addon = ...
 
+local COPPER_PER_SILVER = _G.COPPER_PER_SILVER or 100 -- SharedXML/FormattingUtil.lua
+local SILVER_PER_GOLD = _G.SILVER_PER_GOLD or 100 -- SharedXML/FormattingUtil.lua
+local COPPER_PER_GOLD = _G.COPPER_PER_GOLD or (COPPER_PER_SILVER * SILVER_PER_GOLD) -- SharedXML/FormattingUtil.lua
+
 local function formatShortMoney(money)
 	local output
 	output = string.format('|cffffff66%s|r', FormatLargeNumber(math.floor(money / COPPER_PER_GOLD)))

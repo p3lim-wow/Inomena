@@ -1,5 +1,8 @@
 local addonName, addon = ...
 
+local HAVE_MAIL = _G.HAVE_MAIL -- globalstring
+local HAVE_MAIL_FROM = _G.HAVE_MAIL_FROM -- globalstring
+
 local mail = addon:CreateButton('Button', addonName .. 'MailButton', Minimap, 'SecureActionButtonTemplate')
 mail:SetPoint('TOPLEFT', 5, -5)
 mail:SetSize(30, 30)

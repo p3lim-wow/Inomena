@@ -1,5 +1,7 @@
 local addonName, addon = ...
 
+local IDLE_MESSAGE = _G.IDLE_MESSAGE -- globalstring
+
 local lastAlertTime = 0
 local function alert()
 	if GetTime() >= lastAlertTime + 10 then -- avoid spam
@@ -85,7 +87,7 @@ local function IsInDungeonOrRaid()
 	return inInstance and (instanceType == 'party' or instanceType == 'raid')
 end
 
-addon:RegisterCombatEvent('UNIT_DIED', function(_, _, _, _, _, destGUID, destName, destFlags)
+addon:RegisterCombatEvent('UNIT_DIED', function(_, _, _, _, _, destGUID, destName)
 	if destName and IsInDungeonOrRaid() and C_PlayerInfo.GUIDIsPlayer(destGUID) and not UnitIsFeignDeath(destName) then
 		local unit = UnitTokenFromGUID(destGUID)
 		if unit and (UnitInRaid(unit) or UnitInParty(unit)) then

@@ -1,5 +1,7 @@
 local _, addon = ...
 
+local NUM_CHAT_WINDOWS = _G.NUM_CHAT_WINDOWS or 10 -- FrameXML/ChatFrame.lua
+
 -- faster scrolling
 local function onMouseWheel(chatFrame, direction)
 	if direction > 0 then

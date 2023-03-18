@@ -1,5 +1,7 @@
 local _, addon = ...
 
+local CLICK_CAST_BINDINGS = _G.CLICK_CAST_BINDINGS -- globalstring
+
 local function updateChecked(self)
 	self:SetChecked(ClickBindingFrame and ClickBindingFrame:IsShown() and ClickBindingFrame:GetFocusedFrame() == self:GetParent())
 end

@@ -1,5 +1,8 @@
 local _, addon = ...
 
+local NUM_CHAT_WINDOWS = _G.NUM_CHAT_WINDOWS or 10 -- FrameXML/ChatFrame.lua
+local CHAT_FRAME_TEXTURES = _G.CHAT_FRAME_TEXTURES -- FrameXML/FloatingChatFrame.lua
+
 local function updateTab(tab)
 	if tab:GetObjectType() ~= 'Button' then
 		tab = _G[tab:GetName() .. 'Tab']
@@ -66,6 +69,6 @@ for index = 1, NUM_CHAT_WINDOWS do
 	end
 end
 
-hooksecurefunc('FCF_SetTemporaryWindowType', function(chatFrame, chatType, chatTarget)
+hooksecurefunc('FCF_SetTemporaryWindowType', function(chatFrame)
 	modifyTab(_G[chatFrame:GetName() .. 'Tab'])
 end)

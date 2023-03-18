@@ -1,5 +1,9 @@
 local addonName, addon = ...
 
+local INVENTORY_ALERT_STATUS_SLOTS = _G.INVENTORY_ALERT_STATUS_SLOTS -- FrameXML/DurabilityFrame.lua
+
+local DURABILITY = _G.DURABILITY -- globalstring
+
 local repair = addon:CreateButton('Button', addonName .. 'RepairButton', Minimap, 'SecureActionButtonTemplate')
 repair:SetPoint('BOTTOMRIGHT', -7, 7)
 repair:SetSize(30, 30)

@@ -1,3 +1,5 @@
+local UNAVAILABLE = _G.UNAVAILABLE -- globalstring
+
 local totalElapsed = 0
 WorldMapFrame.ScrollContainer.Child:HookScript('OnUpdate', function(self, elapsed)
 	if totalElapsed < 0.05 then

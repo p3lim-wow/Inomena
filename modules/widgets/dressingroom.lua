@@ -1,4 +1,4 @@
-local _, addon = ...
+local EVENT_TOAST_EXPANDED_DESCRIPTION = _G.EVENT_TOAST_EXPANDED_DESCRIPTION -- globalstring
 
 -- make sure the dressing room is always maximized (this is a bugfix really)
 DressUpFrameResetButton:HookScript('OnClick', function()

@@ -8,7 +8,7 @@ local function sellTrash(isInitialTrigger)
 	end
 
 	lastNumItems = 0
-	for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
+	for bagID = Enum.BagIndex.Backpack, Constants.InventoryConstants.NumBagSlots do
 		for slotID = 1, C_Container.GetContainerNumSlots(bagID) do
 			if not isInitialTrigger and not MerchantFrame:IsShown() then
 				-- this can take some time to iterate, and the player might close

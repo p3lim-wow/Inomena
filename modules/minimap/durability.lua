@@ -1,4 +1,6 @@
-local addonName, addon = ...
+local _, addon = ...
+
+local INVENTORY_ALERT_STATUS_SLOTS = _G.INVENTORY_ALERT_STATUS_SLOTS -- FrameXML/DurabilityFrame.lua
 
 -- color the border based on equipment durability
 local DURABILITY_COLORS = { -- alternative to INVENTORY_ALERT_COLORS

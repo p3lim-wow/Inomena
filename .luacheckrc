@@ -15,193 +15,128 @@ ignore = {
 	'631', -- line is too long
 }
 
-exclude_files = {
-	'modules/units_old/*.lua',
-	'modules/units_old/**/*.lua',
-}
+exclude_files = {}
 
 globals = {
 	-- FrameXML objects we mutate
-	'ChatTypeInfo',
-	'StaticPopupDialogs',
-	'ObjectiveTrackerFrame',
-	'SuperTrackedFrame',
-	'SlashCmdList',
-	'TimeManager_LoadUI',
+	'StaticPopupDialogs', -- FrameXML/StaticPopup.lua
+	'LootFrame', -- FrameXML/LootFrame.xml
+	'ChatTypeInfo', -- FrameXML/ChatFrame.lua
+	'DurabilityFrame', -- FrameXML/DurabilityFrame.xml
+	'ClickBindingFrame', -- AddOns/Blizzard_ClickBindingUI/Blizzard_ClickBindingUI.xml
+
+	-- savedvariables we mutate
+	'OPie_SavedData',
 }
 
 read_globals = {
-	bit = {fields = {'band'}},
 	string = {fields = {'split', 'trim', 'join'}},
 	table = {fields = {'wipe'}},
 
 	-- FrameXML objects
-	'BuffFrame',
-	'ChatFontNormal',
-	'ChatFrame1',
-	'ChatFrame2',
-	'ChatFrameChannelButton',
-	'ChatFrameMenuButton',
-	'CompactRaidFrameManager',
-	'ContainerFrame1MoneyFrame',
-	'DurabilityFrame',
-	'GameTooltip',
-	'GameTooltipStatusBar',
-	'GarrisonLandingPageMinimapButton',
-	'HybridMinimap',
-	'MainMenuBar',
-	'MerchantFrame',
-	'MicroButtonAndBagsBar',
-	'Minimap',
-	'MiniMapMailFrame',
-	'MiniMapMailIcon',
-	'MiniMapTrackingDropDown',
-	'NamePlateDriverFrame',
-	'ObjectiveTrackerFrame',
-	'OrderHallCommandBar',
-	'PetBattleFrame',
-	'QuestInfoFrame',
-	'QueueStatusMinimapButton',
-	'QuickJoinToastButton',
-	'ReadyCheckListenerFrame',
-	'ScenarioBlocksFrame',
-	'SendMailMailButton',
-	'SendMailMoneyCopper',
-	'SendMailMoneyGold',
-	'SendMailMoneySilver',
-	'SendMailNameEditBox',
-	'SendMailSubjectEditBox',
-	'TemporaryEnchantFrame',
-	'TicketStatusFrame',
-	'TradeSkillFrame',
-	'UIErrorsFrame',
-	'UIParent',
-	'VehicleSeatIndicator',
-	'WeeklyRewardsFrame',
-	'WorldMapFrame',
-	'WorldMapFrameCloseButton',
+	'ActionButtonUtil', -- FrameXML/ActionButtonUtil.lua
+	'CompactRaidFrameManager', -- AddOns/Blizzard_CompactRaidFrames/Blizzard_CompactRaidFrameManager.xml
+	'ContainerFrame1MoneyFrame', -- FrameXML/ContainerFrame.xml
+	'DressUpFrame', -- FrameXML/DressUpFrames.xml
+	'DressUpFrameResetButton', -- FrameXML/DressUpFrames.xml
+	'DressUpOutfitDetailsSlotMixin', -- FrameXML/DressUpFrames.lua
+	'ExpansionLandingPage', -- AddOns/Blizzard_ExpansionLandingPage/Blizzard_ExpansionLandingPage.xml
+	'ExpansionLandingPageMinimapButton', -- FrameXML/Minimap.xml
+	'GameTooltip', -- FrameXML/GameTooltip.xml
+	'GenericTraitFrame', -- AddOns/Blizzard_GenericTraitUI/Blizzard_GenericTraitFrame.xml
+	'GenericTraitFrameMixin', -- AddOns/Blizzard_GenericTraitUI/Blizzard_GenericTraitFrame.lua
+	'HelpTip', -- SharedXML/HelpTip.lua
+	'HybridMinimap', -- AddOns/Blizzard_HybridMinimap/Blizzard_HybridMinimap.xml
+	'MacroFrame', -- AddOns/Blizzard_MacroUI/Blizzard_MacroUI.xml
+	'MerchantFrame', -- FrameXML/MerchantFrame.xml
+	'Minimap', -- FrameXML/Minimap.xml
+	'MinimapMixin', -- FrameXML/Minimap.lua
+	'PowerBarColor', -- FrameXML/UnitFrame.lua
+	'ProfessionsFrame', -- AddOns/Blizzard_Professions/Blizzard_ProfessionsFrame.xml
+	'QueueStatusButton', -- FrameXML/QueueStatusFrame.xml
+	'ReadyCheckListenerFrame', -- FrameXML/ReadyCheck.xml
+	'SendMailMailButton', -- FrameXML/MailFrame.xml
+	'SendMailMoneyCopper', -- inherited from FrameXML/MoneyInputFrame.xml
+	'SendMailMoneyGold', -- inherited from FrameXML/MoneyInputFrame.xml
+	'SendMailMoneySilver', -- inherited from FrameXML/MoneyInputFrame.xml
+	'SendMailNameEditBox', -- FrameXML/MailFrame.xml
+	'SendMailSubjectEditBox', -- FrameXML/MailFrame.xml
+	'SlashCmdList', -- FrameXML/ChatFrame.lua
+	'SpellBookFrame', -- FrameXML/SpellBookFrame.xml
+	'SpellBookFrameTabButton1', -- FrameXML/SpellBookFrame.xml
+	'UIErrorsFrame', -- FrameXML/UIErrorsFrame.xml
+	'UIParent', -- FrameXML/UIParent.xml
+	'WeeklyRewardsFrame', -- AddOns/Blizzard_WeeklyRewards/Blizzard_WeeklyRewards.xml
+	'WorldFrame', -- FrameXML/WorldFrame.xml
+	'WorldMapFrame', -- AddOns/Blizzard_WorldMap/Blizzard_WorldMap.xml
+	'WorldMapFrameTitleText', -- inherited from SharedXML/SharedUIPanelTemplates.xml
 
 	-- FrameXML functions
-	'nop',
-	'GetDifficultyColor',
-	'GetUnitName',
-	'IsSecureCmd',
-	'RegisterAttributeDriver',
-	'ReloadUI',
-	'ToggleCalendar',
-	'ToggleDropDownMenu',
-	'ChatEdit_DeactivateChat',
-	'ChatEdit_GetActiveWindow',
-	'ChatEdit_ParseText',
-	'ChatEdit_SendText',
-	'ChatFrame_AddChannel',
-	'ChatFrame_AddMessageGroup',
-	'ChatFrame_OpenChat',
-	'ChatFrame_ReceiveAllPrivateMessages',
-	'ChatFrame_RemoveAllChannels',
-	'ChatFrame_RemoveAllMessageGroups',
-	'FCF_Close',
-	'FCF_GetChatWindowInfo',
-	'FCF_OpenNewWindow',
-	'FCF_ResetChatWindows',
-	'FCF_RestorePositionAndDimensions',
-	'FCF_SavePositionAndDimensions',
-	'FCF_SelectDockFrame',
-	'FCF_SetWindowAlpha',
-	'FCF_SetWindowColor',
-	'GameTooltip_Hide',
-	'GarrisonLandingPageMinimapButton_OnClick',
-	'Minimap_OnClick',
-	'PlayerTalentTab_OnClick',
-	'StaticPopup_Hide',
-	'StaticPopup_Visible',
-	'UnitFrame_OnEnter',
-	'UnitFrame_OnLeave',
+	'AuraUtil', -- FrameXML/AuraUtil.lua
+	'ChatEdit_ParseText', -- FrameXML/ChatFrame.lua
+	'ChatFrame_AddChannel', -- FrameXML/ChatFrame.lua
+	'ChatFrame_AddMessageEventFilter', -- FrameXML/ChatFrame.lua
+	'ChatFrame_AddMessageGroup', -- FrameXML/ChatFrame.lua
+	'ChatFrame_ReceiveAllPrivateMessages', -- FrameXML/ChatFrame.lua
+	'ChatFrame_RemoveAllChannels', -- FrameXML/ChatFrame.lua
+	'ChatFrame_RemoveAllMessageGroups', -- FrameXML/ChatFrame.lua
+	'CopyTable', -- SharedXML/TableUtil.lua
+	'CreateColor', -- SharedXML/Color.lua
+	'FCF_Close', -- FrameXML/FloatingChatFrame.lua
+	'FCF_OpenNewWindow', -- FrameXML/FloatingChatFrame.lua
+	'FCF_ResetChatWindows', -- FrameXML/FloatingChatFrame.lua
+	'FCF_SelectDockFrame', -- FrameXML/FloatingChatFrame.lua
+	'FCF_SetWindowAlpha', -- FrameXML/FloatingChatFrame.lua
+	'FCF_SetWindowColor', -- FrameXML/FloatingChatFrame.lua
+	'FormatLargeNumber', -- SharedXML/FormattingUtil.lua
+	'GameTooltip_Hide', -- FrameXML/GameTooltip.lua
+	'GetUnitName', -- FrameXML/UnitFrame.lua
+	'HideUIPanel', -- FrameXML/UIParent.lua
+	'IsSecureCmd', -- FrameXML/ChatFrame.lua
+	'RegisterAttributeDriver', -- FrameXML/SecureStateDriver.lua
+	'RegisterStateDriver', -- FrameXML/SecureStateDriver.lua
+	'SecureHandlerWrapScript', -- FrameXML/SecureHandlers.lua
+	'SpellBookFrame_UpdateSpells', -- FrameXML/SpellBookFrame.lua
+	'SpellBookFrameTabButton_OnClick', -- FrameXML/SpellBookFrame.lua
+	'StaticPopup_Hide', -- FrameXML/StaticPopup.lua
+	'StaticPopup_IsCustomGenericConfirmationShown', -- FrameXML/StaticPopup.lua
+	'StaticPopup_Visible', -- FrameXML/StaticPopup.lua
+	'ToggleCalendar', -- FrameXML/UIParent.lua
+	'ToggleClickBindingFrame', -- FrameXML/UIParent.lua
+	'UnregisterStateDriver', -- FrameXML/SecureStateDriver.lua
+	'WeeklyRewards_ShowUI', -- FrameXML/UIParent.lua
+	'nop', -- FrameXML/UIParent.lua
 
-	-- FrameXML constants
-	'BACKPACK_CONTAINER',
-	'BNET_CLIENT_D3',
-	'BNET_CLIENT_HEROES',
-	'BNET_CLIENT_OVERWATCH',
-	'BNET_CLIENT_SC2',
-	'BNET_CLIENT_WOW',
-	'BNET_CLIENT_WTCG',
-	'COPPER_PER_GOLD',
-	'COPPER_PER_SILVER',
-	'FACTION_BAR_COLORS',
-	'FRAMERATE_FREQUENCY',
-	'GREEN_FONT_COLOR_CODE',
-	'INVENTORY_ALERT_COLORS',
-	'INVENTORY_ALERT_STATUS_SLOTS',
-	'NUM_BAG_SLOTS',
-	'NUM_CHAT_WINDOWS',
-	'PAPERDOLL_STATCATEGORIES',
-	'PERFORMANCEBAR_UPDATE_INTERVAL',
-	'RAID_CLASS_COLORS',
-	'RED_FONT_COLOR_CODE',
+	-- FrameXML mutable globals
 	'SELECTED_CHAT_FRAME',
-	'SILVER_PER_GOLD',
-	'SOUNDKIT',
-	'TALENTS_TAB',
-	'YELLOW_FONT_COLOR_CODE',
-
-	-- SharedXML objects
-	'BackdropTemplateMixin',
 
 	-- SharedXML functions
-	'CreateColor', -- SharedXML/Color.lua
-	'FormatLargeNumber', -- SharedXML/FormattingUtil.lua
-	'GetItemInfoFromHyperlink', -- SharedXML/LinkUtil.lua
 	'Mixin', -- SharedXML/Mixin.lua
-	'SecondsToTime', -- SharedXML/TimeUtil.lua
-
-	-- GlobalStrings
-	'ARTIFACT_POWER',
-	'CHAT_FLAG_AFK',
-	'CHAT_FLAG_DND',
-	'CURRENCY',
-	'HELPFRAME_ITEM_TITLE',
-	'ID',
-	'IDLE_MESSAGE',
-	'INSTANCE',
-	'ITEM_COOLDOWN_TIME',
-	'LEADER',
-	'MINIMAP_TRACKING_MAILBOX',
-	'MINIMAP_TRACKING_REPAIR',
-	'MONEY',
-	'MOUNT',
-	'RAID_WARNING',
-	'SLASH_SMART_WHISPER1',
-	'STAT_CATEGORY_SPELL',
-	'TIMER_MINUTES_DISPLAY',
-	'UNAVAILABLE',
-	'UNKNOWN',
 
 	-- namespaces
-	'C_ArtifactUI',
 	'C_BattleNet',
 	'C_ChallengeMode',
+	'C_ClassColor',
+	'C_Container',
 	'C_Covenants',
-	'C_CurrencyInfo',
 	'C_CVar',
-	'C_DateAndTime',
+	'C_EditMode',
 	'C_FriendList',
 	'C_Garrison',
+	'C_GossipInfo',
 	'C_Map',
+	'C_Minimap',
 	'C_MountJournal',
-	'C_Navigation',
 	'C_PartyInfo',
-	'C_PetJournal',
 	'C_PlayerInfo',
 	'C_QuestLog',
-	'C_Timer',
 	'C_ToyBox',
-	'C_TradeSkillUI',
 	'C_UI',
+	'Constants',
 	'Enum',
+	'TooltipDataProcessor',
 
 	-- API
-	'hooksecurefunc',
 	'AcceptGroup',
 	'BNGetNumFriends',
 	'CanEjectPassengerFromSeat',
@@ -210,130 +145,95 @@ read_globals = {
 	'CanWithdrawGuildBankMoney',
 	'ChangeChatColor',
 	'ClearCursor',
+	'ClearOverrideBindings',
+	'ConfirmBNRequestInviteFriend',
 	'ConfirmLootRoll',
-	'ContainerIDToInventoryID',
 	'CreateFrame',
 	'CursorHasItem',
 	'EjectPassengerFromSeat',
 	'EquipPendingItem',
 	'GetAchievementInfo',
+	'GetActionBarPage',
+	'GetActionInfo',
 	'GetAutoCompletePresenceID',
 	'GetBattlefieldStatus',
-	'GetBuybackItemLink',
+	'GetBindingKey',
+	'GetBonusBarIndex',
 	'GetChannelName',
-	'GetContainerItemID',
-	'GetContainerItemInfo',
-	'GetContainerItemLink',
-	'GetContainerNumSlots',
-	'GetExistingSocketLink',
-	'GetFramerate',
-	'GetGuildBankItemLink',
 	'GetGuildBankMoney',
 	'GetGuildBankWithdrawMoney',
 	'GetGuildInfo',
 	'GetGuildRosterInfo',
-	'GetInboxItemLink',
 	'GetInventoryAlertStatus',
-	'GetInventoryItemID',
+	'GetInventoryItemDurability',
 	'GetItemCooldown',
 	'GetItemCount',
-	'GetItemCreationContext',
-	'GetLFGDungeonRewardInfo',
-	'GetLFGDungeonRewardLink',
-	'GetLFGDungeonShortageRewardLink',
-	'GetLootRollItemLink',
-	'GetLootSlotLink',
-	'GetMerchantItemCostItem',
-	'GetMerchantItemLink',
+	'GetLatestThreeSenders',
+	'GetMacroSpell',
 	'GetMoney',
-	'GetNetStats',
-	'GetNewSocketLink',
 	'GetNumGuildMembers',
-	'GetNumSpecializations',
-	'GetNumTrackingTypes',
-	'GetPhysicalScreenSize',
-	'GetProfessionInfo',
-	'GetProfessions',
-	'GetPvpTalentInfoByID',
-	'GetQuestCurrencyID',
-	'GetQuestItemInfo',
-	'GetQuestLogItemLink',
-	'GetQuestLogRewardCurrencyInfo',
-	'GetQuestLogSpecialItemInfo',
+	'GetPlayerInfoByGUID',
 	'GetRealmID',
 	'GetRealmName',
 	'GetRepairAllCost',
-	'GetSendMailItemLink',
-	'GetShapeshiftFormInfo',
-	'GetSpecializationInfo',
-	'GetSpellBookItemInfo',
-	'GetSpellBookItemName',
-	'GetSpellBookItemTexture',
+	'GetScreenHeight',
 	'GetSpellCooldown',
 	'GetSpellInfo',
 	'GetSpellTexture',
 	'GetTime',
+	'GetTotemCannotDismiss',
 	'GetTotemInfo',
-	'GetTrackingInfo',
-	'GetTradePlayerItemLink',
-	'GetTradeTargetItemLink',
-	'GetTrainerServiceItemLink',
-	'GetVoidItemInfo',
-	'GetVoidTransferDepositInfo',
-	'GetVoidTransferWithdrawalInfo',
 	'GetWeaponEnchantInfo',
+	'HasBonusActionBar',
 	'HasNewMail',
 	'InCombatLockdown',
 	'IsAddOnLoaded',
 	'IsControlKeyDown',
-	'IsCurrentSpell',
-	'IsPlayerSpell',
+	'IsInGroup',
+	'IsInGuildGroup',
+	'IsInInstance',
+	'IsInRaid',
 	'IsShiftKeyDown',
 	'IsSpellKnown',
-	'IsSwimming',
-	'LoadAddOn',
 	'PickupBagFromSlot',
-	'PickupContainerItem',
-	'PlayerHasToy',
 	'PlaySound',
+	'PlaySoundFile',
 	'PutItemInBag',
 	'RepairAllItems',
-	'SecureCmdOptionParse',
 	'SendChatMessage',
 	'SetBindingClick',
 	'SetChatColorNameByClass',
-	'SetTracking',
+	'SetOverrideBinding',
 	'TaxiRequestEarlyLanding',
 	'UnitAura',
 	'UnitBattlePetLevel',
 	'UnitBattlePetType',
-	'UnitCanAssist',
 	'UnitCanCooperate',
 	'UnitClassBase',
 	'UnitClassification',
 	'UnitCreatureFamily',
 	'UnitCreatureType',
+	'UnitEffectiveLevel',
 	'UnitExists',
-	'UnitFactionGroup',
-	'UnitGUID',
-	'UnitIsBattlePetCompanion',
-	'UnitIsDeadOrGhost',
+	'UnitInParty',
+	'UnitInRaid',
+	'UnitIsFeignDeath',
 	'UnitIsFriend',
 	'UnitIsInMyGuild',
 	'UnitIsPlayer',
+	'UnitIsTapDenied',
 	'UnitIsUnit',
-	'UnitIsWildBattlePet',
-	'UnitLevel',
 	'UnitName',
 	'UnitOnTaxi',
+	'UnitPlayerControlled',
 	'UnitRace',
 	'UnitReaction',
+	'UnitTokenFromGUID',
 	'UnitVehicleSeatCount',
-	'UseContainerItem',
+	'hooksecurefunc',
 
 	-- exposed from other addons
-	'_detalhes', -- Details
 	'LibStub',
-	'OneRingLib', -- OPie
 	'OPie',
+	'TomTomPaste',
 }

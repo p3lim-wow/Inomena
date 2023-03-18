@@ -1,5 +1,15 @@
 local _, addon = ...
 
+local BNET_CLIENT_APP = _G.BNET_CLIENT_APP or 'App' -- FrameXML/BNet.lua
+local BNET_CLIENT_WOW = _G.BNET_CLIENT_WOW or 'WoW' -- FrameXML/BNet.lua
+local NUM_CHAT_WINDOWS = _G.NUM_CHAT_WINDOWS or 10 -- FrameXML/ChatFrame.lua
+
+local UNKNOWN = _G.UNKNOWN -- globalstring
+local CHAT_FLAG_AFK = _G.CHAT_FLAG_AFK -- globalstring
+local CHAT_FLAG_DND = _G.CHAT_FLAG_DND -- globalstring
+local LEADER = _G.LEADER -- globalstring
+local RAID_WARNING = _G.RAID_WARNING -- globalstring
+
 local ABBREVIATIONS = {
 	OFFICER = 'o',
 	GUILD = 'g',
