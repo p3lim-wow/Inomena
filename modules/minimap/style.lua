@@ -17,11 +17,6 @@ end)
 Minimap:SetArchBlobRingScalar(0)
 Minimap:SetQuestBlobRingScalar(0)
 
--- expose shape for LDBIcon-1.0
-function GetMinimapShape()
-	return 'SQUARE'
-end
-
 -- disable expansion landing button animations
 ExpansionLandingPageMinimapButton:UnregisterEvent('PLAYER_ENTERING_WORLD')
 
@@ -104,3 +99,8 @@ addon:Hide('QueueStatusButton', 'Eye', 'EyePokeEnd')
 local eye = QueueStatusButton:CreateTexture(nil, 'ARTWORK')
 eye:SetAllPoints()
 eye:SetAtlas('groupfinder-eye-single')
+
+-- expose shape for LDBIcon-1.0
+function GetMinimapShape()
+	return 'SQUARE'
+end
