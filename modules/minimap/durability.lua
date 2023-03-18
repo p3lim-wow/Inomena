@@ -15,13 +15,10 @@ function addon:UPDATE_INVENTORY_DURABILITY()
 		end
 	end
 
-	local border = _G[addonName .. 'MinimapBorder']
 	local color = DURABILITY_COLORS[alert]
 	if color then
-		border:SetDesaturated(false)
-		border:SetVertexColor(color:GetRGB())
+		Minimap:SetBorderColor(color:GetRGB())
 	else
-		border:SetVertexColor(1, 1, 1)
-		border:SetDesaturated(true)
+		Minimap:SetBorderColor(0, 0, 0)
 	end
 end
