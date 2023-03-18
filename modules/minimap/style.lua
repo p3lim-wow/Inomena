@@ -28,6 +28,20 @@ ExpansionLandingPageMinimapButton:UnregisterEvent('PLAYER_ENTERING_WORLD')
 -- render it above other crap
 ExpansionLandingPageMinimapButton:SetFrameStrata('HIGH')
 
+-- easy access to weekly chest
+ExpansionLandingPageMinimapButton:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
+ExpansionLandingPageMinimapButton:SetScript('OnClick', function(self, button)
+	if button == 'RightButton' then
+		if WeeklyRewardsFrame and WeeklyRewardsFrame:IsShown() then
+			HideUIPanel(WeeklyRewardsFrame)
+		else
+			WeeklyRewards_ShowUI()
+		end
+	else
+		self:ToggleLandingPage()
+	end
+end)
+
 -- move and scale the expansion landing button depending on "garrison" type
 hooksecurefunc(ExpansionLandingPageMinimapButton, 'UpdateIcon', function(self)
 	self:ClearAllPoints()
