@@ -52,3 +52,27 @@ ReadyCheckListenerFrame:SetScript('OnShow', alert)
 -- invites
 addon:RegisterEvent('PARTY_INVITE_REQUEST', alert)
 addon:RegisterEvent('LFG_PROPOSAL_SHOW', alert)
+
+-- feast "alert"
+local FEAST_MESSAGE = '%s placed a feast'
+local FEASTS = {
+	[381420] = true, -- Hoard of Draconic Delicacies
+	[382423] = true, -- Yusa's Hearty Stew
+	[382427] = true, -- Grand Banquet of the Kalu'ak
+}
+
+local function feastWrapper(_, _, casterName, _, _, _, _, _, _, spellID)
+	if FEASTS[spellID] and IsInInstance() then -- SAY is protected in the open world
+		SendChatMessage(FEAST_MESSAGE:format(casterName), 'SAY')
+	end
+end
+
+function addon:PLAYER_REGEN_DISABLED()
+	self:UnregisterCombatEvent('SPELL_CAST_START', feastWrapper)
+end
+
+function addon:PLAYER_REGEN_ENABLED()
+	self:RegisterCombatEvent('SPELL_CAST_START', feastWrapper)
+end
+
+addon:RegisterCombatEvent('SPELL_CAST_START', feastWrapper)
