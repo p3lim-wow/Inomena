@@ -25,7 +25,8 @@ end)
 
 -- auto send when attachment limit reached
 function addon:UI_ERROR_MESSAGE(messageID)
-	if messageID == 654 then
+	if messageID == 655 then -- "You cannot attach more than 12 items to mail."
+		-- TODO: find an enum or something for this, as it changes every patch
 		SendMailMailButton:Click()
 	end
 end
