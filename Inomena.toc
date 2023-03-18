@@ -6,7 +6,12 @@
 
 ../Dashi/embed.xml
 
-addon.lua
+utils/assets.lua
+utils/constants.lua
+utils/enums.lua
+utils/colors.lua
+utils/widgets.lua
+utils/bind.lua
 
 modules/automation/invites.lua
 modules/automation/loot.lua
