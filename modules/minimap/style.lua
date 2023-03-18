@@ -46,30 +46,38 @@ end)
 hooksecurefunc(ExpansionLandingPageMinimapButton, 'UpdateIcon', function(self)
 	self:ClearAllPoints()
 
-	local garrisonType = C_Garrison.GetLandingPageGarrisonType()
-	if garrisonType == Enum.GarrisonType.Type_6_0 then
-		addon:Print('garrison', 'draenor')
-		self:SetPoint('BOTTOMLEFT', Minimap)
-	elseif garrisonType == Enum.GarrisonType.Type_7_0 then
-		self:SetPoint('BOTTOMLEFT', Minimap, 3, 3)
-		self:SetSize(38, 38)
-	elseif garrisonType == Enum.GarrisonType.Type_8_0 then
-		addon:Print('garrison', 'bfa')
-		self:SetPoint('BOTTOMLEFT', Minimap)
-	elseif garrisonType == Enum.GarrisonType.Type_9_0 then
-		local covenantID = C_Covenants.GetActiveCovenantID()
-		if covenantID == Enum.CovenantType.Kyrian then
-			self:SetPoint('BOTTOMLEFT', Minimap, -2, 3)
-			self:SetSize(42, 42)
-		elseif covenantID == Enum.CovenantType.Venthyr then
-			self:SetPoint('BOTTOMLEFT', Minimap, -1, 2)
-			self:SetSize(42, 42)
-		elseif covenantID == Enum.CovenantType.NightFae then
-			self:SetPoint('BOTTOMLEFT', Minimap, 1, 1)
+	if self.garrisonMode then
+		local garrisonType = C_Garrison.GetLandingPageGarrisonType()
+		if garrisonType == Enum.GarrisonType.Type_6_0 then
+			addon:Print('garrison', 'draenor')
+			self:SetPoint('BOTTOMLEFT', Minimap)
+		elseif garrisonType == Enum.GarrisonType.Type_7_0 then
+			self:SetPoint('BOTTOMLEFT', Minimap, 3, 3)
 			self:SetSize(38, 38)
-		elseif covenantID == Enum.CovenantType.Necrolord then
-			self:SetPoint('BOTTOMLEFT', Minimap, -1, 3)
-			self:SetSize(42, 42)
+		elseif garrisonType == Enum.GarrisonType.Type_8_0 then
+			addon:Print('garrison', 'bfa')
+			self:SetPoint('BOTTOMLEFT', Minimap)
+		elseif garrisonType == Enum.GarrisonType.Type_9_0 then
+			local covenantID = C_Covenants.GetActiveCovenantID()
+			if covenantID == Enum.CovenantType.Kyrian then
+				self:SetPoint('BOTTOMLEFT', Minimap, -2, 3)
+				self:SetSize(42, 42)
+			elseif covenantID == Enum.CovenantType.Venthyr then
+				self:SetPoint('BOTTOMLEFT', Minimap, -1, 2)
+				self:SetSize(42, 42)
+			elseif covenantID == Enum.CovenantType.NightFae then
+				self:SetPoint('BOTTOMLEFT', Minimap, 1, 1)
+				self:SetSize(38, 38)
+			elseif covenantID == Enum.CovenantType.Necrolord then
+				self:SetPoint('BOTTOMLEFT', Minimap, -1, 3)
+				self:SetSize(42, 42)
+			end
+		end
+	else
+		local expansionInfo = ExpansionLandingPage:GetOverlayMinimapDisplayInfo()
+		if expansionInfo then
+			self:SetPoint('BOTTOMLEFT', Minimap, 2, 3)
+			self:SetSize(32, 32)
 		end
 	end
 end)
