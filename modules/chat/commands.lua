@@ -41,3 +41,5 @@ addon:RegisterSlash('/npcid', function()
 		print('NPC ID:', npcID)
 	end
 end)
+
+addon:RegisterSlash('/dumpui', SlashCmdList.TABLEINSPECT)
