@@ -24,7 +24,7 @@ function tooltip:Spell(data)
 end
 
 function tooltip:Unit(data)
-	if not C_PlayerInfo.GUIDIsPlayer(data.guid) then
+	if data.guid and not C_PlayerInfo.GUIDIsPlayer(data.guid) then
 		addLine(self, 'npc', addon:ExtractIDFromGUID(data.guid))
 	end
 end
