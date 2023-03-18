@@ -74,9 +74,14 @@ local function getMount()
 		return 168035, Enum_MountType.Item
 	end
 
-	-- prefer the instant-mount during halloween
+	if not select(13, GetAchievementInfo(891)) and #collectedSpecialMounts.chauffeured > 0 then
+		-- player has not trained riding yet
+		return collectedSpecialMounts.chauffeured[math.random(#collectedSpecialMounts.chauffeured)], Enum_MountType.Mount
+	end
+
 	if GetItemCount(37011) > 0 then
-		-- Magic Broom
+		-- prefer the instant-mount Magic Broom during halloween
+		-- it's removed from the inventory after the event ends, so we don't need to check dates
 		return 37011, Enum_MountType.Item
 	end
 
@@ -84,14 +89,10 @@ local function getMount()
 		-- prevent getting shot down in Mechagon
 		return collectedSpecialMounts.mechagon[math.random(#collectedSpecialMounts.mechagon)], Enum_MountType.Mount
 	end
+
 	if addon:GetPlayerMapID() == 1355 and #collectedSpecialMounts.hybrid > 0 then
 		-- I'm sick of swimming slow in Nazjatar
 		return collectedSpecialMounts.hybrid[math.random(#collectedSpecialMounts.hybrid)], Enum_MountType.Mount
-	end
-
-	if not select(13, GetAchievementInfo(891)) and #collectedSpecialMounts.chauffeured > 0 then
-		-- player has not trained riding yet
-		return collectedSpecialMounts.chauffeured[math.random(#collectedSpecialMounts.chauffeured)], Enum_MountType.Mount
 	end
 
 	if not C_QuestLog.IsQuestFlaggedCompleted(63994) and MAW_ZONES[addon:GetPlayerMapID()] and #collectedSpecialMounts.maw > 0 then
