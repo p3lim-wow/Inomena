@@ -25,6 +25,9 @@ end
 -- disable expansion landing button animations
 ExpansionLandingPageMinimapButton:UnregisterEvent('PLAYER_ENTERING_WORLD')
 
+-- render it above other crap
+ExpansionLandingPageMinimapButton:SetFrameStrata('HIGH')
+
 -- move and scale the expansion landing button depending on "garrison" type
 hooksecurefunc(ExpansionLandingPageMinimapButton, 'UpdateIcon', function(self)
 	self:ClearAllPoints()
