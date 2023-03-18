@@ -111,9 +111,9 @@ local MACRO_START = [[
 /dismount [mounted]
 ]]
 
-if addon.CLASS == 'DRUID' then
-	-- remove shapeshift before mounting
-	MACRO_START = MACRO_START .. '\n/cancelform [form]'
+if addon.PLAYER_CLASS == 'DRUID' then
+	-- remove shapeshift before mounting, except Moonkin Form which doesn't cancel
+	MACRO_START = MACRO_START .. '\n/cancelform [known:Moonkin Form,noform:4][noknown:Moonkin Form,form]'
 end
 
 local mount = addon:BindButton('Mount', 'HOME', 'SecureActionButtonTemplate')
