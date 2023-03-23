@@ -20,6 +20,7 @@ local FISHING_SPELLS = {
 	[131474] = true, -- cast spell
 	[131476] = true, -- cast spell
 	[131490] = true, -- channel spell
+	[405274] = true, -- Zskera fishing
 }
 
 -- our state and attribute handler
@@ -114,24 +115,23 @@ local function fishingStart(_, _, _, spellID)
 			C_CVar.SetCVar(name, value)
 		end
 
-		-- rebind the fishing spell hotkey
-		local key1, key2 = getSpellBinding(activeFishingSpell)
-		if key1 then
-			SetOverrideBinding(handler, true, key1, 'INTERACTTARGET')
-		end
-		if key2 then
-			SetOverrideBinding(handler, true, key2, 'INTERACTTARGET')
-		end
+		if activeFishingSpell then
+			-- rebind the fishing spell hotkey
+			local key1, key2 = getSpellBinding(activeFishingSpell)
+			if key1 then
+				SetOverrideBinding(handler, true, key1, 'INTERACTTARGET')
+			end
+			if key2 then
+				SetOverrideBinding(handler, true, key2, 'INTERACTTARGET')
+			end
 
-		-- register state driver to reset the binding when player enters combat
-		RegisterStateDriver(handler, 'combat', '[combat] clear; nothing')
+			-- register state driver to reset the binding when player enters combat
+			RegisterStateDriver(handler, 'combat', '[combat] clear; nothing')
+		end
 
 		-- wait for fishing to end
 		addon:RegisterUnitEvent('UNIT_SPELLCAST_CHANNEL_STOP', 'player', fishingStop)
 		addon:RegisterEvent('PLAYER_LOGOUT', restoreCVars)
-
-		-- unregister ourselves
-		return true
 	end
 end
 
@@ -139,11 +139,11 @@ function addon:UNIT_SPELLCAST_SENT(unit, _, _, spellID)
 	-- BUG: this event is not a valid unit event for whatever reason
 	if unit == 'player' and FISHING_SPELLS[spellID] then
 		-- this event triggers before UNIT_SPELLCAST_CHANNEL_START and holds the actual spell
-		-- used to start fishing, so we'll store it
+		-- used to start fishing, so we'll store it and wait for that even to trigger
 		activeFishingSpell = spellID
-
-		-- wait for the channel event to trigger
-		self:RegisterUnitEvent('UNIT_SPELLCAST_CHANNEL_START', unit, fishingStart)
 	end
 end
 
+-- some fishing starts by interacting with objects, and as such has no USS event trigger,
+-- we need to listen to USCS all the time
+addon:RegisterUnitEvent('UNIT_SPELLCAST_CHANNEL_START', 'player', fishingStart)
