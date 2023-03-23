@@ -175,3 +175,22 @@ function addon:PLAYER_LOGIN()
 
 	return true
 end
+
+local lastDialogSetting
+local function cinematicStart()
+	lastDialogSetting = C_CVar.GetCVar('Sound_EnableDialog')
+	C_CVar.SetCVar('Sound_EnableDialog', '1')
+
+	return true -- we have to stop it because it tends to trigger more than once
+end
+
+function addon:CINEMATIC_STOP()
+	if lastDialogSetting then
+		C_CVar.SetCVar('Sound_EnableDialog', lastDialogSetting)
+		lastDialogSetting = nil
+
+		addon:RegisterEvent('CINEMATIC_START', cinematicStart)
+	end
+end
+
+addon:RegisterEvent('CINEMATIC_START', cinematicStart)
