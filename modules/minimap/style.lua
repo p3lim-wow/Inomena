@@ -49,8 +49,8 @@ hooksecurefunc(ExpansionLandingPageMinimapButton, 'UpdateIcon', function(self)
 	if self.garrisonMode then
 		local garrisonType = C_Garrison.GetLandingPageGarrisonType()
 		if garrisonType == Enum.GarrisonType.Type_6_0 then
-			addon:Print('garrison', 'draenor')
 			self:SetPoint('BOTTOMLEFT', Minimap)
+			self:SetSize(36, 36)
 		elseif garrisonType == Enum.GarrisonType.Type_7_0 then
 			self:SetPoint('BOTTOMLEFT', Minimap, 3, 3)
 			self:SetSize(38, 38)
