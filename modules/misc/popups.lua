@@ -49,13 +49,3 @@ end
 hooksecurefunc(HelpTip, 'Show', function(self, parent, info)
 	self:Acknowledge(parent, info.text)
 end)
-
-addon:HookAddOn('Blizzard_GenericTraitUI', function()
-	-- spend dragon glyphs without nag
-	hooksecurefunc(GenericTraitFrame, 'PurchaseRank', function(self, ...)
-		GenericTraitFrameMixin.PurchaseRankCallback(self, ...)
-		if StaticPopup_IsCustomGenericConfirmationShown(self) then
-			StaticPopup_Hide('GENERIC_CONFIRMATION')
-		end
-	end)
-end)
