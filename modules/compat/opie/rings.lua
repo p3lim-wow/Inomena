@@ -273,6 +273,7 @@ local RINGS = {
 		{'toy', 182780}, -- Muckpool Cookpot
 		{'toy', 116757}, -- Steamworks Sausage Grill
 		{'toy', 117573}, -- Wayfarer's Bonfire
+		{'toy', 203757}, -- Brazier of Madness
 		{'spell', 818}, -- Cooking Fire
 	},
 	{
