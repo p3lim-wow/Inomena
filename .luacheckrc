@@ -51,7 +51,6 @@ read_globals = {
 	'MerchantFrame', -- FrameXML/MerchantFrame.xml
 	'Minimap', -- FrameXML/Minimap.xml
 	'MinimapMixin', -- FrameXML/Minimap.lua
-	'PowerBarColor', -- FrameXML/UnitFrame.lua
 	'ProfessionsFrame', -- AddOns/Blizzard_Professions/Blizzard_ProfessionsFrame.xml
 	'QueueStatusButton', -- FrameXML/QueueStatusFrame.xml
 	'ReadyCheckListenerFrame', -- FrameXML/ReadyCheck.xml
@@ -72,6 +71,7 @@ read_globals = {
 	'WorldMapFrameTitleText', -- inherited from SharedXML/SharedUIPanelTemplates.xml
 
 	-- FrameXML functions
+	'AreaLabelDataProviderMixin', -- AddOns/Blizzard_SharedMapDataProviders/AreaLabelDataProvider.lua
 	'AuraUtil', -- FrameXML/AuraUtil.lua
 	'ChatEdit_ParseText', -- FrameXML/ChatFrame.lua
 	'ChatFrame_AddChannel', -- FrameXML/ChatFrame.lua
@@ -82,6 +82,8 @@ read_globals = {
 	'ChatFrame_RemoveAllMessageGroups', -- FrameXML/ChatFrame.lua
 	'CopyTable', -- SharedXML/TableUtil.lua
 	'CreateColor', -- SharedXML/Color.lua
+	'CreateRectangle', -- SharedXML/Rectangle.lua
+	'CreateVector2D', -- SharedXML/Vector2D.lua
 	'FCF_Close', -- FrameXML/FloatingChatFrame.lua
 	'FCF_OpenNewWindow', -- FrameXML/FloatingChatFrame.lua
 	'FCF_ResetChatWindows', -- FrameXML/FloatingChatFrame.lua
@@ -93,6 +95,7 @@ read_globals = {
 	'GetUnitName', -- FrameXML/UnitFrame.lua
 	'HideUIPanel', -- FrameXML/UIParent.lua
 	'IsSecureCmd', -- FrameXML/ChatFrame.lua
+	'MapLinkDataProviderMixin', -- AddOns/Blizzard_SharedMapDataProviders/MapLinkDataProvider.lua
 	'RegisterAttributeDriver', -- FrameXML/SecureStateDriver.lua
 	'RegisterStateDriver', -- FrameXML/SecureStateDriver.lua
 	'SecureHandlerWrapScript', -- FrameXML/SecureHandlers.lua
@@ -105,6 +108,7 @@ read_globals = {
 	'ToggleClickBindingFrame', -- FrameXML/UIParent.lua
 	'UnregisterStateDriver', -- FrameXML/SecureStateDriver.lua
 	'WeeklyRewards_ShowUI', -- FrameXML/UIParent.lua
+	'WrapTextInColorCode', -- SharedXML/Color.lua
 	'nop', -- FrameXML/UIParent.lua
 
 	-- FrameXML mutable globals
@@ -171,8 +175,10 @@ read_globals = {
 	'GetLatestThreeSenders',
 	'GetMacroSpell',
 	'GetMoney',
+	'GetNumGroupMembers',
 	'GetNumGuildMembers',
 	'GetPlayerInfoByGUID',
+	'GetRaidRosterInfo',
 	'GetRealmID',
 	'GetRealmName',
 	'GetRepairAllCost',
@@ -209,12 +215,14 @@ read_globals = {
 	'UnitBattlePetLevel',
 	'UnitBattlePetType',
 	'UnitCanCooperate',
+	'UnitClass',
 	'UnitClassBase',
 	'UnitClassification',
 	'UnitCreatureFamily',
 	'UnitCreatureType',
 	'UnitEffectiveLevel',
 	'UnitExists',
+	'UnitGroupRolesAssigned',
 	'UnitInParty',
 	'UnitInRaid',
 	'UnitIsFeignDeath',

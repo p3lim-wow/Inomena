@@ -9,6 +9,8 @@ else
 	return
 end
 
+local UNKNOWN = _G.UNKNOWN -- globalstring
+
 local MISDIRECT_SPELL_NAME = GetSpellInfo(MISDIRECT_SPELL)
 local MACRO = ('/stopcasting\n/cast [@%%s,help,nodead] %s'):format(MISDIRECT_SPELL_NAME)
 

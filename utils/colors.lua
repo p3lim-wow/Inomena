@@ -10,7 +10,7 @@ end
 
 addon.colors = {}
 addon.colors.power = {}
-for powerTypeName, color in next, PowerBarColor do
+for powerTypeName, color in next, _G.PowerBarColor do
 	local powerType = addon.POWER_NAME_TYPE[powerTypeName]
 	if powerType then
 		addon.colors.power[powerType] = CreateColor(color.r, color.g, color.b)
@@ -41,6 +41,6 @@ addon.colors.school = {
 }
 
 addon.colors.class = {}
-for className in next, RAID_CLASS_COLORS do
+for className in next, _G.RAID_CLASS_COLORS do
 	addon.colors.class[className] = C_ClassColor.GetClassColor(className)
 end

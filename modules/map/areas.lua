@@ -82,7 +82,7 @@ local function postUpdateLabel(self)
 			for _, zone in next, zones do
 				if zone.needsLabel and zone.rect:EnclosesPoint(cursorX, cursorY) then
 					local mapInfo = C_Map.GetMapInfo(zone.mapID)
-					self:SetLabel(MAP_AREA_LABEL_TYPE.AREA_NAME, mapInfo.name, '')
+					self:SetLabel(_G.MAP_AREA_LABEL_TYPE.AREA_NAME, mapInfo.name, '')
 					self:EvaluateLabels()
 					break
 				end
