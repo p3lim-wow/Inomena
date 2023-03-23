@@ -55,6 +55,9 @@ modules/minimap/durability.lua
 modules/minimap/mail.lua
 modules/minimap/repair.lua
 
+modules/map/doors.lua
+modules/map/areas.lua
+
 modules/settings/cvars.lua
 
 modules/widgets/money.lua
