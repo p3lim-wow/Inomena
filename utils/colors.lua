@@ -39,3 +39,8 @@ addon.colors.school = {
 	Magic = CreateColor(0, 0.8, 1),
 	Poison = CreateColor(0, 0.8, 0),
 }
+
+addon.colors.class = {}
+for className in next, RAID_CLASS_COLORS do
+	addon.colors.class[className] = C_ClassColor.GetClassColor(className)
+end
