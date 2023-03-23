@@ -1,5 +1,8 @@
 local _, addon = ...
 
+local MINIMAP_TRACKING_MAILBOX = _G.MINIMAP_TRACKING_MAILBOX -- globalstring
+local MONEY = _G.MONEY -- globalstring
+
 -- track mailboxes if we have pending mail
 function addon:UPDATE_PENDING_MAIL()
 	for index = 1, C_Minimap.GetNumTrackingTypes() do
