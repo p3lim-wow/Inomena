@@ -18,7 +18,12 @@ Minimap:SetArchBlobRingScalar(0)
 Minimap:SetQuestBlobRingScalar(0)
 
 -- disable expansion landing button animations
-ExpansionLandingPageMinimapButton:UnregisterEvent('PLAYER_ENTERING_WORLD')
+addon:Hide('ExpansionLandingPageMinimapButton', 'LoopingGlow')
+addon:Hide('ExpansionLandingPageMinimapButton', 'SideToastGlow')
+addon:Hide('ExpansionLandingPageMinimapButton', 'CircleGlow')
+addon:Hide('ExpansionLandingPageMinimapButton', 'SoftButtonGlow')
+addon:Hide('ExpansionLandingPageMinimapButton', 'AlertBG')
+addon:Hide('ExpansionLandingPageMinimapButton', 'AlertText')
 
 -- render it above other crap
 ExpansionLandingPageMinimapButton:SetFrameStrata('HIGH')
