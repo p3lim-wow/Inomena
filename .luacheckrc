@@ -65,6 +65,7 @@ read_globals = {
 	'SpellBookFrameTabButton1', -- FrameXML/SpellBookFrame.xml
 	'UIErrorsFrame', -- FrameXML/UIErrorsFrame.xml
 	'UIParent', -- FrameXML/UIParent.xml
+	'UiMapPoint', -- FrameXML/ObjectAPI/UiMapPoint.lua
 	'WeeklyRewardsFrame', -- AddOns/Blizzard_WeeklyRewards/Blizzard_WeeklyRewards.xml
 	'WorldFrame', -- FrameXML/WorldFrame.xml
 	'WorldMapFrame', -- AddOns/Blizzard_WorldMap/Blizzard_WorldMap.xml
