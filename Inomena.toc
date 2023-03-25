@@ -41,6 +41,7 @@ modules/chat/scrolling.lua
 modules/chat/settings.lua
 modules/chat/tabs.lua
 modules/chat/filter.lua
+modules/chat/substitute.lua
 
 modules/compat/opie/skin.lua
 modules/compat/opie/rings.lua
