@@ -124,12 +124,8 @@ local RINGS = {
 	},
 	addon.HEARTHSTONE_IDS,
 	{
-		name = 'Teleport',
+		name = 'Wormhole',
 
-		-- hearthstones
-		{'ring', addonName .. 'Hearthstone', fastClick=true, rotationMode='shuffle'},
-
-		-- engineering
 		{'toy', 198156}, -- Wyrmhole Generator (Dragonflight)
 		{'toy', 172924}, -- Wormhole Generator: Shadowlands
 		{'toy', 168807}, -- Wormhole Generator: Kul Tiras
@@ -145,6 +141,15 @@ local RINGS = {
 		{'toy', 30544}, -- Ultrasafe Teleporter: Toshley's Station
 		{'toy', 18984}, -- Dimensional Ripper - Everlook
 		{'toy', 30542}, -- Dimensional Ripper - Area 52
+	},
+	{
+		name = 'Teleport',
+
+		-- hearthstones
+		{'ring', addonName .. 'Hearthstone', fastClick=true, rotationMode='shuffle'},
+
+		-- engineering wormholes
+		{'ring', addonName .. 'Wormhole'},
 
 		-- equipped items
 		{'item', 46874, show='[have:46874]'}, -- Argent Crusader's Tabard
