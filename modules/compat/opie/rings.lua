@@ -6,6 +6,7 @@ local RINGS = {
 		limit = 'MAGE',
 
 		{'spell', 193759, c='d000ff'},                    -- Hall of the Guardian
+		{'spell', 395277, c='ffc853'},                    -- Valdrakken
 		{'spell', 344587, c='209fe6'},                    -- Oribos
 		{'spell', 281404, c='f9e222', show='[horde]'},    -- Dazar'alor
 		{'spell', 281403, c='21d2d5', show='[alliance]'}, -- Boralus
@@ -36,6 +37,7 @@ local RINGS = {
 		limit = 'MAGE',
 
 		{'spell', 193759, c='d000ff'},                    -- Hall of the Guardian (just for symmetry)
+		{'spell', 395289, c='ffc853'},                    -- Valdrakken
 		{'spell', 344597, c='209fe6'},                    -- Oribos
 		{'spell', 281402, c='f9e222', show='[horde]'},    -- Dazar'alor
 		{'spell', 281400, c='21d2d5', show='[alliance]'}, -- Boralus
