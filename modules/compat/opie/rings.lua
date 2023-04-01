@@ -91,8 +91,14 @@ local RINGS = {
 	{
 		name = 'Legion Keystone Teleport',
 
+		{'spell', 373262}, -- Path of the Fallen Guardian (Karazhan)
 		{'spell', 393764}, -- Path of Proven Worth (Halls of Valor)
 		{'spell', 393766}, -- Path of the Grand Magistrix (Court of Stars)
+	},
+	{
+		name = 'Battle for Azeroth Keystone Teleport',
+
+		{'spell', 373274}, -- Path of the Scrappy Prince (Mechagon)
 	},
 	{
 		name = 'Shadowlands Keystone Teleport',
@@ -120,6 +126,10 @@ local RINGS = {
 		{'spell', 393256}, -- Path of the Clutch Defender (Ruby Life Pools)
 		{'spell', 393262}, -- Path of the Windswept Plains (The Nokhud Offensive)
 		{'spell', 393273}, -- Path of the Draconic Diploma (Algeth'ar Academy)
+		{'spell', 393279}, -- Path of the Arcane Secrets (The Azure Vault)
+		{'spell', 393222}, -- Path of the Watcher's Legacy (Uldaman: Legacy of Tyr)
+		{'spell', 393267}, -- Path of the Rotting Woods (Brackenhide Hollow)
+		{'spell', 393276}, -- Path of the Obsidian Hoard (Neltharus)
 		{'spell', 393283}, -- Path of the Titanic Reservoir (Halls of Infusion)
 	},
 	addon.HEARTHSTONE_IDS,
@@ -229,6 +239,7 @@ local RINGS = {
 		{'ring', addonName .. 'PandariaChallengeModeTeleport'},
 		{'ring', addonName .. 'DraenorChallengeModeTeleport'},
 		{'ring', addonName .. 'LegionKeystoneTeleport'},
+		{'ring', addonName .. 'BattleforAzerothKeystoneTeleport'},
 		{'ring', addonName .. 'ShadowlandsKeystoneTeleport'},
 		{'ring', addonName .. 'ShadowlandsFatedTeleport'},
 		{'ring', addonName .. 'DragonflightKeystoneTeleport'},
