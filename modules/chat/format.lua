@@ -167,7 +167,9 @@ end
 
 function editBoxHooks.BN_WHISPER(editBox)
 	local color, tag = getClientColorAndTag(GetAutoCompletePresenceID(editBox:GetAttribute('tellTarget')))
-	editBox.header:SetFormattedText('|cffa1a1a1@|r|cff%s%s|r: ', color, tag)
+	if color and tag then
+		editBox.header:SetFormattedText('|cffa1a1a1@|r|cff%s%s|r: ', color, tag)
+	end
 end
 
 function editBoxHooks.CHANNEL(editBox)
