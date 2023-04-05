@@ -7,9 +7,10 @@ function addon:BindButton(name, key, template)
 	return button
 end
 
+local bindParent = CreateFrame('Frame')
 function addon:PLAYER_LOGIN()
 	for button, key in next, bindings do
-		SetBindingClick(key, button)
+		SetOverrideBindingClick(bindParent, true, key, button)
 	end
 	return true
 end
