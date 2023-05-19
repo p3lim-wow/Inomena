@@ -109,3 +109,25 @@ end)
 addon:RegisterCombatEvent('ENCOUNTER_END', function()
 	numDead = 0
 end)
+
+local TANAAN_QUEST_IDS = {
+	-- vignetteID = questID
+	[956] = 39288, -- Terrorfist
+	[957] = 39289, -- Doomroller
+	[958] = 39290, -- Vengeance
+	[959] = 39287, -- Deathtalon
+}
+
+local seen = {}
+function addon:VIGNETTES_UPDATED()
+	for _, guid in next, C_VignetteInfo.GetVignettes() do
+		local info = C_VignetteInfo.GetVignetteInfo(guid)
+		if info and info.vignetteID then
+			local questID = TANAAN_QUEST_IDS[info.vignetteID]
+			if questID and not C_QuestLog.IsQuestFlaggedCompleted(questID) and not seen[info.vignetteID] then
+				alert()
+				seen[info.vignetteID] = true -- to avoid sound spam
+			end
+		end
+	end
+end
