@@ -94,9 +94,11 @@ repair:SetScript('OnEnter', function(self)
 		GameTooltip:AddLine(string.format('Lowest: %d%%', lowest * 100), 1, 1, 1)
 	end
 
+	GameTooltip:AddLine(' ')
 	if getRepairSummon() then
-		GameTooltip:AddLine(' ')
 		GameTooltip:AddLine('Click to summon a repair bot', 1, 1, 1)
+	else
+		GameTooltip:AddLine('No repair bot available', 1, 0, 0)
 	end
 
 	GameTooltip:Show()

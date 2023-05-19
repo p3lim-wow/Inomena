@@ -89,13 +89,25 @@ mail:SetScript('OnEnter', function(self)
 		end
 	end
 
-	if getMailboxSummon() then
+	local kind, id = getMailboxSummon()
+	if kind and id then
 		if hasMail then
 			GameTooltip:AddLine(' ')
 		end
 
-		GameTooltip:AddLine('Click to summon a mailbox', 1, 1, 1)
+		if kind == 'toy' then
+			GameTooltip:AddLine('Click to summon ' .. (select(2, GetItemInfo(id))), 1, 1, 1)
+		else
+			GameTooltip:AddLine('Click to summon ' .. (GetSpellLink(id)), 1, 1, 1)
+		end
+	else
+		GameTooltip:AddLine('No mailbox available', 1, 0, 0)
 	end
 
 	GameTooltip:Show()
 end)
+
+function addon:PLAYER_LOGIN()
+	-- need to force update cache
+	getMailboxSummon()
+end
