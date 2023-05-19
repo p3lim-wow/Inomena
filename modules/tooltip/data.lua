@@ -13,11 +13,12 @@ local PREFIXES = {
 	currency = CURRENCY,
 	mount = MOUNT,
 	npc = 'NPC',
+	macro = MACRO,
 }
 
-local function addLine(tip, prefix, id)
-	if IsShiftKeyDown() then
-		tip:AddLine(string.format('%s %s: |cff93ccea%s|r', PREFIXES[prefix], ID, id or UNKNOWN))
+local function addLine(tip, prefix, id, always)
+	if always or IsShiftKeyDown() then
+		tip:AddLine(string.format('%s %s: |cff93ccea%s|r', PREFIXES[prefix], prefix == 'macro' and NAME or ID, id or UNKNOWN))
 	end
 end
 
@@ -54,6 +55,21 @@ function tooltip:PetAction(data)
 		if line.tooltipID then
 			addLine(self, 'spell', line.tooltipID)
 			break
+		end
+	end
+end
+
+function tooltip:Macro(data)
+	local button = self:GetOwner()
+	if button and button.action then
+		local _, macroID = GetActionInfo(button.action)
+		if macroID then
+			addLine(self, 'macro', (GetMacroInfo(macroID)), true)
+
+			local spellID = GetMacroSpell(macroID)
+			if spellID then
+				addLine(self, 'spell', spellID)
+			end
 		end
 	end
 end
