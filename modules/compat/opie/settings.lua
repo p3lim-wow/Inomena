@@ -1,8 +1,8 @@
 local addonName, addon = ...
 
 addon:HookAddOn('OPie', function()
-	-- OPie nukes its settings after loading it and saves it during logout, we'll modify it before
-	-- this happens so we get our changes applied
+	-- OPie nukes its settings table after loading it and saves it during logout, we'll modify it
+	-- before this happens so we get our changes applied
 	if OPie_SavedData and OPie_SavedData.ProfileStorage and OPie_SavedData.ProfileStorage.default then
 		if not OPie_SavedData.ProfileStorage.default.Bindings then
 			OPie_SavedData.ProfileStorage.default.Bindings = {}
@@ -23,5 +23,8 @@ addon:HookAddOn('OPie', function()
 		OPie_SavedData.ProfileStorage.default.Bindings[addonName .. 'SpecialMounts'] = 'SHIFT-HOME'
 		OPie_SavedData.ProfileStorage.default.Bindings[addonName .. 'Teleport'] = 'ALT-G'
 		OPie_SavedData.ProfileStorage.default.Bindings[addonName .. 'Professions'] = 'ALT-T'
+
+		-- bind default rings
+		OPie_SavedData.ProfileStorage.default.Bindings.OPieTracking = 'ALT-F'
 	end
 end)
