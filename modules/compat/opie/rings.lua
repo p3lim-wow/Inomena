@@ -261,6 +261,7 @@ local RINGS = {
 		{'item', 141605, -- Flight Master's Whistle (only shown in zones where it can be used)
 			show = '[zone:Azsuna][zone:Val\'Sharah][zone:Highmountain][zone:Stormheim][zone:Suramar][zone:The Broken Shore][zone:Krokuun][zone:Antoran Wastes][zone:Eredath][zone:Zuldazar][zone:Nazmir][zone:Vol\'dun][zone:Tiragarde Sound][zone:Drustvar][zone:Stormsong Valley][zone:Nazjatar][zone:Mechagon]'
 		},
+		{'toy', 205255, show='[zone:Zaralek Cavern]'}, -- Niffen Diggin' Mits (Zaralek Cavern, Dragon Isles)
 		{'item', 110560}, -- Garrison Hearthstone
 		{'item', 140192}, -- Dalaran Hearthstone
 	},
@@ -305,9 +306,13 @@ local RINGS = {
 		{'spell', 4036}, -- Engineering
 		{'spell', 25229}, -- Jewelcrafting
 		{'spell', 45357}, -- Inscription
-		{'spell', 78670}, -- Archaeology
-		{'spell', 2656}, -- Smelting
+		{'spell', 2656}, -- Mining Journal
+		{'spell', 193290}, -- Herbalism Journal
+		{'spell', 194174}, -- Skinning Journal
 		{'spell', 2550}, -- Cooking
+		{'spell', 78670}, -- Archaeology
+		{'spell', 271990}, -- Fishing Journal
+
 		{'spell', 53428}, -- Runeforging
 
 		{'ring', addonName .. 'Campfire', rotationMode='shuffle'}, -- (might want to add this as a button to the profession window instead)
@@ -326,11 +331,7 @@ addon:HookAddOn('OPie', function()
 	end
 end)
 
-function addon:PLAYER_LOGIN()
-	if not IsAddOnLoaded('OPie') then
-		return
-	end
-
+local function addSwimmingMounts()
 	local ring = {
 		name = 'Swimming Mounts'
 	}
@@ -345,7 +346,13 @@ function addon:PLAYER_LOGIN()
 	end
 
 	addRing(ring)
+end
 
-	return true
+function addon:PLAYER_LOGIN()
+	if not IsAddOnLoaded('OPie') then
+		return
+	end
+
+	addSwimmingMounts()
 end
 
