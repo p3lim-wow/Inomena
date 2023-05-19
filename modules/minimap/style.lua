@@ -108,6 +108,15 @@ local eye = QueueStatusButton:CreateTexture(nil, 'ARTWORK')
 eye:SetAllPoints()
 eye:SetAtlas('groupfinder-eye-single')
 
+-- easy calendar access
+Minimap:SetScript('OnMouseUp', function(self, button)
+	if button == 'MiddleButton' then
+		ToggleCalendar()
+	else
+		MinimapMixin.OnClick(self) -- super
+	end
+end)
+
 -- expose shape for LDBIcon-1.0
 function GetMinimapShape() -- luacheck: ignore
 	return 'SQUARE'
