@@ -87,13 +87,25 @@ local function IsInDungeonOrRaid()
 	return inInstance and (instanceType == 'party' or instanceType == 'raid')
 end
 
+local numDead = 0
 addon:RegisterCombatEvent('UNIT_DIED', function(_, _, _, _, _, destGUID, destName)
 	if destName and IsInDungeonOrRaid() and C_PlayerInfo.GUIDIsPlayer(destGUID) and not UnitIsFeignDeath(destName) then
 		local unit = UnitTokenFromGUID(destGUID)
 		if unit and (UnitInRaid(unit) or UnitInParty(unit)) then
-			-- TODO: if in raid and > 50% dead then don't call it
+			if IsInRaid() then
+				numDead = numDead + 1
+				if numDead > GetNumGroupMembers() / 2 then
+					-- by then it must have been called a wipe
+					return
+				end
+			end
+
 			PlaySoundFile(DEATH_SOUND, 'master')
 			addon:Print(destName, 'Died')
 		end
 	end
+end)
+
+addon:RegisterCombatEvent('ENCOUNTER_END', function()
+	numDead = 0
 end)
