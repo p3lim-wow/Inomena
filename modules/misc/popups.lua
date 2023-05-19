@@ -8,6 +8,9 @@ StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = false
 StaticPopupDialogs.DELETE_ITEM.enterClicksFirstButton = true
 StaticPopupDialogs.DELETE_GOOD_ITEM = StaticPopupDialogs.DELETE_ITEM
 
+-- prevent escape from hiding the logout poput
+StaticPopupDialogs.CAMP.hideOnEscape = false
+
 -- don't prompt when buying using a currency other than gold
 function StaticPopupDialogs.CONFIRM_PURCHASE_TOKEN_ITEM:OnShow()
 	StaticPopup_Hide(self.which)
