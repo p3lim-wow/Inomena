@@ -52,3 +52,9 @@ end
 hooksecurefunc(HelpTip, 'Show', function(self, parent, info)
 	self:Acknowledge(parent, info.text)
 end)
+
+-- don't force show profession tab when there's unspent knowledge
+hooksecurefunc('SpellBookFrame_PlayOpenSound', function()
+	-- we hook into this function because it completes before SpellBookFrame_Update
+	SpellbookMicroButton.suggestedTabButton = nil
+end)
