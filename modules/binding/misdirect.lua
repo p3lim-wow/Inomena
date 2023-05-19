@@ -37,7 +37,7 @@ local function getGroupTankUnit()
 	end
 end
 
-local lastTarget
+local lastTarget, lastTargetName
 local function updateTarget()
 	if InCombatLockdown() then
 		addon:Defer(updateTarget)
@@ -67,11 +67,14 @@ local function updateTarget()
 		lastTarget = unit
 		button:SetAttribute('macrotext', MACRO:format(unit))
 
-		-- TODO: remove this output once I'm comfortable with it
-		local _, targetClass = UnitClass(unit)
-		local targetNameColored = addon.colors.class[targetClass]:WrapTextInColorCode(unitName)
-		local spellNameColored = WrapTextInColorCode(MISDIRECT_SPELL_NAME, 'ffffff00')
-		addon:Print('Setting', targetNameColored, 'as', spellNameColored, 'target')
+		if unitName ~= lastTargetName then
+			-- TODO: remove this output once I'm comfortable with it
+			local _, targetClass = UnitClass(unit)
+			local targetNameColored = addon.colors.class[targetClass]:WrapTextInColorCode(unitName)
+			local spellNameColored = WrapTextInColorCode(MISDIRECT_SPELL_NAME, 'ffffff00')
+			addon:Print('Setting', targetNameColored, 'as', spellNameColored, 'target')
+			lastTargetName = unitName
+		end
 	end
 end
 
