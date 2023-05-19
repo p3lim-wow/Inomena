@@ -1,8 +1,8 @@
 local _, addon = ...
 
 local widgetMixin = {}
-function widgetMixin:CreateFrame(frameType)
-	return Mixin(CreateFrame(frameType or 'Frame', nil, self), widgetMixin, addon.eventMixin)
+function widgetMixin:CreateFrame(frameType, template)
+	return Mixin(CreateFrame(frameType or 'Frame', nil, self, template), widgetMixin, addon.eventMixin)
 end
 
 function widgetMixin:CreateBackdropFrame(frameType)
@@ -11,14 +11,14 @@ function widgetMixin:CreateBackdropFrame(frameType)
 	return frame
 end
 
-function widgetMixin:CreateStatusBar()
-	local statusbar = self:CreateFrame('StatusBar')
+function widgetMixin:CreateStatusBar(template)
+	local statusbar = self:CreateFrame('StatusBar', template)
 	statusbar:SetStatusBarTexture(addon.TEXTURE)
 	return statusbar
 end
 
-function widgetMixin:CreateBackdropStatusBar()
-	local statusbar = self:CreateStatusBar()
+function widgetMixin:CreateBackdropStatusBar(template)
+	local statusbar = self:CreateStatusBar(template)
 	addon:AddBackdrop(statusbar)
 	return statusbar
 end
