@@ -83,11 +83,14 @@ hooksecurefunc(ExpansionLandingPageMinimapButton, 'UpdateIcon', function(self)
 end)
 
 -- move queue status back to the minimap
-QueueStatusButton:SetParent(Minimap)
-QueueStatusButton:ClearAllPoints()
-QueueStatusButton:SetPoint('TOPRIGHT', Minimap, -5, -6)
-QueueStatusButton:SetSize(28, 28)
-QueueStatusButton:SetFrameStrata('HIGH')
+function addon:PLAYER_LOGIN()
+	-- have to delay this because something else is just forcing it back
+	QueueStatusButton:SetParent(Minimap)
+	QueueStatusButton:ClearAllPoints()
+	QueueStatusButton:SetPoint('TOPRIGHT', Minimap, -5, -6)
+	QueueStatusButton:SetSize(28, 28)
+	QueueStatusButton:SetFrameStrata('HIGH')
+end
 
 -- disable eye animations by hiding all components
 addon:Hide('QueueStatusButton', 'Eye', 'texture')
