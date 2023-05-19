@@ -39,6 +39,10 @@ function methods:SetHighlighted(highlight)
 	self.Highlight:SetShown(highlight)
 end
 
+function methods:SetActive(state)
+	self:SetAlpha(state and 0.2 or 1)
+end
+
 do
 	local FORMAT = {
 		days = '%dd',
