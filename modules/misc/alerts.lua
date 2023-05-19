@@ -70,14 +70,14 @@ local function feastWrapper(_, _, casterName, _, _, _, _, _, _, spellID)
 end
 
 function addon:PLAYER_REGEN_DISABLED()
-	self:UnregisterCombatEvent('SPELL_CAST_START', feastWrapper)
+	self:UnregisterCombatEvent('SPELL_CAST_SUCCESS', feastWrapper)
 end
 
 function addon:PLAYER_REGEN_ENABLED()
-	self:RegisterCombatEvent('SPELL_CAST_START', feastWrapper)
+	self:RegisterCombatEvent('SPELL_CAST_SUCCESS', feastWrapper)
 end
 
-addon:RegisterCombatEvent('SPELL_CAST_START', feastWrapper)
+addon:RegisterCombatEvent('SPELL_CAST_SUCCESS', feastWrapper)
 
 -- party/raid member death alerts
 local DEATH_SOUND = ([[Interface\AddOns\%s\assets\crow.mp3]]):format(addonName)
