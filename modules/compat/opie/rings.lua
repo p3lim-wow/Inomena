@@ -80,8 +80,6 @@ local RINGS = {
 		{'toy', 30542}, -- Dimensional Ripper - Area 52
 		{'toy', 18986}, -- Ultrasafe Teleporter: Gadgetzan
 		{'toy', 30544}, -- Ultrasafe Teleporter: Toshley's Station
-		{'toy', 18984}, -- Dimensional Ripper - Everlook
-		{'toy', 30542}, -- Dimensional Ripper - Area 52
 	},
 	{
 		name = 'Teleport',
@@ -136,10 +134,8 @@ local RINGS = {
 		{'item', 51558, show='[have:51558]'}, -- Runed Loop of the Kirin Tor
 		{'item', 51559, show='[have:51559]'}, -- Runed Ring of the Kirin Tor
 		{'item', 51557, show='[have:51557]'}, -- Runed Signet of the Kirin Tor
-		{'item', 51557, show='[have:51557]'}, -- Runed Signet of the Kirin Tor
 		{'item', 63352, show='[have:63352]'}, -- Shroud of Cooperation (Alliance)
 		{'item', 63353, show='[have:63353]'}, -- Shroud of Coordination (Horde)
-		{'item', 40585, show='[have:40585]'}, -- Signet of the Kirin Tor
 		{'item', 40585, show='[have:40585]'}, -- Signet of the Kirin Tor
 		{'item', 17691, show='[have:17691]'}, -- Stormpike Insignia Rank 1
 		{'item', 17900, show='[have:17900]'}, -- Stormpike Insignia Rank 2
