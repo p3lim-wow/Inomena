@@ -232,12 +232,12 @@ local RINGS = {
 	{
 		name = 'Professions',
 
+		{'spell', 4036}, -- Engineering
 		{'spell', 3908}, -- Tailoring
 		{'spell', 2108}, -- Leatherworking
 		{'spell', 2018}, -- Blacksmithing
 		{'spell', 7411}, -- Enchanting
 		{'spell', 2259}, -- Alchemy
-		{'spell', 4036}, -- Engineering
 		{'spell', 25229}, -- Jewelcrafting
 		{'spell', 45357}, -- Inscription
 		{'spell', 2656}, -- Mining Journal
