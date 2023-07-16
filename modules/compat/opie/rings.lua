@@ -193,8 +193,8 @@ local RINGS = {
 			show = '[zone:Azsuna][zone:Val\'Sharah][zone:Highmountain][zone:Stormheim][zone:Suramar][zone:The Broken Shore][zone:Krokuun][zone:Antoran Wastes][zone:Eredath][zone:Zuldazar][zone:Nazmir][zone:Vol\'dun][zone:Tiragarde Sound][zone:Drustvar][zone:Stormsong Valley][zone:Nazjatar][zone:Mechagon]'
 		},
 		{'toy', 205255, show='[zone:Zaralek Cavern]'}, -- Niffen Diggin' Mits (Zaralek Cavern, Dragon Isles)
-		{'item', 110560}, -- Garrison Hearthstone
-		{'item', 140192}, -- Dalaran Hearthstone
+		{'toy', 110560}, -- Garrison Hearthstone
+		{'toy', 140192}, -- Dalaran Hearthstone
 	},
 	{
 		name = 'Special Mounts',
