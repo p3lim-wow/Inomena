@@ -117,7 +117,25 @@ Minimap:SetScript('OnMouseUp', function(self, button)
 	end
 end)
 
--- expose shape for LDBIcon-1.0
+-- disable addon buttons
+function addon:PLAYER_LOGIN()
+	local LDBI = LibStub and LibStub('LibDBIcon-1.0', true)
+	if LDBI then
+		for _, buttonName in next, LDBI:GetButtonList() do
+			if buttonName ~= 'BugSack' then
+				LDBI:Hide(buttonName)
+			end
+		end
+
+		LDBI.RegisterCallback(self, 'LibDBIcon_IconCreated', function(_, _, buttonName)
+			if buttonName ~= 'BugSack' then
+				LDBI:Hide(buttonName)
+			end
+		end)
+	end
+end
+
+-- expose shape for other addons
 function GetMinimapShape() -- luacheck: ignore
 	return 'SQUARE'
 end
