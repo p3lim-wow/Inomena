@@ -250,8 +250,21 @@ local RINGS = {
 	},
 }
 
+local sliceTokens = {}
 local function addRing(data)
 	local id = addonName .. data.name:gsub(' ', '')
+
+	-- each slice needs a unique token
+	-- https://www.townlong-yak.com/addons/opie/dev/slice-token-requirements
+	for _, slice in next, data do
+		if type(slice) == 'table' then
+			slice.sliceToken = id .. '_' .. slice[1] .. slice[2]
+
+			assert(not sliceTokens[slice.sliceToken], 'sliceToken ' .. slice.sliceToken .. ' is not unique')
+			sliceTokens[slice.sliceToken] = true
+		end
+	end
+
 	OPie.CustomRings:SetExternalRing(id, data)
 end
 
