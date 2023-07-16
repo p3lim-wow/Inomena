@@ -1,37 +1,43 @@
 local _, addon = ...
 
-local MISDIRECT_SPELL
+local SPELL_ID, SPELL_ROLE
 if addon.PLAYER_CLASS == 'HUNTER' then
-	MISDIRECT_SPELL = 34477 -- Misdirection
+	SPELL_ID = 34477 -- Misdirection
+	SPELL_ROLE = 'TANK'
 elseif addon.PLAYER_CLASS == 'ROGUE' then
-	MISDIRECT_SPELL = 57934 -- Tricks of the Trade
+	SPELL_ID = 57934 -- Tricks of the Trade
+	SPELL_ROLE = 'TANK'
+elseif addon.PLAYER_CLASS == 'DRUID' then
+	SPELL_ID = 29166 -- Innervate
+	SPELL_ROLE = 'HEALER'
 else
 	return
 end
 
 local UNKNOWN = _G.UNKNOWN -- globalstring
 
-local MISDIRECT_SPELL_NAME = GetSpellInfo(MISDIRECT_SPELL)
-local MACRO = ('/stopcasting\n/cast [@%%s,help,nodead] %s'):format(MISDIRECT_SPELL_NAME)
+local SPELL_NAME = GetSpellInfo(SPELL_ID)
+local MACRO = ('/stopcasting\n/cast [@%%s,help,nodead] %s'):format(SPELL_NAME)
 
 local button = addon:BindButton('Misdirect', 'CTRL-F', 'SecureActionButtonTemplate')
 button:SetAttribute('type', 'macro')
 
-local function isUnitTank(unit, isRaid, raidIndex)
-	if UnitGroupRolesAssigned(unit) == 'TANK' then
+local function unitHasRole(unit, isRaid, raidIndex)
+	if UnitGroupRolesAssigned(unit) == SPELL_ROLE then
 		return true
 	elseif isRaid then
 		local _, _, _, _, _, _, _, _, _, _, _, combatRole = GetRaidRosterInfo(raidIndex)
-		return combatRole == 'TANK'
+		return combatRole == SPELL_ROLE
 	end
 	-- TODO: non-LFG role party check?
 end
 
-local function getGroupTankUnit()
+local function getGroupRoleUnit()
 	local isRaid = IsInRaid()
+	local prefix = isRaid and 'raid' or 'party'
 	for index = 1, GetNumGroupMembers() do
-		local unit = (isRaid and 'raid' or 'party') .. index
-		if isUnitTank(unit, isRaid, index) then
+		local unit = prefix .. index
+		if unitHasRole(unit, isRaid, index) then
 			return unit
 		end
 	end
@@ -44,12 +50,12 @@ local function updateTarget()
 		return
 	end
 
-	if not IsSpellKnown(MISDIRECT_SPELL) then
+	if not IsSpellKnown(SPELL_ID) then
 		return
 	end
 
-	local unit = getGroupTankUnit()
-	if not unit and UnitExists('pet') then
+	local unit = getGroupRoleUnit()
+	if role == 'TANK' and not unit and UnitExists('pet') then
 		unit = 'pet'
 	end
 
@@ -71,7 +77,7 @@ local function updateTarget()
 			-- TODO: remove this output once I'm comfortable with it
 			local _, targetClass = UnitClass(unit)
 			local targetNameColored = addon.colors.class[targetClass]:WrapTextInColorCode(unitName)
-			local spellNameColored = WrapTextInColorCode(MISDIRECT_SPELL_NAME, 'ffffff00')
+			local spellNameColored = WrapTextInColorCode(SPELL_NAME, 'ffffff00')
 			addon:Print('Setting', targetNameColored, 'as', spellNameColored, 'target')
 			lastTargetName = unitName
 		end
