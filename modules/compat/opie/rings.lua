@@ -63,6 +63,30 @@ local RINGS = {
 		{'spell', 32266,  c='f024e2', show='[alliance]'}, -- Exodar
 		{'spell', 120146, c='a54cff'},                    -- Ancient Dalaran
 	},
+	{
+		name = 'Hunter Pets',
+		limit = 'HUNTER',
+
+		{'spell', 2641, show='[@pet,exists,nodead]', fastClick=true}, -- Dismiss Pet
+		{'spell', 883, show='[nopet,havepet:1]'}, -- Call Pet 1
+		{'spell', 83242, show='[nopet,havepet:2]'}, -- Call Pet 2
+		{'spell', 83243, show='[nopet,havepet:3]'}, -- Call Pet 3
+		{'spell', 83244, show='[nopet,havepet:4]'}, -- Call Pet 4
+		{'spell', 83245, show='[nopet,havepet:5]'}, -- Call Pet 5
+		{'spell', 1515, -- Tame Beast (only show if we have empty slots)
+			show='[nopet,nohavepet:1][nopet,nohavepet:2][nopet,nohavepet:3][nopet,nohavepet:4][nopet,nohavepet:5]'
+		}
+	},
+	{
+		name = 'Warlock Demons',
+		limit = 'WARLOCK',
+
+		{'spell', 30146}, -- Felguard
+		{'spell', 691}, -- Felhunter
+		{'spell', 688}, -- Imp
+		{'spell', 697}, -- Voidwalker
+		{'spell', 366222}, -- Succubus
+	},
 	addon.HEARTHSTONE_IDS,
 	{
 		name = 'Wormhole',
