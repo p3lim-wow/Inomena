@@ -26,6 +26,7 @@ globals = {
 	'LootFrame', -- FrameXML/LootFrame.xml
 	'StaticPopupDialogs', -- FrameXML/StaticPopup.lua
 	'SuperTrackedFrame', -- AddOns/Blizzard_QuestNavigation/SuperTrackedFrame.xml
+	'SpellbookMicroButton', -- FrameXML/MainMenuBarMicroButtons.xml
 
 	-- savedvariables we mutate
 	'OPie_SavedData',
@@ -55,6 +56,7 @@ read_globals = {
 	'Minimap', -- FrameXML/Minimap.xml
 	'MinimapMixin', -- FrameXML/Minimap.lua
 	'PaperDollSidebarTab3', -- FrameXML/PaperDollFrame.xml
+	'PaperDollSidebarTabs', -- FrameXML/PaperDollFrame.xml
 	'PetCastingBarFrame', -- FrameXML/PetFrame.xml
 	'PlayerCastingBarFrame', -- FrameXML/CastingBarFrame.xml
 	'ProfessionsFrame', -- AddOns/Blizzard_Professions/Blizzard_ProfessionsFrame.xml
@@ -69,7 +71,6 @@ read_globals = {
 	'SlashCmdList', -- FrameXML/ChatFrame.lua
 	'SpellBookFrame', -- FrameXML/SpellBookFrame.xml
 	'SpellBookFrameTabButton1', -- FrameXML/SpellBookFrame.xml
-	'SpellbookMicroButton', -- FrameXML/MainMenuBarMicroButtons.xml
 	'UIErrorsFrame', -- FrameXML/UIErrorsFrame.xml
 	'UiMapPoint', -- FrameXML/ObjectAPI/UiMapPoint.lua
 	'UIParent', -- FrameXML/UIParent.xml
@@ -232,6 +233,7 @@ read_globals = {
 	'PickupInventoryItem',
 	'PlaySound',
 	'PlaySoundFile',
+	'PutItemInBackpack',
 	'PutItemInBag',
 	'RepairAllItems',
 	'RequestTimePlayed',
