@@ -53,6 +53,7 @@ modules/compat/tomtom.lua
 modules/misc/alerts.lua
 modules/misc/hide.lua
 modules/misc/popups.lua
+modules/misc/played.lua
 
 modules/minimap/style.lua
 modules/minimap/durability.lua
