@@ -15,6 +15,7 @@ utils/bind.lua
 
 data/enchants.lua
 data/hearthstones.lua
+data/teleports.lua
 
 modules/auras/buffs.lua
 
@@ -26,6 +27,7 @@ modules/automation/trash.lua
 modules/automation/rogueclasshall.lua
 modules/automation/keystone.lua
 modules/automation/fishing.lua
+modules/automation/teleportgear.lua
 
 modules/binding/eject.lua
 modules/binding/mount.lua
