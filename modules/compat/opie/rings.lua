@@ -186,15 +186,6 @@ local RINGS = {
 		{'toy', 169297, show='[alliance,zone:Alterac Valley]'}, -- Stormpike Insignia
 		{'toy', 43824, show='[zone:Dalaran]'}, -- The Schools of Arcane Magic - Mastery
 
-		-- dungeon teleports
-		{'ring', addonName .. 'PandariaChallengeModeTeleport'},
-		{'ring', addonName .. 'DraenorChallengeModeTeleport'},
-		{'ring', addonName .. 'LegionKeystoneTeleport'},
-		{'ring', addonName .. 'BattleforAzerothKeystoneTeleport'},
-		{'ring', addonName .. 'ShadowlandsKeystoneTeleport'},
-		{'ring', addonName .. 'ShadowlandsFatedTeleport'},
-		{'ring', addonName .. 'DragonflightKeystoneTeleport'},
-
 		-- class/racial spells
 		{'spell', 193753, show='[me:druid]'}, -- Dreamwalk
 		{'spell', 18960, show='[me:druid]'}, -- Teleport: Moonglade
