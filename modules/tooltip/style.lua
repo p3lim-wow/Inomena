@@ -39,7 +39,17 @@ local REMOVE_LINES = {
 -- we can finally after all these years actually prevent text from being added to the tooltip!
 TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.None, function(tooltip, data)
 	if not tooltip:IsForbidden() and tooltip:IsTooltipType(Enum.TooltipDataType.Unit) then
-		return REMOVE_LINES[data.leftText]
+		if REMOVE_LINES[data.leftText] then
+			return true
+		else
+			-- hide spec/class tooltip line, which sadly has no line type
+			if UnitExists('mouseover') and UnitIsPlayer('mouseover') then
+				local unitClass = UnitClass('mouseover')
+				if data.leftText:sub(data.leftText:len() - unitClass:len() + 1) == unitClass then
+					return true
+				end
+			end
+		end
 	end
 end)
 
@@ -78,12 +88,14 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function(tool
 		local guildName = GetGuildInfo(unit)
 		for _, line in next, data.lines do
 			if guildName and line.leftText:match(guildName) then
+				-- no type exists for the guild line
 				if UnitIsInMyGuild(unit) then
 					replaceLine(line.lineIndex, '|cff008cff<%s>|r', guildName)
 				else
 					replaceLine(line.lineIndex, '|cff00ff19<%s>|r', guildName)
 				end
 			elseif line.leftText:match(TOOLTIP_LEVEL) then
+				-- no type exists for the level line
 				local level = UnitEffectiveLevel(unit)
 				if UnitIsFriend(unit, 'player') then
 					replaceLine(line.lineIndex, '|cffffd000%s|r %s', level, UnitRace(unit))
@@ -108,6 +120,7 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function(tool
 			if line.type == Enum.TooltipDataLineType.UnitOwner then
 				replaceLine(line.lineIndex, '|cff7f7f7f%s|r', line.leftText)
 			elseif line.leftText:match(TOOLTIP_LEVEL) then
+				-- no type exists for the level line
 				local difficulty = C_PlayerInfo.GetContentDifficultyCreatureForPlayer(unit)
 				local level = UnitEffectiveLevel(unit)
 				local levelLine = DIFFICULTY_COLOR[difficulty]:WrapTextInColorCode(level > 0 and level or '??')
