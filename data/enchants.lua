@@ -86,4 +86,7 @@ addon.ENCHANT_IDS = {
 	[6696] = 371676, -- Primal Weighted Weapon
 	[6697] = 371677, -- Primal Weighted Weapon
 	[6698] = 371678, -- Primal Weighted Weapon
+	[6837] = 409659, -- Hissing Rune
+	[6838] = 409654, -- Hissing Rune
+	[6839] = 409660, -- Hissing Rune
 }
