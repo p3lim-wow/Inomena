@@ -224,25 +224,6 @@ local RINGS = {
 		{'ring', addonName .. 'SwimmingMounts'}, -- TODO: randomize?
 	},
 	{
-		name = 'Campfire',
-
-		-- TODO: only consider the ones that doesn't require click to place?
-		--       [@player] doesn't work with those
-		{'toy', 163211}, -- Akunda's Firesticks
-		{'toy', 34686}, -- Brazier of Dancing Flames
-		{'toy', 116435}, -- Cozy Bonfire
-		{'toy', 104309}, -- Eternal Kiln
-		{'toy', 184404}, -- Ever-Abundant Hearth
-		{'toy', 67097}, -- Grim Campfire
-		{'toy', 128536}, -- Leylight Brazier
-		{'toy', 70722}, -- Little Wickerman
-		{'toy', 182780}, -- Muckpool Cookpot
-		{'toy', 116757}, -- Steamworks Sausage Grill
-		{'toy', 117573}, -- Wayfarer's Bonfire
-		{'toy', 203757}, -- Brazier of Madness
-		{'spell', 818}, -- Cooking Fire
-	},
-	{
 		name = 'Professions',
 
 		{'spell', 4036}, -- Engineering
