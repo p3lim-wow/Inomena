@@ -54,6 +54,7 @@ modules/misc/alerts.lua
 modules/misc/hide.lua
 modules/misc/popups.lua
 modules/misc/played.lua
+modules/misc/tracking.lua
 
 modules/minimap/style.lua
 modules/minimap/durability.lua
