@@ -65,6 +65,12 @@ local MAW_ZONES = {
 	[1961] = true, -- Korthia
 }
 
+local ARGUS_ZONES = {
+	[830] = true, -- Krokuun
+	[885] = true, -- Antoran Wastes
+	[882] = true, -- Eredath
+}
+
 local DRAGON_ISLES_ZONES = {
 	[2022] = true, -- The Waking Shores
 	[2023] = true, -- Ohn'ahran Plains
@@ -149,15 +155,21 @@ end
 local mount = addon:BindButton('Mount', 'HOME', 'SecureActionButtonTemplate')
 mount:SetAttribute('type', 'macro')
 mount:SetScript('PreClick', function(self)
-	-- if the player is on a taxi path, request an early landing
-	if UnitOnTaxi('player') then
-		UIErrorsFrame:AddMessage('Requested early landing.', 1, 1, 0)
+	-- if the player is on a taxi path, request an early landing (ignore Argus "taxi")
+	if UnitOnTaxi('player') and not ARGUS_ZONES[addon:GetPlayerMapID()] then
+		UIErrorsFrame:AddMessage('Requesting early landing.', 1, 1, 0)
 		TaxiRequestEarlyLanding()
 		return
 	end
 
 	if InCombatLockdown() then
 		-- we can't change secure attributes while in combat
+		return
+	end
+
+	if not HasFullControl() and ARGUS_ZONES[addon:GetPlayerMapID()] then
+		-- prevent jankyness in Argus
+		self:SetAttribute('macrotext', '')
 		return
 	end
 
