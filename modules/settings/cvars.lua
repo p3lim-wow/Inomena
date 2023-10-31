@@ -88,6 +88,7 @@ local CVARS = {
 	-- no cvar for block guild invites?
 	-- no cvar for display only character achievements?
 	blockChannelInvites = 0,
+	restrictCalendarInvites = 1,
 	showToastOnline = 0,
 	showToastOffline = 0,
 	showToastBroadcast = 0,
@@ -98,6 +99,10 @@ local CVARS = {
 	whisperMode = 'inline',
 	showTimestamps = 'none',
 	enableTwitter = 0,
+
+	-- Ping System
+	pingCategoryTutorialShown = 1,
+	-- TODO: deal with sounds
 
 	-- Accessibility
 	enableMovePad = 0,
@@ -110,6 +115,7 @@ local CVARS = {
 	ShakeStrengthCamera = 1,
 	ShakeStrengthUI = 0,
 	cursorSizePreferred = 1,
+	SoftTargetInteract = 0,
 	SoftTargetTooltipInteract = 0,
 	SoftTargetIconEnemy = 0,
 	SoftTargetIconGameObject = 0,
@@ -171,6 +177,11 @@ function addon:PLAYER_LOGIN()
 
 	for key, value in next, UVARS do
 		C_CVar.SetCVar(key, tostring(value))
+	end
+
+	if UnitLevel('player') < GetMaxLevelForPlayerExpansion() then
+		-- this is nice while leveling
+		C_CVar.SetCVar('AutoPushSpellToActionBar', 1)
 	end
 
 	return true
