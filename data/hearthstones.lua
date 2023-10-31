@@ -26,5 +26,7 @@ addon.HEARTHSTONE_IDS = {
 	{'toy', 190237}, -- Broker Translocation Matrix
 	{'toy', 193588}, -- Timewalker's Hearthstone
 	{'toy', 200630}, -- Ohn'ir Windsage's Hearthstone
+	{'toy', 206195}, -- Path of the Naaru
+	{'toy', 209035}, -- Hearthstone of the Flame
 	{'item', 6948}, -- Hearthstone
 }
