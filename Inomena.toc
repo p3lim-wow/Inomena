@@ -76,6 +76,7 @@ modules/widgets/dressingroom.lua
 modules/widgets/clickcast.lua
 modules/widgets/loot.lua
 modules/widgets/raidmanager.lua
+modules/widgets/nekkid.lua
 
 modules/tooltip/data.lua
 modules/tooltip/style.lua
