@@ -13,6 +13,10 @@ local function formatShortMoney(money)
 end
 
 function addon:PLAYER_LOGIN()
+	if C_ClassTrial.IsClassTrialCharacter() then
+		return
+	end
+
 	if not _G.InomenaMoney then
 		_G.InomenaMoney = {}
 	end
@@ -29,6 +33,10 @@ function addon:PLAYER_LOGIN()
 end
 
 function addon:PLAYER_MONEY()
+	if C_ClassTrial.IsClassTrialCharacter() then
+		return
+	end
+
 	local character = UnitName('player') .. ':' .. (UnitClassBase('player'))
 	_G.InomenaMoney[GetRealmID()][character] = GetMoney()
 end
