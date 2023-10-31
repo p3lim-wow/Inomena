@@ -11,7 +11,6 @@ local CVARS = {
 	autoLootDefault = 1,
 	combinedBags = 0,
 	empowerTapControls = 1,
-	SoftTargetInteract = 0,
 	softTargettingInteractKeySound = 0,
 	ClipCursor = 0,
 	mouseInvertPitch = 0,

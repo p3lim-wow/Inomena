@@ -1,5 +1,7 @@
 local _, addon = ...
 
+local TIMER_MINUTES_DISPLAY = _G.TIMER_MINUTES_DISPLAY -- globalstring
+
 local math_abs = math.abs
 local math_floor = math.floor
 

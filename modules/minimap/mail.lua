@@ -50,7 +50,7 @@ local function cooldownWrapper(start, duration)
 	return start > 0 and start - GetTime() + duration
 end
 
-local function updateTooltip(_, ...)
+local function updateTooltip()
 	GameTooltip:SetOwner(mail, 'ANCHOR_BOTTOMLEFT')
 
 	if HasNewMail() then

@@ -1,9 +1,10 @@
 local _, addon = ...
 
+local NUM_CHAT_WINDOWS = _G.NUM_CHAT_WINDOWS or 10 -- FrameXML/ChatFrame.lua
+local TIME_DAYHOURMINUTESECOND = _G.TIME_DAYHOURMINUTESECOND -- globalstring
+
 local registered = {}
 function addon:PLAYER_LOGIN()
-	requested = true
-
 	-- unregister events
 	for index = 1, NUM_CHAT_WINDOWS do
 		if _G['ChatFrame' .. index]:IsEventRegistered('TIME_PLAYED_MSG') then

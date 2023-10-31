@@ -19,11 +19,13 @@ exclude_files = {}
 
 globals = {
 	-- FrameXML objects we mutate
-	'StaticPopupDialogs', -- FrameXML/StaticPopup.lua
-	'LootFrame', -- FrameXML/LootFrame.xml
+	'BuffFrame', -- FrameXML/BuffFrame.xml
 	'ChatTypeInfo', -- FrameXML/ChatFrame.lua
-	'DurabilityFrame', -- FrameXML/DurabilityFrame.xml
 	'ClickBindingFrame', -- AddOns/Blizzard_ClickBindingUI/Blizzard_ClickBindingUI.xml
+	'DurabilityFrame', -- FrameXML/DurabilityFrame.xml
+	'LootFrame', -- FrameXML/LootFrame.xml
+	'StaticPopupDialogs', -- FrameXML/StaticPopup.lua
+	'SuperTrackedFrame', -- AddOns/Blizzard_QuestNavigation/SuperTrackedFrame.xml
 
 	-- savedvariables we mutate
 	'OPie_SavedData',
@@ -47,10 +49,14 @@ read_globals = {
 	'GenericTraitFrameMixin', -- AddOns/Blizzard_GenericTraitUI/Blizzard_GenericTraitFrame.lua
 	'HelpTip', -- SharedXML/HelpTip.lua
 	'HybridMinimap', -- AddOns/Blizzard_HybridMinimap/Blizzard_HybridMinimap.xml
+	'ItemLocation', -- FrameXML/ObjectAPI/ItemLocation.lua
 	'MacroFrame', -- AddOns/Blizzard_MacroUI/Blizzard_MacroUI.xml
 	'MerchantFrame', -- FrameXML/MerchantFrame.xml
 	'Minimap', -- FrameXML/Minimap.xml
 	'MinimapMixin', -- FrameXML/Minimap.lua
+	'PaperDollSidebarTab3', -- FrameXML/PaperDollFrame.xml
+	'PetCastingBarFrame', -- FrameXML/PetFrame.xml
+	'PlayerCastingBarFrame', -- FrameXML/CastingBarFrame.xml
 	'ProfessionsFrame', -- AddOns/Blizzard_Professions/Blizzard_ProfessionsFrame.xml
 	'QueueStatusButton', -- FrameXML/QueueStatusFrame.xml
 	'ReadyCheckListenerFrame', -- FrameXML/ReadyCheck.xml
@@ -63,9 +69,10 @@ read_globals = {
 	'SlashCmdList', -- FrameXML/ChatFrame.lua
 	'SpellBookFrame', -- FrameXML/SpellBookFrame.xml
 	'SpellBookFrameTabButton1', -- FrameXML/SpellBookFrame.xml
+	'SpellbookMicroButton', -- FrameXML/MainMenuBarMicroButtons.xml
 	'UIErrorsFrame', -- FrameXML/UIErrorsFrame.xml
-	'UIParent', -- FrameXML/UIParent.xml
 	'UiMapPoint', -- FrameXML/ObjectAPI/UiMapPoint.lua
+	'UIParent', -- FrameXML/UIParent.xml
 	'WeeklyRewardsFrame', -- AddOns/Blizzard_WeeklyRewards/Blizzard_WeeklyRewards.xml
 	'WorldFrame', -- FrameXML/WorldFrame.xml
 	'WorldMapFrame', -- AddOns/Blizzard_WorldMap/Blizzard_WorldMap.xml
@@ -81,17 +88,13 @@ read_globals = {
 	'ChatFrame_ReceiveAllPrivateMessages', -- FrameXML/ChatFrame.lua
 	'ChatFrame_RemoveAllChannels', -- FrameXML/ChatFrame.lua
 	'ChatFrame_RemoveAllMessageGroups', -- FrameXML/ChatFrame.lua
-	'CopyTable', -- SharedXML/TableUtil.lua
-	'CreateColor', -- SharedXML/Color.lua
-	'CreateRectangle', -- SharedXML/Rectangle.lua
-	'CreateVector2D', -- SharedXML/Vector2D.lua
+	'ChatFrame_TimeBreakDown', -- FrameXML/ChatFrame.lua
 	'FCF_Close', -- FrameXML/FloatingChatFrame.lua
 	'FCF_OpenNewWindow', -- FrameXML/FloatingChatFrame.lua
 	'FCF_ResetChatWindows', -- FrameXML/FloatingChatFrame.lua
 	'FCF_SelectDockFrame', -- FrameXML/FloatingChatFrame.lua
 	'FCF_SetWindowAlpha', -- FrameXML/FloatingChatFrame.lua
 	'FCF_SetWindowColor', -- FrameXML/FloatingChatFrame.lua
-	'FormatLargeNumber', -- SharedXML/FormattingUtil.lua
 	'GameTooltip_Hide', -- FrameXML/GameTooltip.lua
 	'GetUnitName', -- FrameXML/UnitFrame.lua
 	'HideUIPanel', -- FrameXML/UIParent.lua
@@ -109,40 +112,56 @@ read_globals = {
 	'ToggleClickBindingFrame', -- FrameXML/UIParent.lua
 	'UnregisterStateDriver', -- FrameXML/SecureStateDriver.lua
 	'WeeklyRewards_ShowUI', -- FrameXML/UIParent.lua
-	'WrapTextInColorCode', -- SharedXML/Color.lua
 	'nop', -- FrameXML/UIParent.lua
 
 	-- FrameXML mutable globals
 	'SELECTED_CHAT_FRAME',
 
 	-- SharedXML functions
+	'CopyTable', -- SharedXML/TableUtil.lua
+	'CreateColor', -- SharedXML/Color.lua
+	'CreateRectangle', -- SharedXML/Rectangle.lua
+	'CreateVector2D', -- SharedXML/Vector2D.lua
+	'FormatLargeNumber', -- SharedXML/FormattingUtil.lua
 	'Mixin', -- SharedXML/Mixin.lua
+	'SecondsToTime', -- SharedXML/TimeUtil.lua
+	'WrapTextInColorCode', -- SharedXML/Color.lua
 
 	-- namespaces
+	'C_AddOns',
 	'C_BattleNet',
 	'C_ChallengeMode',
 	'C_ClassColor',
+	'C_ClassTrial',
 	'C_Container',
 	'C_Covenants',
+	'C_CraftingOrders',
 	'C_CVar',
+	'C_DateAndTime',
 	'C_EditMode',
+	'C_EquipmentSet',
 	'C_FriendList',
 	'C_Garrison',
 	'C_GossipInfo',
+	'C_Item',
 	'C_Map',
 	'C_Minimap',
 	'C_MountJournal',
+	'C_Navigation',
 	'C_PartyInfo',
 	'C_PlayerInfo',
 	'C_QuestLog',
+	'C_Timer',
 	'C_ToyBox',
 	'C_UI',
+	'C_VignetteInfo',
 	'Constants',
 	'Enum',
 	'TooltipDataProcessor',
 
 	-- API
 	'AcceptGroup',
+	'AutoEquipCursorItem',
 	'BNGetNumFriends',
 	'CanEjectPassengerFromSeat',
 	'CanGuildBankRepair',
@@ -171,10 +190,15 @@ read_globals = {
 	'GetGuildRosterInfo',
 	'GetInventoryAlertStatus',
 	'GetInventoryItemDurability',
+	'GetInventoryItemID',
+	'GetInventoryItemID',
 	'GetItemCooldown',
 	'GetItemCount',
+	'GetItemInfo',
 	'GetLatestThreeSenders',
+	'GetMacroInfo',
 	'GetMacroSpell',
+	'GetMaxLevelForPlayerExpansion',
 	'GetMoney',
 	'GetNumGroupMembers',
 	'GetNumGuildMembers',
@@ -186,12 +210,14 @@ read_globals = {
 	'GetScreenHeight',
 	'GetSpellCooldown',
 	'GetSpellInfo',
+	'GetSpellLink',
 	'GetSpellTexture',
 	'GetTime',
 	'GetTotemCannotDismiss',
 	'GetTotemInfo',
 	'GetWeaponEnchantInfo',
 	'HasBonusActionBar',
+	'HasFullControl',
 	'HasNewMail',
 	'InCombatLockdown',
 	'IsAddOnLoaded',
@@ -203,14 +229,17 @@ read_globals = {
 	'IsShiftKeyDown',
 	'IsSpellKnown',
 	'PickupBagFromSlot',
+	'PickupInventoryItem',
 	'PlaySound',
 	'PlaySoundFile',
 	'PutItemInBag',
 	'RepairAllItems',
+	'RequestTimePlayed',
 	'SendChatMessage',
 	'SetBindingClick',
 	'SetChatColorNameByClass',
 	'SetOverrideBinding',
+	'SetOverrideBindingClick',
 	'TaxiRequestEarlyLanding',
 	'UnitAura',
 	'UnitBattlePetLevel',
@@ -232,6 +261,7 @@ read_globals = {
 	'UnitIsPlayer',
 	'UnitIsTapDenied',
 	'UnitIsUnit',
+	'UnitLevel',
 	'UnitName',
 	'UnitOnTaxi',
 	'UnitPlayerControlled',
@@ -245,4 +275,7 @@ read_globals = {
 	'LibStub',
 	'OPie',
 	'TomTomPaste',
+
+	-- ???
+	'AddonTooltip',
 }

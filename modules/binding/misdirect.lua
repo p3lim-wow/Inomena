@@ -55,7 +55,7 @@ local function updateTarget()
 	end
 
 	local unit = getGroupRoleUnit()
-	if role == 'TANK' and not unit and UnitExists('pet') then
+	if SPELL_ROLE == 'TANK' and not unit and UnitExists('pet') then
 		unit = 'pet'
 	end
 

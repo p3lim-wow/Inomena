@@ -4,8 +4,10 @@ local ENCOUNTER_JOURNAL_ITEM = _G.ENCOUNTER_JOURNAL_ITEM -- globalstring
 local STAT_CATEGORY_SPELL = _G.STAT_CATEGORY_SPELL -- globalstring
 local CURRENCY = _G.CURRENCY -- globalstring
 local MOUNT = _G.MOUNT -- globalstring
+local MACRO = _G.MACRO -- globalstring
 local ID = _G.ID -- globalstring
 local UNKNOWN = _G.UNKNOWN -- globalstring
+local NAME = _G.NAME -- globalstring
 
 local PREFIXES = {
 	item = ENCOUNTER_JOURNAL_ITEM,
@@ -59,7 +61,7 @@ function tooltip:PetAction(data)
 	end
 end
 
-function tooltip:Macro(data)
+function tooltip:Macro()
 	local button = self:GetOwner()
 	if button and button.action then
 		local _, macroID = GetActionInfo(button.action)

@@ -1,5 +1,7 @@
 local addonName, addon = ...
 
+local CONTAINER_BAG_OFFSET = _G.CONTAINER_BAG_OFFSET or 30 -- FrameXML/Constants.lua
+
 -- adjust position of existing tabs
 PaperDollSidebarTab3:SetPoint('BOTTOMRIGHT', -60, 0)
 PaperDollSidebarTabs.DecorLeft:SetPoint('BOTTOMLEFT', -25, 0)
