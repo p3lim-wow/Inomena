@@ -20,6 +20,9 @@ local SPECIAL_MOUNTS = {
 	[1551] = 'hybrid', -- Cryptic Aurelid
 	[1549] = 'hybrid', -- Shimmering Aurelid
 	[1654] = 'hybrid', -- Otterworldly Ottuk Carrier
+
+	-- instant mounts during halloween
+	[1799] = 'halloween', -- Eve's Ghastly Rider
 }
 
 -- track which special mounts the player has collected and are eligible
@@ -62,6 +65,26 @@ local MAW_ZONES = {
 	[1961] = true, -- Korthia
 }
 
+local DRAGON_ISLES_ZONES = {
+	[2022] = true, -- The Waking Shores
+	[2023] = true, -- Ohn'ahran Plains
+	[2024] = true, -- The Azure Span
+	[2025] = true, -- Thaldraszus
+	[2112] = true, -- Valdrakken
+	[2085] = true, -- The Primalist Future
+	[2151] = true, -- The Forbidden Reach
+	[2133] = true, -- Zaralek Cavern
+}
+
+local function isHalloween()
+	local date = C_DateAndTime.GetCurrentCalendarTime()
+	if (date.month == 10 and date.monthDay >= 18) or (date.month == 11 and date.monthDay == 1) then
+		if not ((date.monthDay == 18 and date.hour < 10) or (date.monthDay == 1 and date.hour > 11)) then
+			return true
+		end
+	end
+end
+
 local function getMount()
 	-- Torghast item mounts
 	if GetItemCount(174464) > 0 then
@@ -80,23 +103,29 @@ local function getMount()
 		return collectedSpecialMounts.chauffeured[math.random(#collectedSpecialMounts.chauffeured)], Enum_MountType.Mount
 	end
 
-	if GetItemCount(37011) > 0 then
+	local playerMapID = addon:GetPlayerMapID()
+	if isHalloween() and not DRAGON_ISLES_ZONES[playerMapID] then
 		-- prefer the instant-mount Magic Broom during halloween
-		-- it's removed from the inventory after the event ends, so we don't need to check dates
-		return 37011, Enum_MountType.Item
+		if #collectedSpecialMounts.halloween > 0 then
+			-- prefer the trained mount(s)
+			return collectedSpecialMounts.halloween[math.random(#collectedSpecialMounts.halloween)], Enum_MountType.Mount
+		elseif GetItemCount(37011) > 0 then
+			-- fallback to the temporary mount
+			return 37011, Enum_MountType.Item
+		end
 	end
 
-	if addon:GetPlayerMapID() == 1462 and #collectedSpecialMounts.mechagon > 0 then
+	if playerMapID == 1462 and #collectedSpecialMounts.mechagon > 0 then
 		-- prevent getting shot down in Mechagon
 		return collectedSpecialMounts.mechagon[math.random(#collectedSpecialMounts.mechagon)], Enum_MountType.Mount
 	end
 
-	if addon:GetPlayerMapID() == 1355 and #collectedSpecialMounts.hybrid > 0 then
+	if playerMapID == 1355 and #collectedSpecialMounts.hybrid > 0 then
 		-- I'm sick of swimming slow in Nazjatar
 		return collectedSpecialMounts.hybrid[math.random(#collectedSpecialMounts.hybrid)], Enum_MountType.Mount
 	end
 
-	if not C_QuestLog.IsQuestFlaggedCompleted(63994) and MAW_ZONES[addon:GetPlayerMapID()] and #collectedSpecialMounts.maw > 0 then
+	if not C_QuestLog.IsQuestFlaggedCompleted(63994) and MAW_ZONES[playerMapID] and #collectedSpecialMounts.maw > 0 then
 		-- player is in the maw and haven't completed the Korthia intro yet
 		return collectedSpecialMounts.maw[math.random(#collectedSpecialMounts.maw)]
 	end
