@@ -1,52 +1,57 @@
 local _, addon = ...
 
-local NUM_CHAT_WINDOWS = _G.NUM_CHAT_WINDOWS or 10 -- FrameXML/ChatFrame.lua
+-- disable castbar
+PlayerCastingBarFrame:SetUnit(nil)
+PetCastingBarFrame:SetUnit(nil)
+PetCastingBarFrame:UnregisterEvent('UNIT_PET')
 
--- hide misc crap
-addon:Hide('TicketStatusFrame')
-addon:Hide('DurabilityFrame')
-DurabilityFrame.SetParent = nop -- fuck you edit mode
-addon:Hide('VehicleSeatIndicator')
-addon:Hide('StanceBar')
-addon:Hide('MainMenuBarVehicleLeaveButton')
-addon:Hide('MicroMenu')
-addon:Hide('BagsBar')
-
--- order hall bar
-addon:HookAddOn('Blizzard_OrderHallUI', function()
-	addon:Hide('OrderHallCommandBar')
+-- minimap fluff
+Minimap:SetParent(UIParent)
+Minimap:ClearAllPoints()
+Minimap:SetPoint('TOPRIGHT', -19.9, -19.9) -- stupid pixel offsets
+addon:Hide('MinimapCluster') -- because it sucks
+addon:Hide('MinimapCompassTexture')
+addon:Hide('MinimapCluster', 'BorderTop')
+addon:Hide('MinimapCluster', 'InstanceDifficulty')
+addon:Hide('MinimapCluster', 'IndicatorFrame')
+addon:Hide('MinimapCluster', 'Tracking')
+addon:Hide('MinimapCluster', 'ZoneTextButton')
+addon:Hide('Minimap', 'ZoomIn')
+addon:Hide('Minimap', 'ZoomOut')
+addon:Hide('Minimap', 'ZoomHitArea')
+addon:Hide('GameTimeFrame')
+addon:HookAddOn('Blizzard_TimeManager', function()
+	addon:Hide('TimeManagerClockButton')
 end)
+
+-- we have our own buffs and debuffs
+addon:Hide('BuffFrame')
+addon:Hide('DebuffFrame')
+BuffFrame.numHideableBuffs = 0 -- avoid EditMode errors
 
 -- chat frame buttons
 addon:Hide('QuickJoinToastButton')
 addon:Hide('ChatFrameChannelButton')
 addon:Hide('ChatFrameMenuButton')
-for index = 1, NUM_CHAT_WINDOWS do
+for index = 1, (_G.NUM_CHAT_WINDOWS or 10) do
 	addon:Hide('ChatFrame' .. index .. 'ButtonFrame')
+	addon:Hide('ChatFrame' .. index, 'ScrollBar')
 end
 
--- minimap
-addon:Hide('MinimapCompassTexture')
-addon:Hide('MinimapCluster', 'BorderTop')
-addon:Hide('MinimapCluster', 'InstanceDifficulty')
-addon:Hide('MinimapCluster', 'IndicatorFrame')
--- addon:Hide('MinimapCluster', 'Tracking')
-addon:Hide('MinimapCluster', 'ZoneTextButton')
-addon:Hide('Minimap', 'ZoomIn')
-addon:Hide('Minimap', 'ZoomOut')
-addon:Hide('GameTimeFrame')
--- addon:Hide('UIWidgetBelowMinimapContainerFrame')
-addon:HookAddOn('Blizzard_TimeManager', function()
-	-- hide the clock
-	addon:Hide('TimeManagerClockButton')
+addon:Hide('MainMenuBarVehicleLeaveButton')
+addon:Hide('MicroMenu')
+addon:Hide('BagsBar')
+addon:Hide('MicroButtonAndBagsBar')
+addon:Hide('DurabilityFrame')
+DurabilityFrame.SetParent = nop -- avoid EditMode errors
+
+-- misc stuff we hide that isn't covered by EditMode
+addon:Hide('TicketStatusFrame')
+addon:Hide('VehicleSeatIndicator')
+addon:Hide('StanceBar')
+addon:HookAddOn('Blizzard_OrderHallUI', function()
+	addon:Hide('OrderHallCommandBar')
 end)
-
--- TODO: disable pulse animations
--- ExpansionLandingPageMinimapButton
--- QueueStatusButton
-
-addon:Hide('DebuffFrame')
-
 addon:HookAddOn('Blizzard_WeeklyRewards', function()
 	hooksecurefunc(WeeklyRewardsFrame, 'UpdateOverlay', function()
 		addon:Hide('WeeklyRewardsFrame', 'Blackout')

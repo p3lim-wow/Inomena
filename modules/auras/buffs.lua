@@ -138,7 +138,3 @@ Buffs:Show() -- the template is hidden by default
 
 -- make sure borders render right, everything is scaled based on WorldFrame
 addon:SetPixelScale(Buffs)
-
--- hide default
-addon:Hide('BuffFrame')
--- addon:Hide('TemporaryEnchantFrame')
