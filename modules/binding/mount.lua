@@ -8,6 +8,7 @@ local SPECIAL_MOUNTS = {
 	-- mounts that will not get shot down in Mechagon
 	[1227] = 'mechagon', -- Aerial Unit R-21/X
 	[1254] = 'mechagon', -- Rustbolt Resistor
+	[1813] = 'mechagon', -- Mimiron's Jumpjets
 
 	-- mounts that are usable in The Maw before earning the rights to use all mounts there
 	[1304] = 'maw', -- Mawsworn Soulhunter
