@@ -24,6 +24,12 @@ addon:HookAddOn('OPie', function()
 		OPie_SavedData.ProfileStorage.default.Bindings[addonName .. 'Teleport'] = 'ALT-G'
 		OPie_SavedData.ProfileStorage.default.Bindings[addonName .. 'Professions'] = 'ALT-T'
 
+		if addon.PLAYER_CLASS == 'HUNTER' then
+			OPie_SavedData.ProfileStorage.default.Bindings[addonName .. 'HunterPets'] = 'ALT-1'
+		elseif addon.PLAYER_CLASS == 'WARLOCK' then
+			OPie_SavedData.ProfileStorage.default.Bindings[addonName .. 'WarlockDemons'] = 'ALT-1'
+		end
+
 		-- bind default rings
 		OPie_SavedData.ProfileStorage.default.Bindings.OPieTracking = 'ALT-F'
 	end
