@@ -5,7 +5,8 @@ local CIRCLE_BORDER = ([[Interface\AddOns\%s\assets\circle]]):format(addonName)
 
 local methods = {
 	-- pulled from OPie/Libs/Mirage.lua, indicatorAPI table methods
-	SetIcon = nop, -- (texture)
+	SetIcon = nop, -- (texture, aspect)
+	SetIconAtlas = nop, -- (atlas, aspect)
 	SetIconTexCoord = nop, -- (a,b,c,d, e,f,g,h)
 	SetIconVertexColor = nop, -- (r,g,b)
 	SetUsable = nop, -- (usable, _usableCharge, _cd, nomana, norange)
@@ -21,6 +22,7 @@ local methods = {
 	SetOuterGlow = nop, -- (shown)
 	SetEquipState = nop, -- (isInContainer, isInInventory)
 	SetShortLabel = nop, -- (text)
+	SetQualityOverlay = nop, -- (qual)
 }
 
 function methods:SetIconVertexColor(r, g, b)
@@ -116,7 +118,7 @@ addon:HookAddOn('OPie', function()
 	-- register skin
 	OPie.UI:RegisterIndicatorConstructor(addonName, {
 		name = addonName,
-		apiLevel = 1,
+		apiLevel = 3,
 		CreateIndicator = constructor,
 	})
 end)
