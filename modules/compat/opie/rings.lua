@@ -191,6 +191,7 @@ local RINGS = {
 		{'spell', 18960, show='[me:druid]'}, -- Teleport: Moonglade
 		{'item', 139590, show='[me:rogue]'}, -- Scroll of Teleport: Ravenholdt
 		{'spell', 50977, show='[me:deathknight]'}, -- Death Gate
+		{'spell', 312370, show='[race:vulpera]'}, -- Make Camp
 		{'spell', 312372, show='[race:vulpera]'}, -- Return to Camp
 		{'spell', 126892, show='[me:monk]'}, -- Zen Pilgrimage
 		{'spell', 556, show='[me:shaman]'}, -- Astral Recall
@@ -199,6 +200,7 @@ local RINGS = {
 		{'ring', addonName .. 'MageTeleport', show='[me:mage]'},
 
 		-- misc items
+		{'item', 37863}, -- Direbrew's Remote
 		{'item', 180817, show='[zone:The Maw]'}, -- Cypher of Relocation
 		{'item', 141605, -- Flight Master's Whistle (only shown in zones where it can be used)
 			show = '[zone:Azsuna][zone:Val\'Sharah][zone:Highmountain][zone:Stormheim][zone:Suramar][zone:The Broken Shore][zone:Krokuun][zone:Antoran Wastes][zone:Eredath][zone:Zuldazar][zone:Nazmir][zone:Vol\'dun][zone:Tiragarde Sound][zone:Drustvar][zone:Stormsong Valley][zone:Nazjatar][zone:Mechagon]'
@@ -207,8 +209,8 @@ local RINGS = {
 			show = '[zone:Azsuna][zone:Val\'Sharah][zone:Highmountain][zone:Stormheim][zone:Suramar][zone:The Broken Shore][zone:Krokuun][zone:Antoran Wastes][zone:Eredath][zone:Zuldazar][zone:Nazmir][zone:Vol\'dun][zone:Tiragarde Sound][zone:Drustvar][zone:Stormsong Valley][zone:Nazjatar][zone:Mechagon]'
 		},
 		{'toy', 205255, show='[zone:Zaralek Cavern]'}, -- Niffen Diggin' Mits (Zaralek Cavern, Dragon Isles)
-		{'toy', 110560}, -- Garrison Hearthstone
-		{'toy', 140192}, -- Dalaran Hearthstone
+		{'toy', 110560}, -- Garrison Hearthstone (OPie has internal checks for these toys, no need for show conditional)
+		{'toy', 140192}, -- Dalaran Hearthstone (OPie has internal checks for these toys, no need for show conditional)
 	},
 	{
 		name = 'Special Mounts',
