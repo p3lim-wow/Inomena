@@ -58,3 +58,8 @@ hooksecurefunc('SpellBookFrame_PlayOpenSound', function()
 	-- we hook into this function because it completes before SpellBookFrame_Update
 	SpellbookMicroButton.suggestedTabButton = nil
 end)
+
+-- force show the spells tab in the spell book
+hooksecurefunc('SpellBookFrame_OnShow', function()
+	SpellBookFrameTabButton_OnClick(SpellBookFrameTabButton1)
+end)
