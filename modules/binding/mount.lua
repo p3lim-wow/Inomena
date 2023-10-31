@@ -31,13 +31,13 @@ local function updateCollectedSpecialMounts()
 
 	for _, mountID in next, C_MountJournal.GetMountIDs() do
 		local _, _, _, _, _, _, _, _, _, ineligible, collected = C_MountJournal.GetMountInfoByID(mountID)
-		if collected and not ineligible then
-			local specialMountType = SPECIAL_MOUNTS[mountID]
-			if specialMountType then
-				if not collectedSpecialMounts[specialMountType] then
-					collectedSpecialMounts[specialMountType] = {}
-				end
+		local specialMountType = SPECIAL_MOUNTS[mountID]
+		if specialMountType then
+			if not collectedSpecialMounts[specialMountType] then
+				collectedSpecialMounts[specialMountType] = {}
+			end
 
+			if collected and not ineligible then
 				table.insert(collectedSpecialMounts[specialMountType], mountID)
 			end
 		end
