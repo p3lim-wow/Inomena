@@ -2,7 +2,7 @@
 ## Author: p3lim
 ## Title: Inomena
 ## Notes: Personal UI
-## SavedVariables: InomenaMoney
+## SavedVariables: InomenaMoney, InomenaPlayed
 
 ../Dashi/embed.xml
 
