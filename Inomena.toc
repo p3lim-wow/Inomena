@@ -80,3 +80,4 @@ modules/widgets/raidmanager.lua
 modules/tooltip/data.lua
 modules/tooltip/style.lua
 modules/tooltip/expiration.lua
+modules/tooltip/addons.lua
