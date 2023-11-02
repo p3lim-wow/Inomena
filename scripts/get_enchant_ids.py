@@ -12,6 +12,9 @@ ignoredSpellIDs = [
 	36503,
 	162426,
 	172938,
+	409669,
+	409671,
+	409672,
 ]
 
 def scrape(path, pattern):
