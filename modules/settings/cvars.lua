@@ -101,7 +101,10 @@ local CVARS = {
 
 	-- Ping System
 	pingCategoryTutorialShown = 1,
-	-- TODO: deal with sounds
+	enablePings = 1,
+	pingMode = 0,
+	Sound_EnablePingSounds = 0,
+	showPingsInChat = 1, -- just so CHAT_MSG_PING works
 
 	-- Accessibility
 	enableMovePad = 0,

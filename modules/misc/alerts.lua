@@ -131,3 +131,34 @@ function addon:VIGNETTES_UPDATED()
 		end
 	end
 end
+
+-- ping sounds on master channel
+local PING_TYPE_PATTERN = '|A:ping_chat_(.-):'
+local PING_SOUND_IDS = {
+	nonthreat = 5339002,
+	threat = 5340601,
+	warning = 5342387,
+	onmyway = 5340605,
+	assist = 5339006,
+	attack = 5350036,
+}
+
+local pingThrottle
+local function endPingThrottle()
+	pingThrottle = false
+end
+
+function addon:CHAT_MSG_PING(text)
+	if pingThrottle and pingThrottle then
+		return
+	end
+
+	local pingType = text:match(PING_TYPE_PATTERN)
+	if pingType then
+		local soundID = PING_SOUND_IDS[pingType]
+		if soundID and PlaySoundFile(soundID, 'master') then
+			pingThrottle = true
+			C_Timer.After(1, endPingThrottle)
+		end
+	end
+end
