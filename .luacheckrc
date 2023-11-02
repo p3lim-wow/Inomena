@@ -146,6 +146,7 @@ read_globals = {
 	'C_GossipInfo',
 	'C_Item',
 	'C_Map',
+	'C_MerchantFrame',
 	'C_Minimap',
 	'C_MountJournal',
 	'C_Navigation',
