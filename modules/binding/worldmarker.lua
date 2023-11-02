@@ -6,7 +6,7 @@ local _, addon = ...
 local secureHeader = CreateFrame('Frame', nil, UIParent, 'SecureHandlerBaseTemplate')
 
 -- create a secure macro button to place markers on the cursor
-local placemarker = addon:BindButton('PlaceMarker', 'CTRL-T', 'SecureActionButtonTemplate')
+local placemarker = addon:BindButton('PlaceMarker', 'ALT-BUTTON5', 'SecureActionButtonTemplate')
 placemarker:SetAttribute('type', 'macro')
 
 -- wrap PreClick so we can modify the macro securely before it is executed
@@ -17,7 +17,7 @@ SecureHandlerWrapScript(placemarker, 'PreClick', secureHeader, [[
 ]])
 
 -- create a secure macro button to clear all markers and reset the cycle
-local clearmarkers = addon:BindButton('ClearMarkers', 'CTRL-SHIFT-T', 'SecureActionButtonTemplate')
+local clearmarkers = addon:BindButton('ClearMarkers', 'ALT-BUTTON4', 'SecureActionButtonTemplate')
 clearmarkers:SetAttribute('type', 'macro')
 clearmarkers:SetAttribute('macrotext', '/clearworldmarker 0')
 
