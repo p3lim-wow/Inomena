@@ -12,6 +12,7 @@ utils/enums.lua
 utils/colors.lua
 utils/widgets.lua
 utils/bind.lua
+utils/text.lua
 
 data/enchants.lua
 data/hearthstones.lua
