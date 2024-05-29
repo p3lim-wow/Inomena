@@ -11,8 +11,13 @@ function widgetMixin:CreateBackdropFrame(frameType)
 	return frame
 end
 
+local statusbarMixin = {}
+function statusbarMixin:SetStatusBarColor(r, g, b, a)
+	self:GetStatusBarTexture():SetVertexColor(r, g, b, a)
+end
+
 function widgetMixin:CreateStatusBar(template)
-	local statusbar = self:CreateFrame('StatusBar', template)
+	local statusbar = Mixin(self:CreateFrame('StatusBar', template), statusbarMixin)
 	local texture = statusbar:CreateTexture()
 	texture:SetTexelSnappingBias(0)
 	texture:SetSnapToPixelGrid(false)
