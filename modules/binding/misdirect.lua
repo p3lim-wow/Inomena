@@ -16,7 +16,7 @@ end
 
 local UNKNOWN = _G.UNKNOWN -- globalstring
 
-local SPELL_NAME = GetSpellInfo(SPELL_ID)
+local SPELL_NAME = (C_Spell.GetSpellName or GetSpellInfo)(SPELL_ID)
 local MACRO = ('/stopcasting\n/cast [@%%s,help,nodead] %s'):format(SPELL_NAME)
 
 local button = addon:BindButton('Misdirect', 'CTRL-F', 'SecureActionButtonTemplate')
@@ -43,7 +43,46 @@ local function getGroupRoleUnit()
 	end
 end
 
-local lastTarget, lastTargetName
+local UnitTokenFromGUID = UnitTokenFromGUID or function(guid) -- classic
+	if UnitGUID('player') == guid then
+		return 'player'
+	elseif UnitGUID('vehicle') == guid then
+		return 'vehicle'
+	elseif UnitGUID('pet') == guid then
+		return 'pet'
+	elseif IsInGroup() and not IsInRaid() then
+		for index = 1, GetNumGroupMembers() do
+			if UnitGUID('party' .. index) == guid then
+				return 'party' .. index
+			end
+		end
+		-- skipping pet check, not relevant for module
+	elseif IsInRaid() then
+		for index = 1, GetNumGroupMembers() do
+			if UnitGUID('raid' .. index) == guid then
+				return 'raid' .. index
+			end
+		end
+		-- skipping pet check, not relevant for module
+	end
+
+	-- not gonna check for the rest of the supported targets for UnitTokenFromGUID as they're
+	-- not relevant for this module
+end
+
+local lockedGUID, softGUID
+local function printTarget()
+	local unit = UnitTokenFromGUID(lockedGUID or softGUID or '')
+	if unit then
+		local coloredName = addon.colors.class[(UnitClassBase(unit))]:WrapTextInColorCode(UnitName(unit))
+		local coloredSpell = WrapTextInColorCode(SPELL_NAME, 'ffffff00')
+		addon:Print(coloredName, 'is', coloredSpell, 'target', lockedGUID and '|cff90ffff(locked)|r' or '')
+	else
+		local coloredSpell = WrapTextInColorCode(SPELL_NAME, 'ffffff00')
+		addon:Print('No', coloredSpell, 'target')
+	end
+end
+
 local function updateTarget()
 	if InCombatLockdown() then
 		addon:Defer(updateTarget)
@@ -54,33 +93,35 @@ local function updateTarget()
 		return
 	end
 
-	local unit = getGroupRoleUnit()
-	if SPELL_ROLE == 'TANK' and not unit and UnitExists('pet') then
-		unit = 'pet'
+	local unit
+	if lockedGUID then
+		unit = UnitTokenFromGUID(lockedGUID)
+	else
+		unit = getGroupRoleUnit()
+	end
+
+	if not unit and SPELL_ID == 34477 then
+		if UnitExists('pet') then
+			unit = 'pet'
+		end
 	end
 
 	if not unit then
 		return
 	end
 
-	local unitName = UnitName(unit)
-	if not unitName or unitName == UNKNOWN then
+	local name = UnitName(unit)
+	if not name or name == UNKNOWN then
 		-- during loading/joining unit names aren't available yet
 		return
 	end
 
-	if unit ~= lastTarget then
-		lastTarget = unit
-		button:SetAttribute('macrotext', MACRO:format(unit))
+	button:SetAttribute('macrotext', MACRO:format(unit))
 
-		if unitName ~= lastTargetName then
-			-- TODO: remove this output once I'm comfortable with it
-			local _, targetClass = UnitClass(unit)
-			local targetNameColored = addon.colors.class[targetClass]:WrapTextInColorCode(unitName)
-			local spellNameColored = WrapTextInColorCode(SPELL_NAME, 'ffffff00')
-			addon:Print('Setting', targetNameColored, 'as', spellNameColored, 'target')
-			lastTargetName = unitName
-		end
+	local guid = UnitGUID(unit)
+	if guid ~= softGUID then
+		softGUID = guid
+		printTarget()
 	end
 end
 
@@ -89,3 +130,23 @@ addon:RegisterEvent('UNIT_PET', updateTarget)
 addon:RegisterEvent('PET_BAR_UPDATE', updateTarget)
 addon:RegisterEvent('PLAYER_ENTERING_WORLD', updateTarget)
 addon:RegisterEvent('SPELLS_CHANGED', updateTarget)
+
+addon:RegisterSlash('/md', function()
+	local guid = UnitExists('target') and UnitGUID('target')
+	if guid and UnitIsUnit('target', 'player') then
+		if lockedGUID ~= nil then
+			local coloredSpell = WrapTextInColorCode(SPELL_NAME, 'ffffff00')
+			addon:Print('Removing', coloredSpell, 'lock')
+			lockedGUID = nil
+			printTarget()
+		end
+
+		updateTarget()
+	elseif guid and (IsGUIDInGroup(guid) or UnitIsUnit('target', 'pet')) then
+		lockedGUID = guid
+		updateTarget()
+		printTarget()
+	else
+		printTarget()
+	end
+end)
