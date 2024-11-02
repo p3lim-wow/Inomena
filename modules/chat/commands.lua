@@ -49,3 +49,12 @@ addon:RegisterSlash('/npcid', function()
 end)
 
 addon:RegisterSlash('/dumpui', SlashCmdList.TABLEINSPECT)
+
+addon:RegisterSlash('/clear', function()
+	for _, chatFrame in next, CHAT_FRAMES do
+		if _G[chatFrame]:IsVisible() then
+			_G[chatFrame]:Clear()
+			break
+		end
+	end
+end)
