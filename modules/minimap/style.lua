@@ -1,6 +1,7 @@
 local _, addon = ...
 
--- add custom border
+-- adjust size and add border
+Minimap:SetSize(200, 200)
 addon:AddBackdrop(Minimap)
 
 -- make the minimap square
@@ -48,16 +49,16 @@ hooksecurefunc(ExpansionLandingPageMinimapButton, 'UpdateIcon', function(self)
 
 	if self.garrisonMode then
 		local garrisonType = C_Garrison.GetLandingPageGarrisonType()
-		if garrisonType == Enum.GarrisonType.Type_6_0 then
+		if garrisonType == Enum.GarrisonType.Type_6_0_Garrison then
 			self:SetPoint('BOTTOMLEFT', Minimap)
 			self:SetSize(36, 36)
-		elseif garrisonType == Enum.GarrisonType.Type_7_0 then
+		elseif garrisonType == Enum.GarrisonType.Type_7_0_Garrison then
 			self:SetPoint('BOTTOMLEFT', Minimap, 3, 3)
 			self:SetSize(38, 38)
-		elseif garrisonType == Enum.GarrisonType.Type_8_0 then
+		elseif garrisonType == Enum.GarrisonType.Type_8_0_Garrison then
 			addon:Print('garrison', 'bfa')
 			self:SetPoint('BOTTOMLEFT', Minimap)
-		elseif garrisonType == Enum.GarrisonType.Type_9_0 then
+		elseif garrisonType == Enum.GarrisonType.Type_9_0_Garrison then
 			local covenantID = C_Covenants.GetActiveCovenantID()
 			if covenantID == Enum.CovenantType.Kyrian then
 				self:SetPoint('BOTTOMLEFT', Minimap, -2, 3)
@@ -90,6 +91,13 @@ function addon:PLAYER_LOGIN()
 	QueueStatusButton:SetPoint('TOPRIGHT', Minimap, -5, -6)
 	QueueStatusButton:SetSize(28, 28)
 	QueueStatusButton:SetFrameStrata('HIGH')
+
+	-- something keeps moving it
+	QueueStatusButton.SetParent = nop
+	QueueStatusButton.ClearAllPoints = nop
+	QueueStatusButton.SetPoint = nop
+	QueueStatusButton.SetSize = nop
+	QueueStatusButton.SetFrameStrata = nop
 end
 
 -- disable eye animations by hiding all components
@@ -108,29 +116,44 @@ local eye = QueueStatusButton:CreateTexture(nil, 'ARTWORK')
 eye:SetAllPoints()
 eye:SetAtlas('groupfinder-eye-single')
 
+-- reanchor tracking so we can use the menu ourselves
+MinimapCluster.Tracking:SetParent(Minimap)
+MinimapCluster.Tracking:ClearAllPoints()
+MinimapCluster.Tracking.Button:SetMenuAnchor(AnchorUtil.CreateAnchor('TOPRIGHT', Minimap, 'BOTTOMLEFT'))
+
 -- easy calendar access
 Minimap:SetScript('OnMouseUp', function(self, button)
 	if button == 'MiddleButton' then
-		ToggleCalendar()
+		if InCombatLockdown() then
+			addon:Print('Can\'t open calendar in combat')
+		else
+			if not C_AddOns.IsAddOnLoaded('Blizzard_Calendar') then
+				C_AddOns.LoadAddOn('Blizzard_Calendar')
+			end
+
+			if CalendarFrame:IsShown() then
+				HideUIPanel(CalendarFrame)
+			else
+				ShowUIPanel(CalendarFrame)
+			end
+		end
+	elseif button == 'RightButton' then
+		MinimapCluster.Tracking.Button:OpenMenu()
 	else
 		MinimapMixin.OnClick(self) -- super
 	end
 end)
 
 -- disable addon buttons
-function addon:PLAYER_LOGIN()
+function addon:OnLogin()
 	local LDBI = LibStub and LibStub('LibDBIcon-1.0', true)
 	if LDBI then
 		for _, buttonName in next, LDBI:GetButtonList() do
-			if buttonName ~= 'BugSack' then
-				LDBI:Hide(buttonName)
-			end
+			addon:Hide('LibDBIcon10_' .. buttonName)
 		end
 
 		LDBI.RegisterCallback(self, 'LibDBIcon_IconCreated', function(_, _, buttonName)
-			if buttonName ~= 'BugSack' then
-				LDBI:Hide(buttonName)
-			end
+			addon:Hide('LibDBIcon10_' .. buttonName)
 		end)
 	end
 end
