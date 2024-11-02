@@ -29,8 +29,5 @@ addon:HookAddOn('OPie', function()
 		elseif addon.PLAYER_CLASS == 'WARLOCK' then
 			OPie_SavedData.ProfileStorage.default.Bindings[addonName .. 'WarlockDemons'] = 'ALT-1'
 		end
-
-		-- bind default rings
-		OPie_SavedData.ProfileStorage.default.Bindings.OPieTracking = 'ALT-F'
 	end
 end)
