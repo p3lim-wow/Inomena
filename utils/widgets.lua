@@ -43,17 +43,28 @@ function widgetMixin:CreateBackdropStatusBar(template)
 	return statusbar
 end
 
-function widgetMixin:CreateText(size)
-	if not self.overlayParent then
-		-- make sure the text renders above other widgets
-		self.overlayParent = CreateFrame('Frame', nil, self)
-		self.overlayParent:SetAllPoints() -- needs a size so children are rendered at all
+do
+	local textMixin = {}
+	function textMixin:SetFontSize(size)
+		self:SetFont(addon.FONT, size or 16, 'OUTLINE')
 	end
 
-	local text = self.overlayParent:CreateFontString(nil, 'OVERLAY')
-	text:SetFont(addon.FONT, size or 16, 'OUTLINE')
-	text:SetWordWrap(false)
-	return text
+	function textMixin:SetFrameLevel(level)
+		self:GetParent():SetFrameLevel(level)
+	end
+
+	function widgetMixin:CreateText(size, level)
+		if not self.overlayParent then
+			-- make sure the text renders above other widgets
+			self.overlayParent = CreateFrame('Frame', nil, self)
+			self.overlayParent:SetAllPoints() -- needs a size so children are rendered at all
+		end
+
+		local text = Mixin(self.overlayParent:CreateFontString(nil, 'OVERLAY'), textMixin)
+		text:SetFontSize(size)
+		text:SetWordWrap(false)
+		return text
+	end
 end
 
 function widgetMixin:CreateIcon(layer)
