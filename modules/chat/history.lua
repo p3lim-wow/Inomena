@@ -2,7 +2,7 @@ local NUM_CHAT_WINDOWS = _G.NUM_CHAT_WINDOWS or 10 -- FrameXML/ChatFrame.lua
 
 local history = {}
 local historyIndex = 0
-local maxHistory = 50
+local maxHistory = 500
 
 local function addHistory(self, line)
 	if not line or line == '' then
@@ -58,6 +58,6 @@ for index = 1, NUM_CHAT_WINDOWS do
 	local editBox = _G['ChatFrame' .. index .. 'EditBox']
 	editBox:HookScript('OnEscapePressed', resetHistoryIndex)
 	editBox:HookScript('OnArrowPressed', navigateHistory)
-	editBox:SetAltArrowKeyMode(false) -- don't require alt to scroll history
+	editBox:SetAltArrowKeyMode(false) -- don't require alt to navigate history
 	hooksecurefunc(editBox, 'AddHistoryLine', addHistory)
 end
