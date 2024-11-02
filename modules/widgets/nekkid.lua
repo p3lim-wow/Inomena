@@ -57,7 +57,7 @@ end)
 local function equipSet()
 	local setID = C_EquipmentSet.GetEquipmentSetID(addonName .. 'Nekkid')
 	if setID then
-		addon:Defer(C_EquipmentSet, 'UseEquipmentSet', setID)
+		addon:Defer(C_EquipmentSet.UseEquipmentSet, setID)
 	end
 end
 
