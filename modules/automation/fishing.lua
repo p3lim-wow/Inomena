@@ -20,7 +20,9 @@ local FISHING_SPELLS = {
 	[131474] = true, -- cast spell
 	[131476] = true, -- cast spell
 	[131490] = true, -- channel spell
-	[405274] = true, -- Zskera fishing
+	[295727] = true, -- Compressed Ocean Fishing (just for the sounds)
+	[377895] = true, -- Ice Fishing (best used with interact key, which also opens the hole)
+	[405274] = true, -- Zskera cauldron fishing (best used with interact key)
 }
 
 -- our state and attribute handler
