@@ -89,16 +89,8 @@ local function handleChild(self)
 end
 
 
-local Buffs = CreateFrame('Frame', nil, WorldFrame, 'SecureAuraHeaderTemplate')
+local Buffs = CreateFrame('Frame', nil, addon.parent, 'SecureAuraHeaderTemplate')
 Buffs:SetPoint('TOPRIGHT', Minimap, 'TOPLEFT', -25, 0)
-
--- make sure the auras are hidden when UI is hidden since we parent to WorldFrame
-UIParent:HookScript('OnShow', function()
-	Buffs:SetAlpha(1)
-end)
-UIParent:HookScript('OnHide', function()
-	Buffs:SetAlpha(0)
-end)
 
 -- set up for player buffs
 Buffs:SetAttribute('template', 'SecureActionButtonTemplate')
@@ -135,6 +127,3 @@ Buffs:HookScript('OnAttributeChanged', function(self, attribute, child)
 end)
 
 Buffs:Show() -- the template is hidden by default
-
--- make sure borders render right, everything is scaled based on WorldFrame
-addon:SetPixelScale(Buffs)
