@@ -23,8 +23,6 @@ local function onMouseWheel(chatFrame, direction)
 	end
 end
 
-function addon:PLAYER_LOGIN()
-	for index = 1, NUM_CHAT_WINDOWS do
-		_G['ChatFrame' .. index]:SetScript('OnMouseWheel', onMouseWheel)
-	end
+for index = 1, NUM_CHAT_WINDOWS do
+	_G['ChatFrame' .. index]:SetScript('OnMouseWheel', onMouseWheel)
 end
