@@ -22,7 +22,7 @@ end
 
 local totems = {}
 for index = 1, NUM_TOTEMS do
-	local totem = Mixin(addon:CreateButton('Button', nil, UIParent, 'SecureActionButtonTemplate'), totemMixin)
+	local totem = Mixin(addon:CreateButton('Button', nil, UIParent, 'SecureActionButtonTemplate'), totemMixin, addon.widgetMixin)
 	totem:SetPoint('TOPLEFT', Minimap, 'BOTTOMLEFT', (index - 1) * (WIDTH + SPACING), -SPACING)
 	totem:SetAttribute('type2', 'destroytotem')
 	totem:SetAttribute('totem-slot', index)
@@ -32,7 +32,7 @@ for index = 1, NUM_TOTEMS do
 
 	addon:AddBackdrop(totem)
 
-	local texture = totem:CreateTexture(nil, 'ARTWORK')
+	local texture = totem:CreateTexture('ARTWORK')
 	texture:SetAllPoints()
 	texture:SetTexCoord(0.08, 0.92, 0.28, 0.82)
 	totem.texture = texture
@@ -45,3 +45,9 @@ function addon:PLAYER_ENTERING_WORLD()
 		totem:Update(index)
 	end
 end
+
+TotemFrame:UnregisterEvent('PLAYER_TOTEM_UPDATE')
+TotemFrame:UnregisterEvent('PLAYER_ENTERING_WORLD')
+TotemFrame:UnregisterEvent('UPDATE_SHAPESHIFT_FORM')
+TotemFrame:UnregisterEvent('PLAYER_TALENT_UPDATE')
+addon:Hide('TotemFrame')
