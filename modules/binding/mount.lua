@@ -132,14 +132,54 @@ local MACRO_START = [[
 /dismount [mounted]
 ]]
 
-if addon.PLAYER_CLASS == 'DRUID' then
-	-- remove shapeshift before mounting, except Moonkin Form which doesn't cancel
-	MACRO_START = MACRO_START .. '\n/cancelform [known:Moonkin Form,noform:4][noknown:Moonkin Form,form]'
-end
-
 local mount = addon:BindButton('Mount', 'HOME', 'SecureActionButtonTemplate')
 mount:SetAttribute('type', 'macro')
-mount:SetScript('PreClick', function(self)
+
+local function updateMountAttribute()
+	if InCombatLockdown() then
+		addon:Defer(updateMountAttribute)
+		return
+	end
+
+	local playerMapID = addon:GetPlayerMapID()
+	local _, _, _, _, canDragonride = C_MountJournal.GetMountInfoByID(1589)
+	if addon.PLAYER_CLASS == 'DRUID' and not canDragonride then
+		-- use flight form
+		-- TODO: in 11.0 druids get dynamic flight form, drop the zone condition above
+		mount:SetAttribute('macrotext', string.trim(string.join(
+			'\n',
+			MACRO_START,
+			'/cast ' .. C_Spell.GetSpellName(783)
+		)))
+	else
+		-- get a suitable mount
+		local mountID, mountType = getMount()
+
+		-- build the macro
+		local macro = MACRO_STOP
+		if mountType == Enum_MountType.Item then
+			macro = string.trim(string.join('\n', macro, MACRO_ITEM:format(mountID)))
+		elseif mountType == Enum_MountType.Mount then
+			macro = string.trim(string.join('\n', macro, MACRO_MOUNT:format(mountID)))
+		end
+
+		if addon.PLAYER_CLASS == 'DRUID' then
+			-- Travel Form if in combat, otherwise cancel all forms but Moonkin to mount
+			mount:SetAttribute('macrotext', string.trim(string.join(
+				'\n',
+				MACRO_START,
+				'/cast [combat]' .. C_Spell.GetSpellName(783),
+				'/stopmacro [combat]',
+				'/cancelform [known:197625/24858,noform:4][noknown:197625/24858,form]',
+				macro
+			)))
+		else
+			mount:SetAttribute('macrotext', string.trim(string.join('\n', MACRO_START, macro)))
+		end
+	end
+end
+
+mount:SetScript('PreClick', function()
 	-- if the player is on a taxi path, request an early landing (ignore Argus "taxi")
 	if UnitOnTaxi('player') and not ARGUS_ZONES[addon:GetPlayerMapID()] then
 		UIErrorsFrame:AddMessage('Requesting early landing.', 1, 1, 0)
@@ -147,27 +187,16 @@ mount:SetScript('PreClick', function(self)
 		return
 	end
 
-	if InCombatLockdown() then
-		-- we can't change secure attributes while in combat
-		return
-	end
-
 	if not HasFullControl() and ARGUS_ZONES[addon:GetPlayerMapID()] then
 		-- prevent jankyness in Argus
-		self:SetAttribute('macrotext', '')
+		mount:SetAttribute('macrotext', '')
 		return
 	end
 
-	-- get a suitable mount
-	local mountID, mountType = getMount()
-
-	-- build the macro
-	local macro = MACRO_STOP
-	if mountType == Enum_MountType.Item then
-		macro = string.trim(string.join('\n', macro, MACRO_ITEM:format(mountID)))
-	elseif mountType == Enum_MountType.Mount then
-		macro = string.trim(string.join('\n', macro, MACRO_MOUNT:format(mountID)))
-	end
-
-	self:SetAttribute('macrotext', string.trim(string.join('\n', MACRO_START, macro)))
+	updateMountAttribute()
 end)
+
+-- extra updates for zone differences, usability etc
+addon:RegisterEvent('ZONE_CHANGED', updateMountAttribute)
+addon:RegisterEvent('PLAYER_ENTERING_WORLD', updateMountAttribute)
+addon:RegisterEvent('MOUNT_JOURNAL_USABILITY_CHANGED', updateMountAttribute)
