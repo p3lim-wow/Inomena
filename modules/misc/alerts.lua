@@ -106,7 +106,11 @@ addon:RegisterCombatEvent('UNIT_DIED', function(_, _, _, _, _, destGUID, destNam
 	end
 end)
 
-addon:RegisterCombatEvent('ENCOUNTER_END', function()
+addon:RegisterEvent('ENCOUNTER_START', function()
+	numDead = 0
+end)
+
+addon:RegisterEvent('ENCOUNTER_END', function()
 	numDead = 0
 end)
 
