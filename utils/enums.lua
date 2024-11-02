@@ -1,18 +1,8 @@
 local _, addon = ...
 
 addon.enum = {}
-addon.enum.DruidForms = { -- useful for GetShapeshiftFormID()
-	Cat = 1,
-	TreeOfLife = 2,
-	Travel = 3,
-	Aquatic = 4,
-	Bear = 5,
-	SwiftFlight = 27,
-	Flight = 29,
-	Moonkin = 31,
-}
 
-addon.enum.ClassSpecialization = { -- useful for GetSpecialization()
+addon.enum.ClassSpecializations = { -- useful with GetSpecialization()
 	DEATHKNIGHT = {
 		Blood = 1,
 		Frost = 2,
@@ -31,6 +21,7 @@ addon.enum.ClassSpecialization = { -- useful for GetSpecialization()
 	EVOKER = {
 		Devastation = 1,
 		Preservation = 2,
+		Augmentation = 3,
 	},
 	HUNTER = {
 		BeastMastery = 1,
@@ -77,4 +68,15 @@ addon.enum.ClassSpecialization = { -- useful for GetSpecialization()
 		Fury = 2,
 		Protection = 3,
 	},
+}
+
+addon.enum.DruidForms = { -- useful with GetShapeshiftFormID()
+	Cat = 1,
+	TreeOfLife = 2,
+	Travel = 3,
+	Aquatic = 4,
+	Bear = 5,
+	SwiftFlight = 27,
+	Flight = 29,
+	Moonkin = 31,
 }
