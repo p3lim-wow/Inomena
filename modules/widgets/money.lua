@@ -84,14 +84,18 @@ tooltip:SetScript('OnEnter', function(self)
 	GameTooltip:SetPoint('BOTTOMRIGHT', self, 'TOPRIGHT')
 
 	local total = 0
-	for character, money in orderedPairs(_G.InomenaMoney[GetRealmID()]) do
-		if money > 10000 then -- ignore characters with less than 1 gold, they're probably deleted
-			local name, class = string.split(':', character)
+	local currentRealm = GetRealmID()
+	for realmID, characters in next, _G.InomenaMoney do
+		for character, money in orderedPairs(characters) do
+			if money > 1000000 then -- ignore characters with less than 100 gold, they're probably deleted
+				local name, class = string.split(':', character)
 
-			local color = C_ClassColor.GetClassColor(class)
-			GameTooltip:AddDoubleLine(color:WrapTextInColorCode(name), formatShortMoney(money))
+				local color = addon.colors.class[class]
+				local suffix = currentRealm ~= realmID and '*' or ''
+				GameTooltip:AddDoubleLine(color:WrapTextInColorCode(name) .. suffix, formatShortMoney(money))
 
-			total = total + money
+				total = total + money
+			end
 		end
 	end
 
