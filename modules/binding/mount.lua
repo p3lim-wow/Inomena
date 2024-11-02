@@ -73,11 +73,8 @@ local ARGUS_ZONES = {
 
 local function isHalloween()
 	local date = C_DateAndTime.GetCurrentCalendarTime()
-	if (date.month == 10 and date.monthDay >= 18) or (date.month == 11 and date.monthDay == 1) then
-		if not ((date.monthDay == 18 and date.hour < 10) or (date.monthDay == 1 and date.hour > 11)) then
-			return true
-		end
-	end
+	local dateNum = tonumber(string.format('%02d%02d%02d', date.month, date.monthDay, date.hour))
+	return dateNum >= 101810 and dateNum <= 110811
 end
 
 local function getMount()
