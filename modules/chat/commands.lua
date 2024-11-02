@@ -34,7 +34,11 @@ addon:RegisterSlash('/mapid', function()
 		mapID = addon:GetPlayerMapID()
 	end
 
-	print('Map ID:', mapID, 'for', C_Map.GetMapInfo(mapID).name)
+	if mapID then
+		print('Map ID:', mapID, 'for', C_Map.GetMapInfo(mapID).name)
+	else
+		print('No valid map ID')
+	end
 end)
 
 addon:RegisterSlash('/npcid', function()
