@@ -71,17 +71,6 @@ local ARGUS_ZONES = {
 	[882] = true, -- Eredath
 }
 
-local DRAGON_ISLES_ZONES = {
-	[2022] = true, -- The Waking Shores
-	[2023] = true, -- Ohn'ahran Plains
-	[2024] = true, -- The Azure Span
-	[2025] = true, -- Thaldraszus
-	[2112] = true, -- Valdrakken
-	[2085] = true, -- The Primalist Future
-	[2151] = true, -- The Forbidden Reach
-	[2133] = true, -- Zaralek Cavern
-}
-
 local function isHalloween()
 	local date = C_DateAndTime.GetCurrentCalendarTime()
 	if (date.month == 10 and date.monthDay >= 18) or (date.month == 11 and date.monthDay == 1) then
@@ -109,8 +98,7 @@ local function getMount()
 		return collectedSpecialMounts.chauffeured[math.random(#collectedSpecialMounts.chauffeured)], Enum_MountType.Mount
 	end
 
-	local playerMapID = addon:GetPlayerMapID()
-	if isHalloween() and not DRAGON_ISLES_ZONES[playerMapID] then
+	if isHalloween() then
 		-- prefer the instant-mount Magic Broom during halloween
 		if #collectedSpecialMounts.halloween > 0 then
 			-- prefer the trained mount(s)
