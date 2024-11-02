@@ -6,7 +6,8 @@ local MONEY = _G.MONEY -- globalstring
 -- track mailboxes if we have pending mail
 function addon:UPDATE_PENDING_MAIL()
 	for index = 1, C_Minimap.GetNumTrackingTypes() do
-		if C_Minimap.GetTrackingInfo(index) == MINIMAP_TRACKING_MAILBOX then
+		local trackingInfo = C_Minimap.GetTrackingInfo(index)
+		if trackingInfo and trackingInfo.name == MINIMAP_TRACKING_MAILBOX then
 			C_Minimap.SetTracking(index, HasNewMail())
 			break
 		end
@@ -27,9 +28,8 @@ hooksecurefunc('SendMail', function(name)
 end)
 
 -- auto send when attachment limit reached
-function addon:UI_ERROR_MESSAGE(messageID)
-	if messageID == 655 then -- "You cannot attach more than 12 items to mail."
-		-- TODO: find an enum or something for this, as it changes every patch
+function addon:UI_ERROR_MESSAGE(_, msg)
+	if msg == ERR_MAIL_INVALID_ATTACHMENT_SLOT then
 		SendMailMailButton:Click()
 	end
 end
