@@ -39,3 +39,8 @@ for index = 1, GetNumClasses() do
 			addon.colors.class[classToken] = C_ClassColor.GetClassColor(classToken)
 	end
 end
+
+addon.colors.reaction = {}
+for key, color in next, _G.FACTION_BAR_COLORS do
+	addon.colors.reaction[key] = addon:CreateColor(color.r, color.g, color.b)
+end
