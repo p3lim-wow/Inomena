@@ -33,6 +33,9 @@ local function updateTab(tab)
 	end
 end
 
+hooksecurefunc('FCFTab_UpdateColors', updateTab)
+hooksecurefunc('FCF_StartAlertFlash', updateTab)
+
 local modifiedTabs = {}
 local function modifyTab(tab)
 	if modifiedTabs[tab] then
@@ -57,16 +60,8 @@ local function modifyTab(tab)
 	end
 end
 
-hooksecurefunc('FCFTab_UpdateColors', updateTab)
-hooksecurefunc('FCF_StartAlertFlash', updateTab)
-
 for index = 1, NUM_CHAT_WINDOWS do
 	modifyTab(_G['ChatFrame' .. index .. 'Tab'])
-
-	-- hide chat frame background crap too
-	for _, texture in next, CHAT_FRAME_TEXTURES do
-		addon:Hide('ChatFrame' .. index .. texture)
-	end
 end
 
 hooksecurefunc('FCF_SetTemporaryWindowType', function(chatFrame)
