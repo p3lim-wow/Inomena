@@ -46,11 +46,6 @@ modules/chat/tabs.lua
 modules/chat/filter.lua
 modules/chat/substitute.lua
 
-modules/compat/opie/skin.lua
-modules/compat/opie/rings.lua
-modules/compat/opie/settings.lua
-modules/compat/tomtom.lua
-
 modules/misc/alerts.lua
 modules/misc/hide.lua
 modules/misc/popups.lua
@@ -83,3 +78,11 @@ modules/tooltip/data.lua
 modules/tooltip/style.lua
 modules/tooltip/expiration.lua
 modules/tooltip/addons.lua
+
+# load compat late, since it's most prone to errors from
+# other developers changing something unexpected
+modules/compat/opie/style.lua
+modules/compat/opie/rings.lua
+modules/compat/opie/settings.lua
+modules/compat/tomtom.lua
+modules/compat/syndicator.lua
