@@ -94,28 +94,38 @@ function addon:AddBackdrop(frame)
 	borderLeft:SetPoint('TOPLEFT', -1, 1)
 	borderLeft:SetPoint('BOTTOMLEFT', -1, -1)
 	borderLeft:SetWidth(1)
+	borderLeft:SetTexelSnappingBias(0)
+	borderLeft:SetSnapToPixelGrid(false)
 	table.insert(frame.backdropEdges, borderLeft)
 
 	local borderRight = frame:CreateTexture('BACKGROUND')
 	borderRight:SetPoint('TOPRIGHT', 1, 1)
 	borderRight:SetPoint('BOTTOMRIGHT', 1, -1)
 	borderRight:SetWidth(1)
+	borderRight:SetTexelSnappingBias(0)
+	borderRight:SetSnapToPixelGrid(false)
 	table.insert(frame.backdropEdges, borderRight)
 
 	local borderTop = frame:CreateTexture('BACKGROUND')
 	borderTop:SetPoint('TOPLEFT', -1, 1)
 	borderTop:SetPoint('TOPRIGHT', 1, 1)
 	borderTop:SetHeight(1)
+	borderTop:SetTexelSnappingBias(0)
+	borderTop:SetSnapToPixelGrid(false)
 	table.insert(frame.backdropEdges, borderTop)
 
 	local borderBottom = frame:CreateTexture('BACKGROUND')
 	borderBottom:SetPoint('BOTTOMLEFT', -1, -1)
 	borderBottom:SetPoint('BOTTOMRIGHT', 1, -1)
 	borderBottom:SetHeight(1)
+	borderBottom:SetTexelSnappingBias(0)
+	borderBottom:SetSnapToPixelGrid(false)
 	table.insert(frame.backdropEdges, borderBottom)
 
 	local background = frame:CreateTexture('BACKGROUND')
 	background:SetAllPoints()
+	background:SetTexelSnappingBias(0)
+	background:SetSnapToPixelGrid(false)
 	frame.backdropBackground = background
 
 	-- set defaults
