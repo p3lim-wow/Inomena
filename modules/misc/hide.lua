@@ -14,7 +14,6 @@ addon:Hide('MinimapCompassTexture')
 addon:Hide('MinimapCluster', 'BorderTop')
 addon:Hide('MinimapCluster', 'InstanceDifficulty')
 addon:Hide('MinimapCluster', 'IndicatorFrame')
-addon:Hide('MinimapCluster', 'Tracking')
 addon:Hide('MinimapCluster', 'ZoneTextButton')
 addon:Hide('Minimap', 'ZoomIn')
 addon:Hide('Minimap', 'ZoomOut')
@@ -29,7 +28,7 @@ addon:Hide('BuffFrame')
 addon:Hide('DebuffFrame')
 BuffFrame.numHideableBuffs = 0 -- avoid EditMode errors
 
--- chat frame buttons
+-- chat frame buttons and such
 addon:Hide('QuickJoinToastButton')
 addon:Hide('ChatFrameChannelButton')
 addon:Hide('ChatFrameMenuButton')
@@ -37,13 +36,17 @@ for index = 1, (_G.NUM_CHAT_WINDOWS or 10) do
 	addon:Hide('ChatFrame' .. index .. 'ButtonFrame')
 	addon:Hide('ChatFrame' .. index, 'ScrollBar')
 end
+addon:Hide('ChatFrame1EditBoxMid')
+addon:Hide('ChatFrame1EditBoxLeft')
+addon:Hide('ChatFrame1EditBoxRight')
 
 addon:Hide('MainMenuBarVehicleLeaveButton')
 addon:Hide('MicroMenu')
 addon:Hide('BagsBar')
 addon:Hide('MicroButtonAndBagsBar')
-addon:Hide('DurabilityFrame')
-DurabilityFrame.SetParent = nop -- avoid EditMode errors
+DurabilityFrame:UnregisterAllEvents() -- doesn't taint, just let it be
+DurabilityFrame:EnableMouse(false)
+DurabilityFrame:SetAlpha(0)
 
 -- misc stuff we hide that isn't covered by EditMode
 addon:Hide('TicketStatusFrame')
@@ -58,3 +61,11 @@ addon:HookAddOn('Blizzard_WeeklyRewards', function()
 		addon:Hide('WeeklyRewardsFrame', 'Overlay')
 	end)
 end)
+
+-- I keep accidentally clicking the reset buttons
+addon:Hide('LFGListFrame', 'SearchPanel', 'FilterButton', 'ResetToDefaults')
+for _, frame in next, WorldMapFrame.overlayFrames do
+	if frame.ResetButton then
+		addon:Hide(frame, 'ResetButton')
+	end
+end
