@@ -36,6 +36,12 @@ function StaticPopupDialogs.REPLACE_ENCHANT:OnShow()
 		StaticPopup_Hide(self.which)
 	end
 end
+function StaticPopupDialogs.REPLACE_TRADESKILL_ENCHANT:OnShow()
+	if ProfessionsFrame and ProfessionsFrame:IsShown() then
+		StaticPopupDialogs[self.which].OnAccept()
+		StaticPopup_Hide(self.which)
+	end
+end
 
 -- don't prompt to equip shareable items
 function addon:EQUIP_BIND_TRADEABLE_CONFIRM(slot)
