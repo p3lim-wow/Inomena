@@ -40,3 +40,15 @@ ChatFrame_AddMessageEventFilter('CHAT_MSG_SYSTEM', function(self, event, msg, ..
 
 	return false, msg, ...
 end)
+
+-- prevent spam from doing island expeditions
+local AZERITE_ISLAND = AZERITE_ISLANDS_XP_GAIN:gsub('%%d', '[0-9]+'):gsub('%%s', '.+')
+local AZERITE_HEART = AZERITE_XP_GAIN:gsub('^%%s', '.+'):gsub('%%s', '[0-9,. ]+')
+ChatFrame_AddMessageEventFilter('CHAT_MSG_SYSTEM', function(self, event, msg, ...)
+	if msg:match(AZERITE_ISLAND) then
+		return true
+	elseif msg:match(AZERITE_HEART) then
+		return true
+	end
+	return false, msg, ...
+end)
