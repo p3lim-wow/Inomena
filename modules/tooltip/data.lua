@@ -61,21 +61,6 @@ function tooltip:PetAction(data)
 	end
 end
 
-function tooltip:Macro()
-	local button = self:GetOwner()
-	if button and button.action then
-		local _, macroID = GetActionInfo(button.action)
-		if macroID then
-			addLine(self, 'macro', (GetMacroInfo(macroID)), true)
-
-			local spellID = GetMacroSpell(macroID)
-			if spellID then
-				addLine(self, 'spell', spellID)
-			end
-		end
-	end
-end
-
 tooltip.Corpse = tooltip.Unit
 tooltip.UnitAura = tooltip.Spell
 tooltip.Toy = tooltip.Item
