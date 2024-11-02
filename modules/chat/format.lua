@@ -173,7 +173,12 @@ function editBoxHooks.BN_WHISPER(editBox)
 end
 
 function editBoxHooks.CHANNEL(editBox)
-	local _, channelName, instanceID = GetChannelName(editBox:GetAttribute('channelTarget'))
+	local channelIndex = editBox:GetAttribute('channelTarget')
+	if not channelIndex then
+		return
+	end
+
+	local _, channelName, instanceID = GetChannelName(channelIndex)
 	if channelName then
 		channelName = channelName:match('%w+')
 		if instanceID > 0 then
