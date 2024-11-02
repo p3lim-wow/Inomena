@@ -81,7 +81,7 @@ local function addMessage(chatFrame, msg, ...)
 end
 
 for index = 1, NUM_CHAT_WINDOWS do
-	if index ~= 2 then -- ignore combat frame
+	if index ~= 2 and index ~= 3 then -- ignore combat and voice frames
 		-- override the message injection
 		local chatFrame = _G['ChatFrame' .. index]
 		chatFrameHooks[chatFrame] = chatFrame.AddMessage
