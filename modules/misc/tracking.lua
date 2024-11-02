@@ -13,9 +13,9 @@ if addon.PLAYER_CLASS == 'HUNTER' then
 	TRACKING[136466] = true -- Stable Master
 end
 
-function addon:PLAYER_LOGIN()
+function addon:OnLogin()
 	for index = 1, C_Minimap.GetNumTrackingTypes() do
-		local _, texture = C_Minimap.GetTrackingInfo(index)
-		C_Minimap.SetTracking(index, TRACKING[texture] or false)
+		local info = C_Minimap.GetTrackingInfo(index)
+		C_Minimap.SetTracking(index, TRACKING[info.texture] or false)
 	end
 end
