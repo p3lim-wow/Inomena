@@ -42,6 +42,11 @@ function addon:TIME_PLAYED_MSG(total)
 	end
 end
 
+local AVG_VALUE = '%.2f hours/day'
+local function formatAverage(total)
+	return AVG_VALUE:format(total / (GetServerTime() - 1108080000) * 24)
+end
+
 hooksecurefunc('ChatFrame_DisplayTimePlayed', function(self)
 	local total = 0
 	for _, characters in next, _G.InomenaPlayed do
@@ -54,6 +59,7 @@ hooksecurefunc('ChatFrame_DisplayTimePlayed', function(self)
 	local time = TIME_DAYHOURMINUTESECOND:format(d, h, m, s)
 	local info = ChatTypeInfo.SYSTEM
 	self:AddMessage('Account time played: ' .. time, info.r, info.g, info.b, info.id)
+	self:AddMessage('Average time played since launch: ' .. formatAverage(total), info.r, info.g, info.b, info.id)
 end)
 
 function addon:PLAYER_LOGOUT()
