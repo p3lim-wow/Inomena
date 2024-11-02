@@ -297,11 +297,9 @@ local function addSwimmingMounts()
 	addRing(ring)
 end
 
-function addon:PLAYER_LOGIN()
-	if not IsAddOnLoaded('OPie') then
-		return
+function addon:OnLogin()
+	if addon:IsAddOnEnabled('OPie') then
+		addSwimmingMounts()
 	end
-
-	addSwimmingMounts()
 end
 
