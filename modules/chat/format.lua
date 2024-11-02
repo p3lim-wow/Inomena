@@ -141,7 +141,7 @@ function addon:CHAT_MSG_WHISPER(_, playerName, _, _, _, _, _, _, _, _, _, player
 	end
 end
 
-function addon:PLAYER_LOGIN()
+function addon:OnLogin()
 	-- these two don't seem to trigger on login
 	self:FRIENDLIST_UPDATE()
 	self:GROUP_ROSTER_UPDATE()
