@@ -6,6 +6,7 @@ local RINGS = {
 		limit = 'MAGE',
 
 		{'spell', 193759, c='d000ff'},                    -- Hall of the Guardian
+		{'spell', 446540, c='9bf2f0'},                    -- Dornogal
 		{'spell', 395277, c='ffc853'},                    -- Valdrakken
 		{'spell', 344587, c='209fe6'},                    -- Oribos
 		{'spell', 281404, c='f9e222', show='[horde]'},    -- Dazar'alor
@@ -37,6 +38,7 @@ local RINGS = {
 		limit = 'MAGE',
 
 		{'spell', 193759, c='d000ff'},                    -- Hall of the Guardian (just for symmetry)
+		{'spell', 446534, c='9bf2f0'},                    -- Dornogal
 		{'spell', 395289, c='ffc853'},                    -- Valdrakken
 		{'spell', 344597, c='209fe6'},                    -- Oribos
 		{'spell', 281402, c='f9e222', show='[horde]'},    -- Dazar'alor
@@ -91,6 +93,7 @@ local RINGS = {
 	{
 		name = 'Wormhole',
 
+		{'toy', 221966}, -- Wormhole Generator: Khaz Algar
 		{'toy', 198156}, -- Wyrmhole Generator (Dragonflight)
 		{'toy', 172924}, -- Wormhole Generator: Shadowlands
 		{'toy', 168807}, -- Wormhole Generator: Kul Tiras
@@ -170,8 +173,6 @@ local RINGS = {
 		{'item', 95051, show='[have:95051]'}, -- The Brassiest Knuckle (Alliance)
 		{'item', 95050, show='[have:95050]'}, -- The Brassiest Knuckle (Horde)
 		{'item', 103678, show='[have:103678]'}, -- Time-Lost Artifact
-		{'item', 133755, show='[have:133755,noknown:201891]'}, -- Underlight Angler
-		{'spell', 201891, show='[known:201891]'}, -- Undercurrent (spell learned from Underlight Angler)
 		{'item', 142469, show='[have:142469]'}, -- Violet Seal of the Grand Magus
 		{'item', 63206, show='[have:63206]'}, -- Wrap of Unity (Alliance)
 		{'item', 63207, show='[have:63207]'}, -- Wrap of Unity (Horde)
@@ -182,6 +183,7 @@ local RINGS = {
 		{'toy', 136849, show='[me:druid]'}, -- Nature's Beacon (random)
 		{'toy', 95568, show='[horde,zone:Isle of Thunder][horde,zone:Throne of Thunder]'}, -- Sunreaver Beacon
 		{'toy', 95567, show='[alliance,zone:Isle of Thunder][alliance,zone:Throne of Thunder]'}, -- Kirin Tor Beacon
+		{'toy', 140324, show='[zone:Suramar]'}, -- Mobile Telemancy Beacon
 		{'toy', 169298, show='[horde,zone:Alterac Valley]'}, -- Frostwolf Insignia
 		{'toy', 169297, show='[alliance,zone:Alterac Valley]'}, -- Stormpike Insignia
 		{'toy', 43824, show='[zone:Dalaran]'}, -- The Schools of Arcane Magic - Mastery
@@ -203,25 +205,30 @@ local RINGS = {
 		{'item', 37863}, -- Direbrew's Remote
 		{'item', 180817, show='[zone:The Maw]'}, -- Cypher of Relocation
 		{'item', 141605, -- Flight Master's Whistle (only shown in zones where it can be used)
-			show = '[zone:Azsuna][zone:Val\'Sharah][zone:Highmountain][zone:Stormheim][zone:Suramar][zone:The Broken Shore][zone:Krokuun][zone:Antoran Wastes][zone:Eredath][zone:Zuldazar][zone:Nazmir][zone:Vol\'dun][zone:Tiragarde Sound][zone:Drustvar][zone:Stormsong Valley][zone:Nazjatar][zone:Mechagon]'
+			show = '[zone:Azsuna][zone:Val\'Sharah][zone:Highmountain][zone:Stormheim][zone:Suramar][zone:The Broken Shore][zone:Krokuun][zone:Antoran Wastes][zone:Eredath][zone:Zuldazar][zone:Nazmir][zone:Vol\'dun][zone:Tiragarde Sound][zone:Drustvar][zone:Stormsong Valley][zone:Nazjatar][zone:Mechagon]' --[zoneid:1332][zoneid:943]'
 		},
 		{'item', 168862, -- G.E.A.R. Tracking Beacon (alternative to Flight Master's Whistle, same rules)
-			show = '[zone:Azsuna][zone:Val\'Sharah][zone:Highmountain][zone:Stormheim][zone:Suramar][zone:The Broken Shore][zone:Krokuun][zone:Antoran Wastes][zone:Eredath][zone:Zuldazar][zone:Nazmir][zone:Vol\'dun][zone:Tiragarde Sound][zone:Drustvar][zone:Stormsong Valley][zone:Nazjatar][zone:Mechagon]'
+			show = '[zone:Azsuna][zone:Val\'Sharah][zone:Highmountain][zone:Stormheim][zone:Suramar][zone:The Broken Shore][zone:Krokuun][zone:Antoran Wastes][zone:Eredath][zone:Zuldazar][zone:Nazmir][zone:Vol\'dun][zone:Tiragarde Sound][zone:Drustvar][zone:Stormsong Valley][zone:Nazjatar][zone:Mechagon]' --[zoneid:1332][zoneid:943]'
 		},
 		{'toy', 205255, show='[zone:Zaralek Cavern]'}, -- Niffen Diggin' Mits (Zaralek Cavern, Dragon Isles)
 		{'toy', 110560}, -- Garrison Hearthstone (OPie has internal checks for these toys, no need for show conditional)
 		{'toy', 140192}, -- Dalaran Hearthstone (OPie has internal checks for these toys, no need for show conditional)
+		{'item', 219222, show='[have:219222]'}, -- Time-Lost Artifact
+		{'item', 217930, show='[have:217930]'}, -- Nostwin's Voucher (infinite bazaar during timerunning in 2024)
 	},
 	{
 		name = 'Special Mounts',
 
 		-- the first owned mount with the flag "fastClick" will be the default action
+		{'spell', 465235, fastClick=true}, -- Trader's Gilded Brutosaur
 		{'spell', 264058, fastClick=true}, -- Mighty Caravan Brutosaur
+		{'spell', 457485, fastClick=true}, -- Grizzly Hills Packmaster
 		{'spell', 122708, fastClick=true}, -- Grand Expedition Yak
 		{'spell', 61447, show='[horde]', fastClick=true}, -- Traveler's Tundra Mammoth (Horde)
 		{'spell', 61425, show='[alliance]', fastClick=true}, -- Traveler's Tundra Mammoth (Alliance)
-
+		{'spell', 436854}, -- Swift Flight Style
 		{'ring', addonName .. 'SwimmingMounts'}, -- TODO: randomize?
+		{'spell', 48778, show='[known:444008]'}, -- Acherus Deathcharger w/ On a Paler Horse hero talent
 	},
 	{
 		name = 'Professions',
@@ -241,10 +248,11 @@ local RINGS = {
 		{'spell', 78670}, -- Archaeology
 		{'spell', 271990}, -- Fishing Journal
 
-		{'spell', 53428}, -- Runeforging
+		{'spell', 53428}, -- (Death Knight) Runeforging (not a profession but lets treat it as one for convenience)
 
-		{'ring', addonName .. 'Campfire', rotationMode='shuffle'}, -- (might want to add this as a button to the profession window instead)
-		{'toy', 134020}, -- Chef's Hat (might want to add this as a button to the profession window instead)
+		-- slap bank utilities in here as I often use them in relation to professions
+		{'spell', 83958}, -- Mobile Banking
+		{'spell', 460905}, -- Warband Bank Distance Inhibitor
 	},
 }
 
