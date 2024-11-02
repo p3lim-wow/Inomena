@@ -1,16 +1,15 @@
 local addonName, addon = ...
 
-local mail = addon:CreateButton('Button', addonName .. 'MailButton', Minimap, 'SecureActionButtonTemplate')
-mail:SetPoint('TOPLEFT', 5, -5)
-mail:SetSize(30, 30)
-mail:SetAttribute('type', 'macro')
+local button = addon:CreateButton('Button', addonName .. 'MailButton', Minimap, 'SecureActionButtonTemplate')
+button:SetPoint('TOPLEFT', 5, -5)
+button:SetSize(30, 30)
 
-local icon = mail:CreateTexture('$parentIcon', 'OVERLAY')
+local icon = button:CreateTexture('$parentIcon', 'OVERLAY')
 icon:SetPoint('CENTER')
 icon:SetAtlas('mailbox', true)
 icon:SetScale(0.7)
 
-local work = mail:CreateTexture('$parentWorkIcon', 'OVERLAY')
+local work = button:CreateTexture('$parentWorkIcon', 'OVERLAY')
 work:SetAtlas('Vehicle-HammerGold-3', true)
 
 -- show icon if there is pending mail
@@ -32,6 +31,9 @@ end
 function addon:UPDATE_PENDING_MAIL()
 	icon:SetAlpha(HasNewMail() and 1 or 0)
 	updateWork()
+
+	-- trigger cache pull
+	GetLatestThreeSenders()
 end
 
 addon:RegisterEvent('CRAFTINGORDERS_UPDATE_PERSONAL_ORDER_COUNTS', updateWork)
