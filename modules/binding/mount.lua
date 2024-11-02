@@ -79,13 +79,13 @@ end
 
 local function getMount()
 	-- Torghast item mounts
-	if GetItemCount(174464) > 0 then
+	if C_Item.GetItemCount(174464) > 0 then
 		-- Spectral Bridle in Torghast
 		return 174464, Enum_MountType.Item
-	elseif GetItemCount(170499) > 0 then
+	elseif C_Item.GetItemCount(170499) > 0 then
 		-- Maw Seeker Harness in Torghast
 		return 170499, Enum_MountType.Item
-	elseif GetItemCount(168035) > 0 then
+	elseif C_Item.GetItemCount(168035) > 0 then
 		-- Mawrat Harness in Torghast
 		return 168035, Enum_MountType.Item
 	end
@@ -100,7 +100,7 @@ local function getMount()
 		if #collectedSpecialMounts.halloween > 0 then
 			-- prefer the trained mount(s)
 			return collectedSpecialMounts.halloween[math.random(#collectedSpecialMounts.halloween)], Enum_MountType.Mount
-		elseif GetItemCount(37011) > 0 then
+		elseif C_Item.GetItemCount(37011) > 0 then
 			-- fallback to the temporary mount
 			return 37011, Enum_MountType.Item
 		end
