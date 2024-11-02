@@ -158,8 +158,8 @@ function editBoxHooks.WHISPER(editBox)
 	local characterName = editBox:GetAttribute('tellTarget')
 	local characterClass = playerClass[characterName]
 	if characterClass then
-		local classColor = C_ClassColor.GetClassColor(characterClass)
-		editBox.header:SetFormattedText('|cffa1a1a1@|r%s: ', classColor:WrapTextInColorCode(characterName))
+		local color = addon.colors.class[characterClass]
+		editBox.header:SetFormattedText('|cffa1a1a1@|r%s: ', color:WrapTextInColorCode(characterName))
 	else
 		editBox.header:SetFormattedText('|cffa1a1a1@|r%s: ', characterName)
 	end
