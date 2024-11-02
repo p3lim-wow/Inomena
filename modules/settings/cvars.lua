@@ -10,7 +10,7 @@ local CVARS = {
 	lootUnderMouse = 0,
 	autoLootDefault = 1,
 	combinedBags = 0,
-	empowerTapControls = 1,
+	empowerTapControls = 1, -- this was moved somewhere else
 	softTargettingInteractKeySound = 0,
 	ClipCursor = 0,
 	mouseInvertPitch = 0,
@@ -18,9 +18,9 @@ local CVARS = {
 	cameraYawMoveSpeed = 90,
 	enableMouseSpeed = 0,
 	autoInteract = 0,
-	cameraWaterCollision = 0,
 	cameraYawSmoothSpeed = 180,
 	cameraPitchSmoothSpeed = 45,
+	cameraWaterCollision = 0,
 	cameraSmoothStyle = 0,
 
 	-- Interface
@@ -78,9 +78,11 @@ local CVARS = {
 	-- no cvar for focus cast key? we want it set to "None"
 	spellActivationOverlayOpacity = 0.5,
 	ActionButtonUseKeyHeldSpell = 0,
-	SoftTargetEnemy = 1,
+	SoftTargetEnemy = 0,
+	occludedSilhouettePlayer = 1,
 
 	-- Social
+	excludedCensorSources = 255,
 	profanityFilter = 0,
 	guildMemberNotify = 1,
 	blockTrades = 0,
@@ -111,18 +113,21 @@ local CVARS = {
 	movieSubtitle = 1,
 	overrideScreenFlash = 1,
 	questTextContrast = 0,
-	WorldTextMinSize = 8,
+	WorldTextMinSize = 10,
 	CameraKeepCharacterCentered = 1,
 	CameraReduceUnexpectedMovement = 1,
 	ShakeStrengthCamera = 1,
 	ShakeStrengthUI = 0,
 	cursorSizePreferred = 1,
-	SoftTargetInteract = 0,
+	SoftTargetInteract = 3, -- plater overrides this one, no way to stop it
 	SoftTargetTooltipInteract = 0,
+	SoftTargetIconFriend = 0,
 	SoftTargetIconEnemy = 0,
-	SoftTargetIconGameObject = 0,
+	SoftTargetIconGameObject = 1, -- plater overrides this one, no way to stop it
 	SoftTargetIconInteract = 0,
 	SoftTargetLowPriorityIcons = 0,
+	SoftTargetInteractArc = 0,
+	SoftTargetNameplateInteract = 0,
 	colorblindMode = 0,
 	speechToText = 0,
 	textToSpeech = 0,
@@ -130,7 +135,7 @@ local CVARS = {
 
 	-- Sound
 	-- Sound_EnableAllSound = 1,
-	-- Sound_MasterVolume = 0.2,
+	Sound_MasterVolume = 0.2,
 	-- Sound_SFXVolume = 0.3,
 	-- Sound_MusicVolume = 0.2,
 	-- Sound_AmbienceVolume = 0.1,
@@ -158,13 +163,17 @@ local UVARS = {
 	screenshotFormat = 'png',
 	screenshotQuality = 10,
 	scriptErrors = 1,
-	taintLog = 2,
+	taintLog = IsTestBuild() and 11 or 2,
 	-- trackQuestSorting = 'proximity',
 	-- secureAbilityToggle = 1,
 	-- nameplateOtherTopInset = -1,
 	-- nameplateOtherBottomInset = -1,
 	minimapTrackingShowAll = 1, -- to get the full minimap tracking menu back
 	AutoPushSpellToActionBar = 0,
+	DisableAdvancedFlyingFullScreenEffects = 1,
+	calendarShowResets = 0,
+	raidOptionIsShown = 0,
+	SpellQueueWindow = 70,
 }
 
 function addon:PLAYER_LOGIN()
@@ -174,11 +183,11 @@ function addon:PLAYER_LOGIN()
 	-- end
 
 	for key, value in next, CVARS do
-		C_CVar.SetCVar(key, tostring(value))
+		C_CVar.SetCVar(key, value)
 	end
 
 	for key, value in next, UVARS do
-		C_CVar.SetCVar(key, tostring(value))
+		C_CVar.SetCVar(key, value)
 	end
 
 	if UnitLevel('player') < GetMaxLevelForPlayerExpansion() then
