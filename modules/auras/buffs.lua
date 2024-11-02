@@ -30,11 +30,11 @@ end
 
 function auraMixin:UpdateAura(index)
 	local unit = self:GetParent():GetAttribute('unit')
-	local exists, texture, count, _, _, expiration = UnitAura(unit, index, 'HELPFUL')
-	if exists then
-		self.Icon:SetTexture(texture)
-		self.Count:SetText(count > 1 and count or '')
-		self.expiration = expiration - GetTime()
+	local aura = C_UnitAuras.GetAuraDataByIndex(unit, index, 'HELPFUL')
+	if aura.name then
+		self.Icon:SetTexture(aura.icon)
+		self.Count:SetText(aura.applications > 1 and aura.applications or '')
+		self.expiration = aura.expirationTime - GetTime()
 	end
 end
 
@@ -46,9 +46,9 @@ function auraMixin:UpdateEnchant(inventorySlotIndex)
 		_, _, _, _, _, duration, count, enchantID = GetWeaponEnchantInfo()
 	end
 
-	self.enchantSpellID = addon.ENCHANT_IDS[enchantID]
+	self.enchantSpellID = addon.data.enchants[enchantID]
 	-- self.Icon:SetTexture(GetInventoryItemTexture('player', inventorySlotIndex))
-	self.Icon:SetTexture(GetSpellTexture(self.enchantSpellID))
+	self.Icon:SetTexture(C_Spell.GetSpellTexture(self.enchantSpellID))
 	self.Count:SetText(count and count > 1 or '')
 	self.expiration = duration / 1000
 	self:SetBorderColor(0.6, 0, 1) -- some flare
@@ -90,7 +90,7 @@ end
 
 
 local Buffs = CreateFrame('Frame', nil, WorldFrame, 'SecureAuraHeaderTemplate')
-Buffs:SetPoint('TOPRIGHT', Minimap, 'TOPLEFT', -20, 0)
+Buffs:SetPoint('TOPRIGHT', Minimap, 'TOPLEFT', -25, 0)
 
 -- make sure the auras are hidden when UI is hidden since we parent to WorldFrame
 UIParent:HookScript('OnShow', function()
@@ -115,8 +115,8 @@ Buffs:SetAttribute('sortDirection', '-') -- shortest to longest, left to right
 Buffs:SetAttribute('point', 'TOPRIGHT')
 Buffs:SetAttribute('minWidth', 510)
 Buffs:SetAttribute('minHeight', 210)
-Buffs:SetAttribute('xOffset', -43)
-Buffs:SetAttribute('wrapYOffset', -43)
+Buffs:SetAttribute('xOffset', -42)
+Buffs:SetAttribute('wrapYOffset', -42)
 Buffs:SetAttribute('wrapAfter', 12)
 Buffs:SetAttribute('initialConfigFunction', [[
 	self:SetAttribute('type2', 'cancelaura')
