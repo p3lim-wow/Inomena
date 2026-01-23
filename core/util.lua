@@ -18,3 +18,59 @@ function addon:IsHalloween()
 	local dateNum = tonumber(string.format('%02d%02d%02d', date.month, date.monthDay, date.hour))
 	return dateNum >= 101810 and dateNum <= 110111
 end
+
+do
+	local inDungeon, inRaid
+
+	local DUNGEON_INSTANCE_TYPES = {
+		scenario = true,
+		party = true,
+		raid = true,
+	}
+
+	addon:RegisterEvent('PLAYER_ENTERING_WORLD', function()
+		local _, instanceType = GetInstanceInfo()
+		inDungeon = DUNGEON_INSTANCE_TYPES[instanceType]
+		inRaid = instanceType == 'raid'
+	end)
+
+	function addon:IsInDungeon()
+		return inDungeon
+	end
+
+	function addon:IsInRaid()
+		return inRaid
+	end
+end
+
+do
+	local abbreviateConfig = {
+		breakpointData = {
+			{ -- billions
+				breakpoint = 1e9,
+				abbreviation = 'b',
+				significandDivisor = 1e6,
+				fractionDivisor = 1e3,
+				abbreviationIsGlobal = false,
+			},
+			{ -- millions
+				breakpoint = 1e6,
+				abbreviation = 'm',
+				significandDivisor = 1e4,
+				fractionDivisor = 100,
+				abbreviationIsGlobal = false,
+			},
+			{ -- thousands
+				breakpoint = 1e4,
+				abbreviation = 'k',
+				significandDivisor = 100,
+				fractionDivisor = 10,
+				abbreviationIsGlobal = false,
+			},
+		},
+	}
+
+	function addon:AbbreviateNumbers(value)
+		return AbbreviateNumbers(value, abbreviateConfig)
+	end
+end
