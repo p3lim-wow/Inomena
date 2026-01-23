@@ -26,10 +26,13 @@ addon:Hide('Minimap', 'ZoomHitArea')
 addon:Hide('GameTimeFrame')
 addon:Hide('ExpansionLandingPageMinimapButton')
 
--- we create our own buffs in modules\widgets\buffs.lua
+-- we create our own buffs (modules\widgets\buffs.lua)
 addon:Hide('BuffFrame')
 CVarCallbackRegistry:UnregisterCallback('consolidateBuffs', BuffFrame)
 CVarCallbackRegistry:UnregisterCallback('collapseExpandBuffs', BuffFrame)
+
+-- we create our own debuffs (modules\units\player.lua)
+addon:Hide('DebuffFrame')
 
 addon:HookAddOn('Blizzard_OrderHallUI', function()
 	addon:Hide('OrderHallCommandBar')
