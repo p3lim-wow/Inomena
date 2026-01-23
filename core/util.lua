@@ -74,3 +74,17 @@ do
 		return AbbreviateNumbers(value, abbreviateConfig)
 	end
 end
+
+function addon:ResizePillsToFit(pills, numPills, spacing)
+	local maxWidth = math.floor(pills:GetWidth())
+	local barWidth = math.floor((maxWidth / numPills) - (spacing or addon.SPACING) + ((spacing or addon.SPACING) / numPills))
+	local leftover = maxWidth - ((barWidth * numPills) + ((spacing or addon.SPACING) * (numPills - 1)))
+
+	for index = 1, numPills do
+		if leftover > (numPills - index) then
+			pills[index]:SetWidth(barWidth + 1)
+		else
+			pills[index]:SetWidth(barWidth)
+		end
+	end
+end

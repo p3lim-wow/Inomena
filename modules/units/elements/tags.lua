@@ -43,6 +43,13 @@ tags.Methods['inomena:hptarget'] = function(unit)
 	end
 end
 
+tags.Events['inomena:power'] = 'UNIT_POWER_FREQUENT UNIT_POWER_UPDATE UNIT_MAXPOWER'
+tags.Methods['inomena:power'] = function(unit)
+	if UnitPowerType(unit) ~= Enum.PowerType.Mana then
+		return C_StringUtil.TruncateWhenZero(UnitPower(unit))
+	end
+end
+
 tags.Events['inomena:reactioncolor'] = 'UNIT_FACTION UNIT_CONNECTION UNIT_NAME_UPDATE'
 tags.Methods['inomena:reactioncolor'] = function(unit)
 	local reaction = UnitReaction(unit, 'player')

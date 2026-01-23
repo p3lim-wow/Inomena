@@ -73,3 +73,15 @@ addon.enums.ClassSpecializations = {
 		Protection = 3,
 	},
 }
+
+addon.enums.DruidForms = {
+	-- useful with GetShapeshiftFormID()
+	Cat = 1,
+	TreeOfLife = 2,
+	Travel = 3,
+	Aquatic = 4,
+	Bear = 5,
+	SwiftFlight = 27,
+	Flight = 29,
+	Moonkin = 31,
+}

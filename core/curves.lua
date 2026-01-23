@@ -18,3 +18,41 @@ addon.curves.AuraAlpha:AddPoint(0.1, 1)
 addon.curves.AuraAlpha:AddPoint(9.9, 1)
 addon.curves.AuraAlpha:AddPoint(89, 1)
 addon.curves.AuraAlpha:AddPoint(90, 0)
+
+-- if the percentage is < 100 then show decimal points, 2 if below 10%
+-- yet again we offset the numbers to avoid weird flashing
+addon.curves.PercentageDecimals = C_CurveUtil.CreateCurve()
+addon.curves.PercentageDecimals:SetType(Enum.LuaCurveType.Step)
+addon.curves.PercentageDecimals:AddPoint(0.0990000, 2)
+addon.curves.PercentageDecimals:AddPoint(0.0990001, 1)
+addon.curves.PercentageDecimals:AddPoint(0.99, 1)
+addon.curves.PercentageDecimals:AddPoint(0.9900001, 0)
+addon.curves.PercentageDecimals:AddPoint(1.0, 0)
+
+-- curves which will yield 0 if the power type is in an idle state, otherwise 1
+addon.curves.PowerIdleAlpha = {}
+for powerType, direction in next, {
+	[Enum.PowerType.Mana] = 1,
+	[Enum.PowerType.Rage] = 0,
+	[Enum.PowerType.Focus] = 1,
+	[Enum.PowerType.Energy] = 1,
+	[Enum.PowerType.RunicPower] = 0,
+	[Enum.PowerType.LunarPower] = 0,
+	[Enum.PowerType.Insanity] = 0,
+	[Enum.PowerType.Fury] = 0,
+} do
+	local alphaCurve = C_CurveUtil.CreateCurve()
+	alphaCurve:SetType(Enum.LuaCurveType.Step)
+
+	if direction > 0 then
+		-- this power type regenerates
+		alphaCurve:AddPoint(0.9999999, 1)
+		alphaCurve:AddPoint(1.0, 0)
+	else
+		-- this power type is gained
+		alphaCurve:AddPoint(0.0, 0)
+		alphaCurve:AddPoint(0.0000001, 1)
+	end
+
+	addon.curves.PowerIdleAlpha[powerType] = alphaCurve
+end
