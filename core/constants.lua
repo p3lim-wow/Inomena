@@ -7,6 +7,30 @@ addon.PLAYER_FACTION = UnitFactionGroup('player')
 addon.PLAYER_FACTION_ID = Enum.PvPFaction[addon.PLAYER_FACTION]
 addon.PLAYER_REALM = GetRealmName()
 
+addon.POWER_TYPE_TOKEN = {
+	[Enum.PowerType.Mana] = 'MANA',
+	[Enum.PowerType.Rage] = 'RAGE',
+	[Enum.PowerType.Focus] = 'FOCUS',
+	[Enum.PowerType.Energy] = 'ENERGY',
+	[Enum.PowerType.ComboPoints] = 'COMBO_POINTS',
+	[Enum.PowerType.Runes] = 'RUNES',
+	[Enum.PowerType.RunicPower] = 'RUNIC_POWER',
+	[Enum.PowerType.SoulShards] = 'SOUL_SHARDS',
+	[Enum.PowerType.LunarPower] = 'LUNAR_POWER',
+	[Enum.PowerType.HolyPower] = 'HOLY_POWER',
+	[Enum.PowerType.Maelstrom] = 'MAELSTROM',
+	[Enum.PowerType.Chi] = 'CHI',
+	[Enum.PowerType.Insanity] = 'INSANITY',
+	[Enum.PowerType.ArcaneCharges] = 'ARCANE_CHARGES',
+	[Enum.PowerType.Fury] = 'FURY',
+	[Enum.PowerType.Essence] = 'ESSENCE',
+}
+
+addon.POWER_TOKEN_TYPE = {}
+for powerType, powerToken in next, addon.POWER_TYPE_TOKEN do
+	addon.POWER_TOKEN_TYPE[powerToken] = powerType
+end
+
 addon.CLASS_RESURRECT_SPELLS = {
 	DRUID = 50769, -- Revive
 	EVOKER = 361227, -- Return

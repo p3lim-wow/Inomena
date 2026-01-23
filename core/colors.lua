@@ -19,6 +19,30 @@ for key, color in next, FACTION_BAR_COLORS do
 	addon.colors.reaction[key] = addon:CreateColor(color.r, color.g, color.b)
 end
 
+addon.colors.power = {}
+for powerToken, color in next, PowerBarColor do
+	local powerType = addon.POWER_TOKEN_TYPE[powerToken]
+	if powerType then
+		addon.colors.power[powerType] = addon:CreateColor(color.r, color.g, color.b)
+
+		-- add atlases too
+		if color.atlas then
+			addon.colors.power[powerType].atlas = color.atlas
+		end
+	end
+end
+
+-- replace some of the colors I don't agree with
+addon.colors.power[Enum.PowerType.Mana] = addon:CreateColor(0, 144, 255)
+addon.colors.power[Enum.PowerType.ArcaneCharges] = addon:CreateColor(186, 77, 188)
+addon.colors.power[Enum.PowerType.SoulShards] = addon:CreateColor(135, 136, 238)
+
+-- add missing power colors
+addon.colors.power[Enum.PowerType.Essence] = addon:CreateColor(100, 173, 206)
+addon.colors.power[Enum.PowerType.RuneBlood] = addon:CreateColor(247, 65, 57)
+addon.colors.power[Enum.PowerType.RuneFrost] = addon:CreateColor(148, 203, 247)
+addon.colors.power[Enum.PowerType.RuneUnholy] = addon:CreateColor(173, 235, 66)
+
 -- custom colors
 
 addon.colors.durability = {

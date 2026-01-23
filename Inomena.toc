@@ -12,6 +12,7 @@
 
 templates.xml
 
+core\enums.lua
 core\constants.lua
 core\curves.lua
 core\colors.lua
