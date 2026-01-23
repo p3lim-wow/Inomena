@@ -135,6 +135,7 @@ read_globals = {
 	'C_AddOns',
 	'C_ClassColor',
 	'C_ClassTalents',
+	'C_ColorUtil',
 	'C_CraftingOrders',
 	'C_CurveUtil',
 	'C_DateAndTime',

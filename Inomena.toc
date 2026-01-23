@@ -34,6 +34,7 @@ modules\settings\played.lua
 modules\settings\tracking.lua
 
 modules\units\elements\core.lua
+modules\units\elements\colors.lua
 modules\units\elements\auras.lua
 modules\units\elements\castbar.lua
 modules\units\elements\health.lua
