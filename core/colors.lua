@@ -36,6 +36,7 @@ addon.colors.creature = {
 	trivial = addon:CreateColor(110, 110, 110),
 	tapped = addon:CreateColor(110, 110, 110),
 }
+
 addon.colors.cast = {
 	importantshielded = addon:CreateColor(230, 95, 232),
 	shielded = addon:CreateColor(132, 132, 132),
@@ -43,4 +44,11 @@ addon.colors.cast = {
 	important = addon:CreateColor(221, 51, 51),
 	interruptible = addon:CreateColor(95, 175, 139),
 	normal = addon:CreateColor(79, 128, 192),
+}
+
+addon.colors.chatTab = {
+	alert = addon:CreateColor(1, 0, 0),
+	hover = addon:CreateColor(0, 153, 255),
+	active = addon:CreateColor(1, 1, 1),
+	inactive = addon:CreateColor(127, 127, 127),
 }
