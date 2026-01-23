@@ -13,3 +13,7 @@ for _, color in next, oUF.colors.reaction do
 	local h, s, v = C_ColorUtil.ConvertRGBToHSV(color:GetRGB())
 	color:SetRGB(C_ColorUtil.ConvertHSVToRGB(h, s, v * 0.6))
 end
+
+-- "disable" the "None" debuff color in oUF by coloring it the same as the default border color,
+-- don't want to mistake no type for bleeds
+oUF.colors.dispel[oUF.Enum.DispelType.None] = oUF:CreateColor(0, 0, 0)
