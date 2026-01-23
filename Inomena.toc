@@ -46,6 +46,7 @@ modules\widgets\coordinates.lua
 modules\widgets\guild.lua
 modules\widgets\mail.lua
 
+modules\blizzard\actionbar.lua
 modules\blizzard\character.lua
 modules\blizzard\chatframes.lua
 modules\blizzard\dressingroom.lua

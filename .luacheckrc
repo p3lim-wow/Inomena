@@ -51,6 +51,7 @@ read_globals = {
 	'MainActionBar',
 	'Minimap',
 	'MinimapCluster',
+	'PetActionBar',
 	'SendMailMailButton',
 	'SendMailMoneyCopper',
 	'SendMailMoneyGold',
@@ -71,6 +72,7 @@ read_globals = {
 	'NUM_ACTIONBAR_BUTTONS',
 	'NUM_CHAT_WINDOWS',
 	'PAPERDOLL_STATCATEGORIES',
+	'RANGE_INDICATOR',
 	'SILVER_PER_GOLD',
 
 	-- FrameXML mixins
@@ -166,6 +168,7 @@ read_globals = {
 	'GetNumClasses',
 	'GetNumGroupMembers',
 	'GetNumGuildMembers',
+	'GetPetActionInfo',
 	'GetPhysicalScreenSize',
 	'GetRaidRosterInfo',
 	'GetRealmName',
