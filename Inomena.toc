@@ -1,0 +1,54 @@
+## Interface: 120000, 120001
+## Author: p3lim
+## Title: Inomena
+## Notes: Collection of bits and bobs that make up my UI
+## Savedvariables: InomenaPlayed
+## X-oUF: oUF_Inomena
+
+# files are loaded in order of importance and likelihood of breaking
+
+..\oUF\oUF.xml
+..\Dashi\embed.xml
+
+templates.xml
+
+core\constants.lua
+core\curves.lua
+core\colors.lua
+core\assets.lua
+core\widgets.lua
+core\backdrop.lua
+core\util.lua
+core\bind.lua
+
+modules\settings\bindings\eject.lua
+modules\settings\bindings\misdirect.lua
+modules\settings\bindings\mount.lua
+modules\settings\bindings\reload.lua
+modules\settings\bindings\skyriding.lua
+
+modules\settings\played.lua
+modules\settings\tracking.lua
+
+modules\automations\alerts.lua
+modules\automations\gossip.lua
+modules\automations\repair.lua
+modules\automations\tracking.lua
+modules\automations\trash.lua
+
+modules\widgets\buffs.lua
+modules\widgets\combat.lua
+modules\widgets\commands.lua
+modules\widgets\coordinates.lua
+modules\widgets\mail.lua
+
+modules\blizzard\character.lua
+modules\blizzard\chatframes.lua
+modules\blizzard\dressingroom.lua
+modules\blizzard\hide.lua
+modules\blizzard\mail.lua
+modules\blizzard\minimap.lua
+modules\blizzard\popups.lua
+modules\blizzard\skyriding.lua
+
+modules\compat\minimap.lua

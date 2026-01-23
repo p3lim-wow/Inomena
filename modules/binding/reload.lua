@@ -1,3 +1,0 @@
-local _, addon = ...
-
-addon:BindButton('Reload', 'F12'):SetScript('OnClick', C_UI.Reload)
