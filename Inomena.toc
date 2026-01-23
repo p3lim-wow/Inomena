@@ -44,6 +44,7 @@ modules\widgets\combat.lua
 modules\widgets\commands.lua
 modules\widgets\coordinates.lua
 modules\widgets\guild.lua
+modules\widgets\herotalents.lua
 modules\widgets\mail.lua
 modules\widgets\talents.lua
 

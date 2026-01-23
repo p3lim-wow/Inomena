@@ -132,6 +132,7 @@ read_globals = {
 	-- namespaces
 	'C_AddOns',
 	'C_ClassColor',
+	'C_ClassTalents',
 	'C_CraftingOrders',
 	'C_CurveUtil',
 	'C_DateAndTime',
@@ -147,6 +148,7 @@ read_globals = {
 	'C_SpecializationInfo',
 	'C_Spell',
 	'C_SpellBook',
+	'C_Traits',
 	'C_UI',
 	'C_UnitAuras',
 	'Enum',
@@ -205,6 +207,7 @@ read_globals = {
 	'UnitInVehicle',
 	'UnitIsFriend',
 	'UnitIsUnit',
+	'UnitLevel',
 	'UnitName',
 	'UnitOnTaxi',
 	'UnitTokenFromGUID',
