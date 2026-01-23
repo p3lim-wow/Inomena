@@ -51,6 +51,10 @@ addon.colors.durability = {
 	CreateColor(0.93, 0.07, 0.07),
 }
 
+addon.colors.skyriding = {
+	normal = addon:CreateColor(77, 164, 194),
+	thrill = addon:CreateColor(168, 135, 65),
+}
 
 addon.colors.creature = {
 	boss = addon:CreateColor(188, 28, 0),

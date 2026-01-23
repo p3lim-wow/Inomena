@@ -62,6 +62,7 @@ modules\widgets\coordinates.lua
 modules\widgets\guild.lua
 modules\widgets\herotalents.lua
 modules\widgets\mail.lua
+modules\widgets\skyriding.lua
 modules\widgets\talents.lua
 
 modules\blizzard\actionbar.lua

@@ -68,6 +68,7 @@ read_globals = {
 
 	-- FrameXML constants
 	'CurveConstants',
+	'BASE_MOVEMENT_SPEED',
 	'COPPER_PER_GOLD',
 	'COPPER_PER_SILVER',
 	'DEFAULT_CHAT_FRAME',
@@ -147,6 +148,7 @@ read_globals = {
 	'C_MerchantFrame',
 	'C_Minimap',
 	'C_MountJournal',
+	'C_PlayerInfo',
 	'C_QuestLog',
 	'C_SpecializationInfo',
 	'C_Spell',
