@@ -21,6 +21,7 @@ core\backdrop.lua
 core\util.lua
 core\bind.lua
 
+modules\settings\bindings\buff.lua
 modules\settings\bindings\eject.lua
 modules\settings\bindings\misdirect.lua
 modules\settings\bindings\mount.lua
