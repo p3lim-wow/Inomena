@@ -2,7 +2,8 @@ local _, addon = ...
 
 -- disable skyriding bar
 
--- we bind the spells directly (modules/settings/bindings/skyriding.lua)
+-- we bind the spells directly (modules/settings/bindings/skyriding.lua), and we display
+-- cooldowns in a separate widget (modules/widgets/skyriding.lua), so we don't need/want the bar
 
 local listener = CreateFrame('Frame', nil, nil, 'SecureHandlerStateTemplate')
 
