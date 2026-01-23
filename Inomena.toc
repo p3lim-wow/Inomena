@@ -27,6 +27,7 @@ modules\settings\bindings\eject.lua
 modules\settings\bindings\misdirect.lua
 modules\settings\bindings\mount.lua
 modules\settings\bindings\reload.lua
+modules\settings\bindings\resurrect.lua
 modules\settings\bindings\skyriding.lua
 
 modules\settings\played.lua
