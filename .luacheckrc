@@ -80,6 +80,7 @@ read_globals = {
 	-- FrameXML misc objects
 	'ChatTypeInfo',
 	'CVarCallbackRegistry',
+	'Menu',
 	'PowerBarColor',
 	'SlashCmdList',
 	'CHAT_FRAMES',
@@ -89,6 +90,7 @@ read_globals = {
 	-- FrameXML utils
 	'AnchorUtil',
 	'ChatFrameUtil',
+	'MenuUtil',
 
 	-- FrameXML functions
 	'CreateAtlasMarkup',
@@ -107,10 +109,12 @@ read_globals = {
 	'SOUNDKIT',
 
 	-- GlobalStrings
+	'CHAT_GUILD_INVITE_SEND',
 	'DASH_WITH_TEXT',
 	'ERR_MAIL_INVALID_ATTACHMENT_SLOT',
 	'EVENT_TOAST_EXPANDED_DESCRIPTION',
 	'HAVE_MAIL',
+	'HEADER_COLON',
 	'MINIMAP_TRACKING_MAILBOX',
 	'MINIMAP_TRACKING_REPAIR',
 	'MONEY',
@@ -128,6 +132,7 @@ read_globals = {
 	'C_DateAndTime',
 	'C_DurationUtil',
 	'C_GossipInfo',
+	'C_GuildInfo',
 	'C_Item',
 	'C_Map',
 	'C_MerchantFrame',
@@ -151,6 +156,8 @@ read_globals = {
 	'GetBattlefieldStatus',
 	'GetClassInfo',
 	'GetGuildBankMoney',
+	'GetGuildInfo',
+	'GetGuildRosterInfo',
 	'GetInstanceInfo',
 	'GetInventoryAlertStatus',
 	'GetInventoryItemTexture',
@@ -158,6 +165,7 @@ read_globals = {
 	'GetMoney',
 	'GetNumClasses',
 	'GetNumGroupMembers',
+	'GetNumGuildMembers',
 	'GetPhysicalScreenSize',
 	'GetRaidRosterInfo',
 	'GetRealmName',
@@ -165,6 +173,7 @@ read_globals = {
 	'GetServerTime',
 	'GetSpecializationInfoForClassID',
 	'GetTime',
+	'GetUnitName',
 	'GetWeaponEnchantInfo',
 	'HasFullControl',
 	'HasNewMail',
@@ -186,6 +195,7 @@ read_globals = {
 	'UnitGroupRolesAssigned',
 	'UnitGUID',
 	'UnitInVehicle',
+	'UnitIsFriend',
 	'UnitIsUnit',
 	'UnitName',
 	'UnitOnTaxi',

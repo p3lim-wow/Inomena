@@ -43,6 +43,7 @@ modules\widgets\buffs.lua
 modules\widgets\combat.lua
 modules\widgets\commands.lua
 modules\widgets\coordinates.lua
+modules\widgets\guild.lua
 modules\widgets\mail.lua
 
 modules\blizzard\character.lua
