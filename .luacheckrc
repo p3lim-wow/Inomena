@@ -51,7 +51,9 @@ read_globals = {
 	'MainActionBar',
 	'Minimap',
 	'MinimapCluster',
+	'OverlayPlayerCastingBarFrame',
 	'PetActionBar',
+	'PlayerSpellsFrame',
 	'SendMailMailButton',
 	'SendMailMoneyCopper',
 	'SendMailMoneyGold',
@@ -95,6 +97,7 @@ read_globals = {
 	'MenuUtil',
 
 	-- FrameXML functions
+	'CreateAnchor',
 	'CreateAtlasMarkup',
 	'CreateColor',
 	'FormatLargeNumber',
@@ -141,6 +144,7 @@ read_globals = {
 	'C_Minimap',
 	'C_MountJournal',
 	'C_QuestLog',
+	'C_SpecializationInfo',
 	'C_Spell',
 	'C_SpellBook',
 	'C_UI',
@@ -168,6 +172,7 @@ read_globals = {
 	'GetNumClasses',
 	'GetNumGroupMembers',
 	'GetNumGuildMembers',
+	'GetNumSpecializations',
 	'GetPetActionInfo',
 	'GetPhysicalScreenSize',
 	'GetRaidRosterInfo',

@@ -45,6 +45,7 @@ modules\widgets\commands.lua
 modules\widgets\coordinates.lua
 modules\widgets\guild.lua
 modules\widgets\mail.lua
+modules\widgets\talents.lua
 
 modules\blizzard\actionbar.lua
 modules\blizzard\character.lua
