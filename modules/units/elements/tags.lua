@@ -87,10 +87,27 @@ tags.Methods['inomena:namecolor'] = function(unit)
 	return '|cffffffff'
 end
 
+tags.Events['inomena:leader'] = 'PARTY_LEADER_CHANGED'
+tags.Methods['inomena:leader'] = function(unit)
+	if UnitIsGroupLeader(unit) then
+		return '|cffffff00!|r'
+	end
+end
+
 tags.Events['inomena:resting'] = 'PLAYER_UPDATE_RESTING'
 tags.Methods['inomena:resting'] = function()
 	if IsResting() then
 		return [[|TInterface\HUD\UIUnitFrameRestingFlipbook:16:16:0:0:360:420:45:80:200:240|t]]
+	end
+end
+
+tags.Events['inomena:summon'] = 'INCOMING_SUMMON_CHANGED'
+tags.Methods['inomena:summon'] = function(unit)
+	local status = C_IncomingSummon.IncomingSummonStatus(unit)
+	if status == Enum.SummonStatus.Pending then
+		return '|A:Raid-Icon-SummonPending:32:32|a'
+	elseif status == Enum.SummonStatus.Accepted then
+		return [[|TInterface\RaidFrame\Raid-Icon-SummonPending:32:32:0:0:32:32:0:32:0:32:0:255:0|t]]
 	end
 end
 
@@ -107,5 +124,12 @@ tags.Methods['inomena:dead'] = function(unit)
 		return '|A:poi-soulspiritghost:18:19|a'
 	elseif UnitIsDead(unit) then
 		return '|A:warfront-alliancehero:32:32|a'
+	end
+end
+
+tags.Events['inomena:offline'] = 'UNIT_CONNECTION'
+tags.Methods['inomena:offline'] = function(unit)
+	if not UnitIsConnected(unit) then
+		return [[|TInterface\CharacterFrame\Disconnect-Icon:28|t]]
 	end
 end

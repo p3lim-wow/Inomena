@@ -31,6 +31,21 @@ for powerType, powerToken in next, addon.POWER_TYPE_TOKEN do
 	addon.POWER_TOKEN_TYPE[powerToken] = powerType
 end
 
+addon.CLASS_SPECIALIZATION_ROLE = {}
+for classIndex = 1, GetNumClasses() do
+	local _, classToken, classID = GetClassInfo(classIndex)
+	if classToken then
+		addon.CLASS_SPECIALIZATION_ROLE[classToken] = {}
+
+		for specIndex = 1, 4 do
+			local _, _, _, _, role = GetSpecializationInfoForClassID(classID, specIndex)
+			if role then
+				addon.CLASS_SPECIALIZATION_ROLE[classToken][specIndex] = role
+			end
+		end
+	end
+end
+
 addon.CLASS_RESURRECT_SPELLS = {
 	DRUID = 50769, -- Revive
 	EVOKER = 361227, -- Return

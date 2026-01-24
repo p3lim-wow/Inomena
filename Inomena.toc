@@ -40,6 +40,7 @@ modules\units\elements\auras.lua
 modules\units\elements\castbar.lua
 modules\units\elements\health.lua
 modules\units\elements\tags.lua
+modules\units\elements\threat.lua
 
 modules\units\elements\devourerpower.lua
 
@@ -48,6 +49,7 @@ modules\units\target.lua
 modules\units\pet.lua
 modules\units\focus.lua
 modules\units\targettarget.lua
+modules\units\group.lua
 modules\units\boss.lua
 modules\units\resources.lua
 modules\units\castbar.lua
