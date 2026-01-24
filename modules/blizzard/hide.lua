@@ -37,6 +37,8 @@ addon:Hide('ChatFrame1EditBoxLeft')
 addon:Hide('ChatFrame1EditBoxRight')
 
 for chatIndex = 1, NUM_CHAT_WINDOWS do
+	local chatFrame = _G['ChatFrame' .. chatIndex]
+
 	-- hide chat scroll bar and buttons
 	addon:Hide(chatFrame, 'buttonFrame')
 	addon:Hide(chatFrame, 'ScrollBar')
@@ -47,7 +49,7 @@ for chatIndex = 1, NUM_CHAT_WINDOWS do
 	end
 
 	-- hide all chat tab textures
-	for _, region in next, {chatTab:GetRegions()} do
+	for _, region in next, {_G['ChatFrame' .. chatIndex .. 'Tab']:GetRegions()} do
 		if region:GetObjectType() == 'Texture' then
 			region:SetTexture(nil)
 		end

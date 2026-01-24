@@ -85,4 +85,3 @@ addon.enums.DruidForms = {
 	Flight = 29,
 	Moonkin = 31,
 }
-	Curse = 2,
