@@ -88,6 +88,14 @@ local function postUpdateClassPower(element, _, max, maxChanged, _, ...)
 	updateChargedComboPoint(element.ChargedComboPoints, ...) -- handler for custom sub-widget
 end
 
+local function updateDevourerColor(element, isCollapsing)
+	if isCollapsing then
+		element:SetStatusBarColor(addon.colors.power.DevourerStar:GetRGB())
+	else
+		element:SetStatusBarColor(addon.colors.power.DevourerMeta:GetRGB())
+	end
+end
+
 local styleName = addon.unitPrefix .. 'Resources'
 oUF:RegisterStyle(styleName, function(self)
 	Mixin(self, addon.widgetMixin)
@@ -161,6 +169,17 @@ oUF:RegisterStyle(styleName, function(self)
 			Rune:SetPoint('LEFT', Runes[index - 1], 'RIGHT', addon.SPACING, 0)
 		end
 	end
+
+	local DevourerPower = self:CreateBackdropStatusBar()
+	DevourerPower:SetPoint('BOTTOMLEFT', Power, 'TOPLEFT', 0, addon.SPACING)
+	DevourerPower:SetPoint('BOTTOMRIGHT', Power, 'TOPRIGHT', 0, addon.SPACING)
+	DevourerPower:SetHeight(12)
+	DevourerPower.UpdateColor = updateDevourerColor
+	self.DevourerPower = DevourerPower
+
+	local DevourerPowerValue = DevourerPower:CreateText()
+	DevourerPowerValue:SetPoint('CENTER')
+	DevourerPower.Text = DevourerPowerValue
 
 	-- we need to register combat state events to update visibility
 	self:RegisterEvent('PLAYER_REGEN_ENABLED', wrapForceUpdate, true)

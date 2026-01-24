@@ -41,6 +41,8 @@ modules\units\elements\castbar.lua
 modules\units\elements\health.lua
 modules\units\elements\tags.lua
 
+modules\units\elements\devourerpower.lua
+
 modules\units\player.lua
 modules\units\target.lua
 modules\units\pet.lua

@@ -45,6 +45,9 @@ addon.colors.power[Enum.PowerType.RuneUnholy] = addon:CreateColor(173, 235, 66)
 
 -- custom colors
 
+addon.colors.power.DevourerMeta = addon:CreateColor(97, 137, 210)
+addon.colors.power.DevourerStar = addon:CreateColor(175, 112, 230)
+
 addon.colors.durability = {
 	-- alternative to INVENTORY_ALERT_COLORS
 	CreateColor(1, 0.82, 0.18),
