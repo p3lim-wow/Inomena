@@ -71,19 +71,6 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Buffs.FilterAura = filterBuffs
 	self.Buffs = Buffs
 
-	local Debuffs = self:CreateFrame()
-	Debuffs:SetPoint('BOTTOMLEFT', self, 'TOPLEFT', 0, addon.SPACING)
-	Debuffs:SetSize(self:GetWidth() * 2/3, self:GetHeight() * 3)
-	Debuffs.growthX = 'RIGHT'
-	Debuffs.growthY = 'UP'
-	Debuffs.initialAnchor = 'BOTTOMLEFT'
-	Debuffs.filter = 'HARMFUL|PLAYER'
-	Debuffs.size = self:GetHeight() * 1.3
-	Debuffs.spacing = addon.SPACING
-	Debuffs.CreateButton = addon.unitShared.CreateAura
-	Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura
-	self.Debuffs = Debuffs
-
 	local Castbar = self:CreateBackdropStatusBar()
 	Castbar:SetPoint('TOPLEFT', self, 'BOTTOMLEFT', 0, -1)
 	Castbar:SetPoint('TOPRIGHT', self, 'BOTTOMRIGHT', 0, -1)
