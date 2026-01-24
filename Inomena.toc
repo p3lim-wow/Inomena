@@ -51,6 +51,7 @@ modules\units\focus.lua
 modules\units\targettarget.lua
 modules\units\group.lua
 modules\units\boss.lua
+modules\units\nameplates.lua
 modules\units\resources.lua
 modules\units\castbar.lua
 

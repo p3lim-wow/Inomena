@@ -133,3 +133,9 @@ tags.Methods['inomena:offline'] = function(unit)
 		return [[|TInterface\CharacterFrame\Disconnect-Icon:28|t]]
 	end
 end
+
+tags.Methods['inomena:quest'] = function(unit)
+	if C_QuestLog.UnitIsRelatedToActiveQuest(unit) then
+		return '|A:questnormal:20:20|a'
+	end
+end
