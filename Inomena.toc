@@ -48,6 +48,7 @@ modules\units\target.lua
 modules\units\pet.lua
 modules\units\focus.lua
 modules\units\targettarget.lua
+modules\units\boss.lua
 modules\units\resources.lua
 modules\units\castbar.lua
 
