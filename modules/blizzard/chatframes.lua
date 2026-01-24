@@ -101,24 +101,8 @@ for chatIndex = 1, NUM_CHAT_WINDOWS do
 		-- prevent Blizzard from coloring the tabs
 		chatTab.Text.SetTextColor = nop
 
-		-- update chat tab color
+		-- update chat tab color on load
 		updateTabColor(chatIndex)
-
-		-- hide scroll bar and buttons
-		addon:Hide(chatFrame, 'buttonFrame')
-		addon:Hide(chatFrame, 'ScrollBar')
-
-		-- hide all chat frame regions
-		for _, region in next, {chatFrame:GetRegions()} do
-			addon:Hide(region)
-		end
-
-		-- hide all chat tab textures
-		for _, region in next, {chatTab:GetRegions()} do
-			if region:GetObjectType() == 'Texture' then
-				region:SetTexture(nil)
-			end
-		end
 	end
 end
 
@@ -127,14 +111,6 @@ ChatFrame1EditBox:SetFont(addon.FONT, 13, 'OUTLINE')
 ChatFrame1EditBox:SetShadowOffset(0, 0)
 ChatFrame1EditBoxHeader:SetFont(addon.FONT, 13, 'OUTLINE')
 ChatFrame1EditBoxHeader:SetShadowOffset(0, 0)
-
--- hide regions
-addon:Hide('QuickJoinToastButton')
-addon:Hide('ChatFrameChannelButton')
-addon:Hide('ChatFrameMenuButton')
-addon:Hide('ChatFrame1EditBoxMid')
-addon:Hide('ChatFrame1EditBoxLeft')
-addon:Hide('ChatFrame1EditBoxRight')
 
 -- expose API for other modules
 function addon:AlertChatTab(tabIndex)
