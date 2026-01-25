@@ -1,24 +1,38 @@
 local _, addon = ...
 
+-- safely set boolean(-ish) state on blizzard objects without taint
+-- this is _super_ hacky, but it's the only way we can do this safely
+local function SafeSetTrue(object, key)
+	TextureLoadingGroupMixin.AddTexture({textures = object}, key)
+end
+
+local function SafeSetNil(object, key)
+	TextureLoadingGroupMixin.RemoveTexture({textures = object}, key)
+end
+
 -- don't accidentally deny summons and invites
-StaticPopupDialogs.PARTY_INVITE.hideOnEscape = false
-StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = false
-StaticPopupDialogs.AREA_SPIRIT_HEAL.hideOnEscape = false
+SafeSetNil(StaticPopupDialogs.PARTY_INVITE, 'hideOnEscape')
+SafeSetNil(StaticPopupDialogs.CONFIRM_SUMMON, 'hideOnEscape')
+SafeSetNil(StaticPopupDialogs.AREA_SPIRIT_HEAL, 'hideOnEscape')
 
 -- don't ask for written confirmation when deleting items
-StaticPopupDialogs.DELETE_ITEM.enterClicksFirstButton = true
+SafeSetTrue(StaticPopupDialogs.DELETE_ITEM, 'enterClicksFirstButton')
+SafeSetTrue(StaticPopupDialogs.DELETE_GOOD_ITEM, 'enterClicksFirstButton')
+
+-- press enter to accept popup (TBH might just hide this if we can)
+SafeSetTrue(StaticPopupDialogs.CONFIRM_PURCHASE_NONREFUNDABLE_ITEM, 'enterClicksFirstButton')
 
 -- prevent escape from hiding the logout poput
 StaticPopupDialogs.CAMP.hideOnEscape = false
 
 -- stop waiting for arbitrary timers
 addon:HookAddOn('Blizzard_ItemInteractionUI', function()
-	StaticPopupDialogs.ITEM_INTERACTION_CONFIRMATION_DELAYED.acceptDelay = 1
-	StaticPopupDialogs.ITEM_INTERACTION_CONFIRMATION_DELAYED_WITH_CHARGE_INFO.acceptDelay = 1
+	SafeSetNil(StaticPopupDialogs.ITEM_INTERACTION_CONFIRMATION_DELAYED, 'acceptDelay')
+	SafeSetNil(StaticPopupDialogs.ITEM_INTERACTION_CONFIRMATION_DELAYED_WITH_CHARGE_INFO, 'acceptDelay')
 end)
 
 addon:HookAddOn('Blizzard_WeeklyRewards', function()
-	StaticPopupDialogs.CONFIRM_SELECT_WEEKLY_REWARD.acceptDelay = 1
+	SafeSetNil(StaticPopupDialogs.CONFIRM_SELECT_WEEKLY_REWARD, 'acceptDelay')
 end)
 
 -- confirm looting items that bind on pickup
