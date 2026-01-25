@@ -32,6 +32,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	local HealthTempLoss = self:CreateBackdropStatusBar()
 	HealthTempLoss:SetAllPoints()
 	HealthTempLoss:SetReverseFill(true)
+	HealthTempLoss:SetStatusBarTexture('UI-HUD-UnitFrame-Target-PortraitOn-Bar-TempHPLoss')
 
 	local Health = self:CreateStatusBar()
 	Health:SetPoint('LEFT')
