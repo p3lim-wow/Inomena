@@ -7,8 +7,8 @@ function addon.unitShared.PostUpdateCast(element, unit)
 	local important = C_Spell.IsSpellImportant(element.spellID)
 
 	-- toggle shielded overlay visibility and adjust color based on spell importance
-	element.Shielded:SetAlphaFromBoolean(element.notInterruptible, 1, 0) -- important: alpha last!
 	element.Shielded:SetColorTextureFromBoolean(important, colors.importantshielded, colors.shielded)
+	element.Shielded:SetAlphaFromBoolean(element.notInterruptible, 1, 0) -- important: alpha last!
 
 	-- color based on non-shielded importance
 	element:SetStatusBarColorFromBoolean(important, colors.important, colors.normal)
