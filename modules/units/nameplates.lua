@@ -114,7 +114,7 @@ oUF:RegisterStyle(styleName, function(self)
 	addon:PixelPerfect(self)
 
 	-- temporary fix for DamageAbsorb clamping not working
-	local HealthContainer = self:CreateBackdropStatusBar()
+	local HealthContainer = self:CreateBackdropFrame()
 	HealthContainer:SetPoint('LEFT')
 	HealthContainer:SetPoint('RIGHT')
 	self.HealthContainer = HealthContainer
