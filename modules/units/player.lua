@@ -50,12 +50,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	local Status = Health:CreateText()
 	Status:SetPoint('LEFT', addon.SPACING, 0)
 	Status:SetJustifyH('LEFT')
-	self:Tag(Status, '[inomena:dead][inomena:resting][inomena:resurrect]')
-
-	local RaidGroup = Health:CreateText()
-	RaidGroup:SetPoint('LEFT', addon.SPACING, 0)
-	RaidGroup:SetTextColor(1, 1, 0)
-	self:Tag(RaidGroup, '[group]')
+	self:Tag(Status, '[|cffffff00$>group<$|r ][inomena:dead][inomena:resting][inomena:resurrect]')
 
 	self.HealthPrediction = {}
 	self.HealthPrediction.incomingHealOverflow = 1 -- don't let it escape bounds
