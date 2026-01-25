@@ -31,30 +31,12 @@ local function wrapForceUpdatePower(self)
 	self.Power:ForceUpdate()
 end
 
-local function onAuraButtonShow(Button)
-	addon:AddBorderGlow(Button, 2)
-end
-local function onAuraButtonHide(Button)
-	addon:RemoveBorderGlow(Button)
-end
-
 local function postCreateBuff(_, Button)
 	-- make buffs a little more eligible since they're small
 	Button.Time:Hide()
 	Button.Count:ClearAllPoints()
 	Button.Count:SetPoint('CENTER', Button, 'BOTTOM', 1, -1)
 	Button.Count:SetJustifyH('CENTER')
-
-	Button:HookScript('OnShow', onAuraButtonShow)
-	Button:HookScript('OnHide', onAuraButtonHide)
-	addon:AddBorderGlow(Button, 2)
-end
-
-local function postUpdateDebuff(element, Button, unit, data)
-	addon.unitShared.PostUpdateAura(element, Button, unit, data)
-
-	local color = C_UnitAuras.GetAuraDispelTypeColor(unit, data.auraInstanceID, addon.curves.DispelGlow)
-	addon:SetBorderGlowColor(Button, color)
 end
 
 local styleName = addon.unitPrefix .. 'Group'
@@ -175,8 +157,8 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Debuffs.spacing = addon.SPACING
 	Debuffs.maxCols = 99 -- make sure it never wraps
 	Debuffs.CreateButton = addon.unitShared.CreateAura
-	Debuffs.PostUpdateButton = postUpdateDebuff
 	Debuffs.filter = 'HARMFUL|RAID'
+	Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura
 	Debuffs.PostUpdate = addon.unitShared.PostUpdateAuras
 	self.Debuffs = Debuffs
 
