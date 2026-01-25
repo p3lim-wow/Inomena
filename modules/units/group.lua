@@ -157,14 +157,13 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Debuffs.spacing = addon.SPACING
 	Debuffs.maxCols = 99 -- make sure it never wraps
 	Debuffs.CreateButton = addon.unitShared.CreateAura
-	Debuffs.filter = 'HARMFUL|RAID'
 	Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura
 	Debuffs.PostUpdate = addon.unitShared.PostUpdateAuras
 	self.Debuffs = Debuffs
 
 	if header:GetAttribute('showRaid') then
 		-- inside the raid frame
-		Debuffs.filter = 'HARMFUL|RAID'
+		Debuffs.filter = 'HARMFUL'
 		Debuffs.size = 16
 		Debuffs.growthX = 'LEFT'
 		Debuffs.initialAnchor = 'BOTTOMRIGHT'
@@ -174,7 +173,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		Debuffs:SetFrameLevel(Name:GetParent():GetFrameLevel() + 1) -- render high
 	else
 		-- outside to the right
-		Debuffs.filter = 'HARMFUL|RAID'
+		Debuffs.filter = 'HARMFUL'
 		Debuffs.size = self:GetHeight() * 2/3
 		Debuffs.growthX = 'RIGHT'
 		Debuffs.initialAnchor = 'LEFT'
