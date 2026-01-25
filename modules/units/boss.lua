@@ -90,15 +90,17 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	CastbarShielded:SetAllPoints(Castbar:GetStatusBarTexture())
 	Castbar.Shielded = CastbarShielded
 
-	local CastbarText = Castbar:CreateText(13)
-	CastbarText:SetPoint('LEFT', addon.SPACING, 0)
-	CastbarText:SetJustifyH('LEFT')
-	Castbar.Text = CastbarText
-
 	local CastbarTime = Castbar:CreateText(13)
 	CastbarTime:SetPoint('RIGHT', -addon.SPACING, 0)
 	CastbarTime:SetJustifyH('RIGHT')
 	Castbar.Time = CastbarTime
+
+	local CastbarText = Castbar:CreateText(13)
+	CastbarText:SetPoint('LEFT', addon.SPACING, 0)
+	CastbarText:SetPoint('RIGHT', CastbarTime, 'LEFT', -3, 0)
+	CastbarText:SetJustifyH('LEFT')
+	Castbar.Text = CastbarText
+
 end)
 
 oUF:SetActiveStyle(styleName)
