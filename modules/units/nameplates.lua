@@ -42,12 +42,12 @@ local function updateOnAdded(self)
 
 	if UnitIsUnit(unit, 'target') then
 		fullSize = true
-		self.Health:SetBorderColor(1, 1, 1)
+		self.HealthContainer:SetBorderColor(1, 1, 1)
 		self.Castbar:SetBorderColor(1, 1, 1)
 		self.Castbar.IconFrame:SetBorderColor(1, 1, 1)
 	elseif not UnitIsUnit(unit, 'mouseover') then
 		-- reset border
-		self.Health:SetBorderColor(0, 0, 0)
+		self.HealthContainer:SetBorderColor(0, 0, 0)
 		self.Castbar:SetBorderColor(0, 0, 0)
 		self.Castbar.IconFrame:SetBorderColor(0, 0, 0)
 	end
@@ -59,10 +59,10 @@ local function updateOnAdded(self)
 
 	if fullSize then
 		self.Name:Show()
-		self.Health:SetHeight(20)
+		self.HealthContainer:SetHeight(20)
 		self.HealthValue:Show()
 	else
-		self.Health:SetHeight(4)
+		self.HealthContainer:SetHeight(4)
 		self.HealthValue:Hide()
 	end
 
@@ -72,7 +72,7 @@ end
 local function updateOnRemoved(self)
 	 -- reset highlight and such
 	self.Highlight:Hide()
-	self.Health:SetBorderColor(0, 0, 0)
+	self.HealthContainer:SetBorderColor(0, 0, 0)
 end
 
 local function updateHighlight(self, event, worldCursorAnchorType)
@@ -98,7 +98,7 @@ local function updateHighlight(self, event, worldCursorAnchorType)
 		end
 	end
 
-	self.Health:SetBorderColor(r, g, b)
+	self.HealthContainer:SetBorderColor(r, g, b)
 	self.Castbar:SetBorderColor(r, g, b)
 	self.Castbar.IconFrame:SetBorderColor(r, g, b)
 end
@@ -113,9 +113,15 @@ oUF:RegisterStyle(styleName, function(self)
 	Mixin(self, addon.widgetMixin)
 	addon:PixelPerfect(self)
 
-	local Health = self:CreateBackdropStatusBar()
-	Health:SetPoint('LEFT')
-	Health:SetPoint('RIGHT')
+	-- temporary fix for DamageAbsorb clamping not working
+	local HealthContainer = self:CreateBackdropStatusBar()
+	HealthContainer:SetPoint('LEFT')
+	HealthContainer:SetPoint('RIGHT')
+	self.HealthContainer = HealthContainer
+
+	local Health = HealthContainer:CreateStatusBar()
+	Health:SetAllPoints()
+	Health:SetClipsChildren(true)
 	Health.colorReaction = true -- we only set these so oUF registers events
 	Health.colorSelection = true
 	Health.UpdateColor = addon.unitShared.UpdateColorHealth
@@ -130,7 +136,7 @@ oUF:RegisterStyle(styleName, function(self)
 	DamageAbsorb:SetStatusBarColor(67/255, 235/255, 231/255)
 	self.HealthPrediction.damageAbsorb = DamageAbsorb
 
-	local HealthValue = Health:CreateText()
+	local HealthValue = self:CreateText()
 	HealthValue:SetPoint('RIGHT', Health, 'TOPRIGHT', -2, -1)
 	HealthValue:SetJustifyH('RIGHT')
 	HealthValue:SetFrameLevel(8)
@@ -167,7 +173,7 @@ oUF:RegisterStyle(styleName, function(self)
 	RaidIcon:SetSize(22, 22)
 	self.RaidTargetIndicator = RaidIcon
 
-	local PetIcon = Health:CreateTexture('OVERLAY')
+	local PetIcon = HealthValue:GetParent():CreateTexture('OVERLAY') -- higher parent
 	PetIcon:SetPoint('CENTER', Health, 'BOTTOMLEFT')
 	PetIcon:SetAtlas('wildbattlepetcapturable')
 	PetIcon:SetSize(12, 12)
