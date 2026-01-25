@@ -43,12 +43,12 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Health.TempLoss = HealthTempLoss
 	self.Health = Health
 
-	local HealthValue = Health:CreateText()
+	local HealthValue = self:CreateText()
 	HealthValue:SetPoint('RIGHT', -addon.SPACING, 0)
 	HealthValue:SetJustifyH('RIGHT')
 	self:Tag(HealthValue, '[|cff43ebe7+$>inomena:absorb<$|r ][|cffff8080-$>inomena:hpdef<$|r ][inomena:hpcur][ $>inomena:hpper<$|cff0090ff%|r]')
 
-	local Status = Health:CreateText()
+	local Status = self:CreateText()
 	Status:SetPoint('LEFT', addon.SPACING, 0)
 	Status:SetJustifyH('LEFT')
 	self:Tag(Status, '[|cffffff00$>group<$|r ][inomena:dead][inomena:resting][inomena:resurrect]')
@@ -105,7 +105,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	self.Debuffs = Debuffs
 
 	local RaidIcon = HealthValue:GetParent():CreateTexture('OVERLAY') -- higher parent
-	RaidIcon:SetPoint('CENTER', Health, 'TOP')
+	RaidIcon:SetPoint('CENTER', self, 'TOP')
 	RaidIcon:SetSize(24, 24)
 	self.RaidTargetIndicator = RaidIcon
 end)
