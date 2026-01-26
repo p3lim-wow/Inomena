@@ -85,3 +85,4 @@ modules\blizzard\skyriding.lua
 
 modules\compat\minimap.lua
 modules\compat\syndicator.lua
+modules\compat\handynotes.lua
