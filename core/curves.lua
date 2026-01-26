@@ -6,6 +6,8 @@ addon.curves = {}
 -- offset this by 0.2 because of weird calculation timings making it flash 10.x
 addon.curves.DurationDecimals = C_CurveUtil.CreateCurve()
 addon.curves.DurationDecimals:SetType(Enum.LuaCurveType.Step)
+addon.curves.DurationDecimals:AddPoint(0.09, 0)
+addon.curves.DurationDecimals:AddPoint(0.1, 1)
 addon.curves.DurationDecimals:AddPoint(9.8, 1)
 addon.curves.DurationDecimals:AddPoint(9.9, 0)
 
@@ -28,6 +30,18 @@ addon.curves.PercentageDecimals:AddPoint(0.0990001, 1)
 addon.curves.PercentageDecimals:AddPoint(0.99, 1)
 addon.curves.PercentageDecimals:AddPoint(0.9900001, 0)
 addon.curves.PercentageDecimals:AddPoint(1.0, 0)
+
+-- curve that yields data for SetDesaturation based on cooldown remaining
+addon.curves.ActionDesaturation = C_CurveUtil.CreateCurve()
+addon.curves.ActionDesaturation:SetType(Enum.LuaCurveType.Step)
+addon.curves.ActionDesaturation:AddPoint(0, 0)
+addon.curves.ActionDesaturation:AddPoint(0.001, 1)
+
+-- curve that yields data for SetAlpha based on cooldown remaining
+addon.curves.ActionAlpha = C_CurveUtil.CreateCurve()
+addon.curves.ActionAlpha:SetType(Enum.LuaCurveType.Step)
+addon.curves.ActionAlpha:AddPoint(0, 1)
+addon.curves.ActionAlpha:AddPoint(0.001, 0.33)
 
 -- curves which will yield 0 if the power type is in an idle state, otherwise 1
 addon.curves.PowerIdleAlpha = {}
