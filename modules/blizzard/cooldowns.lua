@@ -85,6 +85,11 @@ local function skin(group, _, button)
 		end
 	end
 
+	if button.DebuffBorder then
+		-- hide this border until we know what to do with it
+		button.DebuffBorder:SetAlpha(0)
+	end
+
 	-- make cooldown animations ignore parent alpha
 	if button.CooldownFlash then
 		button.CooldownFlash:SetIgnoreParentAlpha(true)
