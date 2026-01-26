@@ -135,6 +135,7 @@ read_globals = {
 	'WEEKLY_REWARDS_COMPLETED_ENCOUNTER',
 
 	-- namespaces
+	'C_ActionBar',
 	'C_AddOns',
 	'C_ClassColor',
 	'C_ClassTalents',
@@ -173,6 +174,7 @@ read_globals = {
 	'EjectPassengerFromSeat',
 	'EquipPendingItem',
 	'GetAchievementInfo',
+	'GetActionInfo',
 	'GetBattlefieldStatus',
 	'GetClassInfo',
 	'GetGuildBankMoney',

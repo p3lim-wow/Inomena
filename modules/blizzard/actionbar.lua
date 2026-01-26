@@ -2,6 +2,33 @@ local _, addon = ...
 
 -- skin the action bars
 
+local function updateCooldown(button)
+	local duration
+
+	local actionType, actionID = GetActionInfo(button.action)
+	if actionType == 'item' then
+		local startTime, durationSecond = C_Item.GetItemCooldown(actionID)
+		if durationSecond > 1.5 then -- GCD
+			duration = C_DurationUtil.CreateDuration()
+			duration:SetTimeFromStart(startTime, durationSecond)
+		end
+	elseif actionType then -- don't waste calculation time on empty actions
+		-- handles actions, as well as items or spells in macros
+		local cooldown = C_ActionBar.GetActionCooldown(button.action)
+		if cooldown and not cooldown.isOnGCD then
+			duration = C_ActionBar.GetActionCooldownDuration(button.action)
+		end
+	end
+
+	if duration then
+		button.icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.ActionDesaturation))
+		button:SetAlpha(duration:EvaluateRemainingDuration(addon.curves.ActionAlpha))
+	else
+		button.icon:SetDesaturation(0)
+		button:SetAlpha(1)
+	end
+end
+
 local function updatePushedState(button, state)
 	button.Pushed:SetShown(state == 'PUSHED')
 end
@@ -40,10 +67,27 @@ for prefix, numButtons in next, {
 			button.icon:SetSize(26, 26)
 		else
 			button.icon:SetSize(42, 42)
+
+			-- reposition and change font of hotkey
+			button.HotKey:ClearAllPoints()
+			button.HotKey:SetPoint('TOPLEFT', button, 2, -4)
+			button.HotKey:SetFont(addon.FONT, 14, 'OUTLINE')
+			button.HotKey:SetJustifyH('LEFT')
+			button.HotKey:SetIgnoreParentAlpha(true)
+
+			-- rewrite binding text
+			hooksecurefunc(button, 'UpdateHotkeys', rewriteHotKeyText)
+			rewriteHotKeyText(button)
+
+			-- use desaturation and alpha to indicate cooldowns better
+			hooksecurefunc(button, 'UpdateAction', updateCooldown)
+			button.cooldown:HookScript('OnCooldownDone', GenerateClosure(updateCooldown, button))
+			addon:RegisterEvent('SPELL_UPDATE_COOLDOWN', GenerateClosure(updateCooldown, button))
 		end
 
 		-- add backdrop anchored to the icon
 		addon:AddBackdrop(button, button.icon)
+		button:SetBorderIgnoreParentAlpha(true)
 
 		-- hide textures
 		addon:Hide(button, 'Border') -- equipped border
@@ -64,18 +108,6 @@ for prefix, numButtons in next, {
 		button.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 		button.icon:RemoveMaskTexture(button.IconMask)
 		button.icon:SetDrawLayer('BORDER')
-
-		if prefix ~= 'PetActionButton' then
-			-- reposition and change font of hotkey
-			button.HotKey:ClearAllPoints()
-			button.HotKey:SetPoint('TOPLEFT', button, 2, -4)
-			button.HotKey:SetFont(addon.FONT, 14, 'OUTLINE')
-			button.HotKey:SetJustifyH('LEFT')
-
-			-- rewrite binding text
-			hooksecurefunc(button, 'UpdateHotkeys', rewriteHotKeyText)
-			rewriteHotKeyText(button)
-		end
 
 		-- reposition and change font of count widget
 		button.Count:ClearAllPoints()
@@ -100,6 +132,8 @@ for prefix, numButtons in next, {
 
 		-- reanchor cooldown
 		button.cooldown:SetAllPoints(button.icon)
+		button.cooldown:SetHideCountdownNumbers(true)
+		button.cooldown:SetIgnoreParentAlpha(true)
 
 		-- adjust style for charge cooldowns
 		button.chargeCooldown:SetDrawEdge(false)
