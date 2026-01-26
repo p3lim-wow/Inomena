@@ -11,12 +11,13 @@ function backdropMixin:SetBorderColor(...)
 	end
 end
 
-function backdropMixin:SetBackdropIgnoreParentAlpha(state)
+function backdropMixin:SetBorderIgnoreParentAlpha(state)
 	for _, edge in next, self.backdropEdges do
 		edge:SetIgnoreParentAlpha(state)
 	end
 end
 
+-- we keep a copy of an unspoiled CreateTexture method for use later
 local createTexture = CreateFrame('Frame').CreateTexture
 function addon:AddBackdrop(frame, anchor)
 	Mixin(frame, backdropMixin)
