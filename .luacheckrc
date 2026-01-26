@@ -55,6 +55,7 @@ read_globals = {
 	'OverlayPlayerCastingBarFrame',
 	'PetActionBar',
 	'PlayerSpellsFrame',
+	'QueueStatusButton',
 	'SendMailMailButton',
 	'SendMailMoneyCopper',
 	'SendMailMoneyGold',

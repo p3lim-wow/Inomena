@@ -80,6 +80,7 @@ modules\blizzard\hide.lua
 modules\blizzard\mail.lua
 modules\blizzard\minimap.lua
 modules\blizzard\popups.lua
+modules\blizzard\queue.lua
 modules\blizzard\skyriding.lua
 
 modules\compat\minimap.lua
