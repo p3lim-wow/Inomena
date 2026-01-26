@@ -3,9 +3,25 @@ local _, addon = ...
 -- skin the cooldown manager
 -- works best with icon size <= 60% and padding = 9
 
+local function getSpellID(button)
+	-- basically a copy of CooldownViewerItemDataMixin.GetSpellID without the auraID
+	-- this feels like a hack that will get patched though
+	local cooldownInfo = button:GetCooldownInfo()
+	if cooldownInfo then
+		if cooldownInfo.linkedSpellID then
+			return cooldownInfo.linkedSpellID
+		elseif cooldownInfo.overrideTooltipSpellID then
+			return cooldownInfo.overrideTooltipSpellID
+		elseif cooldownInfo.overrideSpellID then
+			return cooldownInfo.overrideSpellID
+		end
+		return cooldownInfo.spellID
+	end
+end
+
 local function updateCooldown(button)
 	local duration, charge
-	local spellID = button:GetSpellID()
+	local spellID = getSpellID(button)
 	if spellID then
 		charge = C_Spell.GetSpellChargeDuration(spellID)
 
@@ -18,6 +34,7 @@ local function updateCooldown(button)
 	if charge or duration then
 		button.CustomCooldown.duration = charge or duration
 		button.CustomCooldown:SetCooldownFromDurationObject(charge or duration)
+		button.CustomCooldown:SetAlpha(1)
 
 		if duration then
 			button.Icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.ActionDesaturation))
@@ -35,6 +52,7 @@ local function updateCooldownTime(cooldown)
 		local decimals = cooldown.duration:EvaluateRemainingDuration(addon.curves.DurationDecimals)
 		cooldown.Time:SetFormattedText('%.' .. decimals .. 'f', cooldown.duration:GetRemainingDuration())
 		cooldown.Time:SetAlpha(cooldown.duration:EvaluateRemainingDuration(addon.curves.AuraAlpha))
+		cooldown:SetAlpha(cooldown.duration:EvaluateRemainingDuration(addon.curves.AuraAlpha)) -- would prefer to clear the cooldown but w/e
 	end
 end
 
@@ -112,6 +130,8 @@ local function skin(group, _, button)
 		-- update cooldowns whenever CDM would normally
 		hooksecurefunc(button, 'RefreshSpellCooldownInfo', updateCooldown)
 		hooksecurefunc(button, 'RefreshSpellChargeInfo', updateCooldown)
+		hooksecurefunc(button, 'RefreshIconDesaturation', updateCooldown)
+		hooksecurefunc(button, 'RefreshIconColor', updateCooldown)
 	else -- buff viewer
 		-- re-anchor existing cooldown widget and adjust swipe texture
 		button.Cooldown:SetAllPoints(button.Icon)
