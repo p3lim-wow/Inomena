@@ -41,3 +41,19 @@ hooksecurefunc(EventToastManagerFrame, 'DisplayToast', function(self)
 		self.currentDisplayingToast.SubTitleMouseOverFrame:EnableMouse(false)
 	end
 end)
+
+-- don't prompt for equipping shareable items
+UIParent:UnregisterEvent('EQUIP_BIND_TRADEABLE_CONFIRM')
+function addon:EQUIP_BIND_TRADEABLE_CONFIRM(inventorySlot)
+	if not InCombatLockdown() then
+		EquipPendingItem(inventorySlot)
+	end
+end
+
+-- don't prompt for selling shareable items
+MerchantFrame:UnregisterEvent('MERCHANT_CONFIRM_TRADE_TIMER_REMOVAL')
+function addon:MERCHANT_CONFIRM_TRADE_TIMER_REMOVAL()
+	if CursorHasItem() then
+		SellCursorItem()
+	end
+end
