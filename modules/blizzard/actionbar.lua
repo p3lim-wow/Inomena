@@ -1,6 +1,6 @@
 local _, addon = ...
 
--- skin the (used/visible) action bars
+-- skin the action bars
 
 local function updatePushedState(button, state)
 	button.Pushed:SetShown(state == 'PUSHED')
@@ -30,6 +30,10 @@ for prefix, numButtons in next, {
 } do
 	for index = 1, numButtons do
 		local button = _G[prefix .. index]
+
+		-- disable castbars, reticles, interrupts etc, and loss-of-control spiral
+		addon:SafeSetNil(button, 'enableSpellFX')
+		addon:SafeSetNil(button, 'enableLOCCooldown')
 
 		-- resize icon
 		if prefix == 'PetActionButton' then
