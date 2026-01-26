@@ -7,16 +7,7 @@ local function getSpellID(button)
 	-- basically a copy of CooldownViewerItemDataMixin.GetSpellID without the auraID
 	-- this feels like a hack that will get patched though
 	local cooldownInfo = button:GetCooldownInfo()
-	if cooldownInfo then
-		if cooldownInfo.linkedSpellID then
-			return cooldownInfo.linkedSpellID
-		elseif cooldownInfo.overrideTooltipSpellID then
-			return cooldownInfo.overrideTooltipSpellID
-		elseif cooldownInfo.overrideSpellID then
-			return cooldownInfo.overrideSpellID
-		end
-		return cooldownInfo.spellID
-	end
+	return cooldownInfo and (cooldownInfo.overrideSpellID or cooldownInfo.spellID)
 end
 
 local function updateCooldown(button)
