@@ -74,6 +74,7 @@ modules\widgets\talents.lua
 modules\blizzard\actionbar.lua
 modules\blizzard\character.lua
 modules\blizzard\chatframes.lua
+modules\blizzard\cooldowns.lua
 modules\blizzard\dressingroom.lua
 modules\blizzard\hide.lua
 modules\blizzard\mail.lua
