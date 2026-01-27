@@ -39,7 +39,7 @@ listener:SetAttribute('_onstate-skyriding', [[
 		for _, button in pairs(buttons) do
 			button:SetAttribute('actionpage', page)
 		end
-	elseif newstae == 'reset' then
+	elseif newstate == 'reset' then
 		-- this is the normal state (dismounted), make sure we don't force the buttons
 		for _, button in pairs(buttons) do
 			button:SetAttribute('actionpage', nil)
