@@ -58,10 +58,7 @@ end
 function addon.unitShared.PostUpdateAura(element, Button, unit, data)
 	-- color by dispel type
 	local color = C_UnitAuras.GetAuraDispelTypeColor(unit, data.auraInstanceID, element.dispelColorCurve)
-	if color == nil then
-		color = oUF.colors.dispel[oUF.Enum.DispelType.None]
-	end
-	Button:SetBorderColor(color:GetRGB())
+	Button:SetBorderColor((color or oUF.colors.dispel[oUF.Enum.DispelType.None]):GetRGB())
 end
 
 function addon.unitShared.PostUpdateAuras(element)
