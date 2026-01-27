@@ -4,6 +4,8 @@ local oUF = addon.oUF
 local PLAYER_CLASS = addon.PLAYER_CLASS
 local PLAYER_SPECS = addon.enums.ClassSpecializations[PLAYER_CLASS]
 
+local inCombat -- updated in updateCombat
+
 local function overrideDisplayPower(_, unit)
 	-- basically never show mana
 	if UnitHasVehicleUI(unit) then
@@ -47,7 +49,7 @@ local function postUpdatePower(element, unit)
 	if element.displayType then
 		shouldShow = true
 
-		if InCombatLockdown() then
+		if inCombat then
 			element:SetAlpha(1)
 		else
 			local alphaCurve = addon.curves.PowerIdleAlpha[element.displayType]
@@ -58,11 +60,20 @@ local function postUpdatePower(element, unit)
 	element:SetShown(shouldShow)
 end
 
-local function wrapForceUpdate(self)
-	self.Power:ForceUpdate()
+local function postUpdateRunes(element)
+	if inCombat then
+		element:Show()
+	else
+		local hasRuneCharging
+		for index = 1, 6 do
+			local _, _, runeReady = GetRuneCooldown(index)
+			if not runeReady then
+				hasRuneCharging = true
+				break
+			end
+		end
 
-	if self:IsElementEnabled('Runes') then
-		self.Runes:ForceUpdate()
+		element:SetShown(hasRuneCharging)
 	end
 end
 
@@ -79,7 +90,6 @@ local function updateChargedComboPoint(element, ...)
 	end
 end
 
-
 local function postUpdateClassPower(element, _, max, maxChanged, _, ...)
 	if maxChanged then -- need to resize each class power bar
 		addon:ResizePillsToFit(element, max)
@@ -94,6 +104,13 @@ local function updateDevourerColor(element, isCollapsing)
 	else
 		element:SetStatusBarColor(addon.colors.power.DevourerMeta:GetRGB())
 	end
+end
+
+local function updateCombat(self, _, combatState)
+	inCombat = combatState
+
+	postUpdatePower(self.Power, self.unit)
+	postUpdateRunes(self.Runes)
 end
 
 local styleName = addon.unitPrefix .. 'Resources'
@@ -155,6 +172,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Runes:SetPoint('BOTTOMRIGHT', Power, 'TOPRIGHT', 0, addon.SPACING)
 	Runes:SetHeight(12)
 	Runes.colorSpec = true
+	Runes.PostUpdate = postUpdateRunes
 	self.Runes = Runes
 
 	for index = 1, 6 do
@@ -182,8 +200,7 @@ oUF:RegisterStyle(styleName, function(self)
 	DevourerPower.Text = DevourerPowerValue
 
 	-- we need to register combat state events to update visibility
-	self:RegisterEvent('PLAYER_REGEN_ENABLED', wrapForceUpdate, true)
-	self:RegisterEvent('PLAYER_REGEN_DISABLED', wrapForceUpdate, true)
+	self:RegisterEvent('PLAYER_IN_COMBAT_CHANGED', updateCombat, true) -- unitless event
 end)
 
 oUF:SetActiveStyle(styleName)
