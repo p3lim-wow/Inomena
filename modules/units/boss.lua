@@ -40,6 +40,9 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	HealthValue:SetJustifyH('RIGHT')
 	self:Tag(HealthValue, '[inomena:hpper<$|cff0090ff%|r]')
 
+	-- need to render texts higher than all the healpred stuff
+	HealthValue:GetParent():SetFrameLevel(Health:GetFrameLevel() + 5)
+
 	local Power = self:CreateBackdropStatusBar()
 	Power:SetPoint('BOTTOMLEFT')
 	Power:SetPoint('BOTTOMRIGHT')
