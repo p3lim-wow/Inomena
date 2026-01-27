@@ -1,6 +1,6 @@
 local _, addon = ...
 
--- sound alerts to notify me of certain things (on the master channel)
+-- (sound) alerts to notify me of certain things (on the master channel)
 
 local lastAlertTime = 0
 local function alert()
@@ -42,4 +42,13 @@ end
 
 function addon:CHAT_MSG_BN_WHISPER()
 	PlaySound(SOUNDKIT.TELL_MESSAGE, 'master')
+end
+
+-- display combat state changes
+function addon:PLAYER_REGEN_ENABLED()
+	UIErrorsFrame:AddMessage('- Combat', 1, 1, 1)
+end
+
+function addon:PLAYER_REGEN_DISABLED()
+	UIErrorsFrame:AddMessage('+ Combat', 1, 1, 1)
 end
