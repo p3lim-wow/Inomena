@@ -27,21 +27,21 @@ do
 		Icon:SetAllPoints()
 		Button.Icon = Icon
 
-		local Cooldown = Button:CreateFrame('Cooldown', 'CooldownFrameTemplate')
-		Cooldown:SetAllPoints()
-		Cooldown:SetHideCountdownNumbers(true) -- we want full control over this
+		local Cooldown = Button:CreateCooldown()
 		Cooldown:SetReverse(true)
-		Cooldown:SetDrawEdge(false)
-		Cooldown:SetSwipeColor(0, 0, 0, 0.9)
+		Cooldown:SetUseAuraDisplayTime(true) -- no idea what this does
 		Button.Cooldown = Cooldown
+
+		if element.disableCooldownText then
+			Cooldown:SetHideCountdownNumbers(true)
+		else
+			Cooldown:ClearTimePoints()
+			Cooldown:SetTimePoint('TOPLEFT', 1, -1)
+		end
 
 		local Count = Button:CreateText()
 		Count:SetPoint('BOTTOMRIGHT', 2, 1)
 		Button.Count = Count
-
-		local Time = Button:CreateText()
-		Time:SetPoint('TOPLEFT', 1, -1)
-		Button.Time = Time
 
 		if element.PostCreateButton then
 			element:PostCreateButton(Button)
@@ -55,37 +55,13 @@ do
 	end
 end
 
-do
-	local function updateAuraDuration(Button)
-		if Button.duration then
-			-- show time with a variable amount of decimals
-			local decimals = Button.duration:EvaluateRemainingDuration(addon.curves.DurationDecimals)
-			Button.Time:SetFormattedText('%.' .. decimals .. 'f', Button.duration:GetRemainingDuration())
-
-			-- show/hide time based on alpha
-			Button.Time:SetAlpha(Button.duration:EvaluateRemainingDuration(addon.curves.AuraAlpha))
-		end
+function addon.unitShared.PostUpdateAura(element, Button, unit, data)
+	-- color by dispel type
+	local color = C_UnitAuras.GetAuraDispelTypeColor(unit, data.auraInstanceID, element.dispelColorCurve)
+	if color == nil then
+		color = oUF.colors.dispel[oUF.Enum.DispelType.None]
 	end
-
-	function addon.unitShared.PostUpdateAura(element, Button, unit, data)
-		-- add custom time display
-		if not element.disableCooldownText then
-			Button.duration = C_UnitAuras.GetAuraDuration(unit, data.auraInstanceID)
-			if Button.duration then
-				Button:SetScript('OnUpdate', updateAuraDuration)
-			else
-				Button:SetScript('OnUpdate', nil)
-				Button.Time:SetText('')
-			end
-		end
-
-		-- color by dispel type
-		local color = C_UnitAuras.GetAuraDispelTypeColor(unit, data.auraInstanceID, element.dispelColorCurve)
-		if color == nil then
-			color = oUF.colors.dispel[oUF.Enum.DispelType.None]
-		end
-		Button:SetBorderColor(color:GetRGB())
-	end
+	Button:SetBorderColor(color:GetRGB())
 end
 
 function addon.unitShared.PostUpdateAuras(element)

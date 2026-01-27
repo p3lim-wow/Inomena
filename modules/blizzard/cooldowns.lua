@@ -12,6 +12,7 @@ end
 
 local function updateCooldown(button)
 	local duration, charge
+
 	local spellID = getSpellID(button)
 	if spellID then
 		charge = C_Spell.GetSpellChargeDuration(spellID)
@@ -22,28 +23,19 @@ local function updateCooldown(button)
 		end
 	end
 
+	-- we reset before we try to render the "cooldown state",
+	-- in order to work with procs that reset cooldowns
+	button.CustomCooldown:Hide()
+	button.Icon:SetDesaturation(0)
+	button:SetAlpha(1)
+
 	if charge or duration then
-		button.CustomCooldown.duration = charge or duration
 		button.CustomCooldown:SetCooldownFromDurationObject(charge or duration)
-		button.CustomCooldown:SetAlpha(1)
 
 		if duration then
 			button.Icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.ActionDesaturation))
 			button:SetAlpha(duration:EvaluateRemainingDuration(addon.curves.ActionAlpha))
-			return
 		end
-	end
-
-	button.Icon:SetDesaturation(0)
-	button:SetAlpha(1)
-end
-
-local function updateCooldownTime(cooldown)
-	if cooldown.duration then
-		local decimals = cooldown.duration:EvaluateRemainingDuration(addon.curves.DurationDecimals)
-		cooldown.Time:SetFormattedText('%.' .. decimals .. 'f', cooldown.duration:GetRemainingDuration())
-		cooldown.Time:SetAlpha(cooldown.duration:EvaluateRemainingDuration(addon.curves.AuraAlpha))
-		cooldown:SetAlpha(cooldown.duration:EvaluateRemainingDuration(addon.curves.AuraAlpha)) -- would prefer to clear the cooldown but w/e
 	end
 end
 
@@ -108,20 +100,11 @@ local function skin(group, _, button)
 		hooksecurefunc(button.Icon, 'SetDesaturated', updateCooldownIcon) -- can't just noop it, that taints
 
 		-- add custom cooldown widget
-		button.CustomCooldown = addon:CreateFrame('Cooldown', nil, button, 'CooldownFrameTemplate')
-		button.CustomCooldown:SetAllPoints()
-		button.CustomCooldown:SetHideCountdownNumbers(true)
+		button.CustomCooldown = addon:CreateCooldown(button)
 		button.CustomCooldown:SetIgnoreParentAlpha(true)
-		button.CustomCooldown:SetDrawEdge(false)
-		button.CustomCooldown:SetDrawBling(false)
-		button.CustomCooldown:SetSwipeColor(0, 0, 0, 0.9)
-
-		-- add cooldown time to the widget
-		button.CustomCooldown.Time = button.CustomCooldown:CreateText(group == 'EssentialCooldownViewer' and 20 or 14)
-		button.CustomCooldown.Time:SetPoint('CENTER')
-		button.CustomCooldown.Time:SetJustifyH('CENTER')
-		button.CustomCooldown:Hide()
-		button.CustomCooldown:SetScript('OnUpdate', updateCooldownTime)
+		button.CustomCooldown:SetIgnoreGlobalCooldown(true)
+		button.CustomCooldown:SetCountdownAbbrevThreshold(59)
+		button.CustomCooldown:SetTimeFont(group == 'EssentialCooldownViewer' and 20 or 14)
 
 		-- update cooldowns whenever CDM would normally
 		hooksecurefunc(button, 'RefreshSpellCooldownInfo', updateCooldown)

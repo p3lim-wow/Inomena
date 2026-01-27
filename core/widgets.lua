@@ -83,6 +83,41 @@ do
 	end
 end
 
+do
+	local cooldownMixin = {}
+	function cooldownMixin:SetTimeFont(size)
+		self:GetRegions():SetFont(addon.FONT, size or 16, 'OUTLINE')
+	end
+
+	function cooldownMixin:ClearTimePoints()
+		self:GetRegions():ClearAllPoints()
+	end
+
+	function cooldownMixin:SetTimePoint(...)
+		self:GetRegions():SetPoint(...)
+	end
+
+	function cooldownMixin:SetIgnoreGlobalCooldown(state)
+		self:SetMinimumCountdownDuration(state and 1500 or 0)
+	end
+
+	function widgetMixin:CreateCooldown(anchor)
+		local cooldown = Mixin(addon:CreateFrame('Cooldown', nil, self, 'CooldownFrameTemplate'), cooldownMixin)
+		cooldown:SetAllPoints(anchor or self)
+		cooldown:SetDrawEdge(false)
+		cooldown:SetDrawBling(false)
+		cooldown:SetSwipeColor(0, 0, 0, 0.9)
+		cooldown:SetTimeFont()
+		cooldown:SetIgnoreGlobalCooldown(true)
+		return cooldown
+	end
+
+	-- expose creation globally
+	function addon:CreateCooldown(parent, anchor)
+		return widgetMixin.CreateCooldown(parent, anchor)
+	end
+end
+
 function widgetMixin:AddBackdrop(...)
 	addon:AddBackdrop(self, ...)
 end
