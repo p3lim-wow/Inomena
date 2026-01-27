@@ -192,6 +192,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Debuffs.height = 20
 	Debuffs.width = 30
 	Debuffs.filter = 'HARMFUL|PLAYER'
+	Debuffs.disableCooldownText = true -- custom option
 	Debuffs.disableMouse = true -- custom option
 	Debuffs.CreateButton = addon.unitShared.CreateAura
 	self.Debuffs = Debuffs
@@ -205,6 +206,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Buffs.spacing = addon.SPACING
 	Buffs.size = 34
 	Buffs.num = 3
+	Buffs.disableCooldownText = true -- custom option
 	Buffs.disableMouse = true -- custom option
 	Buffs.CreateButton = addon.unitShared.CreateAura
 	Buffs.PostUpdateButton = addon.unitShared.PostUpdateAura

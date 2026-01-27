@@ -145,6 +145,7 @@ local function style(self, unit)
 	Buffs.size = 16
 	Buffs.spacing = addon.SPACING
 	Buffs.initialAnchor = 'TOPLEFT'
+	Buffs.disableCooldownText = true -- custom option
 	Buffs.filter = 'HELPFUL|PLAYER|RAID'
 	Buffs.CreateButton = addon.unitShared.CreateAura
 	Buffs.PostCreateButton = postCreateBuff
@@ -195,7 +196,7 @@ oUF:RegisterStyle(raidStyle, function(self, unit)
 	self.Debuffs.num = 3
 	self.Debuffs.growthX = 'LEFT'
 	self.Debuffs.initialAnchor = 'BOTTOMRIGHT'
-	self.Debuffs.disableCooldownText = true
+	self.Debuffs.disableCooldownText = true -- custom option
 	self.Debuffs:SetPoint('BOTTOMRIGHT', -3, 3)
 	self.Debuffs:SetSize(self:GetWidth(), self.Debuffs.size)
 	self.Debuffs:SetFrameLevel(self.Name:GetParent():GetFrameLevel() + 1) -- render high
