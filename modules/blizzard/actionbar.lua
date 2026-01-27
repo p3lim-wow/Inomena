@@ -4,19 +4,20 @@ local _, addon = ...
 
 local function updateCooldown(button)
 	local duration
-
-	local actionType, actionID = GetActionInfo(button.action)
-	if actionType == 'item' then
-		local startTime, durationSecond = C_Item.GetItemCooldown(actionID)
-		if durationSecond > 1.5 then -- GCD
-			duration = C_DurationUtil.CreateDuration()
-			duration:SetTimeFromStart(startTime, durationSecond)
-		end
-	elseif actionType then -- don't waste calculation time on empty actions
-		-- handles actions, as well as items or spells in macros
-		local cooldown = C_ActionBar.GetActionCooldown(button.action)
-		if cooldown and not cooldown.isOnGCD then
-			duration = C_ActionBar.GetActionCooldownDuration(button.action)
+	if C_ActionBar.HasAction(button.action) then
+		local actionType, actionID = GetActionInfo(button.action)
+		if actionType == 'item' then
+			local startTime, durationSecond = C_Item.GetItemCooldown(actionID)
+			if durationSecond > 1.5 then -- GCD
+				duration = C_DurationUtil.CreateDuration()
+				duration:SetTimeFromStart(startTime, durationSecond)
+			end
+		else
+			-- handles actions, as well as items or spells in macros
+			local cooldown = C_ActionBar.GetActionCooldown(button.action)
+			if cooldown and not cooldown.isOnGCD then
+				duration = C_ActionBar.GetActionCooldownDuration(button.action)
+			end
 		end
 	end
 
