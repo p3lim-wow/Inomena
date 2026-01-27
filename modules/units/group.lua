@@ -40,7 +40,6 @@ local function postCreateBuff(_, Button)
 end
 
 local function style(self, unit)
-	local header = self:GetParent()
 	Mixin(self, addon.widgetMixin)
 
 	self:SetScript('OnEnter', addon.unitShared.Tooltip)
@@ -118,6 +117,7 @@ local function style(self, unit)
 	Name:SetWidth(999) -- last part of the trick
 	Name:SetPoint('LEFT')
 	Name:SetJustifyH('LEFT')
+	self.Name = Name
 	self:Tag(Name, '[inomena:leader][inomena:reactioncolor][inomena:name<$|r]')
 
 	local Status = Health:CreateText()
@@ -178,12 +178,12 @@ oUF:RegisterStyle(partyStyle, function(self, unit)
 	style(self, unit)
 
 	-- debuffs outside to the right
-	Debuffs.filter = 'HARMFUL'
-	Debuffs.size = self:GetHeight() * 2/3
-	Debuffs.growthX = 'RIGHT'
-	Debuffs.initialAnchor = 'LEFT'
-	Debuffs:SetPoint('LEFT', self, 'RIGHT', addon.SPACING, 0)
-	Debuffs:SetHeight(Debuffs.size)
+	self.Debuffs.filter = 'HARMFUL'
+	self.Debuffs.size = self:GetHeight() * 2/3
+	self.Debuffs.growthX = 'RIGHT'
+	self.Debuffs.initialAnchor = 'LEFT'
+	self.Debuffs:SetPoint('LEFT', self, 'RIGHT', addon.SPACING, 0)
+	self.Debuffs:SetHeight(self.Debuffs.size)
 end)
 
 local raidStyle = addon.unitPrefix .. 'Raid'
@@ -191,15 +191,15 @@ oUF:RegisterStyle(raidStyle, function(self, unit)
 	style(self, unit)
 
 	-- debuffs inside the raid frame
-	Debuffs.filter = 'HARMFUL'
-	Debuffs.size = 16
-	Debuffs.num = 3
-	Debuffs.growthX = 'LEFT'
-	Debuffs.initialAnchor = 'BOTTOMRIGHT'
-	Debuffs.disableCooldownText = true
-	Debuffs:SetPoint('BOTTOMRIGHT', -3, 3)
-	Debuffs:SetSize(self:GetWidth(), Debuffs.size)
-	Debuffs:SetFrameLevel(Name:GetParent():GetFrameLevel() + 1) -- render high
+	self.Debuffs.filter = 'HARMFUL'
+	self.Debuffs.size = 16
+	self.Debuffs.num = 3
+	self.Debuffs.growthX = 'LEFT'
+	self.Debuffs.initialAnchor = 'BOTTOMRIGHT'
+	self.Debuffs.disableCooldownText = true
+	self.Debuffs:SetPoint('BOTTOMRIGHT', -3, 3)
+	self.Debuffs:SetSize(self:GetWidth(), self.Debuffs.size)
+	self.Debuffs:SetFrameLevel(self.Name:GetParent():GetFrameLevel() + 1) -- render high
 end)
 
 oUF:Factory(function(self)
