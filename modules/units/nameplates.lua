@@ -246,7 +246,7 @@ oUF:RegisterStyle(styleName, function(self)
 	CastbarIcon:SetAllPoints()
 	Castbar.Icon = CastbarIcon
 
-	local Threat = Health:CreateFrame('Frame', 'BackdropTemplate')
+	local Threat = HealthContainer:CreateFrame('Frame', 'BackdropTemplate')
 	Threat:SetPoint('TOPLEFT', -5, 5)
 	Threat:SetPoint('BOTTOMRIGHT', 5, -5)
 	Threat:SetFrameStrata('BACKGROUND')
