@@ -193,6 +193,7 @@ oUF:RegisterStyle(raidStyle, function(self, unit)
 	-- debuffs inside the raid frame
 	Debuffs.filter = 'HARMFUL'
 	Debuffs.size = 16
+	Debuffs.num = 3
 	Debuffs.growthX = 'LEFT'
 	Debuffs.initialAnchor = 'BOTTOMRIGHT'
 	Debuffs.disableCooldownText = true
