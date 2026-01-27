@@ -33,7 +33,6 @@ end
 
 local function postCreateBuff(_, Button)
 	-- make buffs a little more eligible since they're small
-	Button.Time:Hide()
 	Button.Count:ClearAllPoints()
 	Button.Count:SetPoint('CENTER', Button, 'BOTTOM', 1, -1)
 	Button.Count:SetJustifyH('CENTER')
