@@ -196,6 +196,7 @@ read_globals = {
 	'GetRaidRosterInfo',
 	'GetRealmName',
 	'GetRepairAllCost',
+	'GetRuneCooldown',
 	'GetServerTime',
 	'GetShapeshiftFormID',
 	'GetSpecializationInfoForClassID',
