@@ -43,16 +43,6 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Health.TempLoss = HealthTempLoss
 	self.Health = Health
 
-	local HealthValue = self:CreateText()
-	HealthValue:SetPoint('RIGHT', -addon.SPACING, 0)
-	HealthValue:SetJustifyH('RIGHT')
-	self:Tag(HealthValue, '[|cff43ebe7+$>inomena:absorb<$|r ][|cffff8080-$>inomena:hpdef<$|r ][inomena:hpcur][ $>inomena:hpper<$|cff0090ff%|r]')
-
-	local Status = self:CreateText()
-	Status:SetPoint('LEFT', addon.SPACING, 0)
-	Status:SetJustifyH('LEFT')
-	self:Tag(Status, '[|cffffff00$>group<$|r ][inomena:dead][inomena:resting][inomena:resurrect]')
-
 	self.HealthPrediction = {}
 	self.HealthPrediction.incomingHealOverflow = 1 -- don't let it escape bounds
 
@@ -79,6 +69,19 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	HealAbsorb:SetReverseFill(true)
 	HealAbsorb:SetStatusBarColor(251/255, 125/255, 129/255, 0.5)
 	self.HealthPrediction.healAbsorb = HealAbsorb
+
+	local HealthValue = self:CreateText()
+	HealthValue:SetPoint('RIGHT', -addon.SPACING, 0)
+	HealthValue:SetJustifyH('RIGHT')
+	self:Tag(HealthValue, '[|cff43ebe7+$>inomena:absorb<$|r ][|cffff8080-$>inomena:hpdef<$|r ][inomena:hpcur][ $>inomena:hpper<$|cff0090ff%|r]')
+
+	-- need to render texts higher than all the healpred stuff
+	HealthValue:GetParent():SetFrameLevel(Health:GetFrameLevel() + 5)
+
+	local Status = self:CreateText()
+	Status:SetPoint('LEFT', addon.SPACING, 0)
+	Status:SetJustifyH('LEFT')
+	self:Tag(Status, '[|cffffff00$>group<$|r ][inomena:dead][inomena:resting][inomena:resurrect]')
 
 	if MANA_CLASSES[addon.PLAYER_CLASS] then
 		local Power = self:CreateBackdropStatusBar()
