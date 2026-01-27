@@ -39,8 +39,7 @@ local function postCreateBuff(_, Button)
 	Button.Count:SetJustifyH('CENTER')
 end
 
-local styleName = addon.unitPrefix .. 'Group'
-oUF:RegisterStyle(styleName, function(self, unit)
+local function style(self, unit)
 	local header = self:GetParent()
 	Mixin(self, addon.widgetMixin)
 
@@ -161,26 +160,6 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Debuffs.PostUpdate = addon.unitShared.PostUpdateAuras
 	self.Debuffs = Debuffs
 
-	if header:GetAttribute('showRaid') then
-		-- inside the raid frame
-		Debuffs.filter = 'HARMFUL'
-		Debuffs.size = 16
-		Debuffs.growthX = 'LEFT'
-		Debuffs.initialAnchor = 'BOTTOMRIGHT'
-		Debuffs.disableCooldownText = true
-		Debuffs:SetPoint('BOTTOMRIGHT', -3, 3)
-		Debuffs:SetSize(self:GetWidth(), Debuffs.size)
-		Debuffs:SetFrameLevel(Name:GetParent():GetFrameLevel() + 1) -- render high
-	else
-		-- outside to the right
-		Debuffs.filter = 'HARMFUL'
-		Debuffs.size = self:GetHeight() * 2/3
-		Debuffs.growthX = 'RIGHT'
-		Debuffs.initialAnchor = 'LEFT'
-		Debuffs:SetPoint('LEFT', self, 'RIGHT', addon.SPACING, 0)
-		Debuffs:SetHeight(Debuffs.size)
-	end
-
 	local Threat = self:CreateFrame('Frame', 'BackdropTemplate')
 	Threat:SetPoint('TOPLEFT', -5, 5)
 	Threat:SetPoint('BOTTOMRIGHT', 5, -5)
@@ -192,13 +171,37 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	self.Range = {
 		outsideAlpha = 0.2,
 	}
+end
+
+local partyStyle = addon.unitPrefix .. 'Party'
+oUF:RegisterStyle(partyStyle, function(self, unit)
+	style(self, unit)
+
+	-- debuffs outside to the right
+	Debuffs.filter = 'HARMFUL'
+	Debuffs.size = self:GetHeight() * 2/3
+	Debuffs.growthX = 'RIGHT'
+	Debuffs.initialAnchor = 'LEFT'
+	Debuffs:SetPoint('LEFT', self, 'RIGHT', addon.SPACING, 0)
+	Debuffs:SetHeight(Debuffs.size)
 end)
 
-oUF:SetActiveStyle(styleName)
+local raidStyle = addon.unitPrefix .. 'Raid'
+oUF:RegisterStyle(raidStyle, function(self, unit)
+	style(self, unit)
+
+	-- debuffs inside the raid frame
+	Debuffs.filter = 'HARMFUL'
+	Debuffs.size = 16
+	Debuffs.growthX = 'LEFT'
+	Debuffs.initialAnchor = 'BOTTOMRIGHT'
+	Debuffs.disableCooldownText = true
+	Debuffs:SetPoint('BOTTOMRIGHT', -3, 3)
+	Debuffs:SetSize(self:GetWidth(), Debuffs.size)
+	Debuffs:SetFrameLevel(Name:GetParent():GetFrameLevel() + 1) -- render high
+end)
 
 oUF:Factory(function(self)
-	self:SetActiveStyle(styleName)
-
 	local sharedAttributes = {
 		groupBy = 'ASSIGNEDROLE',
 		groupingOrder = 'TANK,HEALER,DAMAGER',
@@ -209,7 +212,7 @@ oUF:Factory(function(self)
 		yOffset = -addon.SPACING,
 	}
 
-	local function SpawnHeader(role, attributes, ...)
+	local function SpawnHeader(styleName, role, attributes, ...)
 		local visibleSpecs = addon:T()
 		for specIndex, specRole in next, addon.CLASS_SPECIALIZATION_ROLE[addon.PLAYER_CLASS] do
 			if role:sub(1, 1) == '!' then
@@ -225,7 +228,9 @@ oUF:Factory(function(self)
 			return
 		end
 
-		local header = oUF:SpawnHeader(nil, nil, attributes:merge(sharedAttributes))
+		self:SetActiveStyle(styleName)
+
+		local header = self:SpawnHeader(nil, nil, attributes:merge(sharedAttributes))
 		header:SetPoint(...)
 		addon:PixelPerfect(header)
 
@@ -240,7 +245,7 @@ oUF:Factory(function(self)
 	end
 
 	-- same party frames for all roles, so we use a fake negative role to match all roles
-	SpawnHeader('!ALL', addon:T({
+	SpawnHeader(partyStyle, '!ALL', addon:T({
 		showParty = true,
 		showPlayer = true,
 		maxColumns = 1,
@@ -251,7 +256,7 @@ oUF:Factory(function(self)
 	}), 'RIGHT', UIParent, 'CENTER', -360, 0)
 
 	-- healer-specific raid
-	SpawnHeader('HEALER', addon:T({
+	SpawnHeader(raidStyle, 'HEALER', addon:T({
 		showRaid = true,
 		maxColumns = 8,
 		['oUF-initialConfigFunction'] = [[
@@ -261,7 +266,7 @@ oUF:Factory(function(self)
 	}), 'RIGHT', UIParent, 'CENTER', -300, 0)
 
 	-- dmg & tank use the same raid layout
-	SpawnHeader('!HEALER', addon:T({
+	SpawnHeader(raidStyle, '!HEALER', addon:T({
 		showRaid = true,
 		maxColumns = 8,
 		['oUF-initialConfigFunction'] = [[
