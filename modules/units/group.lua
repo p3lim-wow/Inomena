@@ -292,8 +292,8 @@ oUF:Factory(function(self)
 		showRaid = true,
 		maxColumns = 8,
 		['oUF-initialConfigFunction'] = [[
-			self:SetWidth(60)
-			self:SetHeight(30)
+			self:SetWidth(80)
+			self:SetHeight(40)
 		]]
-	}), 'RIGHT', UIParent, 'CENTER', -500, -102)
+	}), 'RIGHT', UIParent, 'CENTER', -500, -90)
 end)
