@@ -160,6 +160,11 @@ local function style(self, unit)
 	Debuffs.PostUpdate = addon.unitShared.PostUpdateAuras
 	self.Debuffs = Debuffs
 
+	local PrivateAuras = self:CreateFrame()
+	PrivateAuras.spacing = addon.SPACING
+	PrivateAuras.maxCols = 99 -- make sure it never wraps
+	self.PrivateAuras = PrivateAuras
+
 	local Threat = self:CreateFrame('Frame', 'BackdropTemplate')
 	Threat:SetPoint('TOPLEFT', -5, 5)
 	Threat:SetPoint('BOTTOMRIGHT', 5, -5)
@@ -184,6 +189,13 @@ oUF:RegisterStyle(partyStyle, function(self, unit)
 	self.Debuffs.initialAnchor = 'LEFT'
 	self.Debuffs:SetPoint('LEFT', self, 'RIGHT', addon.SPACING, 0)
 	self.Debuffs:SetHeight(self.Debuffs.size)
+
+	self.PrivateAuras:SetPoint('LEFT', self.Debuffs, 'RIGHT', -1, 0) -- god knows if this is safe
+	self.PrivateAuras:SetSize(self:GetWidth(), self.Debuffs:GetHeight())
+	self.PrivateAuras.size = self.Debuffs.size
+	self.PrivateAuras.growthX = self.Debuffs.growthX
+	self.PrivateAuras.initialAnchor = self.Debuffs.initialAnchor
+	self.PrivateAuras.borderScale = 2.5
 end)
 
 local raidStyle = addon.unitPrefix .. 'Raid'
@@ -200,6 +212,15 @@ oUF:RegisterStyle(raidStyle, function(self, unit)
 	self.Debuffs:SetPoint('BOTTOMRIGHT', -3, 3)
 	self.Debuffs:SetSize(self:GetWidth(), self.Debuffs.size)
 	self.Debuffs:SetFrameLevel(self.Name:GetParent():GetFrameLevel() + 1) -- render high
+
+	self.PrivateAuras:SetPoint('TOPRIGHT', -2, -4)
+	self.PrivateAuras:SetSize(self:GetWidth(), self.Debuffs:GetHeight())
+	self.PrivateAuras.spacing = 3
+	self.PrivateAuras.size = self.Debuffs.size + 3
+	self.PrivateAuras.growthX = self.Debuffs.growthX
+	self.PrivateAuras.initialAnchor = self.Debuffs.initialAnchor
+	self.PrivateAuras.disableCooldownText = self.Debuffs.disableCooldownText
+	self.PrivateAuras.borderScale = 1
 end)
 
 oUF:Factory(function(self)
