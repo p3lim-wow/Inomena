@@ -107,6 +107,17 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Debuffs.PostUpdate = addon.unitShared.PostUpdateAuras
 	self.Debuffs = Debuffs
 
+	local PrivateAuras = self:CreateFrame()
+	PrivateAuras:SetPoint('BOTTOMRIGHT', Debuffs, 'BOTTOMLEFT', 1, 0) -- is this safe?
+	PrivateAuras:SetSize(self:GetWidth(), Debuffs:GetHeight())
+	PrivateAuras.size = Debuffs.size
+	PrivateAuras.spacing = Debuffs.spacing
+	PrivateAuras.growthX = Debuffs.growthX
+	PrivateAuras.initialAnchor = Debuffs.initialAnchor
+	PrivateAuras.maxCols = Debuffs.maxCols
+	PrivateAuras.borderScale = 2.5
+	self.PrivateAuras = PrivateAuras
+
 	local RaidIcon = HealthValue:GetParent():CreateTexture('OVERLAY') -- higher parent
 	RaidIcon:SetPoint('CENTER', self, 'TOP')
 	RaidIcon:SetSize(24, 24)
