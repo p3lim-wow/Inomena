@@ -31,6 +31,10 @@ oUF.colors.runes[addon.enums.ClassSpecializations.DEATHKNIGHT.Blood] = oUF:Creat
 oUF.colors.runes[addon.enums.ClassSpecializations.DEATHKNIGHT.Frost] = oUF:CreateColor(addon.colors.power[Enum.PowerType.RuneFrost]:GetRGB())
 oUF.colors.runes[addon.enums.ClassSpecializations.DEATHKNIGHT.Unholy] = oUF:CreateColor(addon.colors.power[Enum.PowerType.RuneUnholy]:GetRGB())
 
+-- devourer demon hunter power colors
+oUF.colors.power.SOUL_FRAGMENTS[1] = oUF:CreateColor(addon.colors.power.DevourerMeta:GetRGB())
+oUF.colors.power.SOUL_FRAGMENTS[2] = oUF:CreateColor(addon.colors.power.DevourerStar:GetRGB())
+
 -- "disable" the "None" debuff color in oUF by coloring it the same as the default border color,
 -- don't want to mistake no type for bleeds
 oUF.colors.dispel[oUF.Enum.DispelType.None] = oUF:CreateColor(0, 0, 0)
