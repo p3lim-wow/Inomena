@@ -120,6 +120,7 @@ oUF:RegisterStyle(styleName, function(self)
 	local HealthContainer = self:CreateBackdropFrame()
 	HealthContainer:SetPoint('LEFT')
 	HealthContainer:SetPoint('RIGHT')
+	HealthContainer:SetBackgroundColor(0, 0, 0, 0.7)
 	self.HealthContainer = HealthContainer
 
 	local Health = HealthContainer:CreateStatusBar()

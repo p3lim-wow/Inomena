@@ -33,7 +33,7 @@ do
 	function widgetMixin:CreateBackdropStatusBar(template)
 		local statusBar = self:CreateStatusBar(template)
 		statusBar:AddBackdrop()
-		statusBar:SetBackgroundColor(0, 0, 0, 0.5) -- default is hard to see on light backgrounds
+		statusBar:SetBackgroundColor(0, 0, 0, 0.7) -- default is hard to see on light backgrounds
 		return statusBar
 	end
 end

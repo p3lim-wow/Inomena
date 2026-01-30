@@ -48,6 +48,7 @@ local function style(self, unit)
 	addon.unitShared.AddShiftClick(self, unit)
 	addon.unitShared.AddMiddleClick(self)
 	addon:AddBackdrop(self)
+	self:SetBackgroundColor(0, 0, 0, 0.7)
 
 	local Health = self:CreateStatusBar()
 	Health:SetPoint('TOPLEFT')
