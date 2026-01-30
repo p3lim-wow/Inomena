@@ -46,14 +46,15 @@ addon.curves.ActionAlpha:AddPoint(0.001, 0.33)
 -- curves which will yield 0 if the power type is in an idle state, otherwise 1
 addon.curves.PowerIdleAlpha = {}
 for powerType, direction in next, {
+	[Enum.PowerType.Energy] = 1,
+	[Enum.PowerType.Focus] = 1,
+	[Enum.PowerType.Fury] = 0,
+	[Enum.PowerType.Insanity] = 0,
+	[Enum.PowerType.LunarPower] = 0,
+	[Enum.PowerType.Maelstrom] = 0,
 	[Enum.PowerType.Mana] = 1,
 	[Enum.PowerType.Rage] = 0,
-	[Enum.PowerType.Focus] = 1,
-	[Enum.PowerType.Energy] = 1,
 	[Enum.PowerType.RunicPower] = 0,
-	[Enum.PowerType.LunarPower] = 0,
-	[Enum.PowerType.Insanity] = 0,
-	[Enum.PowerType.Fury] = 0,
 } do
 	local alphaCurve = C_CurveUtil.CreateCurve()
 	alphaCurve:SetType(Enum.LuaCurveType.Step)
