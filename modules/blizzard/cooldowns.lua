@@ -89,7 +89,7 @@ local function skin(group, _, button)
 	if button.Applications then
 		button.Applications.Applications:ClearAllPoints()
 		button.Applications.Applications:SetPoint('CENTER', button.Icon, 'TOP')
-		button.Applications.Applications:SetFont(addon.FONT, 14, 'OUTLINE')
+		button.Applications.Applications:SetFont(addon.FONT, 24, 'OUTLINE')
 	end
 
 	if button.RefreshSpellCooldownInfo then
