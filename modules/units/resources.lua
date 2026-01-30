@@ -127,8 +127,13 @@ end
 local function updateCombat(self, _, combatState)
 	inCombat = combatState
 
-	postUpdatePower(self.Power, self.unit)
-	postUpdateRunes(self.Runes)
+	self.Power:ForceUpdate()
+	self.ClassPower:ForceUpdate()
+
+	if self.Runes.ForceUpdate then
+		-- this method doesn't exist unless runes have been properly enabled
+		self.Runes:ForceUpdate()
+	end
 end
 
 local styleName = addon.unitPrefix .. 'Resources'
