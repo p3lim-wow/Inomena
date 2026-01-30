@@ -91,12 +91,37 @@ local function updateChargedComboPoint(element, ...)
 	end
 end
 
-local function postUpdateClassPower(element, _, max, maxChanged, _, ...)
+local function postUpdateClassPower(element, cur, max, maxChanged, powerType, ...)
 	if maxChanged then -- need to resize each class power bar
 		addon:ResizePillsToFit(element, max)
 	end
 
 	updateChargedComboPoint(element.ChargedComboPoints, ...) -- handler for custom sub-widget
+
+	-- hide class power when idle
+	if inCombat then
+		element:SetAlpha(1)
+	else
+		if powerType == 'ARCANE_CHARGES' and cur == 0 then
+			element:SetAlpha(0)
+		elseif powerType == 'CHI' and (C_SpellBook.IsSpellKnown(121817) and cur == 2 or cur == 0) then
+			element:SetAlpha(0)
+		elseif powerType == 'COMBO_POINTS' and cur == 0 then
+			element:SetAlpha(0)
+		elseif powerType == 'ESSENCE' and cur == max then
+			element:SetAlpha(0)
+		elseif powerType == 'HOLY_POWER' and cur == 0 then
+			element:SetAlpha(0)
+		elseif powerType == 'MAELSTROM' and cur == 0 then
+			element:SetAlpha(0)
+		elseif powerType == 'SOUL_FRAGMENTS' and cur == 0 then
+			element:SetAlpha(0)
+		elseif powerType == 'SOUL_SHARDS' and cur == 3 then
+			element:SetAlpha(0)
+		else
+			element:SetAlpha(1)
+		end
+	end
 end
 
 local function updateCombat(self, _, combatState)
