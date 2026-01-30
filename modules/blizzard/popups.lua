@@ -1,9 +1,9 @@
 local _, addon = ...
 
 -- don't accidentally deny summons and invites
-addon:SafeSetNil(StaticPopupDialogs.PARTY_INVITE, 'hideOnEscape')
-addon:SafeSetNil(StaticPopupDialogs.CONFIRM_SUMMON, 'hideOnEscape')
-addon:SafeSetNil(StaticPopupDialogs.AREA_SPIRIT_HEAL, 'hideOnEscape')
+StaticPopupDialogs.PARTY_INVITE.hideOnEscape = nil
+StaticPopupDialogs.CONFIRM_SUMMON.hideOnEscape = nil
+StaticPopupDialogs.AREA_SPIRIT_HEAL.hideOnEscape = nil
 
 -- don't ask for written confirmation when deleting items
 addon:SafeSetTrue(StaticPopupDialogs.DELETE_ITEM, 'enterClicksFirstButton')
@@ -13,16 +13,16 @@ addon:SafeSetTrue(StaticPopupDialogs.DELETE_GOOD_ITEM, 'enterClicksFirstButton')
 addon:SafeSetTrue(StaticPopupDialogs.CONFIRM_PURCHASE_NONREFUNDABLE_ITEM, 'enterClicksFirstButton')
 
 -- prevent escape from hiding the logout poput
-addon:SafeSetNil(StaticPopupDialogs.CAMP, 'hideOnEscape')
+StaticPopupDialogs.CAMP.hideOnEscape = nil
 
 -- stop waiting for arbitrary timers
 addon:HookAddOn('Blizzard_ItemInteractionUI', function()
-	addon:SafeSetNil(StaticPopupDialogs.ITEM_INTERACTION_CONFIRMATION_DELAYED, 'acceptDelay')
-	addon:SafeSetNil(StaticPopupDialogs.ITEM_INTERACTION_CONFIRMATION_DELAYED_WITH_CHARGE_INFO, 'acceptDelay')
+	StaticPopupDialogs.ITEM_INTERACTION_CONFIRMATION_DELAYED.acceptDelay = nil
+	StaticPopupDialogs.ITEM_INTERACTION_CONFIRMATION_DELAYED_WITH_CHARGE_INFO.acceptDelay = nil
 end)
 
 addon:HookAddOn('Blizzard_WeeklyRewards', function()
-	addon:SafeSetNil(StaticPopupDialogs.CONFIRM_SELECT_WEEKLY_REWARD, 'acceptDelay')
+	StaticPopupDialogs.CONFIRM_SELECT_WEEKLY_REWARD.acceptDelay = nil
 end)
 
 -- confirm looting items that bind on pickup
