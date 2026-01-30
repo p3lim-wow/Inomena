@@ -55,7 +55,7 @@ Button:SetThrottledUpdate(1, function()
 	end
 end)
 
-function addon:ENCOUNTER_START(encounterID)
+function addon:ENCOUNTER_START()
 	Button:Show()
 end
 
