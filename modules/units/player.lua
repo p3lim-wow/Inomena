@@ -66,8 +66,11 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	HealAbsorb:SetPoint('BOTTOM')
 	HealAbsorb:SetPoint('RIGHT', Health:GetStatusBarTexture())
 	HealAbsorb:SetWidth(self:GetWidth())
+	HealAbsorb:GetStatusBarTexture():SetAtlas('RaidFrame-Absorb-Overlay', false, nil, nil, 'REPEAT', 'REPEAT')
+	HealAbsorb:GetStatusBarTexture():SetHorizTile(true)
+	HealAbsorb:GetStatusBarTexture():SetVertTile(true)
+	HealAbsorb:GetStatusBarTexture():SetVertexColor(0, 0, 0)
 	HealAbsorb:SetReverseFill(true)
-	HealAbsorb:SetStatusBarColor(251/255, 125/255, 129/255, 0.5)
 	self.HealthPrediction.healAbsorb = HealAbsorb
 
 	local HealthValue = self:CreateText()
