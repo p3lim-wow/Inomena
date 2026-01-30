@@ -1,8 +1,31 @@
 local _, addon = ...
 
 local widgetMixin = {}
-function widgetMixin:CreateFrame(frameType, template)
-	return Mixin(addon:CreateFrame(frameType or 'Frame', nil, self, template), widgetMixin) -- extending Dashi
+
+do
+	local frameMixin = {}
+	function frameMixin:SetThrottledUpdate(interval, callback)
+		if interval and callback then
+			local total = 0
+			self:SetScript('OnUpdate', function(_, elapsed)
+				total = total + elapsed
+				if total > interval then
+					total = 0
+					callback(self)
+				end
+			end)
+		else
+			self:SetScript('OnUpdate', nil)
+		end
+	end
+
+	function widgetMixin:CreateFrame(frameType, template)
+		return Mixin(addon:CreateFrame(frameType or 'Frame', nil, self, template), widgetMixin, frameMixin)
+	end
+
+	function addon:CreateFrame(...)
+		return Mixin(CreateFrame(...), widgetMixin, addon.eventMixin, frameMixin)
+	end
 end
 
 function widgetMixin:CreateBackdropFrame(frameType, template)
@@ -123,9 +146,5 @@ function widgetMixin:AddBackdrop(...)
 end
 
 -- expose internally
-
-function addon:CreateFrame(...)
-	return Mixin(CreateFrame(...), widgetMixin, addon.eventMixin)
-end
 
 addon.widgetMixin = widgetMixin
