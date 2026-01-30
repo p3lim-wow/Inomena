@@ -124,9 +124,9 @@ for _, group in next, {
 	'UtilityCooldownViewer',
 	'BuffIconCooldownViewer',
 } do
-	-- hide whenever in pet battle, or when skyriding
+	-- hide whenever in pet battle, vehicle, or when skyriding
 	local listener = CreateFrame('Frame', nil, nil, 'SecureHandlerStateTemplate')
-	RegisterStateDriver(listener, 'visibility', '[petbattle][bonusbar:5] hide; show')
+	RegisterStateDriver(listener, 'visibility', '[petbattle][vehicleui][bonusbar:5] hide; show')
 	listener:HookScript('OnAttributeChanged', function(_, _, shouldHide)
 		_G[group]:SetAlphaFromBoolean(not shouldHide, 1, 0)
 		for _, button in next, _G[group]:GetItemFrames() do
