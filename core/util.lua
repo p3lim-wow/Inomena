@@ -6,10 +6,6 @@ function addon:SafeSetTrue(object, key)
 	TextureLoadingGroupMixin.AddTexture({textures = object}, key)
 end
 
-function addon:SafeSetNil(object, key)
-	TextureLoadingGroupMixin.RemoveTexture({textures = object}, key)
-end
-
 do
 	local SCALE = 768 / select(2, GetPhysicalScreenSize())
 	function addon:PixelPerfect(obj)

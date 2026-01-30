@@ -60,8 +60,8 @@ for prefix, numButtons in next, {
 		local button = _G[prefix .. index]
 
 		-- disable castbars, reticles, interrupts etc, and loss-of-control spiral
-		addon:SafeSetNil(button, 'enableSpellFX')
-		addon:SafeSetNil(button, 'enableLOCCooldown')
+		button.enableSpellFX = nil
+		button.enableLOCCooldown = nil
 
 		-- resize icon
 		if prefix == 'PetActionButton' then
