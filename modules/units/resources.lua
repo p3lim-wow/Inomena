@@ -44,7 +44,7 @@ local function overrideDisplayPower(_, unit)
 end
 
 local function postUpdatePower(element, unit)
-	-- hide power if player is idle
+	-- hide power if no display power or if player is idle
 	local shouldShow = false
 	if element.displayType then
 		shouldShow = true
@@ -61,6 +61,7 @@ local function postUpdatePower(element, unit)
 end
 
 local function postUpdateRunes(element)
+	-- hide runes when idle
 	if inCombat then
 		element:Show()
 	else
