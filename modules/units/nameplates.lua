@@ -13,7 +13,7 @@ local function updateOnAdded(self)
 		self:DisableElement('Auras')
 		self:DisableElement('Castbar')
 		return
-	elseif UnitIsFriend('player', unit) then
+	elseif UnitIsFriend('player', unit) and not UnitIsPossessed(unit) and not UnitIsCharmed(unit) then
 		self.Name:Hide()
 		self.FriendlyName:Show()
 		self.PetIcon:Hide()
