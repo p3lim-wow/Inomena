@@ -86,15 +86,15 @@ end
 do
 	local cooldownMixin = {}
 	function cooldownMixin:SetTimeFont(size)
-		self:GetRegions():SetFont(addon.FONT, size or 16, 'OUTLINE')
+		self:GetCountdownFontString():SetFont(addon.FONT, size or 16, 'OUTLINE')
 	end
 
 	function cooldownMixin:ClearTimePoints()
-		self:GetRegions():ClearAllPoints()
+		self:GetCountdownFontString():ClearAllPoints()
 	end
 
 	function cooldownMixin:SetTimePoint(...)
-		self:GetRegions():SetPoint(...)
+		self:GetCountdownFontString():SetPoint(...)
 	end
 
 	function cooldownMixin:SetIgnoreGlobalCooldown(state)
