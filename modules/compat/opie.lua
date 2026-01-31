@@ -98,7 +98,7 @@ function methods:SetIconVertexColor(r, g, b)
 	self.Icon:SetVertexColor(r, g, b)
 end
 
-local function constructor(name, parent, size)
+local function constructor(_, parent, size)
 	local Button = CreateFrame('CheckButton', nil, parent)
 	Button:SetSize(size, size)
 
