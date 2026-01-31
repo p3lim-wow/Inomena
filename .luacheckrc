@@ -281,5 +281,6 @@ read_globals = {
 
 	-- exposed from other addons
 	'LibStub',
+	'OPie',
 	'Syndicator',
 }
