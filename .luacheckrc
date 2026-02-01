@@ -27,6 +27,7 @@ globals = {
 
 	-- savedvariables
 	'InomenaPlayed',
+	'OPie_SavedData', -- we mutate OPie's savedvariables
 }
 
 read_globals = {
@@ -117,6 +118,7 @@ read_globals = {
 	'HideUIPanel',
 	'RegisterAttributeDriver',
 	'RegisterStateDriver',
+	'SecondsToTime',
 	'ShowUIPanel',
 	'WrapTextInColorCode',
 	'nop',
@@ -126,15 +128,20 @@ read_globals = {
 
 	-- GlobalStrings
 	'CHAT_GUILD_INVITE_SEND',
+	'COOLDOWN_REMAINING',
 	'DASH_WITH_TEXT',
 	'ERR_MAIL_INVALID_ATTACHMENT_SLOT',
 	'EVENT_TOAST_EXPANDED_DESCRIPTION',
 	'HAVE_MAIL',
 	'HEADER_COLON',
+	'HOUSING_DASHBOARD_RETURN',
+	'HOUSING_DASHBOARD_TELEPORT_BUTTON_TEXT',
 	'MINIMAP_TRACKING_MAILBOX',
 	'MINIMAP_TRACKING_REPAIR',
 	'MONEY',
 	'PROFESSIONS_CRAFTING_ORDERS_PAGE_NAME',
+	'SPELL_CAST_TIME_SEC',
+	'SPELL_RECAST_TIME_MIN',
 	'TIME_DAYHOURMINUTESECOND',
 	'UNAVAILABLE',
 	'UNKNOWN',
@@ -153,6 +160,7 @@ read_globals = {
 	'C_DurationUtil',
 	'C_GossipInfo',
 	'C_GuildInfo',
+	'C_Housing',
 	'C_IncomingSummon',
 	'C_Item',
 	'C_Map',

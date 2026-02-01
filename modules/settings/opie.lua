@@ -347,7 +347,7 @@ do
 
 	local function AddHouseTeleports()
 		-- check for owned houses and create custom actions
-		self:RegisterEvent('PLAYER_HOUSE_LIST_UPDATED', UpdateHouseButtons)
+		addon:RegisterEvent('PLAYER_HOUSE_LIST_UPDATED', UpdateHouseButtons)
 		C_Housing.GetPlayerOwnedHouses()
 
 		-- pre-create custom ring for the house teleport actions
@@ -377,7 +377,7 @@ do
 		button.name = HOUSING_DASHBOARD_RETURN
 		button.icon = 'dashboard-panel-homestone-teleport-out-button'
 		button.castTime = 10
-		button.actionSlotID = AB:CreateActionSlot(GenerateClosure(getActionDescription, button), nil, 'attribute', 'type', 'click', 'clickbutton', button)
+		button.actionSlotID = AB:CreateActionSlot(GenerateClosure(GetActionDescription, button), nil, 'attribute', 'type', 'click', 'clickbutton', button)
 		AB:RegisterActionType('inomena.housereturn', GenerateClosure(GetActionSlotID, button), nop, 1)
 	end
 
