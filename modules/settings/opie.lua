@@ -276,3 +276,37 @@ do
 		end
 	end
 end
+
+-- kill OPie's default bindings
+addon:HookAddOn('OPie', function()
+	if not OPie_SavedData then
+		OPie_SavedData = {}
+	end
+	if not OPie_SavedData.ProfileStorage then
+		OPie_SavedData.ProfileStorage = {}
+	end
+	if not OPie_SavedData.ProfileStorage.default then
+		OPie_SavedData.ProfileStorage.default = {}
+	end
+	if not OPie_SavedData.ProfileStorage.default.Bindings then
+		OPie_SavedData.ProfileStorage.default.Bindings = {}
+	end
+
+	-- ripped out of OPie/Bundle/Editable.lua
+	OPie_SavedData.ProfileStorage.default.Bindings.CommonTrades = false
+	OPie_SavedData.ProfileStorage.default.Bindings.DKCombat = false
+	OPie_SavedData.ProfileStorage.default.Bindings.DruidFeral = false
+	OPie_SavedData.ProfileStorage.default.Bindings.DruidShift = false
+	OPie_SavedData.ProfileStorage.default.Bindings.DruidUtility = false
+	OPie_SavedData.ProfileStorage.default.Bindings.HunterAspects = false
+	OPie_SavedData.ProfileStorage.default.Bindings.MageCombat = false
+	OPie_SavedData.ProfileStorage.default.Bindings.MageTools = false
+	OPie_SavedData.ProfileStorage.default.Bindings.MageTravel = false
+	OPie_SavedData.ProfileStorage.default.Bindings.OPieAutoQuest = false
+	OPie_SavedData.ProfileStorage.default.Bindings.PaladinTools = false
+	OPie_SavedData.ProfileStorage.default.Bindings.RaidSymbols = false
+	OPie_SavedData.ProfileStorage.default.Bindings.SpecMenu = false
+	OPie_SavedData.ProfileStorage.default.Bindings.WarlockCombat = false
+	OPie_SavedData.ProfileStorage.default.Bindings.WarlockLTS = false
+	OPie_SavedData.ProfileStorage.default.Bindings.WorldMarkers = false
+end)
