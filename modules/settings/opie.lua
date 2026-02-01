@@ -147,6 +147,7 @@ local RINGS = {
 		hotkey = 'ALT-G',
 
 		{'ring', 'CommonHearth', fastClick=true, rotationMode='shuffle'},
+		{'opie.ext', 'mythport', show='[mythport]', _t='mythport'},
 		{'ring', addonName .. 'Wormholes'},
 
 		-- misc toys
