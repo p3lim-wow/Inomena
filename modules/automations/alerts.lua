@@ -16,6 +16,12 @@ function addon:LFG_LIST_APPLICATION_STATUS_UPDATED(_, status)
 	end
 end
 
+-- afk logout
+function addon:PLAYER_CAMPING()
+	local success, isAFK = pcall(UnitIsAFK, 'player') -- stupid secrets
+	if success and isAFK then
+		C_Sound.PlaySound(SOUNDKIT.READY_CHECK, 'master', true)
+	end
 end
 
 -- misc events we straight up trigger sounds for
@@ -25,6 +31,11 @@ for event, soundkitID in next, {
 	PARTY_INVITE_REQUEST = 'IG_PLAYER_INVITE',
 	READY_CHECK = 'READY_CHECK',
 	LFG_PROPOSAL_SHOW = 'READY_CHECK',
+	LFG_READY_CHECK_SHOW = 'READY_CHECK',
+	LFG_ROLE_CHECK_SHOW = 'READY_CHECK',
+	ROLE_POLL_BEGIN = 'READY_CHECK',
+	PET_BATTLE_QUEUE_PROPOSE_MATCH = 'PVP_THROUGH_QUEUE',
+	START_PLAYER_COUNTDOWN = 'UI_COUNTDOWN_TIMER', -- why isn't this in "Gameplay Sound Effects"?
 } do
 	addon:RegisterEvent(event, function()
 		C_Sound.PlaySound(SOUNDKIT[soundkitID], 'master', true)
