@@ -114,13 +114,13 @@ end
 local styleName = addon.unitPrefix .. 'NamePlates'
 oUF:RegisterStyle(styleName, function(self)
 	Mixin(self, addon.widgetMixin)
-	addon:PixelPerfect(self)
 
 	-- temporary fix for DamageAbsorb clamping not working
 	local HealthContainer = self:CreateBackdropFrame()
 	HealthContainer:SetPoint('LEFT')
 	HealthContainer:SetPoint('RIGHT')
 	HealthContainer:SetBackgroundColor(0, 0, 0, 0.7)
+	addon:PixelPerfect(HealthContainer)
 	self.HealthContainer = HealthContainer
 
 	local Health = HealthContainer:CreateStatusBar()
@@ -183,7 +183,7 @@ oUF:RegisterStyle(styleName, function(self)
 	PetIcon:SetSize(12, 12)
 	self.PetIcon = PetIcon
 
-	local Debuffs = self:CreateFrame()
+	local Debuffs = HealthContainer:CreateFrame()
 	Debuffs:SetPoint('BOTTOMLEFT', Health, 'TOPLEFT', 0, addon.SPACING)
 	Debuffs:SetSize(120, 140)
 	Debuffs.initialAnchor = 'BOTTOMLEFT'
@@ -198,7 +198,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Debuffs.CreateButton = addon.unitShared.CreateAura
 	self.Debuffs = Debuffs
 
-	local Buffs = self:CreateFrame()
+	local Buffs = HealthContainer:CreateFrame()
 	Buffs:SetPoint('BOTTOMRIGHT', Health, 'TOPRIGHT', 0, addon.SPACING)
 	Buffs:SetSize(80, 140)
 	Buffs.initialAnchor = 'BOTTOMRIGHT'
@@ -214,7 +214,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Buffs.FilterAura = filterBuffs
 	self.Buffs = Buffs
 
-	local Castbar = self:CreateBackdropStatusBar()
+	local Castbar = HealthContainer:CreateBackdropStatusBar()
 	Castbar:SetPoint('TOPLEFT', Health, 'BOTTOMLEFT', 0, -1)
 	Castbar:SetPoint('TOPRIGHT', Health, 'BOTTOMRIGHT', 0, -1)
 	Castbar:SetHeight(14)
