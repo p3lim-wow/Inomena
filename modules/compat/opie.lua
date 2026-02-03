@@ -91,7 +91,7 @@ function methods:SetIcon(texture)
 end
 
 function methods:SetIconAtlas(atlas)
-	self.Icon:SetTexture(atlas)
+	self.Icon:SetAtlas(atlas)
 end
 
 function methods:SetIconVertexColor(r, g, b)
