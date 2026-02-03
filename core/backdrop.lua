@@ -49,7 +49,7 @@ function addon:AddBackdrop(frame, anchor)
 	addon:PixelPerfect(borderBottom)
 
 	local background = createTexture(frame, nil, 'BACKGROUND')
-	background:SetAllPoints()
+	background:SetAllPoints(anchor or frame)
 	frame.backdropBackground = background
 	addon:PixelPerfect(background)
 
