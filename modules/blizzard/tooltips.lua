@@ -3,25 +3,33 @@ local _, addon = ...
 -- skin tooltips
 
 -- replace border
-for _, name in next, {
+local function skin(tooltip)
+	addon:Hide(tooltip, 'NineSlice')
+	addon:AddBackdrop(tooltip)
+
+	if tooltip.CompareHeader then
+		-- adjust color so it's less confusing
+		tooltip:SetBorderColor(0.2, 0.2, 0.2)
+		tooltip:SetBackgroundColor(0.1, 0.1, 0.1, 0.8)
+
+		-- hide "Equipped" header
+		tooltip.CompareHeader:SetAlpha(0)
+	else
+		tooltip:SetBackgroundColor(0, 0, 0, 0.8) -- it's too transparent by default
+	end
+end
+
+for _, tooltip in next, {
 	'GameTooltip',
 	'ShoppingTooltip1',
 	'ShoppingTooltip2',
 } do
-	addon:Hide(name, 'NineSlice')
-	addon:AddBackdrop(_G[name])
-
-	if _G[name].CompareHeader then
-		-- adjust color so it's less confusing
-		_G[name]:SetBorderColor(0.2, 0.2, 0.2)
-		_G[name]:SetBackgroundColor(0.1, 0.1, 0.1, 0.8)
-
-		-- hide "Equipped" header
-		_G[name].CompareHeader:SetAlpha(0)
-	else
-		_G[name]:SetBackgroundColor(0, 0, 0, 0.8)
-	end
+	skin(_G[tooltip])
 end
+
+addon:HookAddOn('OPie', function()
+	skin(NotGameTooltip1) -- OPie uses a custom tooltip based on GameTooltip
+end)
 
 -- adjust spacing between shopping tooltips
 hooksecurefunc(TooltipComparisonManager, 'AnchorShoppingTooltips', function(show1, show2)
