@@ -114,7 +114,7 @@ local function postUpdateClassPower(element, cur, max, maxChanged, powerType, ..
 			element:SetAlpha(0)
 		elseif powerType == 'MAELSTROM' and cur == 0 then
 			element:SetAlpha(0)
-		elseif powerType == 'SOUL_FRAGMENTS' and cur == 0 then
+		elseif powerType == 'SOUL_FRAGMENTS' and (C_SpellBook.IsSpellKnown(1261684) and cur == 0.5 or cur == 0) then
 			element:SetAlpha(0)
 		elseif powerType == 'SOUL_SHARDS' and cur == 3 then
 			element:SetAlpha(0)
