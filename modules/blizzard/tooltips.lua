@@ -50,13 +50,13 @@ hooksecurefunc(TooltipComparisonManager, 'AnchorShoppingTooltips', function(show
 end)
 
 -- set custom font
-for _, name in next, {
+for _, tooltipFontString in next, {
 	'GameTooltipHeaderText',
 	'GameTooltipText',
 	'GameTooltipTextSmall',
 } do
-	_G[name]:SetFont(addon.FONT, 12, 'OUTLINE')
-	_G[name]:SetShadowOffset(0, 0)
+	_G[tooltipFontString]:SetFont(addon.FONT, 12, 'OUTLINE')
+	_G[tooltipFontString]:SetShadowOffset(0, 0)
 end
 
 -- style bar
