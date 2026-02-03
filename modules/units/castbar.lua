@@ -22,16 +22,18 @@ local function postStartCast(element)
 	element:SetStatusBarColor(1, 1, 1) -- need to reset here after fake GCDs
 end
 
+local timer
 local function resetCastbar(element)
 	if not element.castID then -- don't reset if it's in use
 		element.channeling = nil
 		element:Hide()
+		timer = nil
 	end
 end
 
 local function updateGlobalCooldown(self)
 	local element = self.Castbar
-	if element.casting or element.empowering or element.channeling then
+	if element.castID then
 		return
 	end
 
@@ -40,6 +42,9 @@ local function updateGlobalCooldown(self)
 		-- reset manually
 		element.castID = nil
 		element.delay = 0
+		if timer then
+			timer:Cancel()
+		end
 
 		-- fake channeling
 		element.channeling = true
@@ -56,7 +61,7 @@ local function updateGlobalCooldown(self)
 		element:Show()
 
 		-- reset after duration ends
-		C_Timer.After(info.duration, GenerateClosure(resetCastbar, element))
+		timer = C_Timer.NewTimer(info.duration, GenerateClosure(resetCastbar, element))
 	end
 end
 
