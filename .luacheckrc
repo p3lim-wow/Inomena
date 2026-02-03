@@ -105,6 +105,7 @@ read_globals = {
 	'AnchorUtil',
 	'ChatFrameUtil',
 	'MenuUtil',
+	'TooltipDataProcessor',
 
 	-- FrameXML functions
 	'CreateAnchor',
@@ -169,6 +170,7 @@ read_globals = {
 	'C_MountJournal',
 	'C_PlayerInfo',
 	'C_QuestLog',
+	'C_Sound',
 	'C_SpecializationInfo',
 	'C_Spell',
 	'C_SpellBook',
@@ -233,6 +235,7 @@ read_globals = {
 	'RequestTimePlayed',
 	'SellCursorItem',
 	'TaxiRequestEarlyLanding',
+	'UnitAffectingCombat',
 	'UnitCanAttack',
 	'UnitClass',
 	'UnitClassBase',
@@ -250,6 +253,7 @@ read_globals = {
 	'UnitHealthMissing',
 	'UnitHealthPercent',
 	'UnitInVehicle',
+	'UnitIsAFK',
 	'UnitIsCharmed',
 	'UnitIsConnected',
 	'UnitIsDead',
@@ -289,6 +293,7 @@ read_globals = {
 
 	-- exposed from other addons
 	'LibStub',
+	'NotGameTooltip1', -- OPie's custom tooltip
 	'OPie',
 	'Syndicator',
 }
