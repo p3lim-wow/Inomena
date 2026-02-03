@@ -5,7 +5,7 @@ local _, addon = ...
 -- battleground queue pop
 function addon:UPDATE_BATTLEFIELD_STATUS(index)
 	if GetBattlefieldStatus(index) == 'confirm' then
-		C_Sound.PlaySound(SOUNDKIT.READY_CHECK, 'master', true)
+		C_Sound.PlaySound(SOUNDKIT.PVP_THROUGH_QUEUE, 'master', true)
 	end
 end
 
@@ -22,7 +22,7 @@ end
 for event, soundkitID in next, {
 	CHAT_MSG_WHISPER = 'TELL_MESSAGE',
 	CHAT_MSG_BN_WHISPER = 'TELL_MESSAGE',
-	PARTY_INVITE_REQUEST = 'READY_CHECK',
+	PARTY_INVITE_REQUEST = 'IG_PLAYER_INVITE',
 	READY_CHECK = 'READY_CHECK',
 	LFG_PROPOSAL_SHOW = 'READY_CHECK',
 } do
