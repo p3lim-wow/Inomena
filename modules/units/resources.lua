@@ -4,8 +4,6 @@ local oUF = addon.oUF
 local PLAYER_CLASS = addon.PLAYER_CLASS
 local PLAYER_SPECS = addon.enums.ClassSpecializations[PLAYER_CLASS]
 
-local inCombat -- updated in updateCombat
-
 local function overrideDisplayPower(_, unit)
 	-- basically never show mana
 	if UnitHasVehicleUI(unit) then
@@ -49,7 +47,7 @@ local function postUpdatePower(element, unit)
 	if element.displayType then
 		shouldShow = true
 
-		if inCombat then
+		if UnitAffectingCombat('player') then
 			element:SetAlpha(1)
 		else
 			local alphaCurve = addon.curves.PowerIdleAlpha[element.displayType]
@@ -62,7 +60,7 @@ end
 
 local function postUpdateRunes(element)
 	-- hide runes when idle
-	if inCombat then
+	if UnitAffectingCombat('player') then
 		element:Show()
 	else
 		local hasRuneCharging
@@ -99,7 +97,7 @@ local function postUpdateClassPower(element, cur, max, maxChanged, powerType, ..
 	updateChargedComboPoint(element.ChargedComboPoints, ...) -- handler for custom sub-widget
 
 	-- hide class power when idle
-	if inCombat then
+	if UnitAffectingCombat('player') then
 		element:SetAlpha(1)
 	else
 		if powerType == 'ARCANE_CHARGES' and cur == 0 then
@@ -124,9 +122,7 @@ local function postUpdateClassPower(element, cur, max, maxChanged, powerType, ..
 	end
 end
 
-local function updateCombat(self, _, combatState)
-	inCombat = combatState
-
+local function updateCombat(self)
 	self.Power:ForceUpdate()
 	self.ClassPower:ForceUpdate()
 
@@ -212,7 +208,8 @@ oUF:RegisterStyle(styleName, function(self)
 	end
 
 	-- we need to register combat state events to update visibility
-	self:RegisterEvent('PLAYER_IN_COMBAT_CHANGED', updateCombat, true) -- unitless event
+	self:RegisterEvent('PLAYER_REGEN_DISABLED', updateCombat, true)
+	self:RegisterEvent('PLAYER_REGEN_ENABLED', updateCombat, true)
 end)
 
 oUF:SetActiveStyle(styleName)
