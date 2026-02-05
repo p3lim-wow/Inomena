@@ -27,8 +27,13 @@ MinimapCluster.Tracking:SetParent(Minimap)
 MinimapCluster.Tracking:ClearAllPoints()
 MinimapCluster.Tracking.Button:SetMenuAnchor(AnchorUtil.CreateAnchor('TOPRIGHT', Minimap, 'BOTTOMLEFT'))
 
--- override click handler
-Minimap:SetScript('OnMouseUp', function(self, button)
+-- overlay frame to hijack clicks
+local clickOverlay = CreateFrame('Frame', nil, Minimap)
+clickOverlay:SetAllPoints()
+clickOverlay:EnableMouse(true)
+clickOverlay:SetPassThroughButtons('LeftButton') -- don't prevent pinging
+clickOverlay:SetPropagateMouseMotion(true) -- don't prevent tooltips
+clickOverlay:SetScript('OnMouseUp', function(self, button)
 	if button == 'MiddleButton' then
 		-- open calendar on middle-click
 		if InCombatLockdown() then
@@ -47,9 +52,6 @@ Minimap:SetScript('OnMouseUp', function(self, button)
 	elseif button == 'RightButton' then
 		-- open tracking menu on right-click
 		MinimapCluster.Tracking.Button:OpenMenu()
-	else
-		-- call the original handler
-		MinimapMixin.OnClick(self)
 	end
 end)
 
