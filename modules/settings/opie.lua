@@ -86,6 +86,8 @@ local RINGS = addon:T({
 		{'spell', 395277, show='[me:mage]'}, -- Teleport: Valdrakken
 		{'spell', 395289, show='[me:mage]'}, -- Portal: Valdrakken
 		{'toy', 198156}, -- Wyrmhole Generator (Dragonflight)
+		{'item', 200613}, -- Aylaag Windstone Fragment
+		{'item', 204481}, -- Morqut Hearth Totem
 	},
 	{
 		name = addonName .. 'Teleport9', -- Shadowlands
@@ -93,6 +95,12 @@ local RINGS = addon:T({
 		{'spell', 344587, show='[me:mage]'}, -- Teleport: Oribos
 		{'spell', 344597, show='[me:mage]'}, -- Portal: Oribos
 		{'toy', 172924}, -- Wormhole Generator: Shadowlands
+		{'item', 181163}, -- Scroll of Teleport: Theater of Pain
+		{'item', 184500}, -- Attendant's Pocket Portal: Bastion
+		{'item', 184501}, -- Attendant's Pocket Portal: Revendreth
+		{'item', 184502}, -- Attendant's Pocket Portal: Maldraxxus
+		{'item', 184503}, -- Attendant's Pocket Portal: Ardenweald
+		{'item', 184504}, -- Attendant's Pocket Portal: Oribos
 	},
 	{
 		name = addonName .. 'Teleport8', -- Zandalar & Kul Tiras
@@ -103,6 +111,10 @@ local RINGS = addon:T({
 		{'spell', 281400, show='[me:mage,alliance]'}, -- Portal: Boralus
 		{'toy', 168807}, -- Wormhole Generator: Kul Tiras
 		{'toy', 168808}, -- Wormhole Generator: Zandalar
+		{'item', 166559}, -- Commander's Signet of Battle
+		{'item', 166560}, -- Captain's Signet of Command
+		{'item', 202046}, -- Lucky Tortollan Charm
+		{'item', 167075}, -- Ultrasafe Transporter: Mechagon
 	},
 	{
 		name = addonName .. 'Teleport7', -- Broken Isles
@@ -114,6 +126,12 @@ local RINGS = addon:T({
 		{'spell', 224869, show='[me:mage]'}, -- Teleport: Dalaran - Broken Isles
 		{'spell', 224871, show='[me:mage]'}, -- Portal: Dalaran - Broken Isles
 		{'item', 144341}, -- Rechargeable Reaves Battery
+		{'item', 140493}, -- Adept's Guide to Dimensional Rifting
+		{'item', 141013}, -- Scroll of Town Portal: Shala'nir
+		{'item', 141014}, -- Scroll of Town Portal: Sashj'tar
+		{'item', 141015}, -- Scroll of Town Portal: Kal'delar
+		{'item', 141016}, -- Scroll of Town Portal: Faronaar
+		{'item', 141017}, -- Scroll of Town Portal: Lian'tril
 	},
 	{
 		name = addonName .. 'Teleport6', -- Draenor
@@ -126,6 +144,8 @@ local RINGS = addon:T({
 		{'toy', 112059}, -- Wormhole Centrifuge (Draenor)
 		{'toy', 151652}, -- Wormhole Generator: Argus
 		{'item', 128353}, -- Admiral's Compass
+		{'item', 118662}, -- Bladespire Relic
+		{'item', 118663}, -- Relic of Karabor
 	},
 	{
 		name = addonName .. 'Teleport5', -- Pandaria
@@ -136,6 +156,8 @@ local RINGS = addon:T({
 		{'spell', 132621, show='[me:mage,alliance]'}, -- Teleport: Vale of Eternal Blossoms
 		{'spell', 132620, show='[me:mage,alliance]'}, -- Portal: Vale of Eternal Blossoms
 		{'toy', 87215}, -- Wormhole Generator: Pandaria
+		{'item', 219222}, -- Time-Lost Artifact (item variant from 2024 timerunning)
+		{'item', 103678}, -- Time-Lost Artifact
 	},
 	{
 		name = addonName .. 'Teleport3', -- Northrend
@@ -143,6 +165,25 @@ local RINGS = addon:T({
 		{'spell', 53140, show='[me:mage]'}, -- Teleport: Dalaran - Northrend
 		{'spell', 53142, show='[me:mage]'}, -- Portal: Dalaran - Northrend
 		{'toy', 48933}, -- Wormhole Generator: Northrend
+		{'item', 40585}, -- Signet of the Kirin Tor
+		{'item', 40586}, -- Band of the Kirin Tor
+		{'item', 44934}, -- Loop of the Kirin Tor
+		{'item', 44935}, -- Ring of the Kirin Tor
+		{'item', 45688}, -- Inscribed Band of the Kirin Tor
+		{'item', 45689}, -- Inscribed Loop of the Kirin Tor
+		{'item', 45690}, -- Inscribed Ring of the Kirin Tor
+		{'item', 45691}, -- Inscribed Signet of the Kirin Tor
+		{'item', 48954}, -- Etched Band of the Kirin Tor
+		{'item', 48955}, -- Etched Loop of the Kirin Tor
+		{'item', 48956}, -- Etched Ring of the Kirin Tor
+		{'item', 48957}, -- Etched Signet of the Kirin Tor
+		{'item', 51557}, -- Runed Signet of the Kirin Tor
+		{'item', 51558}, -- Runed Loop of the Kirin Tor
+		{'item', 51559}, -- Runed Ring of the Kirin Tor
+		{'item', 51560}, -- Runed Band of the Kirin Tor
+		{'item', 139599}, -- Empowered Ring of the Kirin Tor
+		{'item', 46874}, -- Argent Crusader's Tabard
+		{'item', 52251}, -- Jaina's Locket
 	},
 	{
 		name = addonName .. 'Teleport2', -- Outland
@@ -153,6 +194,7 @@ local RINGS = addon:T({
 		{'spell', 33691, show='[me:mage,alliance]'}, -- Portal: Shattrath
 		{'toy', 30542}, -- Dimensional Ripper - Area 52
 		{'toy', 30544}, -- Ultrasafe Teleporter: Toshley's Station
+		{'item', 32757}, -- Blessed Medallion of Karabor
 		{'toy', 151016}, -- Fractured Necrolyte Skull
 	},
 	{
@@ -184,11 +226,33 @@ local RINGS = addon:T({
 		{'spell', 88345, show='[me:mage,alliance]'}, -- Portal: Tol Barad
 		{'spell', 120145, show='[me:mage]'}, -- Teleport: Ancient Dalaran
 		{'spell', 120146, show='[me:mage]'}, -- Portal: Ancient Dalaran
+		{'item', 65274}, -- Cloak of Cooperation (Horde)
+		{'item', 63207}, -- Wrap of Unity (Horde)
+		{'item', 63353}, -- Shroud of Cooperation (Horde)
+		{'item', 65360}, -- Cloak of Cooperation (Alliance)
+		{'item', 63206}, -- Wrap of Unity (Alliance)
+		{'item', 63352}, -- Shroud of Cooperation (Alliance)
 		{'spell', 18960, show='[me:druid]'}, -- Teleport: Moonglade
 		{'item', 139590, show='[me:rogue]'}, -- Scroll of Teleport: Ravenholdt
 		{'toy', 211788, show='[race:worgen]'}, -- Tess's Peacebloom
+		{'item', 50287}, -- Boots of the Bay
 		{'toy', 18984}, -- Dimensional Ripper - Everlook
 		{'toy', 18986}, -- Ultrasafe Teleporter: Gadgetzan
+		{'item', 37863}, -- Direbrew's Remote
+		{'item', 63378}, -- Hellscream's Reach Tabard
+		{'item', 63379}, -- Baradin Wardens Tabard
+		{'item', 142469}, -- Violet Seal of the Grand Magus
+		{'item', 22589}, -- Atiesh, Greatstaff of the Guardian (Mage)
+		{'item', 22630}, -- Atiesh, Greatstaff of the Guardian (Warlock)
+		{'item', 22631}, -- Atiesh, Greatstaff of the Guardian (Priest)
+		{'item', 22632}, -- Atiesh, Greatstaff of the Guardian (Druid)
+		{'item', 95050}, -- The Brassiest Knuckle (Horde)
+		{'item', 95051}, -- The Brassiest Knuckle (Alliance)
+		{'item', 118908}, -- Pit Fighter's Punching Ring (Horde)
+		{'item', 118907}, -- Pit Fighter's Punching Ring (Alliance)
+		{'item', 144391}, -- Pugilist's Powerful Punching Ring (Alliance)
+		{'item', 144392}, -- Pugilist's Powerful Punching Ring (Horde)
+		{'item', 58487}, -- Potion of Deepholm
 	},
 	-- combined teleport ring
 	{
@@ -215,11 +279,27 @@ local RINGS = addon:T({
 
 		-- misc location/race-specific stuff
 		{'toy', 169298, show='[zone:Alterac Valley,in:battleground]'}, -- Frostwolf Insignia
+		{'item', 17690, show='[zone:Alterac Valley,in:battleground]'}, -- Frostwolf Insignia Rank 1
+		{'item', 17905, show='[zone:Alterac Valley,in:battleground]'}, -- Frostwolf Insignia Rank 2
+		{'item', 17906, show='[zone:Alterac Valley,in:battleground]'}, -- Frostwolf Insignia Rank 3
+		{'item', 17907, show='[zone:Alterac Valley,in:battleground]'}, -- Frostwolf Insignia Rank 4
+		{'item', 17908, show='[zone:Alterac Valley,in:battleground]'}, -- Frostwolf Insignia Rank 5
+		{'item', 17909, show='[zone:Alterac Valley,in:battleground]'}, -- Frostwolf Insignia Rank 6
+		{'item', 17691, show='[zone:Alterac Valley,in:battleground]'}, -- Stormpike Insignia Rank 1
 		{'toy', 169297, show='[zone:Alterac Valley,in:battleground]'}, -- Stormpike Insignia
+		{'item', 17691, show='[zone:Alterac Valley,in:battleground]'}, -- Stormpike Insignia Rank 1
+		{'item', 17900, show='[zone:Alterac Valley,in:battleground]'}, -- Stormpike Insignia Rank 2
+		{'item', 17901, show='[zone:Alterac Valley,in:battleground]'}, -- Stormpike Insignia Rank 3
+		{'item', 17902, show='[zone:Alterac Valley,in:battleground]'}, -- Stormpike Insignia Rank 4
+		{'item', 17903, show='[zone:Alterac Valley,in:battleground]'}, -- Stormpike Insignia Rank 5
+		{'item', 17904, show='[zone:Alterac Valley,in:battleground]'}, -- Stormpike Insignia Rank 6
 		{'toy', 95568, show='[horde,zone:Isle of Thunder][horde,zone:Throne of Thunder]'}, -- Sunreaver Beacon
 		{'toy', 95567, show='[alliance,zone:Isle of Thunder][alliance,zone:Throne of Thunder]'}, -- Kirin Tor Beacon
+		{'item', 128503, show='[zone:Tanaan Jungle]'}, -- Master Hunter's Seeking Crystal
+		{'item', 128502, show='[zone:Tanaan Jungle]'}, -- Hunter's Seeking Crystal
 		{'item', 141605, show='[in:Broken Isles/Argus/BfA]'}, -- Flight Master's Whistle
 		{'item', 168862, show='[in:Broken Isles/Argus/BfA]'}, -- G.E.A.R. Tracking Beacon
+		{'item', 129276, show='[zone:Azsuna]'}, -- Beginner's Guide to Dimensional Rifting
 		{'toy', 43824, show='[zone:Dalaran]'}, -- The Schools of Arcane Magic - Mastery
 		{'toy', 140324, show='[zone:Suramar]'}, -- Mobile Telemancy Beacon
 		{'item', 180817, show='[zone:The Maw]'}, -- Cypher of Relocation
