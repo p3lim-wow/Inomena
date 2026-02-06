@@ -22,12 +22,24 @@ local function updateCooldown(button)
 	end
 
 	if duration then
-		button.icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.ActionDesaturation))
+		button.Icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.ActionDesaturation))
 		button:SetAlpha(duration:EvaluateRemainingDuration(addon.curves.ActionAlpha))
 	else
-		button.icon:SetDesaturation(0)
+		button.Icon:SetDesaturation(0)
 		button:SetAlpha(1)
 	end
+end
+
+local function updateIcon(self, texture)
+	self.Icon:SetTexture(texture)
+end
+
+local function showIcon(self)
+	self.Icon:SetAlpha(1)
+end
+
+local function hideIcon(self)
+	self.Icon:SetAlpha(0)
 end
 
 local function updatePushedState(button, state)
@@ -63,11 +75,23 @@ for prefix, numButtons in next, {
 		button.enableSpellFX = nil
 		button.enableLOCCooldown = nil
 
-		-- resize icon
+		-- need to roll our own icon if we want to desaturate it, in order to prevent taints
+		local Icon = button:CreateTexture(nil, 'BORDER')
+		Icon:SetPoint('CENTER')
+		Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+		button.Icon = Icon
+
+		-- hook original icon for texture updates, bit of an ugly hack
+		hooksecurefunc(button.icon, 'SetTexture', updateIcon)
+		hooksecurefunc(button.icon, 'Show', showIcon)
+		hooksecurefunc(button.icon, 'Hide', hideIcon)
+		button.icon.Icon = Icon
+
+		-- set icon size
 		if prefix == 'PetActionButton' then
-			button.icon:SetSize(26, 26)
+			Icon:SetSize(26, 26)
 		else
-			button.icon:SetSize(42, 42)
+			Icon:SetSize(42, 42)
 
 			-- reposition and change font of hotkey
 			button.HotKey:ClearAllPoints()
@@ -87,10 +111,11 @@ for prefix, numButtons in next, {
 		end
 
 		-- add backdrop anchored to the icon
-		addon:AddBackdrop(button, button.icon)
+		addon:AddBackdrop(button, Icon)
 		button:SetBorderIgnoreParentAlpha(true)
 
 		-- hide textures
+		addon:Hide(button, 'icon') -- we add our own
 		addon:Hide(button, 'Border') -- equipped border
 		addon:Hide(button, 'Name') -- macro name
 		addon:Hide(button, 'Flash')
@@ -103,13 +128,6 @@ for prefix, numButtons in next, {
 		button:GetPushedTexture():SetAlpha(0)
 		button:GetCheckedTexture():SetColorTexture(0, 0, 0, 0)
 
-		-- change texture size and bounds
-		button.icon:ClearAllPoints()
-		button.icon:SetPoint('CENTER')
-		button.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-		button.icon:RemoveMaskTexture(button.IconMask)
-		button.icon:SetDrawLayer('BORDER')
-
 		-- reposition and change font of count widget
 		button.Count:ClearAllPoints()
 		button.Count:SetPoint('BOTTOMRIGHT', -2, 2)
@@ -118,13 +136,13 @@ for prefix, numButtons in next, {
 
 		-- replace highlight texture with color
 		local highlight = button:GetHighlightTexture()
-		highlight:SetAllPoints(button.icon)
+		highlight:SetAllPoints(Icon)
 		highlight:SetColorTexture(0, 3/5, 1, 1/3)
 		highlight:SetBlendMode('ADD')
 
 		-- add custom pushed texture
 		local pushed = button:CreateTexture(nil, 'OVERLAY')
-		pushed:SetAllPoints(button.icon)
+		pushed:SetAllPoints(Icon)
 		pushed:SetColorTexture(1, 1, 2/5, 1/3)
 		pushed:SetBlendMode('ADD')
 		pushed:Hide()
@@ -132,7 +150,7 @@ for prefix, numButtons in next, {
 		hooksecurefunc(button, 'SetButtonState', updatePushedState)
 
 		-- reanchor cooldown
-		button.cooldown:SetAllPoints(button.icon)
+		button.cooldown:SetAllPoints(Icon)
 		button.cooldown:SetHideCountdownNumbers(true)
 		button.cooldown:SetIgnoreParentAlpha(true)
 
@@ -140,7 +158,7 @@ for prefix, numButtons in next, {
 		button.chargeCooldown:SetDrawEdge(false)
 		button.chargeCooldown:SetDrawSwipe(true)
 		button.chargeCooldown:SetSwipeColor(0, 0, 0, 0.9)
-		button.chargeCooldown:SetAllPoints(button.icon)
+		button.chargeCooldown:SetAllPoints(Icon)
 	end
 end
 
