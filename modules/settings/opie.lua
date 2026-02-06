@@ -220,26 +220,10 @@ local RINGS = addon:T({
 		{'spell', 48778, show='[known:444008]'}, -- Acherus Deathcharger w/"On a Paler Horse" talent
 	},
 	{
-		name = addonName .. 'Professions',
-		hotkey = 'ALT-T',
+		name = addonName .. 'TradeSkill',
+		extends = 'CommonTrades', -- base off of a ring provided by OPie
 
-		{'spell', 4036}, -- Engineering
-		{'spell', 3908}, -- Tailoring
-		{'spell', 2108}, -- Leatherworking
-		{'spell', 2018}, -- Blacksmithing
-		{'spell', 7411}, -- Enchanting
-		{'spell', 2259}, -- Alchemy
-		{'spell', 25229}, -- Jewelcrafting
-		{'spell', 45357}, -- Inscription
-		{'spell', 2656}, -- Mining Journal
-		{'spell', 193290}, -- Herbalism Journal
-		{'spell', 194174}, -- Skinning Journal
-		{'spell', 2550}, -- Cooking
-		{'spell', 78670}, -- Archaeology
-		{'spell', 271990}, -- Fishing Journal
-
-		-- misc utility that aren't really professions but I like to have them in this ring
-		{'spell', 53428}, -- Runeforging (Death Knight)
+		-- misc utility that aren't really tradeskills but I like to have them in this ring
 		{'spell', 83958}, -- Mobile Banking
 		{'spell', 460905}, -- Warband Bank Distance Inhibitor
 	},
@@ -252,9 +236,34 @@ local RINGS = addon:T({
 do
 	local sliceTokens = {}
 	local function AddRing(ring)
-		-- OPie requires unique token per slice
-		-- https://www.townlong-yak.com/addons/opie/dev/slice-token-requirements
+		if ring.extends then
+			-- fork a default ring
+			local orig = OPie.CustomRings:GetDefaultDescription(ring.extends)
+			local fork = {
+				name = ring.name,
+				hotkey = ring.hotkey or orig.hotkey,
+			}
+
+			-- inject slices from the original
+			for _, slice in ipairs(orig) do
+				if slice[1] == 'imptext' then
+					table.insert(fork, {id=slice[2], _t=slice._u}) -- hopefully unique enough token
+				else
+					table.insert(fork, slice)
+				end
+			end
+
+			-- append our slices
+			for _, slice in ipairs(ring) do
+				table.insert(fork, slice)
+			end
+
+			ring = fork
+		end
+
 		for _, slice in ipairs(ring) do
+			-- OPie requires unique token per slice
+			-- https://www.townlong-yak.com/addons/opie/dev/slice-token-requirements
 			slice.sliceToken = ring.name .. '_' .. (slice._t or (slice[1] .. slice[2]))
 			assert(not sliceTokens[slice.sliceToken], 'sliceToken ' .. slice.sliceToken .. ' is not unique')
 			sliceTokens[slice.sliceToken] = true
