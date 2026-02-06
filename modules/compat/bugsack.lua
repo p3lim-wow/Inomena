@@ -2,9 +2,6 @@ local _, addon = ...
 
 -- custom minimap button for bugsack
 
-local IsAltKeyDown = _G.IsAltKeyDown -- TODO: remove and add to luacheckrc
-local BugGrabber = _G.BugGrabber -- TODO: remove and add to luacheckrc
-
 local function onEnter(self)
 	GameTooltip:SetOwner(self, 'ANCHOR_BOTTOMLEFT')
 	self.bugsack.dataObject.OnTooltipShow(GameTooltip)
