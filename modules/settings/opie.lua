@@ -63,144 +63,177 @@ local RINGS = addon:T({
 		{'spell', 381637}, -- Atrophic Poison
 		{'spell', 3408}, -- Crippling Poison
 	},
+	-- (hidden) expansion/continent teleport rings
 	{
-		name = addonName .. 'MageTeleport',
-		limit = 'MAGE',
+		name = addonName .. 'Teleport12', -- Midnight
 
-		{'spell', 193759}, -- Hall of the Guardian
-		{'spell', 1259190}, -- Silvermoon
-		{'spell', 446540}, -- Dornogal
-		{'spell', 395277}, -- Valdrakken
-		{'spell', 344587}, -- Oribos
-		{'spell', 281404, show='[horde]'}, -- Dazar'alor
-		{'spell', 281403, show='[alliance]'}, -- Boralus
-		{'spell', 224869}, -- Dalaran - Broken Isles
-		{'spell', 176242, show='[horde]'}, -- Warspear
-		{'spell', 176248, show='[alliance]'}, -- Stormshield
-		{'spell', 132627, show='[horde]'}, -- Vale of Eternal Blossoms
-		{'spell', 132621, show='[alliance]'}, -- Vale of Eternal Blossoms
-		{'spell', 88344, show='[horde]'}, -- Tol Barad
-		{'spell', 88342, show='[alliance]'}, -- Tol Barad
-		{'spell', 53140}, -- Dalaran - Northrend
-		{'spell', 35715, show='[horde]'}, -- Shattrath
-		{'spell', 33690, show='[alliance]'}, -- Shattrath
-		{'spell', 49358, show='[horde]'}, -- Stonard
-		{'spell', 49359, show='[alliance]'}, -- Theramore
-		{'spell', 3563, show='[horde]'}, -- Undercity
-		{'spell', 3562, show='[alliance]'}, -- Ironforge
-		{'spell', 3567, show='[horde]'}, -- Orgrimmar
-		{'spell', 3561, show='[alliance]'}, -- Stormwind
-		{'spell', 3566, show='[horde]'}, -- Thunder Bluff
-		{'spell', 3565, show='[alliance]'}, -- Darnassus
-		{'spell', 32272, show='[horde]'}, -- Silvermoon
-		{'spell', 32271, show='[alliance]'}, -- Exodar
-		{'spell', 120145}, -- Ancient Dalaran
-	},
-	{
-		name = addonName .. 'MagePortal',
-		limit = 'MAGE',
-
-		{'spell', 1259194}, -- Silvermoon
-		{'spell', 446534}, -- Dornogal
-		{'spell', 395289}, -- Valdrakken
-		{'spell', 344597}, -- Oribos
-		{'spell', 281402, show='[horde]'}, -- Dazar'alor
-		{'spell', 281400, show='[alliance]'}, -- Boralus
-		{'spell', 224871}, -- Dalaran - Broken Isles
-		{'spell', 176244, show='[horde]'}, -- Warspear
-		{'spell', 176246, show='[alliance]'}, -- Stormshield
-		{'spell', 132626, show='[horde]'}, -- Vale of Eternal Blossoms
-		{'spell', 132620, show='[alliance]'}, -- Vale of Eternal Blossoms
-		{'spell', 88346, show='[horde]'}, -- Tol Barad
-		{'spell', 88345, show='[alliance]'}, -- Tol Barad
-		{'spell', 53142}, -- Dalaran - Northrend
-		{'spell', 35717, show='[horde]'}, -- Shattrath
-		{'spell', 33691, show='[alliance]'}, -- Shattrath
-		{'spell', 49361, show='[horde]'}, -- Stonard
-		{'spell', 49360, show='[alliance]'}, -- Theramore
-		{'spell', 11418, show='[horde]'}, -- Undercity
-		{'spell', 11416, show='[alliance]'}, -- Ironforge
-		{'spell', 11417, show='[horde]'}, -- Orgrimmar
-		{'spell', 10059, show='[alliance]'}, -- Stormwind
-		{'spell', 11420, show='[horde]'}, -- Thunder Bluff
-		{'spell', 11419, show='[alliance]'}, -- Darnassus
-		{'spell', 32267, show='[horde]'}, -- Silvermoon
-		{'spell', 32266, show='[alliance]'}, -- Exodar
-		{'spell', 120146}, -- Ancient Dalaran
-	},
-	{
-		name = addonName .. 'Wormholes',
-
+		{'spell', 1259190, show='[me:mage]'}, -- Teleport: Silvermoon
+		{'spell', 1259194, show='[me:mage]'}, -- Portal: Silvermoon
 		{'toy', 248485}, -- Wormhole Generator: Quel'Thalas
+	},
+	{
+		name = addonName .. 'Teleport11', -- Khaz Algar
+
+		{'spell', 446540, show='[me:mage]'}, -- Teleport: Dornogal
+		{'spell', 446534, show='[me:mage]'}, -- Portal: Dornogal
 		{'toy', 221966}, -- Wormhole Generator: Khaz Algar
+		{'toy', 243056, show='[in:world][in:garrison]'}, -- Delver's Mana-Bound Ethergate
+		{'toy', 230850, show='[in:world][in:garrison]'}, -- Delve-O-Bot 7001
+	},
+	{
+		name = addonName .. 'Teleport10', -- Dragon Isles
+
+		{'spell', 395277, show='[me:mage]'}, -- Teleport: Valdrakken
+		{'spell', 395289, show='[me:mage]'}, -- Portal: Valdrakken
 		{'toy', 198156}, -- Wyrmhole Generator (Dragonflight)
+	},
+	{
+		name = addonName .. 'Teleport9', -- Shadowlands
+
+		{'spell', 344587, show='[me:mage]'}, -- Teleport: Oribos
+		{'spell', 344597, show='[me:mage]'}, -- Portal: Oribos
 		{'toy', 172924}, -- Wormhole Generator: Shadowlands
+	},
+	{
+		name = addonName .. 'Teleport8', -- Zandalar & Kul Tiras
+
+		{'spell', 281404, show='[me:mage,horde]'}, -- Teleport: Dazar'alor
+		{'spell', 281402, show='[me:mage,horde]'}, -- Portal: Dazar'alor
+		{'spell', 281403, show='[me:mage,alliance]'}, -- Teleport: Boralus
+		{'spell', 281400, show='[me:mage,alliance]'}, -- Portal: Boralus
 		{'toy', 168807}, -- Wormhole Generator: Kul Tiras
 		{'toy', 168808}, -- Wormhole Generator: Zandalar
-		{'item', 144341}, -- Rechargeable Reaves Battery (Legion)
-		{'toy', 151652}, -- Wormhole Generator: Argus
+	},
+	{
+		name = addonName .. 'Teleport7', -- Broken Isles
+
+		{'toy', 140192}, -- Dalaran Hearthstone
+		{'spell', 193753, show='[me:druid]'}, -- Dreamwalk
+		{'spell', 50977, show='[me:deathknight]'}, -- Death Gate
+		{'spell', 193759, show='[me:mage]'}, -- Teleport: Hall of the Guardian
+		{'spell', 224869, show='[me:mage]'}, -- Teleport: Dalaran - Broken Isles
+		{'spell', 224871, show='[me:mage]'}, -- Portal: Dalaran - Broken Isles
+		{'item', 144341}, -- Rechargeable Reaves Battery
+	},
+	{
+		name = addonName .. 'Teleport6', -- Draenor
+
+		{'toy', 110560}, -- Garrison Hearthstone
+		{'spell', 176242, show='[me:mage,horde]'}, -- Teleport: Warspear
+		{'spell', 176244, show='[me:mage,horde]'}, -- Portal: Warspear
+		{'spell', 176248, show='[me:mage,alliance]'}, -- Teleport: Stormshield
+		{'spell', 176246, show='[me:mage,alliance]'}, -- Portal: Stormshield
 		{'toy', 112059}, -- Wormhole Centrifuge (Draenor)
+		{'toy', 151652}, -- Wormhole Generator: Argus
+		{'item', 128353}, -- Admiral's Compass
+	},
+	{
+		name = addonName .. 'Teleport5', -- Pandaria
+
+		{'spell', 126892, show='[me:monk]'}, -- Zen Pilgrimage
+		{'spell', 132627, show='[me:mage,horde]'}, -- Teleport: Vale of Eternal Blossoms
+		{'spell', 132626, show='[me:mage,horde]'}, -- Portal: Vale of Eternal Blossoms
+		{'spell', 132621, show='[me:mage,alliance]'}, -- Teleport: Vale of Eternal Blossoms
+		{'spell', 132620, show='[me:mage,alliance]'}, -- Portal: Vale of Eternal Blossoms
 		{'toy', 87215}, -- Wormhole Generator: Pandaria
+	},
+	{
+		name = addonName .. 'Teleport3', -- Northrend
+
+		{'spell', 53140, show='[me:mage]'}, -- Teleport: Dalaran - Northrend
+		{'spell', 53142, show='[me:mage]'}, -- Portal: Dalaran - Northrend
 		{'toy', 48933}, -- Wormhole Generator: Northrend
+	},
+	{
+		name = addonName .. 'Teleport2', -- Outland
+
+		{'spell', 35715, show='[me:mage,horde]'}, -- Teleport: Shattrath
+		{'spell', 35717, show='[me:mage,horde]'}, -- Portal: Shattrath
+		{'spell', 33690, show='[me:mage,alliance]'}, -- Teleport: Shattrath
+		{'spell', 33691, show='[me:mage,alliance]'}, -- Portal: Shattrath
 		{'toy', 30542}, -- Dimensional Ripper - Area 52
 		{'toy', 30544}, -- Ultrasafe Teleporter: Toshley's Station
+		{'toy', 151016}, -- Fractured Necrolyte Skull
+	},
+	{
+		name = addonName .. 'Teleport1', -- Azeroth (incl Cataclysm zones)
+
+		{'spell', 3567, show='[me:mage,horde]'}, -- Teleport: Orgrimmar
+		{'spell', 11417, show='[me:mage,horde]'}, -- Portal: Orgrimmar
+		{'spell', 3561, show='[me:mage,alliance]'}, -- Teleport: Stormwind
+		{'spell', 10059, show='[me:mage,alliance]'}, -- Portal: Stormwind
+		{'spell', 3563, show='[me:mage,horde]'}, -- Teleport: Undercity
+		{'spell', 11418, show='[me:mage,horde]'}, -- Portal: Undercity
+		{'spell', 3562, show='[me:mage,alliance]'}, -- Teleport: Ironforge
+		{'spell', 11416, show='[me:mage,alliance]'}, -- Portal: Ironforge
+		{'spell', 3566, show='[me:mage,horde]'}, -- Teleport: Thunder Bluff
+		{'spell', 11420, show='[me:mage,horde]'}, -- Portal: Thunder Bluff
+		{'spell', 3565, show='[me:mage,alliance]'}, -- Teleport: Darnassus
+		{'spell', 11419, show='[me:mage,alliance]'}, -- Portal: Darnassus
+		{'spell', 32272, show='[me:mage,horde]'}, -- Teleport: Silvermoon
+		{'spell', 32267, show='[me:mage,horde]'}, -- Portal: Silvermoon
+		{'spell', 32271, show='[me:mage,alliance]'}, -- Teleport: Exodar
+		{'spell', 32266, show='[me:mage,alliance]'}, -- Portal: Exodar
+		{'spell', 49358, show='[me:mage,horde]'}, -- Teleport: Stonard
+		{'spell', 49361, show='[me:mage,horde]'}, -- Portal: Stonard
+		{'spell', 49359, show='[me:mage,alliance]'}, -- Teleport: Theramore
+		{'spell', 49360, show='[me:mage,alliance]'}, -- Portal: Theramore
+		{'spell', 88344, show='[me:mage,horde]'}, -- Teleport: Tol Barad
+		{'spell', 88346, show='[me:mage,horde]'}, -- Portal: Tol Barad
+		{'spell', 88342, show='[me:mage,alliance]'}, -- Teleport: Tol Barad
+		{'spell', 88345, show='[me:mage,alliance]'}, -- Portal: Tol Barad
+		{'spell', 120145, show='[me:mage]'}, -- Teleport: Ancient Dalaran
+		{'spell', 120146, show='[me:mage]'}, -- Portal: Ancient Dalaran
+		{'spell', 18960, show='[me:druid]'}, -- Teleport: Moonglade
+		{'item', 139590, show='[me:rogue]'}, -- Scroll of Teleport: Ravenholdt
+		{'toy', 211788, show='[race:worgen]'}, -- Tess's Peacebloom
 		{'toy', 18984}, -- Dimensional Ripper - Everlook
 		{'toy', 18986}, -- Ultrasafe Teleporter: Gadgetzan
 	},
+	-- combined teleport ring
 	{
 		name = addonName .. 'Teleport',
 		hotkey = 'ALT-G',
 
+		-- most convenient rings first
 		{'ring', 'CommonHearth', fastClick=true, rotationMode='shuffle'},
-		{'opie.ext', 'mythport', show='[mythport]', _t='mythport'},
-		{'ring', addonName .. 'Wormholes'},
-
-		-- misc toys
-		{'toy', 151016}, -- Fractured Necrolyte Skull
-		{'toy', 153004}, -- Unstable Portal Emitter
-		{'toy', 136849, show='[me:druid]'}, -- Nature's Beacon
-
-		-- class/racial items and spells
-		{'spell', 193753, show='[me:druid]'}, -- Dreamwalk
-		{'spell', 18960, show='[me:druid]'}, -- Teleport: Moonglade
-		{'item', 139590, show='[me:rogue]'}, -- Scroll of Teleport: Ravenholdt
-		{'spell', 50977, show='[me:deathknight]'}, -- Death Gate
-		{'spell', 312370, show='[race:vulpera]'}, -- Make Camp
-		{'spell', 312372, show='[race:vulpera]'}, -- Return to Camp
-		{'spell', 126892, show='[me:monk]'}, -- Zen Pilgrimage
 		{'spell', 556, show='[me:shaman]'}, -- Astral Recall
-		{'spell', 265225}, -- Mole Machine (Dark Iron Dwarf)
-		{'ring', addonName .. 'MagePortal', show='[me:mage]'},
-		{'ring', addonName .. 'MageTeleport', show='[me:mage]'},
+		{'opie.ext', 'mythport', show='[mythport]'}, -- dynamic Hero's Path teleport
 
-		-- misc items
-		{'item', 118662}, -- Bladespire Relic
-		{'item', 37863}, -- Direbrew's Remote
-		{'item', 128353}, -- Admiral's Compass
-		{'toy', 110560}, -- Garrison Hearthstone
-		{'toy', 140192}, -- Dalaran Hearthstone
-		{'toy', 230850}, -- Delve-O-Bot 7001
-		{'toy', 243056, show='[in:world][in:garrison]'}, -- Delver's Mana-Bound Ethergate
-		{'item', 219222}, -- Time-Lost Artifact (item variant from 2024 timerunning)
+		-- continent/expansion specific rings
+		{'ring', addonName .. 'Teleport12'},
+		{'ring', addonName .. 'Teleport11'},
+		{'ring', addonName .. 'Teleport10'},
+		{'ring', addonName .. 'Teleport9'},
+		{'ring', addonName .. 'Teleport8'},
+		{'ring', addonName .. 'Teleport7'},
+		{'ring', addonName .. 'Teleport6'},
+		{'ring', addonName .. 'Teleport5'},
+		{'ring', addonName .. 'Teleport3'},
+		{'ring', addonName .. 'Teleport2'},
+		{'ring', addonName .. 'Teleport1'},
 
-		-- zone-conditional items and toys
-		{'toy', 43824, show='[zone:Dalaran]'}, -- The Schools of Arcane Magic - Mastery
+		-- misc location/race-specific stuff
+		{'toy', 169298, show='[zone:Alterac Valley,in:battleground]'}, -- Frostwolf Insignia
+		{'toy', 169297, show='[zone:Alterac Valley,in:battleground]'}, -- Stormpike Insignia
 		{'toy', 95568, show='[horde,zone:Isle of Thunder][horde,zone:Throne of Thunder]'}, -- Sunreaver Beacon
 		{'toy', 95567, show='[alliance,zone:Isle of Thunder][alliance,zone:Throne of Thunder]'}, -- Kirin Tor Beacon
-		{'toy', 140324, show='[zone:Suramar]'}, -- Mobile Telemancy Beacon
-		{'toy', 169298, show='[horde,zone:Alterac Valley]'}, -- Frostwolf Insignia
-		{'toy', 169297, show='[alliance,zone:Alterac Valley]'}, -- Stormpike Insignia
 		{'item', 141605, show='[in:Broken Isles/Argus/BfA]'}, -- Flight Master's Whistle
 		{'item', 168862, show='[in:Broken Isles/Argus/BfA]'}, -- G.E.A.R. Tracking Beacon
+		{'toy', 43824, show='[zone:Dalaran]'}, -- The Schools of Arcane Magic - Mastery
+		{'toy', 140324, show='[zone:Suramar]'}, -- Mobile Telemancy Beacon
 		{'item', 180817, show='[zone:The Maw]'}, -- Cypher of Relocation
 		{'toy', 205255, show='[zone:Zaralek Cavern]'}, -- Niffen Diggin' Mitts
 		{'item', 234389, show='[zone:Liberation of Undermine]'}, -- Gallagio Royalty Rewards Card: Silver
 		{'item', 249699, show='[zone:Manaforge Omega]'}, -- Shadowguard Translocator
+		{'spell', 312370, show='[race:vulpera]'}, -- Make Camp
+		{'spell', 312372, show='[race:vulpera]'}, -- Return to Camp
+		{'spell', 265225, show='[race:darkirondwarf]'}, -- Mole Machine (Dark Iron Dwarf)
 		{'item', 217930}, -- Nostwin's Voucher (Timerunning 2024)
 		{'item', 238727}, -- Nostwin's Voucher (Timerunning 2025)
 
 		-- custom actions for housing teleportation at the end
-		{'inomena.housereturn', show='[house:inside/plot/editor/neighborhood]', _t='housereturn'},
+		{'inomena.housereturn', show='[house:inside/plot/editor/neighborhood]'},
 		{'ring', addonName .. 'Home'},
 	},
 	-- common utility rings
