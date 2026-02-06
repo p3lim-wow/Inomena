@@ -102,12 +102,27 @@ local function generateMacro()
 	elseif not select(13, GetAchievementInfo(891)) and #SPECIAL_MOUNTS_AVAILABLE.Chauffeured > 0 then
 		-- player has not trained riding yet
 		macro = MACRO.Mount:format(SPECIAL_MOUNTS_AVAILABLE.Chauffeured[1])
-	elseif addon:IsHalloween() and isMountEligible(1799) then
-		-- prefer "Eve's Ghastly Rider" during Hallow's End (instant mount)
-		macro = MACRO.Mount:format(1799)
 	else
-		-- default to random mount
-		macro = MACRO.Mount:format(0)
+		if UnitExists('target') then
+			-- copy the mount the target uses, for fun :)
+			for _, auraInfo in next, C_UnitAuras.GetUnitAuras('target', 'HELPFUL') do
+				local mountID = C_MountJournal.GetMountFromSpell(auraInfo.spellId)
+				if mountID ~= nil then -- this handles secrets perfectly fine
+					macro = MACRO.Mount:format(mountID)
+					break
+				end
+			end
+		end
+
+		if not macro then
+			if addon:IsHalloween() and isMountEligible(1799) then
+				-- prefer "Eve's Ghastly Rider" during Hallow's End (instant mount)
+				macro = MACRO.Mount:format(1799)
+			else
+				-- default to random mount
+				macro = MACRO.Mount:format(0)
+			end
+		end
 	end
 
 	return MACRO_PREFIX .. macro
