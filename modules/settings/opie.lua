@@ -63,6 +63,16 @@ local RINGS = addon:T({
 		{'spell', 381637}, -- Atrophic Poison
 		{'spell', 3408}, -- Crippling Poison
 	},
+	{
+		name = addonName .. 'Paladin',
+		limit = 'PALADIN',
+		hotkey = 'ALT-1',
+
+		-- auras
+		{'spell', 465}, -- Devotion Aura
+		{'spell', 317920}, -- Concentration Aura
+		{'spell', 32223}, -- Crusader Aura
+	},
 	-- (hidden) expansion/continent teleport rings
 	{
 		name = addonName .. 'Teleport12', -- Midnight
