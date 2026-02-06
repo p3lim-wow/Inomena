@@ -373,7 +373,6 @@ local RINGS = addon:T({
 		{'item', 17907, show='[zone:Alterac Valley,in:battleground]'}, -- Frostwolf Insignia Rank 4
 		{'item', 17908, show='[zone:Alterac Valley,in:battleground]'}, -- Frostwolf Insignia Rank 5
 		{'item', 17909, show='[zone:Alterac Valley,in:battleground]'}, -- Frostwolf Insignia Rank 6
-		{'item', 17691, show='[zone:Alterac Valley,in:battleground]'}, -- Stormpike Insignia Rank 1
 		{'toy', 169297, show='[zone:Alterac Valley,in:battleground]'}, -- Stormpike Insignia
 		{'item', 17691, show='[zone:Alterac Valley,in:battleground]'}, -- Stormpike Insignia Rank 1
 		{'item', 17900, show='[zone:Alterac Valley,in:battleground]'}, -- Stormpike Insignia Rank 2
