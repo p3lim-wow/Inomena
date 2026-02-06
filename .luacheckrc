@@ -224,6 +224,7 @@ read_globals = {
 	'HasFullControl',
 	'HasNewMail',
 	'InCombatLockdown',
+	'IsAltKeyDown',
 	'IsControlKeyDown',
 	'IsEncounterInProgress',
 	'IsGUIDInGroup',
@@ -297,6 +298,7 @@ read_globals = {
 	'Hex',
 
 	-- exposed from other addons
+	'BugGrabber',
 	'LibStub',
 	'NotGameTooltip1', -- OPie's custom tooltip
 	'OPie',
