@@ -84,5 +84,6 @@ modules\blizzard\tooltips.lua
 
 modules\compat\minimap.lua
 modules\compat\opie.lua
+modules\compat\opiehome.lua
 modules\compat\syndicator.lua
 modules\compat\handynotes.lua
