@@ -12,6 +12,16 @@ for chatType in next, ChatTypeInfo do
 	ChatTypeInfo[chatType].flashTab = false
 end
 
+-- hide buttons around the chat frame
+addon:Hide('QuickJoinToastButton')
+addon:Hide('ChatFrameChannelButton')
+addon:Hide('ChatFrameMenuButton')
+
+-- remove texture around the chat edit box
+addon:Hide('ChatFrame1EditBoxMid')
+addon:Hide('ChatFrame1EditBoxLeft')
+addon:Hide('ChatFrame1EditBoxRight')
+
 local function onChatScroll(chatFrame, direction)
 	if direction > 0 then
 		if IsShiftKeyDown() then
@@ -67,6 +77,15 @@ for chatIndex = 1, NUM_CHAT_WINDOWS do
 		local chatFrame = _G['ChatFrame' .. chatIndex]
 		local chatTab = _G['ChatFrame' .. chatIndex .. 'Tab']
 
+		-- hide chat scroll bar and buttons
+		addon:Hide(chatFrame, 'buttonFrame')
+		addon:Hide(chatFrame, 'ScrollBar')
+
+		-- hide all chat frame regions (background and such)
+		for _, region in next, {chatFrame:GetRegions()} do
+			addon:Hide(region)
+		end
+
 		-- increase chat history
 		chatFrame:SetMaxLines(10000)
 
@@ -89,6 +108,13 @@ for chatIndex = 1, NUM_CHAT_WINDOWS do
 
 		-- disable dragging tabs
 		chatTab:RegisterForDrag()
+
+		-- hide all chat tab textures
+		for _, region in next, {chatTab:GetRegions()} do
+			if region:GetObjectType() == 'Texture' then
+				region:SetTexture(nil)
+			end
+		end
 
 		-- hook events for tabs
 		chatTab:HookScript('OnEnter', GenerateClosure(updateTabColor, chatIndex))
