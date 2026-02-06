@@ -21,6 +21,7 @@ globals = {
 	-- FrameXML objects we mutate (taint city)
 	'ChatTypeInfo',
 	'StaticPopupDialogs',
+	'MainMenuMicroButton_ShowAlert',
 
 	-- globals we expose
 	'GetMinimapShape',
@@ -157,6 +158,7 @@ read_globals = {
 	'C_ColorUtil',
 	'C_CraftingOrders',
 	'C_CurveUtil',
+	'C_CVar',
 	'C_DateAndTime',
 	'C_DurationUtil',
 	'C_GossipInfo',
@@ -286,6 +288,9 @@ read_globals = {
 	'UnitTreatAsPlayerForDisplay',
 	'UnitVehicleSeatCount',
 	'hooksecurefunc',
+
+	-- misc globals
+	'NUM_LE_FRAME_TUTORIALS',
 
 	-- luacheck gets confused about oUF's tag environment
 	'_TAGS',

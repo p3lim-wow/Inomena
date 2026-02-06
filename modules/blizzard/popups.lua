@@ -57,3 +57,12 @@ function addon:MERCHANT_CONFIRM_TRADE_TIMER_REMOVAL()
 		SellCursorItem()
 	end
 end
+
+-- hide repetitive help tips
+for index = 1, NUM_LE_FRAME_TUTORIALS do
+	C_CVar.SetCVarBitfield('closedInfoFrames', index, true)
+end
+for index = 1, #Enum.FrameTutorialAccount do
+	C_CVar.SetCVarBitfield('closedInfoFramesAccountWide', index, true)
+end
+MainMenuMicroButton_ShowAlert = nop
