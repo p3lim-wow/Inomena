@@ -264,7 +264,8 @@ do
 		for _, slice in ipairs(ring) do
 			-- OPie requires unique token per slice
 			-- https://www.townlong-yak.com/addons/opie/dev/slice-token-requirements
-			slice.sliceToken = ring.name .. '_' .. (slice._t or (slice[1] .. slice[2]))
+			slice.sliceToken = ring.name .. '_' .. (slice._t or (slice[1] .. (slice[2] or '')))
+			slice.sliceToken = slice.sliceToken:gsub('%.', '_') -- token doesn't support "."
 			assert(not sliceTokens[slice.sliceToken], 'sliceToken ' .. slice.sliceToken .. ' is not unique')
 			sliceTokens[slice.sliceToken] = true
 		end
