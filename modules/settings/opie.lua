@@ -11,49 +11,54 @@ local PET_MACRO = [[
 /cast [@pet,nodead,exists] {{spell:136}}
 ]]
 
-local RINGS = {
+local RINGS = addon:T({
+	-- class utility rings
 	{
-		name = addonName .. 'HunterPets',
+		name = addonName .. 'Hunter',
 		limit = 'HUNTER',
 		hotkey = 'ALT-1',
 
-		{id=PET_MACRO:format(1, 883), show='[havepet:1]', _t=883},
-		{id=PET_MACRO:format(2, 83242), show='[havepet:2]', _t=83242},
-		{id=PET_MACRO:format(3, 83243), show='[havepet:3]', _t=83243},
-		{id=PET_MACRO:format(4, 83244), show='[havepet:4]', _t=83244},
-		{id=PET_MACRO:format(5, 83245), show='[havepet:5]', _t=83245},
-		{'spell', 1515, show='[nohavepet:1][nohavepet:2][nohavepet:3][nohavepet:4][nohavepet:5]'}, -- Tame Beast
+		-- pet management
+		{'imptext', PET_MACRO:format(1, 883), show='[havepet:1]', _t=883},
+		{'imptext', PET_MACRO:format(2, 83242), show='[havepet:2]', _t=83242},
+		{'imptext', PET_MACRO:format(3, 83243), show='[havepet:3]', _t=83243},
+		{'imptext', PET_MACRO:format(4, 83244), show='[havepet:4]', _t=83244},
+		{'imptext', PET_MACRO:format(5, 83245), show='[havepet:5]', _t=83245},
+		{'spell', 1515, show='[nohavepet:1][nohavepet:2][nohavepet:3][nohavepet:4][nohavepet:5]'}, -- Tame Beast if empty slot
 		{'spell', 982, show='[nopet]'}, -- Revive Pet, as a backup in case macro fails
 	},
 	{
-		name = addonName .. 'WarlockDemons',
+		name = addonName .. 'Warlock',
 		limit = 'WARLOCK',
 		hotkey = 'ALT-1',
 
+		-- demons
 		{'spell', 30146}, -- Felguard
 		{'spell', 691}, -- Felhunter
 		{'spell', 688}, -- Imp
 		{'spell', 697}, -- Voidwalker
 		{'spell', 366222}, -- Succubus
-		{'spell', 333889}, -- Fel Domination
 
-		-- add warlock utility here as well, because why not
+		-- add some utility here as well, because why not
 		{'spell', 698, show='[group]'}, -- Ritual of Summoning
 		{'spell', 6201, show='[nogroup]'}, -- Create Healthstone
 		{'spell', 29893, show='[group]'}, -- Soulwell
+
+		-- Fel Domination last so it's in a convenient spot
+		{'spell', 333889}, -- Fel Domination
 	},
 	{
-		name = addonName .. 'RoguePoisons',
+		name = addonName .. 'Rogue',
 		limit = 'ROGUE',
 		hotkey = 'ALT-1',
 
-		-- Lethal
+		-- lethal poisons
 		{'spell', 2823}, -- Deadly Poison (assassination only)
 		{'spell', 381664}, -- Amplifying Poison (assassination only)
 		{'spell', 315584, show='[nospec:1]'}, -- Instant Poison
 		{'spell', 8679}, -- Wound Poison
 
-		-- Non-lethal
+		-- non-lethal poisons
 		{'spell', 5761}, -- Numbing Poison
 		{'spell', 381637}, -- Atrophic Poison
 		{'spell', 3408}, -- Crippling Poison
@@ -198,6 +203,7 @@ local RINGS = {
 		{'inomena.housereturn', show='[house:inside/plot/editor/neighborhood]', _t='housereturn'},
 		{'ring', addonName .. 'Home'},
 	},
+	-- common utility rings
 	{
 		name = addonName .. 'ExtraMounts',
 		hotkey = 'SHIFT-HOME',
@@ -236,8 +242,12 @@ local RINGS = {
 		{'spell', 53428}, -- Runeforging (Death Knight)
 		{'spell', 83958}, -- Mobile Banking
 		{'spell', 460905}, -- Warband Bank Distance Inhibitor
+	},
+	{
+		name = addonName .. 'SwimmingMounts',
+		-- data gets injected later, this ring must be last!
 	}
-}
+})
 
 do
 	local sliceTokens = {}
@@ -253,30 +263,22 @@ do
 		OPie.CustomRings:SetExternalRing(ring.name, ring)
 	end
 
-	local function AddSwimmingMountsRing()
-		-- add swimming mounts dynamically based on their existence
-		local ring = addon:T({
-			name = addonName .. 'SwimmingMounts'
-		})
-
-		for _, mountID in next, C_MountJournal.GetMountIDs() do
-			local _, _, _, _, mountType = C_MountJournal.GetMountInfoExtraByID(mountID)
-			if mountType == 231 or mountType == 254 then -- turtle/swimming
-				local _, spellID = C_MountJournal.GetMountInfoByID(mountID)
-				ring:insert(1, {'spell', spellID})
-			end
-		end
-
-		AddRing(ring)
-	end
-
 	function addon:OnLogin()
+		-- have to delay this in order to inject swimming mounts
 		if addon:IsAddOnEnabled('OPie') then
+			-- inject swimming mounts to the last custom ring dynamically based on their existence
+			for _, mountID in next, C_MountJournal.GetMountIDs() do
+				local _, _, _, _, mountType = C_MountJournal.GetMountInfoExtraByID(mountID)
+				if mountType == 231 or mountType == 254 then -- turtle/swimming
+					local _, spellID = C_MountJournal.GetMountInfoByID(mountID)
+					table.insert(RINGS[RINGS:size()], 1, {'spell', spellID})
+				end
+			end
+
+			-- add our custom rings
 			for _, ring in next, RINGS do
 				AddRing(ring)
 			end
-
-			AddSwimmingMountsRing()
 		end
 	end
 end
