@@ -70,6 +70,10 @@ local RINGS = addon:T({
 		{'spell', 1259190, show='[me:mage]'}, -- Teleport: Silvermoon
 		{'spell', 1259194, show='[me:mage]'}, -- Portal: Silvermoon
 		{'toy', 248485}, -- Wormhole Generator: Quel'Thalas
+		{'spell', 1254400}, -- Path of the Windrunners (Windrunner Spire)
+		{'spell', 1254559}, -- Path of Cavernous Depths (Maisara Caverns)
+		{'spell', 1254563}, -- Path of the Fractured Core (Nexus-Point Xenas)
+		{'spell', 1254572}, -- Path of Devoted Magistry (Magisters' Terrace)
 	},
 	{
 		name = addonName .. 'Teleport11', -- Khaz Algar
@@ -79,6 +83,19 @@ local RINGS = addon:T({
 		{'toy', 221966}, -- Wormhole Generator: Khaz Algar
 		{'toy', 243056, show='[in:world][in:garrison]'}, -- Delver's Mana-Bound Ethergate
 		{'toy', 230850, show='[in:world][in:garrison]'}, -- Delve-O-Bot 7001
+		{'spell', 1216786}, -- Path of the Circuit Breaker (Operation: Floodgate)
+		{'spell', 367416}, -- Path of the Streetwise Merchant (Tazavesh, the Veiled Market)
+		{'spell', 445269}, -- Path of the Corrupted Foundry (The Stonevault)
+		{'spell', 445414}, -- Path of the Arathi Flagship (The Dawnbreaker)
+		{'spell', 445416}, -- Path of Nerubian Ascension (City of Threads)
+		{'spell', 445417}, -- Path of the Ruined City (Ara-Kara, City of Echoes)
+		{'spell', 445440}, -- Path of the Flaming Brewery (Cinderbrew Meadery)
+		{'spell', 445441}, -- Path of the Warding Candles (Darkflame Cleft)
+		{'spell', 445443}, -- Path of the Fallen Stormriders (The Rookery)
+		{'spell', 445444}, -- Path of the Light's Reverence (Priory of the Sacred Flame)
+		{'spell', 1237215}, -- Path of the Eco-Dome (Eco-Dome Al'dani)
+		{'spell', 1226482}, -- Path of the Full House (Liberation of Undermine)
+		{'spell', 1239155}, -- Path of the All-Devouring (Manaforge Omega)
 	},
 	{
 		name = addonName .. 'Teleport10', -- Dragon Isles
@@ -88,6 +105,17 @@ local RINGS = addon:T({
 		{'toy', 198156}, -- Wyrmhole Generator (Dragonflight)
 		{'item', 200613}, -- Aylaag Windstone Fragment
 		{'item', 204481}, -- Morqut Hearth Totem
+		{'spell', 393256}, -- Path of the Clutch Defender (Ruby Life Pools)
+		{'spell', 393262}, -- Path of the Windswept Plains (The Nokhud Offensive)
+		{'spell', 393267}, -- Path of the Rotting Woods (Brackenhide Hollow)
+		{'spell', 393273}, -- Path of the Draconic Diploma (Algeth'ar Academy)
+		{'spell', 393276}, -- Path of the Obsidian Hoard (Neltharus)
+		{'spell', 393279}, -- Path of Arcane Secrets (The Azure Vault)
+		{'spell', 393283}, -- Path of the Titanic Reservoir (Halls of Infusion)
+		{'spell', 424197}, -- Path of Twisted Time (Dawn of the Infinite)
+		{'spell', 432254}, -- Path of the Primal Prison (Vault of the Incarnates)
+		{'spell', 432257}, -- Path of the Bitter Legacy (Aberrus, the Shadowed Crucible)
+		{'spell', 432258}, -- Path of the Scorching Dream (Amirdrassil, the Dream's Hope)
 	},
 	{
 		name = addonName .. 'Teleport9', -- Shadowlands
@@ -101,6 +129,17 @@ local RINGS = addon:T({
 		{'item', 184502}, -- Attendant's Pocket Portal: Maldraxxus
 		{'item', 184503}, -- Attendant's Pocket Portal: Ardenweald
 		{'item', 184504}, -- Attendant's Pocket Portal: Oribos
+		{'spell', 354462}, -- Path of the Courageous (The Necrotic Wake)
+		{'spell', 354463}, -- Path of the Plagued (Plaguefall)
+		{'spell', 354464}, -- Path of the Misty Forest (Mists of Tirna Scithe)
+		{'spell', 354465}, -- Path of the Sinful Soul (Halls of Atonement)
+		{'spell', 354466}, -- Path of the Ascendant (Spires of Ascension)
+		{'spell', 354467}, -- Path of the Undefeated (Theater of Pain)
+		{'spell', 354468}, -- Path of the Scheming Loa (De Other Side)
+		{'spell', 354469}, -- Path of the Stone Warden (Sanguine Depths)
+		{'spell', 373190}, -- Path of the Sire (Castle Nathria)
+		{'spell', 373191}, -- Path of the Tormented Soul (Sanctum of Domination)
+		{'spell', 373192}, -- Path of the First Ones (Sepulcher of the First Ones)
 	},
 	{
 		name = addonName .. 'Teleport8', -- Zandalar & Kul Tiras
@@ -115,6 +154,15 @@ local RINGS = addon:T({
 		{'item', 166560}, -- Captain's Signet of Command
 		{'item', 202046}, -- Lucky Tortollan Charm
 		{'item', 167075}, -- Ultrasafe Transporter: Mechagon
+		{'spell', 373274}, -- Path of the Scrappy Prince (Operation: Mechagon)
+		{'spell', 410071}, -- Path of the Freebooter (Freehold)
+		{'spell', 410074}, -- Path of Festering Rot (The Underrot)
+		{'spell', 424167}, -- Path of Heart's Bane (Waycrest Manor)
+		{'spell', 424187}, -- Path of the Golden Tomb (Atal'Dazar)
+		{'spell', 445418, show='[alliance]'}, -- Path of the Besieged Harbor (Siege of Boralus) (alliance version)
+		{'spell', 464256, show='[horde]'}, -- Path of the Besieged Harbor (Siege of Boralus) (horde version)
+		{'spell', 467553, show='[alliance]'}, -- Path of the Azerite Refinery (The MOTHERLODE!!) (alliance version)
+		{'spell', 467555, show='[horde]'}, -- Path of the Azerite Refinery (The MOTHERLODE!!) (horde version)
 	},
 	{
 		name = addonName .. 'Teleport7', -- Broken Isles
@@ -132,6 +180,12 @@ local RINGS = addon:T({
 		{'item', 141015}, -- Scroll of Town Portal: Kal'delar
 		{'item', 141016}, -- Scroll of Town Portal: Faronaar
 		{'item', 141017}, -- Scroll of Town Portal: Lian'tril
+		{'spell', 393764}, -- Path of Proven Worth (Halls of Valor)
+		{'spell', 393766}, -- Path of the Grand Magistrix (Court of Stars)
+		{'spell', 410078}, -- Path of the Earth-Warder (Neltharion's Lair)
+		{'spell', 424153}, -- Path of Ancient Horrors (Black Rook Hold)
+		{'spell', 424163}, -- Path of the Nightmare Lord (Darkheart Thicket)
+		{'spell', 1254551}, -- Path of Dark Dereliction (Seat of the Triumvirate)
 	},
 	{
 		name = addonName .. 'Teleport6', -- Draenor
@@ -146,6 +200,14 @@ local RINGS = addon:T({
 		{'item', 128353}, -- Admiral's Compass
 		{'item', 118662}, -- Bladespire Relic
 		{'item', 118663}, -- Relic of Karabor
+		{'spell', 159895}, -- Path of the Bloodmaul (Bloodmaul Slag Mines)
+		{'spell', 159896}, -- Path of the Iron Prow (Iron Docks)
+		{'spell', 159897}, -- Path of the Vigilant (Auchindoun)
+		{'spell', 159899}, -- Path of the Crescent Moon (Shadowmoon Burial Grounds)
+		{'spell', 159900}, -- Path of the Dark Rail (Grimrail Depot)
+		{'spell', 159901}, -- Path of the Verdant (The Everbloom)
+		{'spell', 159898}, -- Path of the Skies (Skyreach)
+		{'spell', 1254557, show='[noknown:159898]'}, -- Path of the Crowning Pinnacle (Skyreach) (avoid duplicates)
 	},
 	{
 		name = addonName .. 'Teleport5', -- Pandaria
@@ -158,6 +220,12 @@ local RINGS = addon:T({
 		{'toy', 87215}, -- Wormhole Generator: Pandaria
 		{'item', 219222}, -- Time-Lost Artifact (item variant from 2024 timerunning)
 		{'item', 103678}, -- Time-Lost Artifact
+		{'spell', 131204}, -- Path of the Jade Serpent (Temple of the Jade Serpent)
+		{'spell', 131205}, -- Path of the Stout Brew (Stormstout Brewery)
+		{'spell', 131206}, -- Path of the Shado-Pan (Shado-Pan Monastery)
+		{'spell', 131222}, -- Path of the Mogu King (Mogu'shan Palace)
+		{'spell', 131225}, -- Path of the Setting Sun (Gate of the Setting Sun)
+		{'spell', 131228}, -- Path of the Black Ox (Siege of Niuzao Temple)
 	},
 	{
 		name = addonName .. 'Teleport3', -- Northrend
@@ -184,6 +252,7 @@ local RINGS = addon:T({
 		{'item', 139599}, -- Empowered Ring of the Kirin Tor
 		{'item', 46874}, -- Argent Crusader's Tabard
 		{'item', 52251}, -- Jaina's Locket
+		{'spell', 1254555}, -- Path of Unyielding Blight (Pit of Saron)
 	},
 	{
 		name = addonName .. 'Teleport2', -- Outland
@@ -253,6 +322,15 @@ local RINGS = addon:T({
 		{'item', 144391}, -- Pugilist's Powerful Punching Ring (Alliance)
 		{'item', 144392}, -- Pugilist's Powerful Punching Ring (Horde)
 		{'item', 58487}, -- Potion of Deepholm
+		{'spell', 131229}, -- Path of the Scarlet Mitre (Scarlet Monastery)
+		{'spell', 131231}, -- Path of the Scarlet Blade (Scarlet Halls)
+		{'spell', 131232}, -- Path of the Necromancer (Scholomance)
+		{'spell', 159902}, -- Path of the Burning Mountain (Upper Blackrock Spire)
+		{'spell', 393222}, -- Path of the Watcher's Legacy (Uldaman: Legacy of Tyr)
+		{'spell', 410080}, -- Path of Wind's Domain (The Vortex Pinnacle)
+		{'spell', 424142}, -- Path of the Tidehunter (Throne of the Tides)
+		{'spell', 445424}, -- Path of the Twilight Fortress (Grim Batol)
+		{'spell', 373262}, -- Path of the Fallen Guardian (Karazhan)
 	},
 	-- combined teleport ring
 	{
