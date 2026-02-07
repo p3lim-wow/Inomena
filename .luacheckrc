@@ -46,6 +46,7 @@ read_globals = {
 	'ChatFrame1EditBoxHeader',
 	'CooldownViewerSettings',
 	'CreateFrame',
+	'DeveloperConsole',
 	'DressUpFrame',
 	'EventToastManagerFrame',
 	'GameTooltip',
