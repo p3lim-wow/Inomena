@@ -30,6 +30,9 @@ end
 addon:HookAddOn('OPie', function()
 	skin(NotGameTooltip1) -- OPie uses a custom tooltip based on GameTooltip
 end)
+addon:HookAddOn('TomTom', function()
+	skin(TomTomTooltip) -- TomTom uses a custom tooltip too
+end)
 
 -- adjust spacing between shopping tooltips
 hooksecurefunc(TooltipComparisonManager, 'AnchorShoppingTooltips', function(show1, show2)
