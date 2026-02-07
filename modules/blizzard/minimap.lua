@@ -63,6 +63,15 @@ clickOverlay:SetScript('OnMouseUp', function(self, button)
 			end
 		end
 	elseif button == 'RightButton' then
+		if TomTomTooltip and TomTomTooltip:IsShown() then
+			-- we'll want to open the tomtom waypoint menu surely
+			local waypoint = TomTomTooltip:GetOwner()
+			if waypoint then
+				waypoint.callbacks.onclick('onclick', waypoint.point.uid, waypoint, button)
+				return
+			end
+		end
+
 		-- open tracking menu on right-click
 		MinimapCluster.Tracking.Button:OpenMenu()
 	end

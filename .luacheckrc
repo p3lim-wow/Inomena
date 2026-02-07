@@ -303,4 +303,5 @@ read_globals = {
 	'NotGameTooltip1', -- OPie's custom tooltip
 	'OPie',
 	'Syndicator',
+	'TomTomTooltip',
 }
