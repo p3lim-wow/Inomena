@@ -59,10 +59,10 @@ function addon:MERCHANT_CONFIRM_TRADE_TIMER_REMOVAL()
 end
 
 -- hide repetitive help tips
+C_CVar.RegisterCVar('hideHelptips', 1)
 for index = 1, NUM_LE_FRAME_TUTORIALS do
 	C_CVar.SetCVarBitfield('closedInfoFrames', index, true)
 end
 for index = 1, #Enum.FrameTutorialAccount do
 	C_CVar.SetCVarBitfield('closedInfoFramesAccountWide', index, true)
 end
-MainMenuMicroButton_ShowAlert = nop
