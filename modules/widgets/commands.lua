@@ -51,6 +51,11 @@ end)
 -- alias for `/tinspect`
 addon:RegisterSlash('/dumpui', SlashCmdList.TABLEINSPECT)
 
+-- spawn the console without needing to enable it
+addon:RegisterSlash('/con', function()
+	DeveloperConsole:Toggle()
+end)
+
 -- why is this buried so deep into the options?
 addon:RegisterSlash('/cd', '/wa', function()
 	if InCombatLockdown() then
