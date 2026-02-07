@@ -54,7 +54,7 @@ local function updateGlobalCooldown(self)
 
 		-- generate duration from spell info
 		local duration = C_DurationUtil.CreateDuration()
-		duration:SetTimeFromStart(GetTime(), info.duration)
+		duration:SetTimeFromStart(GetTime(), info.duration, info.modRate)
 
 		-- render duration on castbar
 		element:SetTimerDuration(duration, element.smoothing, Enum.StatusBarTimerDirection.RemainingTime)
