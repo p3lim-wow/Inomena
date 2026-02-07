@@ -39,6 +39,7 @@ function methods:SetCooldown(remaining, duration)
 		self.Icon:SetAlpha(1/3)
 		self.Border:SetAlpha(1/3)
 	else
+		self.Cooldown:Hide()
 		self.Icon:SetDesaturated(false)
 		self.Icon:SetAlpha(1)
 		self.Border:SetAlpha(1)
