@@ -34,6 +34,10 @@ local function updateIcon(self, texture)
 	self.Icon:SetTexture(texture)
 end
 
+local function updateIconColor(self, ...)
+	self.Icon:SetVertexColor(...)
+end
+
 local function showIcon(self)
 	self.Icon:SetAlpha(1)
 end
@@ -83,6 +87,7 @@ for prefix, numButtons in next, {
 
 		-- hook original icon for texture updates, bit of an ugly hack
 		hooksecurefunc(button.icon, 'SetTexture', updateIcon)
+		hooksecurefunc(button.icon, 'SetVertexColor', updateIconColor)
 		hooksecurefunc(button.icon, 'Show', showIcon)
 		hooksecurefunc(button.icon, 'Hide', hideIcon)
 		button.icon.Icon = Icon
