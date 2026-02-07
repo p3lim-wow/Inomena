@@ -120,13 +120,14 @@ for prefix, numButtons in next, {
 		button:SetBorderIgnoreParentAlpha(true)
 
 		-- hide textures
-		addon:Hide(button, 'icon') -- we add our own
+		button.icon:SetSize(0.001, 0.001) -- prevent taint
 		addon:Hide(button, 'Border') -- equipped border
-		addon:Hide(button, 'Name') -- macro name
 		addon:Hide(button, 'Flash')
 		addon:Hide(button, 'NewActionTexture')
 		addon:Hide(button, 'SpellHighlightTexture')
 		addon:Hide(button, 'SlotBackground')
+		addon:Hide(button, 'Name') -- macro name
+		button.Name = nil -- prevent secret taint
 
 		-- hide button textures in a different way because they use atlases
 		button:GetNormalTexture():SetAlpha(0)
