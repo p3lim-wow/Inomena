@@ -68,6 +68,7 @@ modules\widgets\mail.lua
 modules\widgets\resurrect.lua
 modules\widgets\skyriding.lua
 modules\widgets\talents.lua
+modules\widgets\petbattle.lua
 
 modules\blizzard\actionbar.lua
 modules\blizzard\character.lua
