@@ -56,6 +56,7 @@ modules\units\castbar.lua
 modules\automations\alerts.lua
 modules\automations\fishing.lua
 modules\automations\gossip.lua
+modules\automations\loot.lua
 modules\automations\repair.lua
 modules\automations\tracking.lua
 modules\automations\trash.lua
