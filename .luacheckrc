@@ -104,6 +104,7 @@ read_globals = {
 	'SELECTED_CHAT_FRAME',
 
 	-- FrameXML utils
+	'ActionButtonUtil',
 	'AnchorUtil',
 	'ChatFrameUtil',
 	'MenuUtil',
@@ -196,6 +197,7 @@ read_globals = {
 	'GetAchievementInfo',
 	'GetActionInfo',
 	'GetBattlefieldStatus',
+	'GetBindingKey',
 	'GetClassInfo',
 	'GetGuildBankMoney',
 	'GetGuildInfo',
@@ -238,6 +240,7 @@ read_globals = {
 	'RepairAllItems',
 	'RequestTimePlayed',
 	'SellCursorItem',
+	'SetOverrideBinding',
 	'TaxiRequestEarlyLanding',
 	'UnitAffectingCombat',
 	'UnitCanAttack',

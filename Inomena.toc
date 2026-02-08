@@ -54,6 +54,7 @@ modules\units\resources.lua
 modules\units\castbar.lua
 
 modules\automations\alerts.lua
+modules\automations\fishing.lua
 modules\automations\gossip.lua
 modules\automations\repair.lua
 modules\automations\tracking.lua
