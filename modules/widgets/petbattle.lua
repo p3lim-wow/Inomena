@@ -21,7 +21,7 @@ button.NormalTexture:SetDrawLayer('ARTWORK', 1) -- render above glow because it 
 local wrapper = CreateFrame('Frame', nil, nil, 'SecureHandlerBaseTemplate')
 wrapper:WrapScript(button, 'PostClick', [[self:Hide()]])
 
-function addon:PET_BATTLE_CLOSE()
+function addon:PET_BATTLE_OVER()
 	local spellCooldown = C_Spell.GetSpellCooldown(REVIVE_SPELL)
 	if spellCooldown and spellCooldown.startTime > 0 then
 		if C_Item.GetItemCount(REVIVE_ITEM) > 0 then
