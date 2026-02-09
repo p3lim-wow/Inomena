@@ -27,6 +27,10 @@ local function AttemptLoot()
 end
 
 local function StartLooting()
+	if IsShiftKeyDown() then
+		return
+	end
+
 	lastLootSlot = GetNumLootItems()
 	if lastLootSlot == 0 then
 		return
