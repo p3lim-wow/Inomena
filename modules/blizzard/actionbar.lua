@@ -62,14 +62,16 @@ local function rewriteHotKeyText(button)
 end
 
 for prefix, numButtons in next, {
-	ActionButton = 12,
-	MultiBarBottomLeftButton = 12,
-	MultiBarBottomRightButton = 12,
-	MultiBarLeftButton = 12,
-	MultiBarRightButton = 12,
-	MultiBar5Button = 12,
-	MultiBar6Button = 12,
-	MultiBar7Button = 12,
+	-- I'd use ActionButtonUtil.ActionBarButtonNames and NUM_ACTIONBAR_BUTTONS but they don't
+	-- include the pet buttons so we'll just do it ourselves
+	ActionButton = NUM_ACTIONBAR_BUTTONS,
+	MultiBarBottomLeftButton = NUM_ACTIONBAR_BUTTONS,
+	MultiBarBottomRightButton = NUM_ACTIONBAR_BUTTONS,
+	MultiBarLeftButton = NUM_ACTIONBAR_BUTTONS,
+	MultiBarRightButton = NUM_ACTIONBAR_BUTTONS,
+	MultiBar5Button = NUM_ACTIONBAR_BUTTONS,
+	MultiBar6Button = NUM_ACTIONBAR_BUTTONS,
+	MultiBar7Button = NUM_ACTIONBAR_BUTTONS,
 	PetActionButton = 10,
 } do
 	for index = 1, numButtons do
