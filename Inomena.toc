@@ -33,6 +33,7 @@ modules\settings\bindings\skyriding.lua
 
 modules\settings\played.lua
 modules\settings\tracking.lua
+modules\settings\cvars.lua
 
 modules\units\elements\core.lua
 modules\units\elements\colors.lua
