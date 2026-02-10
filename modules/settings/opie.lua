@@ -184,6 +184,7 @@ local RINGS = addon:T({
 		{'spell', 224869, show='[me:mage]'}, -- Teleport: Dalaran - Broken Isles
 		{'spell', 224871, show='[me:mage]'}, -- Portal: Dalaran - Broken Isles
 		{'item', 144341}, -- Rechargeable Reaves Battery
+		{'toy', 151652}, -- Wormhole Generator: Argus
 		{'item', 140493}, -- Adept's Guide to Dimensional Rifting
 		{'item', 141013}, -- Scroll of Town Portal: Shala'nir
 		{'item', 141014}, -- Scroll of Town Portal: Sashj'tar
@@ -206,7 +207,6 @@ local RINGS = addon:T({
 		{'spell', 176248, show='[me:mage,alliance]'}, -- Teleport: Stormshield
 		{'spell', 176246, show='[me:mage,alliance]'}, -- Portal: Stormshield
 		{'toy', 112059}, -- Wormhole Centrifuge (Draenor)
-		{'toy', 151652}, -- Wormhole Generator: Argus
 		{'item', 128353}, -- Admiral's Compass
 		{'item', 118662}, -- Bladespire Relic
 		{'item', 118663}, -- Relic of Karabor
