@@ -30,6 +30,7 @@ modules\settings\bindings\mount.lua
 modules\settings\bindings\reload.lua
 modules\settings\bindings\resurrect.lua
 modules\settings\bindings\skyriding.lua
+modules\settings\bindings\auction.lua
 
 modules\settings\played.lua
 modules\settings\tracking.lua

@@ -40,6 +40,7 @@ read_globals = {
 	},
 
 	-- FrameXML frames and widgets
+	'AuctionHouseFrame',
 	'BuffFrame',
 	'CalendarFrame',
 	'ChatFrame1EditBox',
