@@ -117,13 +117,13 @@ local function filterBuffs(_, unit)
 end
 
 local filterDebuffs; do
-	local function filter(filter, unit, data) -- shorthand
+	local function matches(filter, unit, data) -- shorthand
 		return not C_UnitAuras.IsAuraFilteredOutByInstanceID(unit, data.auraInstanceID, filter)
 	end
 
 	function filterDebuffs(_, ...)
 		-- we only show player-applied debuffs, but not CC as it's handled by a different element
-		return filter('HARMFUL|PLAYER', ...) and not filter('HARMFUL|CROWD_CONTROL', ...)
+		return matches('HARMFUL|PLAYER', ...) and not matches('HARMFUL|CROWD_CONTROL', ...)
 	end
 end
 

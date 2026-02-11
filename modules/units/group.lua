@@ -39,7 +39,7 @@ local function postCreateBuff(_, Button)
 end
 
 local filterBuffs, filterDefensiveBuffs; do
-	local function filter(filter, unit, data) -- shorthand
+	local function matches(filter, unit, data) -- shorthand
 		return not C_UnitAuras.IsAuraFilteredOutByInstanceID(unit, data.auraInstanceID, filter)
 	end
 
@@ -47,13 +47,13 @@ local filterBuffs, filterDefensiveBuffs; do
 		-- we want to see our applied buffs, but not defensives since that's separate
 		if UnitAffectingCombat('player') then
 			-- filter out useless auras during combat, like class raid buffs
-			return filter('HELPFUL|PLAYER|RAID_IN_COMBAT', ...) and not filter('HELPFUL|BIG_DEFENSIVE', ...) and not filter('HELPFUL|EXTERNAL_DEFENSIVE', ...)
+			return matches('HELPFUL|PLAYER|RAID_IN_COMBAT', ...) and not matches('HELPFUL|BIG_DEFENSIVE', ...) and not matches('HELPFUL|EXTERNAL_DEFENSIVE', ...)
 		end
-		return filter('HELPFUL|PLAYER|RAID', ...) and not filter('HELPFUL|BIG_DEFENSIVE', ...) and not filter('HELPFUL|EXTERNAL_DEFENSIVE', ...)
+		return matches('HELPFUL|PLAYER|RAID', ...) and not matches('HELPFUL|BIG_DEFENSIVE', ...) and not matches('HELPFUL|EXTERNAL_DEFENSIVE', ...)
 	end
 
 	function filterDefensiveBuffs(_, ...)
-		return filter('HELPFUL|BIG_DEFENSIVE', ...) or filter('HELPFUL|EXTERNAL_DEFENSIVE', ...)
+		return matches('HELPFUL|BIG_DEFENSIVE', ...) or matches('HELPFUL|EXTERNAL_DEFENSIVE', ...)
 	end
 end
 
