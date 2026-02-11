@@ -197,6 +197,7 @@ local UVARS = { -- unexposed (hidden) settings
 	alwaysCompareItems = 0,
 	cameraDistanceMaxZoomFactor = 2.6,
 	rawMouseEnable = 1,
+	SoftTargetInteractArc = 1,
 }
 
 function addon:OnLogin()
