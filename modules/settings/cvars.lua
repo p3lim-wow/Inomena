@@ -32,7 +32,7 @@ local CVARS = { -- exposed settings from the interface options
 	chatBubblesRaid = 0, -- (default)
 
 	-- Gameplay Action Bars
-	enableMultiActionBars = 15,
+	enableMultiActionBars = 79,
 	lockActionBars = 1,
 	countdownForCooldowns = 1,
 
