@@ -10,8 +10,6 @@
 ..\oUF\oUF.xml
 ..\Dashi\embed.xml
 
-templates.xml
-
 core\enums.lua
 core\constants.lua
 core\curves.lua

@@ -1,8 +1,0 @@
-<Ui xmlns='http://www.blizzard.com/wow/ui/'>
-  <!-- have to do this because SecureAuraHeaderTemplate taints when we try to register clicks in Lua -->
-  <Button name='InomenaAuraButtonTemplate' inherits='SecureActionButtonTemplate' registerForClicks='RightButtonDown' virtual='true'>
-    <Attributes>
-      <Attribute name='type2' value='cancelaura'/>
-    </Attributes>
-  </Button>
-</Ui>

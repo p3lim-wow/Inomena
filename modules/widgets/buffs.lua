@@ -104,11 +104,11 @@ buffs:SetPoint('TOPRIGHT', Minimap, 'TOPLEFT', -25, 0)
 addon:PixelPerfect(buffs)
 
 -- set up templates and filters
-buffs:SetAttribute('template', 'InomenaAuraButtonTemplate')
+buffs:SetAttribute('template', 'SecureAuraButtonTemplate')
 buffs:SetAttribute('unit', 'player')
 buffs:SetAttribute('filter', 'HELPFUL')
 buffs:SetAttribute('includeWeapons', 1)
-buffs:SetAttribute('weaponTemplate', 'InomenaAuraButtonTemplate')
+buffs:SetAttribute('weaponTemplate', 'SecureAuraButtonTemplate')
 
 -- sorting
 buffs:SetAttribute('sortMethod', 'TIME')
