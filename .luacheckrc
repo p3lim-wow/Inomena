@@ -311,7 +311,6 @@ read_globals = {
 	-- exposed from other addons
 	'BugGrabber',
 	'LibStub',
-	'NotGameTooltip1', -- OPie's custom tooltip
 	'OPie',
 	'Syndicator',
 	'TomTomTooltip',

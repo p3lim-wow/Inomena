@@ -3,7 +3,8 @@ local _, addon = ...
 -- skin tooltips
 
 -- replace border
-local function skin(tooltip)
+local function skin(tooltipName)
+	local tooltip = _G[tooltipName]
 	addon:Hide(tooltip, 'NineSlice')
 	addon:AddBackdrop(tooltip)
 
@@ -24,14 +25,17 @@ for _, tooltip in next, {
 	'ShoppingTooltip1',
 	'ShoppingTooltip2',
 } do
-	skin(_G[tooltip])
+	skin(tooltip)
 end
 
 addon:HookAddOn('OPie', function()
-	skin(NotGameTooltip1) -- OPie uses a custom tooltip based on GameTooltip
+	skin('NotGameTooltip1') -- OPie uses a custom tooltip based on GameTooltip
 end)
 addon:HookAddOn('TomTom', function()
-	skin(TomTomTooltip) -- TomTom uses a custom tooltip too
+	skin('TomTomTooltip') -- TomTom uses a custom tooltip too
+end)
+addon:HookAddOn('InteractiveWormholes', function()
+	skin('InteractiveWormholesTooltip')
 end)
 
 -- adjust spacing between shopping tooltips
