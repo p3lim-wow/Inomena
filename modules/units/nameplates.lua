@@ -106,9 +106,25 @@ local function updateHighlight(self, event, worldCursorAnchorType)
 	self.Castbar.IconFrame:SetBorderColor(r, g, b)
 end
 
+local function postCCCreate(_, Button)
+	Button.Cooldown:ClearTimePoints()
+	Button.Cooldown:SetTimePoint('CENTER')
+end
+
 local function filterBuffs(_, unit)
 	-- we only use this to show buffs on mobs, for purge or de-enrage
 	return not UnitIsPlayer(unit)
+end
+
+local filterDebuffs; do
+	local function filter(filter, unit, data) -- shorthand
+		return not C_UnitAuras.IsAuraFilteredOutByInstanceID(unit, data.auraInstanceID, filter)
+	end
+
+	function filterDebuffs(_, ...)
+		-- we only show player-applied debuffs, but not CC as it's handled by a different element
+		return filter('HARMFUL|PLAYER', ...) and not filter('HARMFUL|CROWD_CONTROL', ...)
+	end
 end
 
 local styleName = addon.unitPrefix .. 'NamePlates'
@@ -192,10 +208,11 @@ oUF:RegisterStyle(styleName, function(self)
 	Debuffs.spacing = addon.SPACING
 	Debuffs.height = 20
 	Debuffs.width = 30
-	Debuffs.filter = 'HARMFUL|PLAYER'
+	Debuffs.filter = 'HARMFUL|PLAYER' -- we filter it further in FilterAura override
 	Debuffs.disableCooldownText = true -- custom option
 	Debuffs.disableMouse = true -- custom option
 	Debuffs.CreateButton = addon.unitShared.CreateAura
+	Debuffs.FilterAura = filterDebuffs
 	self.Debuffs = Debuffs
 
 	local Buffs = HealthContainer:CreateFrame()
@@ -213,6 +230,22 @@ oUF:RegisterStyle(styleName, function(self)
 	Buffs.PostUpdateButton = addon.unitShared.PostUpdateAura
 	Buffs.FilterAura = filterBuffs
 	self.Buffs = Buffs
+
+	local CrowdControlDebuffs = self:CreateFrame()
+	CrowdControlDebuffs:SetPoint('LEFT', Health, 'RIGHT', addon.SPACING, 0)
+	CrowdControlDebuffs:SetSize(80, 140)
+	CrowdControlDebuffs.initialAnchor = 'LEFT'
+	CrowdControlDebuffs.growthX = 'RIGHT'
+	CrowdControlDebuffs.growthY = 'UP'
+	CrowdControlDebuffs.spacing = addon.SPACING
+	CrowdControlDebuffs.size = 36
+	CrowdControlDebuffs.numDebuffs = 3
+	CrowdControlDebuffs.numBuffs = 0
+	CrowdControlDebuffs.debuffFilter = 'HARMFUL|CROWD_CONTROL'
+	CrowdControlDebuffs.disableMouse = true -- custom option
+	CrowdControlDebuffs.CreateButton = addon.unitShared.CreateAura
+	CrowdControlDebuffs.PostCreateButton = postCCCreate
+	self.Auras = CrowdControlDebuffs
 
 	local Castbar = HealthContainer:CreateBackdropStatusBar()
 	Castbar:SetPoint('TOPLEFT', Health, 'BOTTOMLEFT', 0, -1)
