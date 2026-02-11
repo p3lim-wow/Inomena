@@ -38,6 +38,30 @@ local function postCreateBuff(_, Button)
 	Button.Count:SetJustifyH('CENTER')
 end
 
+local filterBuffs, filterDefensiveBuffs; do
+	local function filter(filter, unit, data) -- shorthand
+		return not C_UnitAuras.IsAuraFilteredOutByInstanceID(unit, data.auraInstanceID, filter)
+	end
+
+	function filterBuffs(_, ...)
+		-- we want to see our applied buffs, but not defensives since that's separate
+		if UnitAffectingCombat('player') then
+			-- filter out useless auras during combat, like class raid buffs
+			return filter('HELPFUL|PLAYER|RAID_IN_COMBAT', ...) and not filter('HELPFUL|BIG_DEFENSIVE', ...) and not filter('HELPFUL|EXTERNAL_DEFENSIVE', ...)
+		end
+		return filter('HELPFUL|PLAYER|RAID', ...) and not filter('HELPFUL|BIG_DEFENSIVE', ...) and not filter('HELPFUL|EXTERNAL_DEFENSIVE', ...)
+	end
+
+	function filterDefensiveBuffs(_, ...)
+		return filter('HELPFUL|BIG_DEFENSIVE', ...) or filter('HELPFUL|EXTERNAL_DEFENSIVE', ...)
+	end
+end
+
+local function updateCombat(self)
+	-- update buffs to force refresh our filters when combat changes
+	self.Buffs:ForceUpdate()
+end
+
 local function style(self, unit)
 	Mixin(self, addon.widgetMixin)
 
@@ -150,10 +174,15 @@ local function style(self, unit)
 	Buffs.spacing = addon.SPACING
 	Buffs.initialAnchor = 'TOPLEFT'
 	Buffs.disableCooldownText = true -- custom option
-	Buffs.filter = 'HELPFUL|PLAYER|RAID'
+	Buffs.filter = 'HELPFUL|PLAYER' -- we filter it further in FilterAura override
 	Buffs.CreateButton = addon.unitShared.CreateAura
 	Buffs.PostCreateButton = postCreateBuff
+	Buffs.FilterAura = filterBuffs
 	self.Buffs = Buffs
+
+	-- force update auras on combat state change for filters
+	self:RegisterEvent('PLAYER_REGEN_DISABLED', updateCombat, true)
+	self:RegisterEvent('PLAYER_REGEN_ENABLED', updateCombat, true)
 
 	local Debuffs = self:CreateFrame()
 	Debuffs.growthY = 'DOWN'
@@ -163,6 +192,20 @@ local function style(self, unit)
 	Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura
 	Debuffs.PostUpdate = addon.unitShared.PostUpdateAuras
 	self.Debuffs = Debuffs
+
+	local DefensiveBuffs = self:CreateFrame()
+	DefensiveBuffs:SetPoint('CENTER')
+	DefensiveBuffs:SetSize(self:GetHeight() / 2, self:GetHeight() / 2)
+	DefensiveBuffs:SetFrameLevel(Name:GetParent():GetFrameLevel() + 2) -- render high
+	DefensiveBuffs.size = self:GetHeight() / 2
+	DefensiveBuffs.initialAnchor = 'CENTER'
+	DefensiveBuffs.numBuffs = 1
+	DefensiveBuffs.numDebuffs = 0
+	DefensiveBuffs.disableCooldownText = true -- custom option
+	DefensiveBuffs.buffFilter = 'HELPFUL' -- we filter it further in FilterAura override
+	DefensiveBuffs.CreateButton = addon.unitShared.CreateAura
+	DefensiveBuffs.FilterAura = filterDefensiveBuffs
+	self.Auras = DefensiveBuffs
 
 	local PrivateAuras = self:CreateFrame()
 	PrivateAuras.spacing = addon.SPACING
