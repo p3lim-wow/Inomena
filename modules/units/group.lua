@@ -92,7 +92,7 @@ local function style(self, unit)
 	HealingPrediction:SetPoint('LEFT', Health:GetStatusBarTexture(), 'RIGHT')
 	HealingPrediction:SetWidth(self:GetWidth())
 	HealingPrediction:SetStatusBarColor(140/255, 1, 46/255, 0.5)
-	self.HealthPrediction.healingAll = HealingPrediction
+	Health.HealingAll = HealingPrediction
 
 	local DamageAbsorb = Health:CreateStatusBar()
 	DamageAbsorb:SetPoint('TOP')
@@ -100,7 +100,7 @@ local function style(self, unit)
 	DamageAbsorb:SetPoint('LEFT', HealingPrediction:GetStatusBarTexture(), 'RIGHT')
 	DamageAbsorb:SetWidth(self:GetWidth())
 	DamageAbsorb:SetStatusBarColor(67/255, 235/255, 231/255)
-	self.HealthPrediction.damageAbsorb = DamageAbsorb
+	Health.DamageAbsorb = DamageAbsorb
 
 	local HealAbsorb = Health:CreateStatusBar()
 	HealAbsorb:SetPoint('TOP')
@@ -112,14 +112,14 @@ local function style(self, unit)
 	HealAbsorb:GetStatusBarTexture():SetVertTile(true)
 	HealAbsorb:GetStatusBarTexture():SetVertexColor(0, 0, 0)
 	HealAbsorb:SetReverseFill(true)
-	self.HealthPrediction.healAbsorb = HealAbsorb
+	Health.HealAbsorb = HealAbsorb
 
 	local OverHealAbsorbIndicator = Health:CreateTexture()
 	OverHealAbsorbIndicator:SetPoint('TOP', Health, 0, 2)
 	OverHealAbsorbIndicator:SetPoint('BOTTOM', Health, 0, -2)
 	OverHealAbsorbIndicator:SetPoint('RIGHT', Health, 'LEFT', 3, 0)
 	OverHealAbsorbIndicator:SetWidth(10)
-	self.HealthPrediction.OverHealAbsorbIndicator = OverHealAbsorbIndicator
+	Health.OverHealAbsorbIndicator = OverHealAbsorbIndicator
 
 	local Power = self:CreateBackdropStatusBar()
 	Power:SetPoint('BOTTOMLEFT')

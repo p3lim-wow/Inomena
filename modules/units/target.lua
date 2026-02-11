@@ -27,7 +27,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	DamageAbsorb:SetPoint('BOTTOM')
 	DamageAbsorb:SetPoint('LEFT', Health:GetStatusBarTexture(), 'RIGHT')
 	DamageAbsorb:SetStatusBarColor(67/255, 235/255, 231/255)
-	self.HealthPrediction.damageAbsorb = DamageAbsorb
+	Health.DamageAbsorb = DamageAbsorb
 
 	local HealthValue = Health:CreateText()
 	HealthValue:SetPoint('RIGHT', -addon.SPACING, 0)
