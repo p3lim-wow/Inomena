@@ -58,6 +58,9 @@ local function updateOnAdded(self)
 	if C_QuestLog.UnitIsRelatedToActiveQuest(unit) then
 		-- quest mobs always have name shown
 		self.Name:Show()
+	elseif classification == 'rare' or classification == 'rareelite' then
+		-- always show rare name
+		self.Name:Show()
 	end
 
 	if fullSize then
