@@ -159,9 +159,9 @@ local CVARS = { -- exposed settings from the interface options
 	-- Sound
 	Sound_EnableAllSound = 1, -- (default)
 	Sound_MasterVolume = 0.25,
-	Sound_MusicVolume = 0,
-	Sound_SFXVolume = 0,
-	Sound_AmbienceVolume = 0,
+	Sound_MusicVolume = 0.2,
+	Sound_SFXVolume = 0.3,
+	Sound_AmbienceVolume = 0.4,
 	Sound_DialogVolume = 1,
 	Sound_EnableMusic = 0,
 	Sound_ZoneMusicNoDelay = 0, -- (default)
