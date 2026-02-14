@@ -100,7 +100,7 @@ local function auraButtonInit(button)
 	-- add script handlers
 	button:HookScript('OnAttributeChanged', auraOnAttributeChanged)
 	button:SetScript('OnEnter', auraOnEnter)
-	button:SetScript('OnLeave', GameTooltip_Hide)
+	button:SetScript('OnLeave', addon.HideTooltip)
 end
 
 local buffs = CreateFrame('Frame', nil, UIParent, 'SecureAuraHeaderTemplate')
