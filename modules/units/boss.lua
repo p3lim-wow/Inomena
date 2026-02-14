@@ -9,8 +9,8 @@ local styleName = addon.unitPrefix .. 'Boss'
 oUF:RegisterStyle(styleName, function(self, unit)
 	Mixin(self, addon.widgetMixin)
 
-	self:SetScript('OnEnter', addon.unitShared.Tooltip)
-	self:SetScript('OnLeave', GameTooltip_Hide)
+	self:SetScript('OnEnter', addon.unitShared.ShowTooltip)
+	self:SetScript('OnLeave', addon.unitShared.HideTooltip)
 	self:RegisterForClicks('AnyUp')
 	self:SetSize(250, 30)
 

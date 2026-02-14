@@ -3,25 +3,22 @@ local oUF = addon.oUF
 
 do
 	local function onAuraEnter(Button)
-		if GameTooltip:IsForbidden() or not Button:IsVisible() then
+		if not Button:IsVisible() then
 			return
 		end
 
 		local element = Button:GetParent()
-		GameTooltip:SetOwner(Button, element.__restricted and 'ANCHOR_CURSOR' or 'ANCHOR_TOPRIGHT')
-		GameTooltip:SetUnitAuraByAuraInstanceID(element.__owner.unit, Button.auraInstanceID)
-	end
-
-	local function onAuraLeave()
-		if not GameTooltip:IsForbidden() then
-			GameTooltip:Hide()
+		local anchor = element.__restricted and 'ANCHOR_CURSOR' or 'ANCHOR_TOPRIGHT'
+		local tooltip = addon:GetTooltip(Button, anchor)
+		if tooltip:SetUnitAuraByAuraInstanceID(element.__owner.unit, Button.auraInstanceID) then
+			tooltip:Show()
 		end
 	end
 
 	function addon.unitShared.CreateAura(element)
 		local Button = element:CreateBackdropFrame('Button')
 		Button:SetScript('OnEnter', onAuraEnter)
-		Button:SetScript('OnLeave', onAuraLeave)
+		Button:SetScript('OnLeave', addon.HideTooltip)
 
 		local Icon = Button:CreateIcon()
 		Icon:SetAllPoints()

@@ -65,8 +65,8 @@ end
 local function style(self, unit)
 	Mixin(self, addon.widgetMixin)
 
-	self:SetScript('OnEnter', addon.unitShared.Tooltip)
-	self:SetScript('OnLeave', GameTooltip_Hide)
+	self:SetScript('OnEnter', addon.unitShared.ShowTooltip)
+	self:SetScript('OnLeave', addon.unitShared.HideTooltip)
 
 	addon:DeferMethod(self, 'RegisterForClicks', 'AnyUp')
 	addon.unitShared.AddShiftClick(self, unit)

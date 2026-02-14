@@ -25,9 +25,9 @@ local function onSpecButtonClick(self)
 end
 
 local function onSpecButtonEnter(self)
-  GameTooltip:SetOwner(self, 'TOPRIGHT')
-  GameTooltip:SetText((select(2, C_SpecializationInfo.GetSpecializationInfo(self:GetID()))))
-  GameTooltip:Show()
+	local tooltip = addon:GetTooltip(self, 'TOPRIGHT')
+	tooltip:SetText((select(2, C_SpecializationInfo.GetSpecializationInfo(self:GetID()))))
+	tooltip:Show()
 end
 
 addon:HookAddOn('Blizzard_PlayerSpells', function()
@@ -51,7 +51,7 @@ addon:HookAddOn('Blizzard_PlayerSpells', function()
 		button:SetID(index)
 		button:SetScript('OnClick', onSpecButtonClick)
 		button:SetScript('OnEnter', onSpecButtonEnter)
-		button:SetScript('OnLeave', GameTooltip_Hide)
+		button:SetScript('OnLeave', addon.HideTooltip)
 		button:SetFrameStrata('HIGH')
 		button:SetChecked(index == C_SpecializationInfo.GetSpecialization())
 		button.icon:SetTexture((select(4, C_SpecializationInfo.GetSpecializationInfo(index))))

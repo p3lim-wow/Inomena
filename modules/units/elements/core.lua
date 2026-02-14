@@ -4,12 +4,18 @@ addon.units = {}
 addon.unitShared = {}
 addon.unitPrefix = C_AddOns.GetAddOnMetadata(addonName, 'X-oUF')
 
-function addon.unitShared.Tooltip(self)
-	GameTooltip_SetDefaultAnchor(GameTooltip, self)
+function addon.unitShared.ShowTooltip(self)
+	local tooltip = addon:GetTooltip()
 
-	if GameTooltip:SetUnit(self.unit) then
-		GameTooltip:Show()
+	GameTooltip_SetDefaultAnchor(tooltip, self)
+
+	if tooltip:SetUnit(self.unit) then
+		tooltip:Show()
 	end
+end
+
+function addon.unitShared.HideTooltip(self)
+	addon:HideTooltip()
 end
 
 do

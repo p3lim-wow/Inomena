@@ -69,12 +69,12 @@ end
 local function onOverlayEnter(self)
 	local configID, _, _, treeInfo = getInactiveHeroTalentSpecInfo()
 	if configID then
-		GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
+		local tooltip = addon:GetTooltip(self, 'ANCHOR_RIGHT')
 
 		local atlas = CreateAtlasMarkup(treeInfo.iconElementID, 16, 16)
 		local color = C_ClassColor.GetClassColor(addon.PLAYER_CLASS)
-		GameTooltip:SetText(TOOLTIP_TEXT:format(atlas, color:WrapTextInColorCode(treeInfo.name)))
-		GameTooltip:Show()
+		tooltip:SetText(TOOLTIP_TEXT:format(atlas, color:WrapTextInColorCode(treeInfo.name)))
+		tooltip:Show()
 	end
 end
 
@@ -94,7 +94,7 @@ overlay:SetPassThroughButtons('LeftButton') -- don't override normal click funct
 overlay:SetPropagateMouseMotion(true) -- so we own the tooltip
 overlay:SetScript('OnClick', onOverlayClick)
 overlay:SetScript('OnEnter', onOverlayEnter)
-overlay:SetScript('OnLeave', GameTooltip_Hide)
+overlay:SetScript('OnLeave', addon.HideTooltip)
 
 addon:HookAddOn('Blizzard_PlayerSpells', function()
 	overlay:SetParent(PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer.HeroSpecButton)

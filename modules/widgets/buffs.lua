@@ -3,14 +3,18 @@ local _, addon = ...
 -- custom buff display
 
 local function auraOnEnter(button)
-	GameTooltip:SetOwner(button, 'ANCHOR_BOTTOMLEFT')
+	local tooltip = addon:GetTooltip(button, 'ANCHOR_BOTTOMLEFT')
 
 	local auraIndex = button:GetAttribute('index')
 	if auraIndex then
 		local unit = button:GetParent():GetAttribute('unit')
-		GameTooltip:SetUnitAura(unit, auraIndex, 'HELPFUL')
+		if tooltip:SetUnitAura(unit, auraIndex, 'HELPFUL') then
+			tooltip:Show()
+		end
 	elseif button:GetAttribute('target-slot') then
-		GameTooltip:SetInventoryItem('player', button:GetID())
+		if tooltip:SetInventoryItem('player', button:GetID()) then
+			tooltip:Show()
+		end
 	end
 end
 

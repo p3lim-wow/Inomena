@@ -5,19 +5,19 @@ local _, addon = ...
 local button = Mixin(CreateFrame('Frame', nil, Minimap), addon.widgetMixin)
 button:SetPoint('TOPLEFT', 5, -5)
 button:SetSize(30, 30)
-button:SetScript('OnLeave', GameTooltip_Hide)
+button:SetScript('OnLeave', addon.HideTooltip)
 button:SetScript('OnEnter', function(self)
-	GameTooltip:SetOwner(self, 'ANCHOR_BOTTOMLEFT')
+	local tooltip = addon:GetTooltip(self, 'ANCHOR_BOTTOMLEFT')
 
 	if HasNewMail() then
-		GameTooltip:AddLine(HAVE_MAIL)
+		tooltip:AddLine(HAVE_MAIL)
 
 		for _, sender in next, {GetLatestThreeSenders()} do
 			-- there's a caching issue with this API ^
-			GameTooltip:AddLine(DASH_WITH_TEXT:format(sender), 1, 1, 1)
+			tooltip:AddLine(DASH_WITH_TEXT:format(sender), 1, 1, 1)
 		end
 	else
-		GameTooltip:AddLine('No mail')
+		tooltip:AddLine('No mail')
 	end
 
 	-- add lines for pending crafting orders
@@ -29,15 +29,15 @@ button:SetScript('OnEnter', function(self)
 			numOrders = numOrders + order.numPersonalOrders
 		end
 
-		GameTooltip:AddLine(' ')
-		GameTooltip:AddLine(PROFESSIONS_CRAFTING_ORDERS_PAGE_NAME:format(numOrders))
+		tooltip:AddLine(' ')
+		tooltip:AddLine(PROFESSIONS_CRAFTING_ORDERS_PAGE_NAME:format(numOrders))
 
 		for _, order in next, orders do
-			GameTooltip:AddLine(WEEKLY_REWARDS_COMPLETED_ENCOUNTER:format(order.professionName, order.numPersonalOrders), 1, 1, 1)
+			tooltip:AddLine(WEEKLY_REWARDS_COMPLETED_ENCOUNTER:format(order.professionName, order.numPersonalOrders), 1, 1, 1)
 		end
 	end
 
-	GameTooltip:Show()
+	tooltip:Show()
 end)
 
 local icon = button:CreateTexture('OVERLAY')

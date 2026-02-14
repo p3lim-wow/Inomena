@@ -32,6 +32,7 @@ for _, tooltip in next, {
 	'GameTooltip',
 	'ShoppingTooltip1',
 	'ShoppingTooltip2',
+	addon:GetTooltip():GetName(), -- our own tooltip
 } do
 	skin(tooltip)
 end

@@ -3,9 +3,9 @@ local _, addon = ...
 -- custom minimap button for bugsack
 
 local function onEnter(self)
-	GameTooltip:SetOwner(self, 'ANCHOR_BOTTOMLEFT')
-	self.bugsack.dataObject.OnTooltipShow(GameTooltip)
-	GameTooltip:Show()
+	local tooltip = addon:GetTooltip(self, 'ANCHOR_BOTTOMLEFT')
+	self.bugsack.dataObject.OnTooltipShow(tooltip)
+	tooltip:Show()
 end
 
 local function onClick(self, ...)
@@ -29,7 +29,7 @@ addon:HookAddOn('BugSack', function()
 	button:SetPoint('TOPRIGHT', UIParent)
 	button:SetPoint('BOTTOMLEFT', Minimap, 'TOPRIGHT', -10, -10)
 	button:SetFrameStrata('HIGH')
-	button:SetScript('OnLeave', GameTooltip_Hide)
+	button:SetScript('OnLeave', addon.HideTooltip)
 	button:SetScript('OnEnter', onEnter)
 	button:SetScript('OnClick', onClick)
 	button:SetAlpha(0)
