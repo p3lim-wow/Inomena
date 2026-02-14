@@ -18,6 +18,14 @@ local function skin(tooltipName)
 	else
 		tooltip:SetBackgroundColor(0, 0, 0, 0.8) -- it's too transparent by default
 	end
+
+	if tooltip.StatusBar then
+		tooltip.StatusBar:ClearAllPoints()
+		tooltip.StatusBar:SetPoint('BOTTOMLEFT')
+		tooltip.StatusBar:SetPoint('BOTTOMRIGHT')
+		tooltip.StatusBar:SetHeight(3)
+		tooltip.StatusBar:SetStatusBarTexture(addon.TEXTURE)
+	end
 end
 
 for _, tooltip in next, {
@@ -65,10 +73,3 @@ for _, tooltipFontString in next, {
 	_G[tooltipFontString]:SetFont(addon.FONT, 12, 'OUTLINE')
 	_G[tooltipFontString]:SetShadowOffset(0, 0)
 end
-
--- style bar
-GameTooltipStatusBar:ClearAllPoints()
-GameTooltipStatusBar:SetPoint('BOTTOMLEFT')
-GameTooltipStatusBar:SetPoint('BOTTOMRIGHT')
-GameTooltipStatusBar:SetHeight(3)
-GameTooltipStatusBar:SetStatusBarTexture(addon.TEXTURE)
