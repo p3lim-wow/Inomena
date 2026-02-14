@@ -105,16 +105,18 @@ tags.Events['inomena:summon'] = 'INCOMING_SUMMON_CHANGED'
 tags.Methods['inomena:summon'] = function(unit)
 	local status = C_IncomingSummon.IncomingSummonStatus(unit)
 	if status == Enum.SummonStatus.Pending then
-		return '|A:Raid-Icon-SummonPending:32:32|a'
+		return '|A:RaidFrame-Icon-SummonPending:32:32|a'
 	elseif status == Enum.SummonStatus.Accepted then
-		return [[|TInterface\RaidFrame\Raid-Icon-SummonPending:32:32:0:0:32:32:0:32:0:32:0:255:0|t]]
+		return '|A:RaidFrame-Icon-SummonPending:32:32:0:0:0:255:0|a'
+	elseif status == Enum.SummonStatus.Declined then
+		return '|A:RaidFrame-Icon-SummonPending:32:32:0:0:255:0:0|a'
 	end
 end
 
 tags.Events['inomena:resurrect'] = 'INCOMING_RESURRECT_CHANGED UNIT_HEALTH'
 tags.Methods['inomena:resurrect'] = function(unit)
 	if UnitHasIncomingResurrection(unit) then
-		return [[|TInterface\RaidFrame\Raid-Icon-Rez:22|t]]
+		return '|A:RaidFrame-Icon-Rez:22|a'
 	end
 end
 
