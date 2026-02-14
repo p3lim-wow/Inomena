@@ -72,8 +72,8 @@ tags.Methods['inomena:name'] = function(unit)
 	return UnitNameUnmodified(unit)
 end
 
-tags.Events['inomena:namecolor'] = 'UNIT_NAME_UPDATE UNIT_CLASSIFICATION_CHANGED'
-tags.Methods['inomena:namecolor'] = function(unit)
+tags.Events['inomena:classificationcolor'] = 'UNIT_NAME_UPDATE UNIT_CLASSIFICATION_CHANGED'
+tags.Methods['inomena:classificationcolor'] = function(unit)
 	local classification = UnitClassification(unit)
 	if classification == 'rare' then
 		return '|cff0090ff'

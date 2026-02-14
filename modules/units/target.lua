@@ -48,7 +48,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Name:SetPoint('LEFT', addon.SPACING, 0)
 	Name:SetPoint('RIGHT', HealthValue, 'LEFT', -addon.SPACING, 0)
 	Name:SetJustifyH('LEFT')
-	self:Tag(Name, '[inomena:namecolor][inomena:name<$|r]')
+	self:Tag(Name, '[inomena:classificationcolor][inomena:name<$|r]')
 
 	local RaidIcon = HealthValue:GetParent():CreateTexture('OVERLAY') -- higher parent
 	RaidIcon:SetPoint('CENTER', Health, 'TOP')

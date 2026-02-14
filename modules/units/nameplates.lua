@@ -179,7 +179,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Name:SetWordWrap(false)
 	Name:SetFrameLevel(10)
 	self.Name = Name
-	self:Tag(Name, '[inomena:quest][inomena:namecolor][inomena:name<$|r]')
+	self:Tag(Name, '[inomena:quest][inomena:classificationcolor][inomena:name<$|r]')
 
 	local FriendlyName = self:CreateText(14)
 	FriendlyName:SetPoint('CENTER')
