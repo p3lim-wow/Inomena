@@ -2,7 +2,7 @@
 ## Author: p3lim
 ## Title: Inomena
 ## Notes: Collection of bits and bobs that make up my UI
-## Savedvariables: InomenaPlayed
+## Savedvariables: InomenaPlayed, InomenaSeen
 ## X-oUF: oUF_Inomena
 
 # files are loaded in order of importance and likelihood of breaking
@@ -57,6 +57,7 @@ modules\automations\alerts.lua
 modules\automations\fishing.lua
 modules\automations\gossip.lua
 modules\automations\loot.lua
+modules\automations\movies.lua
 modules\automations\repair.lua
 modules\automations\tracking.lua
 modules\automations\trash.lua
