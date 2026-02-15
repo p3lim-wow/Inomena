@@ -2,7 +2,7 @@ local _, addon = ...
 local oUF = addon.oUF
 
 local function overrideDisplayPower(element, unit)
-	-- only show power for healers' mana or blood death knights
+	-- only show power for healers' mana or blood death knights' runic power
 	local self = element:GetParent()
 
 	local role = UnitGroupRolesAssigned(unit)
