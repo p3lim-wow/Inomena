@@ -71,6 +71,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 
 	self:SetSize(310, 1)
 	self:EnableMouse(false) -- non-interactable
+	self:SetFrameStrata('DIALOG')
 
 	local Castbar = self:CreateBackdropStatusBar()
 	Castbar:SetPoint('TOPLEFT')
