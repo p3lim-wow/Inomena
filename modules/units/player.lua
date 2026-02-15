@@ -95,6 +95,14 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		Power.displayAltPower = true -- needed for display override to work
 		Power.GetDisplayPower = overrideDisplayPower
 		self.Power = Power
+
+		local PowerPrediction = Power:CreateStatusBar()
+		PowerPrediction:SetReverseFill(true)
+		PowerPrediction:SetPoint('TOP')
+		PowerPrediction:SetPoint('BOTTOM')
+		PowerPrediction:SetPoint('RIGHT', Power:GetStatusBarTexture())
+		PowerPrediction:SetStatusBarColor(0, 0, 0, 0.4) -- render as a shade
+		Power.CostPrediction = PowerPrediction
 	end
 
 	local Debuffs = self:CreateFrame()

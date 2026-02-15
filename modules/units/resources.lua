@@ -152,6 +152,14 @@ oUF:RegisterStyle(styleName, function(self)
 	Power.PostUpdate = postUpdatePower
 	self.Power = Power
 
+	local PowerPrediction = Power:CreateStatusBar()
+	PowerPrediction:SetReverseFill(true)
+	PowerPrediction:SetPoint('TOP')
+	PowerPrediction:SetPoint('BOTTOM')
+	PowerPrediction:SetPoint('RIGHT', Power:GetStatusBarTexture())
+	PowerPrediction:SetStatusBarColor(0, 0, 0, 0.4) -- render as a shade
+	Power.CostPrediction = PowerPrediction
+
 	local PowerValue = Power:CreateText()
 	PowerValue:SetPoint('CENTER')
 	self:Tag(PowerValue, '[inomena:power]')
