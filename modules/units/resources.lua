@@ -145,6 +145,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Power:SetHeight(12)
 	Power.colorPower = true
 	Power.colorPowerAtlas = addon.PLAYER_COLOR ~= 'HUNTER' -- focus atlas looks horrible
+	Power.smoothing = Enum.StatusBarInterpolation.ExponentialEaseOut
 	Power.frequentUpdates = true
 	Power.displayAltPower = true -- needed for display override to work
 	Power.GetDisplayPower = overrideDisplayPower
