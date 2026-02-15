@@ -8,11 +8,9 @@ local function resetSpecButtons()
 		button:SetChecked(index == C_SpecializationInfo.GetSpecialization())
 	end
 
-	OverlayPlayerCastingBarFrame:EndReplacingPlayerBar()
 	PlayerSpellsFrame.TalentsFrame.DisabledOverlay:Hide()
 end
 
-local castbarOverrideInfo
 local function onSpecButtonClick(self)
 	resetSpecButtons()
 
@@ -20,7 +18,6 @@ local function onSpecButtonClick(self)
 		C_SpecializationInfo.SetSpecialization(self:GetID())
 
 		PlayerSpellsFrame.TalentsFrame.DisabledOverlay:Show()
-		OverlayPlayerCastingBarFrame:StartReplacingPlayerBarAt(PlayerSpellsFrame.TalentsFrame.DisabledOverlay, castbarOverrideInfo)
 	end
 end
 
@@ -37,13 +34,6 @@ addon:HookAddOn('Blizzard_PlayerSpells', function()
 	local anchor = addon:CreateFrame('Frame', nil, PlayerSpellsFrame.TalentsFrame)
 	anchor:SetPoint('BOTTOM', PlayerSpellsFrame.TalentsFrame.ApplyButton, 'TOP', 0, 35)
 	anchor:SetSize(numSpecializations * 45, 1)
-
-	-- override info for castbar
-	castbarOverrideInfo = {
-		overrideBarType = 'applyingtalents',
-		overrideAnchor = CreateAnchor('BOTTOM', PlayerSpellsFrame.TalentsFrame.DisabledOverlay, 'BOTTOM', 0, 80),
-		overrideStrata = 'DIALOG',
-	}
 
 	for index = 1, numSpecializations do
 		local button = addon:CreateButton('CheckButton', nil, anchor, 'ActionButtonTemplate')
