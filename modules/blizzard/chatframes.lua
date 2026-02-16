@@ -143,3 +143,12 @@ function addon:AlertChatTab(tabIndex)
 	chatTabAlerts[tabIndex] = true
 	updateTabColor(tabIndex)
 end
+
+-- tooltip on chat links
+addon:RegisterCallback('ChatFrame.OnHyperlinkLeave', addon.HideTooltip)
+addon:RegisterCallback('ChatFrame.OnHyperlinkEnter', function(_, chatFrame, link)
+	local tooltip = addon:GetTooltip(chatFrame, 'ANCHOR_CURSOR')
+	if tooltip:SetHyperlink(link) then
+		tooltip:Show()
+	end
+end)
