@@ -96,7 +96,6 @@ read_globals = {
 	'TextureLoadingGroupMixin',
 
 	-- FrameXML misc objects
-	'ChatTypeInfo',
 	'CVarCallbackRegistry',
 	'Menu',
 	'PowerBarColor',
@@ -137,10 +136,16 @@ read_globals = {
 	'SOUNDKIT',
 
 	-- GlobalStrings
+	'AZERITE_ISLANDS_XP_GAIN',
+	'AZERITE_XP_GAIN',
 	'CHAT_GUILD_INVITE_SEND',
 	'COOLDOWN_REMAINING',
 	'DASH_WITH_TEXT',
+	'ERR_LEARN_ABILITY_S',
+	'ERR_LEARN_PASSIVE_S',
+	'ERR_LEARN_SPELL_S',
 	'ERR_MAIL_INVALID_ATTACHMENT_SLOT',
+	'ERR_SPELL_UNLEARNED_S',
 	'EVENT_TOAST_EXPANDED_DESCRIPTION',
 	'HAVE_MAIL',
 	'HEADER_COLON',
@@ -315,6 +320,7 @@ read_globals = {
 	'UnitTreatAsPlayerForDisplay',
 	'UnitVehicleSeatCount',
 	'hooksecurefunc',
+	'issecretvalue',
 
 	-- misc globals
 	'NUM_LE_FRAME_TUTORIALS',
