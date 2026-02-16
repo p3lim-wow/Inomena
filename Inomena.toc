@@ -20,6 +20,7 @@ core\backdrop.lua
 core\util.lua
 core\bind.lua
 
+modules\settings\bindings\auction.lua
 modules\settings\bindings\buff.lua
 modules\settings\bindings\drive.lua
 modules\settings\bindings\eject.lua
@@ -28,11 +29,10 @@ modules\settings\bindings\mount.lua
 modules\settings\bindings\reload.lua
 modules\settings\bindings\resurrect.lua
 modules\settings\bindings\skyriding.lua
-modules\settings\bindings\auction.lua
 
+modules\settings\cvars.lua
 modules\settings\played.lua
 modules\settings\tracking.lua
-modules\settings\cvars.lua
 
 modules\units\elements\core.lua
 modules\units\elements\colors.lua
@@ -70,10 +70,10 @@ modules\widgets\coordinates.lua
 modules\widgets\guild.lua
 modules\widgets\herotalents.lua
 modules\widgets\mail.lua
+modules\widgets\petbattle.lua
 modules\widgets\resurrect.lua
 modules\widgets\skyriding.lua
 modules\widgets\talents.lua
-modules\widgets\petbattle.lua
 
 modules\blizzard\actionbar.lua
 modules\blizzard\character.lua
