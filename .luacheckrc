@@ -54,6 +54,7 @@ read_globals = {
 	'GameTooltip',
 	'GameTooltipStatusBar',
 	'HybridMinimap',
+	'LFDRoleCheckPopupAcceptButton',
 	'MainActionBar',
 	'MerchantFrame',
 	'Minimap',
@@ -127,6 +128,8 @@ read_globals = {
 	'RegisterStateDriver',
 	'SecondsToTime',
 	'ShowUIPanel',
+	'StaticPopup_Hide',
+	'StaticPopup_Visible',
 	'WrapTextInColorCode',
 	'nop',
 
@@ -157,6 +160,7 @@ read_globals = {
 	-- namespaces
 	'C_ActionBar',
 	'C_AddOns',
+	'C_BattleNet',
 	'C_ChallengeMode',
 	'C_ClassColor',
 	'C_ClassTalents',
@@ -166,6 +170,7 @@ read_globals = {
 	'C_CVar',
 	'C_DateAndTime',
 	'C_DurationUtil',
+	'C_FriendList',
 	'C_GossipInfo',
 	'C_GuildInfo',
 	'C_Housing',
@@ -190,6 +195,7 @@ read_globals = {
 
 	-- API
 	'AbbreviateNumbers',
+	'AcceptGroup',
 	'CanEjectPassengerFromSeat',
 	'CanGuildBankRepair',
 	'CanMerchantRepair',
@@ -213,6 +219,7 @@ read_globals = {
 	'GetLootSlotType',
 	'GetMaxLevelForPlayerExpansion',
 	'GetMoney',
+	'GetNextPendingInviteConfirmation',
 	'GetNumClasses',
 	'GetNumGroupMembers',
 	'GetNumGuildMembers',
@@ -248,6 +255,7 @@ read_globals = {
 	'PlaySound',
 	'RepairAllItems',
 	'RequestTimePlayed',
+	'RespondToInviteConfirmation',
 	'SellCursorItem',
 	'SetOverrideBinding',
 	'TaxiRequestEarlyLanding',
