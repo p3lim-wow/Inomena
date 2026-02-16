@@ -12,7 +12,7 @@ function addon:OnLogin()
 	playerNameClass = UnitName('player') .. ':' .. addon.PLAYER_CLASS
 
 	-- prevent our request from triggering chat messages on login
-	for index = 1, NUM_CHAT_WINDOWS do
+	for index = 1, Constants.ChatFrameConstants.MaxChatWindows do
 		if _G['ChatFrame' .. index]:IsEventRegistered('TIME_PLAYED_MSG') then
 			_G['ChatFrame' .. index]:UnregisterEvent('TIME_PLAYED_MSG')
 			chatFrameEvents:insert(_G['ChatFrame' .. index])

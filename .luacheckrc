@@ -86,7 +86,6 @@ read_globals = {
 	'DEFAULT_CHAT_FRAME',
 	'FACTION_BAR_COLORS',
 	'NUM_ACTIONBAR_BUTTONS',
-	'NUM_CHAT_WINDOWS',
 	'PAPERDOLL_STATCATEGORIES',
 	'RANGE_INDICATOR',
 	'SILVER_PER_GOLD',
@@ -191,6 +190,7 @@ read_globals = {
 	'C_Traits',
 	'C_UI',
 	'C_UnitAuras',
+	'Constants',
 	'Enum',
 
 	-- API

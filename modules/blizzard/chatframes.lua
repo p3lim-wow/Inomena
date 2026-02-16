@@ -72,7 +72,7 @@ local function onTabClick(chatTab)
 	end
 end
 
-for chatIndex = 1, NUM_CHAT_WINDOWS do
+for chatIndex = 1, Constants.ChatFrameConstants.MaxChatWindows do
 	if chatIndex ~= 2 and chatIndex ~= 3 then -- ignore combat log and voice log
 		local chatFrame = _G['ChatFrame' .. chatIndex]
 		local chatTab = _G['ChatFrame' .. chatIndex .. 'Tab']
