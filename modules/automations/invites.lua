@@ -70,6 +70,43 @@ function addon:GROUP_INVITE_CONFIRMATION()
 	end
 end
 
+-- accept invites requesting the old way too
+function addon:CHAT_MSG_WHISPER(msg, _, _, _, _, _, _, _, _, _, _, requesterGUID)
+	if issecretvalue(msg) then
+		return
+	end
+
+	if (msg == 'inv' or msg == 'invite') and IsFriend(requesterGUID) then
+		-- have to use name and realm to invite cross realm or faction
+		local name, realm = UnitNameFromGUID(requesterGUID)
+		C_PartyInfo.InviteUnit(name .. '-' .. realm)
+	end
+end
+
+function addon:CHAT_MSG_BN_WHISPER(msg, _, _, _, _, _, _, _, _, _, _, _, requesterID)
+	if issecretvalue(msg) then
+		return
+	end
+
+	if (msg == 'inv' or msg == 'invite') and requesterID then
+		local accountInfo = C_BattleNet.GetAccountInfoByID(requesterID)
+		if not accountInfo then
+			return
+		end
+
+		if accountInfo.gameAccountInfo.clientProgram ~= BNET_CLIENT_WOW then
+			return
+		end
+
+		if accountInfo.gameAccountInfo.wowProjectID ~= WOW_PROJECT_ID then
+			return
+		end
+
+		-- have to use name and realm to invite cross realm or faction
+		C_PartyInfo.InviteUnit(accountInfo.gameAccountInfo.characterName .. '-' .. accountInfo.gameAccountInfo.realmName)
+	end
+end
+
 -- auto-confirm role checks
 LFDRoleCheckPopupAcceptButton:HookScript('OnShow', function(self)
 	if IsShiftKeyDown() then

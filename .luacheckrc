@@ -81,6 +81,7 @@ read_globals = {
 	-- FrameXML constants
 	'CurveConstants',
 	'BASE_MOVEMENT_SPEED',
+	'BNET_CLIENT_WOW',
 	'COPPER_PER_GOLD',
 	'COPPER_PER_SILVER',
 	'DEFAULT_CHAT_FRAME',
@@ -89,6 +90,7 @@ read_globals = {
 	'PAPERDOLL_STATCATEGORIES',
 	'RANGE_INDICATOR',
 	'SILVER_PER_GOLD',
+	'WOW_PROJECT_ID',
 
 	-- FrameXML mixins
 	'DressUpCustomSetDetailsSlotMixin',
@@ -186,6 +188,7 @@ read_globals = {
 	'C_MerchantFrame',
 	'C_Minimap',
 	'C_MountJournal',
+	'C_PartyInfo',
 	'C_PlayerInfo',
 	'C_QuestLog',
 	'C_Sound',
