@@ -47,24 +47,6 @@ addon:HookAddOn('InteractiveWormholes', function()
 	skin('InteractiveWormholesTooltip')
 end)
 
--- adjust spacing between shopping tooltips
-hooksecurefunc(TooltipComparisonManager, 'AnchorShoppingTooltips', function(show1, show2)
-	if show1 then
-		if ShoppingTooltip1:GetPoint(2) == 'LEFT' then
-			ShoppingTooltip1:SetPointsOffset(5, 0)
-		else
-			ShoppingTooltip1:SetPointsOffset(-5, 0)
-		end
-	end
-	if show2 then
-		if ShoppingTooltip2:GetPoint(2) == 'LEFT' then
-			ShoppingTooltip2:SetPointsOffset(5, 0)
-		else
-			ShoppingTooltip2:SetPointsOffset(-5, 0)
-		end
-	end
-end)
-
 -- set custom font
 for _, tooltipFontString in next, {
 	'GameTooltipHeaderText',
