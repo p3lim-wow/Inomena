@@ -132,6 +132,9 @@ for _, group in next, {
 	listener:HookScript('OnAttributeChanged', function(_, _, shouldHide)
 		_G[group]:SetAlphaFromBoolean(not shouldHide, 1, 0)
 		for _, button in next, _G[group]:GetItemFrames() do
+			if button.CustomCooldown then
+				button.CustomCooldown:SetIgnoreParentAlpha(not shouldHide)
+			end
 			if button.SetBorderIgnoreParentAlpha then -- not ready yet
 				button:SetBorderIgnoreParentAlpha(not shouldHide)
 			end
