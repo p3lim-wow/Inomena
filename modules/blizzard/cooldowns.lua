@@ -3,28 +3,30 @@ local _, addon = ...
 -- skin the cooldown manager
 -- works best with icon size <= 60% and padding = 9
 
-local function getSpellID(button)
-	-- basically a copy of CooldownViewerItemDataMixin.GetSpellID without the auraID
-	-- this feels like a hack that will get patched though
+local function updateCooldown(button, _, spellID, baseSpellID)
 	local cooldownInfo = button:GetCooldownInfo()
-	return cooldownInfo and (cooldownInfo.overrideSpellID or cooldownInfo.spellID)
-end
-
-local function updateCooldown(button)
-	local duration, charge
-
-	local spellID = getSpellID(button)
-	if spellID then
-		charge = C_Spell.GetSpellChargeDuration(spellID)
-
-		local cooldown = C_Spell.GetSpellCooldown(spellID)
-		if cooldown and not cooldown.isOnGCD then
-			duration = C_Spell.GetSpellCooldownDuration(spellID)
-		end
+	if not cooldownInfo then
+		return
 	end
 
-	-- we reset before we try to render the "cooldown state",
-	-- in order to work with procs that reset cooldowns
+	-- (try to) ensure whatever triggered this call was meant for this button
+	if not spellID then
+		-- for when this function was triggered by something anonymous we just gotta update,
+		-- which sadly is true for SPELL_UPDATE_CHARGES, SPELL_UPDATE_USABLE
+		spellID = (cooldownInfo.overrideSpellID or cooldownInfo.spellID)
+	elseif (cooldownInfo.overrideSpellID or cooldownInfo.spellID) == baseSpellID then
+		spellID = baseSpellID
+	elseif (cooldownInfo.overrideSpellID or cooldownInfo.spellID) ~= spellID then
+		return
+	end
+
+	local duration
+	local charge = C_Spell.GetSpellChargeDuration(spellID)
+	local cooldown = C_Spell.GetSpellCooldown(spellID)
+	if cooldown and not cooldown.isOnGCD then
+		duration = C_Spell.GetSpellCooldownDuration(spellID)
+	end
+
 	button.CustomCooldown:Hide()
 	button.Icon:SetDesaturation(0)
 	button:SetAlpha(1)
@@ -37,10 +39,6 @@ local function updateCooldown(button)
 			button:SetAlpha(duration:EvaluateRemainingDuration(addon.curves.ActionAlpha))
 		end
 	end
-end
-
-local function updateCooldownIcon(icon)
-	updateCooldown(icon:GetParent())
 end
 
 local skinned = {}
@@ -96,21 +94,25 @@ local function skin(group, _, button)
 		-- remove the default cooldown widget as it also tracks buff/debuff uptime
 		addon:Hide(button, 'Cooldown')
 
-		-- prevent CDM from messing with desaturation
-		hooksecurefunc(button.Icon, 'SetDesaturated', updateCooldownIcon) -- can't just noop it, that taints
-
 		-- add custom cooldown widget
 		button.CustomCooldown = addon:CreateCooldown(button)
 		button.CustomCooldown:SetIgnoreParentAlpha(true)
 		button.CustomCooldown:SetIgnoreGlobalCooldown(true)
 		button.CustomCooldown:SetCountdownAbbrevThreshold(59)
+		button.CustomCooldown:SetSwipeColor(0, 0, 0, 0.7)
 		button.CustomCooldown:SetTimeFont(group == 'EssentialCooldownViewer' and 20 or 14)
+		addon:RegisterEvent('SPELL_UPDATE_COOLDOWN', GenerateClosure(updateCooldown, button))
+		addon:RegisterEvent('SPELL_UPDATE_USABLE', GenerateFlatClosure(updateCooldown, button))
 
-		-- update cooldowns whenever CDM would normally
-		hooksecurefunc(button, 'RefreshSpellCooldownInfo', updateCooldown)
-		hooksecurefunc(button, 'RefreshSpellChargeInfo', updateCooldown)
-		hooksecurefunc(button, 'RefreshIconDesaturation', updateCooldown)
-		hooksecurefunc(button, 'RefreshIconColor', updateCooldown)
+		-- instead of registering for SPELL_UPDATE_CHARGES, which is anonymous, we check for
+		-- charges once the main cooldown is done, but this renders isEnabled=false as if they're
+		-- permanently on a full duration cooldown (which is better than the current bug where the
+		-- cooldown spiral "strobes" in and out of cooldown state)
+		button.CustomCooldown:HookScript('OnCooldownDone', GenerateFlatClosure(updateCooldown, button))
+
+		-- prevent CDM from messing with desaturation
+		-- we also use this to initiate cooldowns on login
+		hooksecurefunc(button.Icon, 'SetDesaturated', GenerateFlatClosure(updateCooldown, button))
 	else -- buff viewer
 		-- re-anchor existing cooldown widget and adjust swipe texture
 		button.Cooldown:SetAllPoints(button.Icon)

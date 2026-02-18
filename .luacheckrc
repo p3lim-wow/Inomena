@@ -123,6 +123,7 @@ read_globals = {
 	'GameTooltip_Hide',
 	'GameTooltip_SetDefaultAnchor',
 	'GenerateClosure',
+	'GenerateFlatClosure',
 	'GetMoneyString',
 	'HideUIPanel',
 	'RegisterAttributeDriver',
