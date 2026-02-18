@@ -36,12 +36,8 @@ end
 
 do
 	local statusBarMixin = {}
-	function statusBarMixin:SetStatusBarColor(...)
-		self:GetStatusBarTexture():SetVertexColor(...)
-	end
-
 	function statusBarMixin:SetStatusBarColorFromBoolean(...)
-		self:GetStatusBarTexture():SetVertexColorFromBoolean(...)
+		self:SetStatusBarColor(C_CurveUtil.EvaluateColorFromBoolean(...):GetRGB())
 	end
 
 	function widgetMixin:CreateStatusBar(template)
@@ -65,7 +61,7 @@ do
 	local textureMixin = {}
 	function textureMixin:SetColorTextureFromBoolean(...)
 		self:SetColorTexture(1, 1, 1) -- reset color texture first
-		self:SetVertexColorFromBoolean(...)
+		self:SetVertexColor(C_CurveUtil.EvaluateColorFromBoolean(...):GetRGB())
 	end
 
 	local createTexture = CreateFrame('Frame').CreateTexture
