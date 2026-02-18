@@ -40,6 +40,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Health:SetPoint('BOTTOMRIGHT', HealthTempLoss:GetStatusBarTexture(), 'BOTTOMLEFT')
 	Health.colorClass = true
 	Health.colorReaction = true
+	Health.incomingHealOverflow = 1
 	Health.TempLoss = HealthTempLoss
 	self.Health = Health
 
