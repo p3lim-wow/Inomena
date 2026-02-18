@@ -81,6 +81,7 @@ local function style(self, unit)
 	Health.colorClass = true
 	Health.colorDisconnected = true
 	Health.colorReaction = true -- for vehicles
+	Health.incomingHealOverflow = 1
 	self.Health = Health
 
 	self.HealthPrediction = {}
