@@ -1,6 +1,14 @@
 local _, addon = ...
 local oUF = addon.oUF
 
+local function updateAnchors(self)
+	if self.Castbar:IsShown() then
+		self.TargetOutline:SetPoint('BOTTOM', self.Castbar, 0, -4)
+	else
+		self.TargetOutline:SetPoint('BOTTOM', self.Health, 0, -4)
+	end
+end
+
 local function updateOnAdded(self)
 	local unit = self.unit
 
@@ -45,12 +53,10 @@ local function updateOnAdded(self)
 
 	if UnitIsUnit(unit, 'target') then
 		fullSize = true
-		self.Health:SetBorderColor(1, 1, 1)
-		self.Castbar:SetBorderColor(1, 1, 1)
-	elseif not UnitIsUnit(unit, 'mouseover') then
-		-- reset border
-		self.Health:SetBorderColor(0, 0, 0)
-		self.Castbar:SetBorderColor(0, 0, 0)
+
+		self.TargetOutline:Show()
+	else
+		self.TargetOutline:Hide()
 	end
 
 	if C_QuestLog.UnitIsRelatedToActiveQuest(unit) then
@@ -70,41 +76,29 @@ local function updateOnAdded(self)
 		self.HealthValue:Hide()
 	end
 
+	updateAnchors(self)
+
 	self.PetIcon:SetShown(UnitIsOtherPlayersPet(unit))
 	C_Timer.After(0, GenerateClosure(self.Health.ForceUpdate, self.Health)) -- temp fix
 end
 
 local function updateOnRemoved(self)
-	 -- reset highlight and such
+	 -- reset highlight
 	self.Highlight:Hide()
-	self.Health:SetBorderColor(0, 0, 0)
 end
 
 local function updateHighlight(self, event, worldCursorAnchorType)
-	-- we check specific events to avoid UAE
-	local r, g, b = 0, 0, 0
 	if event == 'WORLD_CURSOR_TOOLTIP_UPDATE' and worldCursorAnchorType == Enum.WorldCursorAnchorType.None then
 		-- mouse left the nameplate
 		self.Highlight:Hide()
-		if UnitIsUnit(self.unit, 'target') then
-			r, g, b = 1, 1, 1
-		end
 	elseif event == 'UPDATE_MOUSEOVER_UNIT' then
 		-- mouse entered some unit
 		if UnitIsUnit(self.unit, 'mouseover') then
 			self.Highlight:Show()
-			r, g, b = 1, 1, 0 -- yellow
 		else
-			-- repeat of the logic for world cursor none
 			self.Highlight:Hide()
-			if UnitIsUnit(self.unit, 'target') then
-				r, g, b = 1, 1, 1
-			end
 		end
 	end
-
-	self.Health:SetBorderColor(r, g, b)
-	self.Castbar:SetBorderColor(r, g, b)
 end
 
 local function postCCCreate(_, Button)
@@ -245,6 +239,8 @@ oUF:RegisterStyle(styleName, function(self)
 	Castbar:SetPoint('TOPLEFT', Health, 'BOTTOMLEFT', 0, -1)
 	Castbar:SetPoint('TOPRIGHT', Health, 'BOTTOMRIGHT', 0, -1)
 	Castbar:SetHeight(14)
+	Castbar:HookScript('OnShow', GenerateFlatClosure(updateAnchors, self))
+	Castbar:HookScript('OnHide', GenerateFlatClosure(updateAnchors, self))
 	Castbar.timeToHold = 2.5
 	Castbar.PostCastStart = addon.unitShared.PostUpdateCast
 	Castbar.PostCastInterruptible = addon.unitShared.PostUpdateCast
@@ -274,6 +270,16 @@ oUF:RegisterStyle(styleName, function(self)
 	Threat.PostUpdate = addon.unitShared.PostUpdateThreat
 	Threat.feedbackUnit = 'player'
 	self.ThreatIndicator = Threat
+
+	local TargetOutline = Health:CreateBackdropStatusBar()
+	TargetOutline:SetPoint('TOPLEFT', -4, 4)
+	TargetOutline:SetPoint('TOPRIGHT', 4, 4)
+	TargetOutline:SetPoint('BOTTOM', 0, -4)
+	TargetOutline:SetFrameStrata('BACKGROUND')
+	TargetOutline:SetMinMaxValues(0, 1)
+	TargetOutline:SetValue(1)
+	TargetOutline:Hide()
+	self.TargetOutline = TargetOutline
 
 	self:RegisterEvent('PLAYER_REGEN_DISABLED', updateOnAdded, true) -- for combat state changes
 	self:RegisterEvent('PLAYER_REGEN_ENABLED', updateOnAdded, true) -- for combat state changes
