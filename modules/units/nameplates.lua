@@ -101,7 +101,7 @@ local function updateHighlight(self, event, worldCursorAnchorType)
 	end
 end
 
-local function postCCCreate(_, Button)
+local function postCreateAura(_, Button)
 	Button.Cooldown:ClearTimePoints()
 	Button.Cooldown:SetTimePoint('CENTER')
 end
@@ -232,7 +232,7 @@ oUF:RegisterStyle(styleName, function(self)
 	CrowdControlDebuffs.debuffFilter = 'HARMFUL|CROWD_CONTROL'
 	CrowdControlDebuffs.disableMouse = true -- custom option
 	CrowdControlDebuffs.CreateButton = addon.unitShared.CreateAura
-	CrowdControlDebuffs.PostCreateButton = postCCCreate
+	CrowdControlDebuffs.PostCreateButton = postCreateAura
 	self.Auras = CrowdControlDebuffs
 
 	local Castbar = Health:CreateBackdropStatusBar()
