@@ -58,7 +58,6 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	DamageAbsorb:SetPoint('TOP')
 	DamageAbsorb:SetPoint('BOTTOM')
 	DamageAbsorb:SetPoint('LEFT', HealingPrediction:GetStatusBarTexture(), 'RIGHT')
-	DamageAbsorb:SetWidth(self:GetWidth())
 	DamageAbsorb:SetStatusBarColor(addon.colors.absorb:GetRGB())
 	Health.DamageAbsorb = DamageAbsorb
 

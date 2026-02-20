@@ -91,7 +91,6 @@ local function style(self, unit)
 	HealingPrediction:SetPoint('TOP')
 	HealingPrediction:SetPoint('BOTTOM')
 	HealingPrediction:SetPoint('LEFT', Health:GetStatusBarTexture(), 'RIGHT')
-	HealingPrediction:SetWidth(self:GetWidth())
 	HealingPrediction:SetStatusBarColor(addon.colors.healing:GetRGBA())
 	Health.HealingAll = HealingPrediction
 
@@ -99,7 +98,6 @@ local function style(self, unit)
 	DamageAbsorb:SetPoint('TOP')
 	DamageAbsorb:SetPoint('BOTTOM')
 	DamageAbsorb:SetPoint('LEFT', HealingPrediction:GetStatusBarTexture(), 'RIGHT')
-	DamageAbsorb:SetWidth(self:GetWidth())
 	DamageAbsorb:SetStatusBarColor(addon.colors.absorb:GetRGB())
 	Health.DamageAbsorb = DamageAbsorb
 
@@ -107,7 +105,6 @@ local function style(self, unit)
 	HealAbsorb:SetPoint('TOP')
 	HealAbsorb:SetPoint('BOTTOM')
 	HealAbsorb:SetPoint('RIGHT', Health:GetStatusBarTexture())
-	HealAbsorb:SetWidth(self:GetWidth())
 	HealAbsorb:GetStatusBarTexture():SetAtlas('RaidFrame-Absorb-Overlay', false, nil, nil, 'REPEAT', 'REPEAT')
 	HealAbsorb:GetStatusBarTexture():SetHorizTile(true)
 	HealAbsorb:GetStatusBarTexture():SetVertTile(true)
