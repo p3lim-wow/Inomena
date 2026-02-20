@@ -55,8 +55,10 @@ local function updateOnAdded(self)
 		fullSize = true
 
 		self.TargetOutline:Show()
+		self.Health:SetAlpha(1)
 	else
 		self.TargetOutline:Hide()
+		self.Health:SetAlphaFromBoolean(UnitExists('target'), 0.6, 1) -- making target stand out
 	end
 
 	if C_QuestLog.UnitIsRelatedToActiveQuest(unit) then
