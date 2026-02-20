@@ -187,7 +187,7 @@ oUF:RegisterStyle(styleName, function(self)
 
 	local RaidIcon = HealthValue:GetParent():CreateTexture('OVERLAY') -- higher parent
 	RaidIcon:SetPoint('CENTER', Health, 'TOP', 0, addon.SPACING)
-	RaidIcon:SetSize(22, 22)
+	RaidIcon:SetSize(30, 30)
 	self.RaidTargetIndicator = RaidIcon
 
 	local PetIcon = HealthValue:GetParent():CreateTexture('OVERLAY') -- higher parent
