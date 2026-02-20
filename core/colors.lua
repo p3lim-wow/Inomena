@@ -48,6 +48,8 @@ addon.colors.power[Enum.PowerType.RuneUnholy] = addon:CreateColor(173, 235, 66)
 addon.colors.healing = addon:CreateColor(140, 1, 46, 0.5)
 addon.colors.absorb = addon:CreateColor(67, 235, 231)
 
+addon.colors.nameplate = addon:CreateColor(131, 130, 203)
+addon.colors.focus = addon:CreateColor(56, 188, 255)
 addon.colors.threat = addon:CreateColor(227, 68, 68)
 addon.colors.highlight = addon:CreateColor(1, 1, 1, 0.5)
 

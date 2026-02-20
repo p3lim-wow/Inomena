@@ -109,6 +109,45 @@ local function updateHighlight(self, event, worldCursorAnchorType)
 	end
 end
 
+local function updateHealthColor(self, event, unit)
+	if event == 'PLAYER_FOCUS_CHANGED' then
+		-- it's unitless
+		unit = self.unit
+	end
+
+	if not unit or self.unit ~= unit then
+		return
+	end
+
+	local color
+	if addon:IsInDungeon() and not addon:IsInRaid() then
+		local threatStatus = UnitThreatSituation('player', unit)
+		if UnitIsUnit(unit, 'focus') then
+			color = addon.colors.focus
+		elseif threatStatus then
+			color = addon.colors.nameplate
+		end
+
+		-- override colors with threat status
+		if threatStatus then
+			local groupRole = UnitGroupRolesAssigned('player')
+			if groupRole == 'TANK' and threatStatus < 3 then
+				-- player is low on aggro
+				color = addon.colors.threat
+			elseif groupRole ~= 'NONE' and threatStatus > 1 then
+				-- player has aggro
+				color = addon.colors.threat
+			end
+		end
+	end
+
+	if color then
+		self.Health:SetStatusBarColor(color:GetRGB())
+	else
+		addon.unitShared.UpdateColorHealth(self, event, unit)
+	end
+end
+
 local function postCreateAura(_, Button)
 	Button.Cooldown:ClearTimePoints()
 	Button.Cooldown:SetTimePoint('CENTER')
@@ -142,7 +181,8 @@ oUF:RegisterStyle(styleName, function(self)
 	Health:SetBackgroundColor(0, 0, 0, 0.7)
 	Health.colorReaction = true -- we only set these so oUF registers events
 	Health.colorSelection = true
-	Health.UpdateColor = addon.unitShared.UpdateColorHealth
+	Health.colorThreat = true
+	Health.UpdateColor = updateHealthColor
 	self.Health = Health
 
 	local DamageAbsorb = Health:CreateStatusBar()
@@ -270,15 +310,6 @@ oUF:RegisterStyle(styleName, function(self)
 	CastbarText:SetFrameLevel(10)
 	Castbar.Text = CastbarText
 
-	local Threat = Health:CreateFrame('Frame', 'BackdropTemplate')
-	Threat:SetPoint('TOPLEFT', -5, 5)
-	Threat:SetPoint('BOTTOMRIGHT', 5, -5)
-	Threat:SetFrameStrata('BACKGROUND')
-	Threat:SetBackdrop(addon.GLOW)
-	Threat.PostUpdate = addon.unitShared.PostUpdateThreat
-	Threat.feedbackUnit = 'player'
-	self.ThreatIndicator = Threat
-
 	local TargetOutline = Health:CreateBackdropStatusBar()
 	TargetOutline:SetPoint('TOPLEFT', -4, 4)
 	TargetOutline:SetPoint('TOPRIGHT', 4, 4)
@@ -291,6 +322,7 @@ oUF:RegisterStyle(styleName, function(self)
 
 	self:RegisterEvent('PLAYER_REGEN_DISABLED', updateOnAdded, true) -- for combat state changes
 	self:RegisterEvent('PLAYER_REGEN_ENABLED', updateOnAdded, true) -- for combat state changes
+	self:RegisterEvent('PLAYER_FOCUS_CHANGED', updateHealthColor, true)
 	self:RegisterEvent('PLAYER_TARGET_CHANGED', updateOnAdded, true)
 	self:RegisterEvent('UNIT_FLAGS', updateOnAdded) -- for reaction state changes (?)
 	self:RegisterEvent('UNIT_HEALTH', updateOnAdded) -- extra updates
