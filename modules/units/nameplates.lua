@@ -238,7 +238,7 @@ oUF:RegisterStyle(styleName, function(self)
 	local Castbar = Health:CreateBackdropStatusBar()
 	Castbar:SetPoint('TOPLEFT', Health, 'BOTTOMLEFT', 0, -1)
 	Castbar:SetPoint('TOPRIGHT', Health, 'BOTTOMRIGHT', 0, -1)
-	Castbar:SetHeight(14)
+	Castbar:SetHeight(20)
 	Castbar:HookScript('OnShow', GenerateFlatClosure(updateAnchors, self))
 	Castbar:HookScript('OnHide', GenerateFlatClosure(updateAnchors, self))
 	Castbar.timeToHold = 2.5
@@ -256,7 +256,7 @@ oUF:RegisterStyle(styleName, function(self)
 	CastbarShielded:SetAllPoints(Castbar:GetStatusBarTexture())
 	Castbar.Shielded = CastbarShielded
 
-	local CastbarText = Castbar:CreateText(12)
+	local CastbarText = Castbar:CreateText(14)
 	CastbarText:SetPoint('LEFT', 2, 0)
 	CastbarText:SetJustifyH('LEFT')
 	CastbarText:SetFrameLevel(10)
