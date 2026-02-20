@@ -11,6 +11,12 @@ function backdropMixin:SetBorderColor(...)
 	end
 end
 
+function backdropMixin:SetBorderAlpha(...)
+	for _, edge in next, self.backdropEdges do
+		edge:SetAlpha(...)
+	end
+end
+
 function backdropMixin:SetBorderIgnoreParentAlpha(state)
 	for _, edge in next, self.backdropEdges do
 		edge:SetIgnoreParentAlpha(state)
