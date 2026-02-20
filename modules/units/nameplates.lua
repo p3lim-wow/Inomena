@@ -73,6 +73,7 @@ local function updateOnAdded(self)
 	end
 
 	self.PetIcon:SetShown(UnitIsOtherPlayersPet(unit))
+	C_Timer.After(0, GenerateClosure(self.Health.ForceUpdate, self.Health)) -- temp fix
 end
 
 local function updateOnRemoved(self)
