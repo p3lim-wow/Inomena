@@ -33,7 +33,7 @@ local function updateOnAdded(self)
 
 	local fullSize = false
 	if IsInInstance() or UnitThreatSituation('player', unit) then
-		-- not in instance or not in combat with the plate
+		-- in instance or in combat with the player
 		fullSize = true
 	end
 
@@ -255,11 +255,11 @@ oUF:RegisterStyle(styleName, function(self)
 	Castbar.PostCastFail = addon.unitShared.PostInterruptedCast
 	self.Castbar = Castbar
 
-	local CastbarInterruptible = Castbar:CreateTexture('OVERLAY', 1)
+	local CastbarInterruptible = Castbar:CreateTexture('OVERLAY', 1) -- level is important
 	CastbarInterruptible:SetAllPoints(Castbar:GetStatusBarTexture())
 	Castbar.Interruptible = CastbarInterruptible
 
-	local CastbarShielded = Castbar:CreateTexture('OVERLAY', 2)
+	local CastbarShielded = Castbar:CreateTexture('OVERLAY', 2) -- level is important
 	CastbarShielded:SetAllPoints(Castbar:GetStatusBarTexture())
 	Castbar.Shielded = CastbarShielded
 
@@ -291,7 +291,7 @@ oUF:RegisterStyle(styleName, function(self)
 	self:RegisterEvent('PLAYER_REGEN_DISABLED', updateOnAdded, true) -- for combat state changes
 	self:RegisterEvent('PLAYER_REGEN_ENABLED', updateOnAdded, true) -- for combat state changes
 	self:RegisterEvent('PLAYER_TARGET_CHANGED', updateOnAdded, true)
-	self:RegisterEvent('UNIT_FLAGS', updateOnAdded) -- for reaction state changes
+	self:RegisterEvent('UNIT_FLAGS', updateOnAdded) -- for reaction state changes (?)
 	self:RegisterEvent('UNIT_HEALTH', updateOnAdded) -- extra updates
 	self:RegisterEvent('UNIT_THREAT_LIST_UPDATE', updateOnAdded, true) -- for threat border updates
 	self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', updateOnAdded, true)
@@ -374,6 +374,6 @@ for _, fontObject in next, {
 	'SystemFont_LargeNamePlate',
 	'SystemFont_LargeNamePlateFixed',
 } do
-	-- font size doesn't matter, they'll be resized anyways
+	-- font size doesn't seem to matter, they'll be resized anyways?
 	_G[fontObject]:SetFont(addon.FONT, 16, 'OUTLINE')
 end
