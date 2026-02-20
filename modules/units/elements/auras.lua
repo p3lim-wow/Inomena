@@ -16,7 +16,7 @@ do
 	end
 
 	function addon.unitShared.CreateAura(element)
-		local Button = element:CreateBackdropFrame('Button')
+		local Button = element:CreateBackdropFrame('Button', 'InomenaPropagateMotion,InomenaPropagateClicks')
 		Button:SetScript('OnEnter', onAuraEnter)
 		Button:SetScript('OnLeave', addon.HideTooltip)
 
