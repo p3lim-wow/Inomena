@@ -29,14 +29,22 @@ local function updateCooldown(button, _, spellID, baseSpellID)
 
 	button.CustomCooldown:Hide()
 	button.Icon:SetDesaturation(0)
-	button:SetAlpha(1)
+	button:SetAlphaFromBoolean(not button.utility, 1, 0)
+	button:SetBorderAlpha(button.utility and 0 or 1)
 
 	if charge or duration then
 		button.CustomCooldown:SetCooldownFromDurationObject(charge or duration)
 
 		if duration then
 			button.Icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.ActionDesaturation))
-			button:SetAlpha(duration:EvaluateRemainingDuration(addon.curves.ActionAlpha))
+
+			if button.utility then
+				local alpha = duration:EvaluateRemainingDuration(addon.curves.ActionAlphaMinor)
+				button:SetAlpha(alpha)
+				button:SetBorderAlpha(alpha)
+			else
+				button:SetAlpha(duration:EvaluateRemainingDuration(addon.curves.ActionAlpha))
+			end
 		end
 	end
 end
@@ -118,6 +126,11 @@ local function skin(group, _, button)
 		button.Cooldown:SetAllPoints(button.Icon)
 		button.Cooldown:SetSwipeTexture(addon.TEXTURE)
 		button.Cooldown:SetIgnoreParentAlpha(true)
+	end
+
+	-- flag utility cooldowns so we can do different things to them
+	if group == 'UtilityCooldownViewer' then
+		button.utility = true
 	end
 end
 

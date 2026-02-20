@@ -43,6 +43,12 @@ addon.curves.ActionAlpha:SetType(Enum.LuaCurveType.Step)
 addon.curves.ActionAlpha:AddPoint(0, 1)
 addon.curves.ActionAlpha:AddPoint(0.001, 0.33)
 
+-- curve that yields data for SetAlpha based on cooldown remaining, except reverse(-ish)
+addon.curves.ActionAlphaMinor = C_CurveUtil.CreateCurve()
+addon.curves.ActionAlphaMinor:SetType(Enum.LuaCurveType.Step)
+addon.curves.ActionAlphaMinor:AddPoint(0, 0)
+addon.curves.ActionAlphaMinor:AddPoint(0.001, 0.66)
+
 -- curves which will yield 0 if the power type is in an idle state, otherwise 1
 addon.curves.PowerIdleAlpha = {}
 for powerType, direction in next, {
