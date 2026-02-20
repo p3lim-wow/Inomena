@@ -232,7 +232,7 @@ oUF:RegisterStyle(partyStyle, function(self, unit)
 	self.Debuffs.size = self:GetHeight() * 2/3
 	self.Debuffs.growthX = 'RIGHT'
 	self.Debuffs.initialAnchor = 'LEFT'
-	self.Debuffs:SetPoint('LEFT', self, 'RIGHT', addon.SPACING, 0)
+	self.Debuffs:SetPoint('LEFT', self, 'RIGHT', addon.SPACING + 2, 0) -- extra 2px because of threat border
 	self.Debuffs:SetHeight(self.Debuffs.size)
 
 	self.PrivateAuras:SetPoint('LEFT', self.Debuffs, 'RIGHT', -1, 0) -- god knows if this is safe
