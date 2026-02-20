@@ -295,7 +295,7 @@ oUF:SetActiveStyle(styleName)
 local nameplates = oUF:SpawnNamePlates()
 nameplates:SetAddedCallback(updateOnAdded)
 nameplates:SetRemovedCallback(updateOnRemoved)
-nameplates:SetSize(200, 22) -- we keep it wide just because of stupid long names, no other reason
+nameplates:SetSize(200, 40) -- we keep it wide just because of stupid long names, no other reason
 
 nameplates:SetCVars({
 	-- from the settings, in order
