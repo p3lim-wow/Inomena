@@ -257,8 +257,8 @@ oUF:RegisterStyle(styleName, function(self)
 	Castbar.Shielded = CastbarShielded
 
 	local CastbarText = Castbar:CreateText(14)
-	CastbarText:SetPoint('LEFT', 2, 0)
-	CastbarText:SetJustifyH('LEFT')
+	CastbarText:SetPoint('CENTER')
+	CastbarText:SetJustifyH('CENTER')
 	CastbarText:SetFrameLevel(10)
 	Castbar.Text = CastbarText
 
