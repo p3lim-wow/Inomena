@@ -169,7 +169,7 @@ oUF:RegisterStyle(styleName, function(self)
 	self:RegisterEvent('UPDATE_MOUSEOVER_UNIT', updateHighlight, true)
 	self:RegisterEvent('WORLD_CURSOR_TOOLTIP_UPDATE', updateHighlight, true)
 
-	local Name = self:CreateText(14)
+	local Name = Health:CreateText(14)
 	Name:SetPoint('LEFT', Health, 'TOPLEFT', 2, -1)
 	Name:SetPoint('RIGHT', HealthValue, 'LEFT', 1, 0)
 	Name:SetJustifyH('LEFT')
