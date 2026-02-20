@@ -150,7 +150,7 @@ oUF:RegisterStyle(styleName, function(self)
 	DamageAbsorb:SetPoint('TOP')
 	DamageAbsorb:SetPoint('BOTTOM')
 	DamageAbsorb:SetPoint('LEFT', Health:GetStatusBarTexture(), 'RIGHT')
-	DamageAbsorb:SetStatusBarColor(67/255, 235/255, 231/255)
+	DamageAbsorb:SetStatusBarColor(addon.colors.absorb:GetRGB())
 	Health.DamageAbsorb = DamageAbsorb
 
 	local HealthValue = Health:CreateText()
@@ -163,7 +163,7 @@ oUF:RegisterStyle(styleName, function(self)
 
 	local Highlight = Health:CreateTexture('OVERLAY', 1)
 	Highlight:SetAllPoints(Health:GetStatusBarTexture())
-	Highlight:SetColorTexture(1, 1, 1, 0.5)
+	Highlight:SetColorTexture(addon.colors.highlight:GetRGBA())
 	Highlight:Hide()
 	self.Highlight = Highlight
 	self:RegisterEvent('UPDATE_MOUSEOVER_UNIT', updateHighlight, true)

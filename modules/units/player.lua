@@ -51,7 +51,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	HealingPrediction:SetPoint('TOP')
 	HealingPrediction:SetPoint('BOTTOM')
 	HealingPrediction:SetPoint('LEFT', Health:GetStatusBarTexture(), 'RIGHT')
-	HealingPrediction:SetStatusBarColor(140/255, 1, 46/255, 0.5)
+	HealingPrediction:SetStatusBarColor(addon.colors.healing:GetRGBA())
 	Health.HealingAll = HealingPrediction
 
 	local DamageAbsorb = Health:CreateStatusBar()
@@ -59,7 +59,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	DamageAbsorb:SetPoint('BOTTOM')
 	DamageAbsorb:SetPoint('LEFT', HealingPrediction:GetStatusBarTexture(), 'RIGHT')
 	DamageAbsorb:SetWidth(self:GetWidth())
-	DamageAbsorb:SetStatusBarColor(67/255, 235/255, 231/255)
+	DamageAbsorb:SetStatusBarColor(addon.colors.absorb:GetRGB())
 	Health.DamageAbsorb = DamageAbsorb
 
 	local HealAbsorb = Health:CreateStatusBar()
