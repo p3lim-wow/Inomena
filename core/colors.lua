@@ -77,10 +77,8 @@ addon.colors.creature = {
 addon.colors.cast = {
 	importantshielded = addon:CreateColor(230, 95, 232),
 	shielded = addon:CreateColor(132, 132, 132),
-	importantinterruptible = addon:CreateColor(128, 206, 64),
-	important = addon:CreateColor(221, 51, 51),
-	interruptible = addon:CreateColor(95, 175, 139),
-	normal = addon:CreateColor(79, 128, 192),
+	important = addon:CreateColor(252, 89, 0),
+	normal = addon:CreateColor(253, 219, 0),
 }
 
 addon.colors.chatTab = {
