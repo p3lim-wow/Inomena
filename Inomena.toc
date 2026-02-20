@@ -62,6 +62,7 @@ modules\automations\gossip.lua
 modules\automations\invites.lua
 modules\automations\loot.lua
 modules\automations\movies.lua
+modules\automations\pierre.lua
 modules\automations\repair.lua
 modules\automations\tracking.lua
 modules\automations\trash.lua
