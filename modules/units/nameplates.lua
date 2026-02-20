@@ -294,8 +294,6 @@ oUF:RegisterStyle(styleName, function(self)
 	self:RegisterEvent('PLAYER_TARGET_CHANGED', updateOnAdded, true)
 	self:RegisterEvent('UNIT_FLAGS', updateOnAdded) -- for reaction state changes (?)
 	self:RegisterEvent('UNIT_HEALTH', updateOnAdded) -- extra updates
-	self:RegisterEvent('UNIT_THREAT_LIST_UPDATE', updateOnAdded, true) -- for threat border updates
-	self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', updateOnAdded, true)
 end)
 
 oUF:SetActiveStyle(styleName)
