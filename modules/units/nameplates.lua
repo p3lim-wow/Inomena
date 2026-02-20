@@ -8,7 +8,7 @@ local function updateOnAdded(self)
 		self.Name:Hide()
 		self.FriendlyName:Hide()
 		self.PetIcon:Hide()
-		self.HealthContainer:Hide()
+		self.Health:Hide()
 		self:DisableElement('Health')
 		self:DisableElement('Auras')
 		self:DisableElement('Castbar')
@@ -17,7 +17,7 @@ local function updateOnAdded(self)
 		self.Name:Hide()
 		self.FriendlyName:Show()
 		self.PetIcon:Hide()
-		self.HealthContainer:Hide()
+		self.Health:Hide()
 		self:DisableElement('Health')
 		self:DisableElement('Auras')
 		self:DisableElement('Castbar')
@@ -25,7 +25,7 @@ local function updateOnAdded(self)
 	else
 		self.Name:Hide() -- we change this later
 		self.FriendlyName:Hide()
-		self.HealthContainer:Show()
+		self.Health:Show()
 		self:EnableElement('Health')
 		self:EnableElement('Auras')
 		self:EnableElement('Castbar')
@@ -45,12 +45,12 @@ local function updateOnAdded(self)
 
 	if UnitIsUnit(unit, 'target') then
 		fullSize = true
-		self.HealthContainer:SetBorderColor(1, 1, 1)
+		self.Health:SetBorderColor(1, 1, 1)
 		self.Castbar:SetBorderColor(1, 1, 1)
 		self.Castbar.IconFrame:SetBorderColor(1, 1, 1)
 	elseif not UnitIsUnit(unit, 'mouseover') then
 		-- reset border
-		self.HealthContainer:SetBorderColor(0, 0, 0)
+		self.Health:SetBorderColor(0, 0, 0)
 		self.Castbar:SetBorderColor(0, 0, 0)
 		self.Castbar.IconFrame:SetBorderColor(0, 0, 0)
 	end
@@ -65,10 +65,10 @@ local function updateOnAdded(self)
 
 	if fullSize then
 		self.Name:Show()
-		self.HealthContainer:SetHeight(20)
+		self.Health:SetHeight(20)
 		self.HealthValue:Show()
 	else
-		self.HealthContainer:SetHeight(4)
+		self.Health:SetHeight(4)
 		self.HealthValue:Hide()
 	end
 
@@ -78,7 +78,7 @@ end
 local function updateOnRemoved(self)
 	 -- reset highlight and such
 	self.Highlight:Hide()
-	self.HealthContainer:SetBorderColor(0, 0, 0)
+	self.Health:SetBorderColor(0, 0, 0)
 end
 
 local function updateHighlight(self, event, worldCursorAnchorType)
@@ -104,7 +104,7 @@ local function updateHighlight(self, event, worldCursorAnchorType)
 		end
 	end
 
-	self.HealthContainer:SetBorderColor(r, g, b)
+	self.Health:SetBorderColor(r, g, b)
 	self.Castbar:SetBorderColor(r, g, b)
 	self.Castbar.IconFrame:SetBorderColor(r, g, b)
 end
@@ -134,23 +134,16 @@ local styleName = addon.unitPrefix .. 'NamePlates'
 oUF:RegisterStyle(styleName, function(self)
 	Mixin(self, addon.widgetMixin)
 
-	-- temporary fix for DamageAbsorb clamping not working
-	local HealthContainer = self:CreateBackdropFrame()
-	HealthContainer:SetPoint('LEFT')
-	HealthContainer:SetPoint('RIGHT')
-	HealthContainer:SetBackgroundColor(0, 0, 0, 0.7)
-	addon:PixelPerfect(HealthContainer)
-	self.HealthContainer = HealthContainer
+	addon:PixelPerfect(self)
 
-	local Health = HealthContainer:CreateStatusBar()
-	Health:SetAllPoints()
-	Health:SetClipsChildren(true)
+	local Health = self:CreateBackdropStatusBar()
+	Health:SetPoint('LEFT')
+	Health:SetPoint('RIGHT')
+	Health:SetBackgroundColor(0, 0, 0, 0.7)
 	Health.colorReaction = true -- we only set these so oUF registers events
 	Health.colorSelection = true
 	Health.UpdateColor = addon.unitShared.UpdateColorHealth
 	self.Health = Health
-
-	self.HealthPrediction = {}
 
 	local DamageAbsorb = Health:CreateStatusBar()
 	DamageAbsorb:SetPoint('TOP')
@@ -159,7 +152,7 @@ oUF:RegisterStyle(styleName, function(self)
 	DamageAbsorb:SetStatusBarColor(67/255, 235/255, 231/255)
 	Health.DamageAbsorb = DamageAbsorb
 
-	local HealthValue = HealthContainer:CreateText()
+	local HealthValue = Health:CreateText()
 	HealthValue:SetPoint('RIGHT', Health, 'TOPRIGHT', -2, -1)
 	HealthValue:SetJustifyH('RIGHT')
 	HealthValue:SetFrameLevel(8)
@@ -202,7 +195,7 @@ oUF:RegisterStyle(styleName, function(self)
 	PetIcon:SetSize(12, 12)
 	self.PetIcon = PetIcon
 
-	local Debuffs = HealthContainer:CreateFrame()
+	local Debuffs = Health:CreateFrame()
 	Debuffs:SetPoint('BOTTOMLEFT', Health, 'TOPLEFT', 0, addon.SPACING)
 	Debuffs:SetSize(120, 140)
 	Debuffs.initialAnchor = 'BOTTOMLEFT'
@@ -218,7 +211,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Debuffs.FilterAura = filterDebuffs
 	self.Debuffs = Debuffs
 
-	local Buffs = HealthContainer:CreateFrame()
+	local Buffs = Health:CreateFrame()
 	Buffs:SetPoint('BOTTOMRIGHT', Health, 'TOPRIGHT', 0, addon.SPACING)
 	Buffs:SetSize(80, 140)
 	Buffs.initialAnchor = 'BOTTOMRIGHT'
@@ -250,7 +243,7 @@ oUF:RegisterStyle(styleName, function(self)
 	CrowdControlDebuffs.PostCreateButton = postCCCreate
 	self.Auras = CrowdControlDebuffs
 
-	local Castbar = HealthContainer:CreateBackdropStatusBar()
+	local Castbar = Health:CreateBackdropStatusBar()
 	Castbar:SetPoint('TOPLEFT', Health, 'BOTTOMLEFT', 0, -1)
 	Castbar:SetPoint('TOPRIGHT', Health, 'BOTTOMRIGHT', 0, -1)
 	Castbar:SetHeight(14)
@@ -285,7 +278,7 @@ oUF:RegisterStyle(styleName, function(self)
 	CastbarIcon:SetAllPoints()
 	Castbar.Icon = CastbarIcon
 
-	local Threat = HealthContainer:CreateFrame('Frame', 'BackdropTemplate')
+	local Threat = Health:CreateFrame('Frame', 'BackdropTemplate')
 	Threat:SetPoint('TOPLEFT', -5, 5)
 	Threat:SetPoint('BOTTOMRIGHT', 5, -5)
 	Threat:SetFrameStrata('BACKGROUND')
