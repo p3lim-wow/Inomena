@@ -47,12 +47,10 @@ local function updateOnAdded(self)
 		fullSize = true
 		self.Health:SetBorderColor(1, 1, 1)
 		self.Castbar:SetBorderColor(1, 1, 1)
-		self.Castbar.IconFrame:SetBorderColor(1, 1, 1)
 	elseif not UnitIsUnit(unit, 'mouseover') then
 		-- reset border
 		self.Health:SetBorderColor(0, 0, 0)
 		self.Castbar:SetBorderColor(0, 0, 0)
-		self.Castbar.IconFrame:SetBorderColor(0, 0, 0)
 	end
 
 	if C_QuestLog.UnitIsRelatedToActiveQuest(unit) then
@@ -107,7 +105,6 @@ local function updateHighlight(self, event, worldCursorAnchorType)
 
 	self.Health:SetBorderColor(r, g, b)
 	self.Castbar:SetBorderColor(r, g, b)
-	self.Castbar.IconFrame:SetBorderColor(r, g, b)
 end
 
 local function postCCCreate(_, Button)
@@ -268,16 +265,6 @@ oUF:RegisterStyle(styleName, function(self)
 	CastbarText:SetJustifyH('LEFT')
 	CastbarText:SetFrameLevel(10)
 	Castbar.Text = CastbarText
-
-	local CastbarIconFrame = Castbar:CreateBackdropFrame()
-	CastbarIconFrame:SetPoint('BOTTOMRIGHT', Castbar, 'BOTTOMLEFT', -1, 0)
-	CastbarIconFrame:SetPoint('TOPRIGHT', Health, 'TOPLEFT', -1, 0)
-	CastbarIconFrame:SetSize(34, 34)
-	Castbar.IconFrame = CastbarIconFrame
-
-	local CastbarIcon = CastbarIconFrame:CreateIcon()
-	CastbarIcon:SetAllPoints()
-	Castbar.Icon = CastbarIcon
 
 	local Threat = Health:CreateFrame('Frame', 'BackdropTemplate')
 	Threat:SetPoint('TOPLEFT', -5, 5)
