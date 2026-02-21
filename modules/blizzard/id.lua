@@ -133,7 +133,6 @@ end
 -- react to shift key when we can
 function addon:MODIFIER_STATE_CHANGED(key)
 	if not InCombatLockdown() and key == 'LSHIFT' or key == 'RSHIFT' then
-		-- TODO: this breaks on unit tooltips in dungeons even when not in combat
 		if GameTooltip:IsShown() and not GameTooltip:IsForbidden() then
 			if not issecretvalue(GameTooltip:GetUnit()) then
 				GameTooltip:RefreshData() -- high taint contender
