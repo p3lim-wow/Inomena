@@ -68,12 +68,11 @@ addon.colors.skyriding = {
 }
 
 addon.colors.creature = {
-	boss = addon:CreateColor(188, 28, 0),
-	lieutenant = addon:CreateColor(144, 0, 188),
-	caster = addon:CreateColor(0, 116, 188),
-	melee = addon:CreateColor(178, 142, 85),
-	trivial = addon:CreateColor(110, 110, 110),
-	tapped = addon:CreateColor(110, 110, 110),
+	boss = addon:CreateColor(255, 84, 54),
+	lieutenant = addon:CreateColor(223, 120, 255),
+	caster = addon:CreateColor(91, 192, 255),
+	melee = addon:CreateColor(204, 181, 144),
+	trivial = addon:CreateColor(211, 211, 211),
 }
 
 addon.colors.cast = {
