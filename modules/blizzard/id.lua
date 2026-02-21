@@ -124,7 +124,6 @@ end
 dataTypeHandlers.Corpse = dataTypeHandlers.Unit
 dataTypeHandlers.Toy = dataTypeHandlers.Item
 
--- add caster name to aura tooltips
 do
 	local getters = {
 		GetUnitAura = C_UnitAuras.GetAuraDataByIndex,
@@ -137,6 +136,7 @@ do
 
 	function dataTypeHandlers:UnitAura(data)
 		if data.id then
+			-- add caster name to aura tooltips
 			local getter = getters[self.processingInfo.getterName]
 			if getter then
 				local auraInfo = getter(unpack(self.processingInfo.getterArgs))
