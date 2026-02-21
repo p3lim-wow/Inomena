@@ -32,7 +32,7 @@ tags.Methods['inomena:hpper'] = function(unit)
 	end
 end
 
-tags.Events['inomena:hptarget'] = 'UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION'
+tags.Events['inomena:hptarget'] = 'UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED'
 tags.Methods['inomena:hptarget'] = function(unit)
 	if not UnitIsDeadOrGhost(unit) or not UnitIsConnected(unit) then
 		if UnitCanAttack('player', unit) then
@@ -50,7 +50,7 @@ tags.Methods['inomena:power'] = function(unit)
 	end
 end
 
-tags.Events['inomena:reactioncolor'] = 'UNIT_FACTION UNIT_CONNECTION UNIT_NAME_UPDATE'
+tags.Events['inomena:reactioncolor'] = 'UNIT_FACTION UNIT_CONNECTION UNIT_NAME_UPDATE PLAYER_FLAGS_CHANGED UNIT_HEALTH'
 tags.Methods['inomena:reactioncolor'] = function(unit)
 	local reaction = UnitReaction(unit, 'player')
 	if UnitIsTapDenied(unit) or not UnitIsConnected(unit) then
@@ -159,7 +159,7 @@ tags.Methods['inomena:dead'] = function(unit)
 	end
 end
 
-tags.Events['inomena:offline'] = 'UNIT_CONNECTION'
+tags.Events['inomena:offline'] = 'UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH'
 tags.Methods['inomena:offline'] = function(unit)
 	if not UnitIsConnected(unit) then
 		return [[|TInterface\CharacterFrame\Disconnect-Icon:28|t]]
