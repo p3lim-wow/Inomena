@@ -8,6 +8,7 @@ local function updateColor(self)
 	self:SetStatusBarColor((cachedColor or WHITE_FONT_COLOR):GetRGB())
 end
 
+local NAME_REALM_FORMAT = '%s |cff777777(%s)|r'
 TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(tooltip, data)
 	if tooltip:IsForbidden() or not tooltip:IsTooltipType(Enum.TooltipDataType.Unit) then
 		return
@@ -18,10 +19,10 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 		return
 	end
 
-	local name
+	local name, realm
 	if issecretvalue(unit) then
-		local _, classToken, _, _, _, playerName = GetPlayerInfoByGUID(guid)
-		name = playerName
+		local _, classToken = GetPlayerInfoByGUID(guid)
+		name, realm = UnitNameFromGUID(guid)
 
 		if classToken ~= nil then
 			cachedColor = C_ClassColor.GetClassColor(classToken)
@@ -34,7 +35,7 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 			cachedColor = C_ClassColor.GetClassColor(classToken)
 
 			-- grab name from GUID regardless so we can avoid realm name
-			name = UnitNameFromGUID(guid)
+			name, realm = UnitNameFromGUID(guid)
 		elseif UnitIsMinion(unit) then
 			-- TODO: this is a bit wasteful, pre-create the colors and use the other API
 			cachedColor = addon:CreateColor(UnitSelectionColor(unit, true))
@@ -45,7 +46,9 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 
 	updateColor(tooltip.StatusBar)
 
-	if name ~= nil then
+	if realm ~= nil then
+		tooltip:AddLine(NAME_REALM_FORMAT:format(name, realm), cachedColor:GetRGB())
+	elseif name ~= nil then
 		tooltip:AddLine(name, cachedColor:GetRGB())
 	else
 		tooltip:AddLine(data.leftText, (cachedColor or data.leftColor):GetRGB())
