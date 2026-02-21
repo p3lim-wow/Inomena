@@ -76,11 +76,12 @@ function dataTypeHandlers:Currency(data)
 end
 
 function dataTypeHandlers:Mount(data)
-	addTooltipLine(self, 'mount', data.id)
-
 	if data.id then
 		local _, spellID = C_MountJournal.GetMountInfoByID(data.id)
-		addTooltipLine(self, 'spell', spellID)
+		if spellID then
+			addTooltipLine(self, 'mount', data.id)
+			addTooltipLine(self, 'spell', spellID)
+		end
 	end
 end
 
