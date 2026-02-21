@@ -48,7 +48,7 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 	if name ~= nil then
 		tooltip:AddLine(name, cachedColor:GetRGB())
 	else
-		tooltip:AddLine(data.leftText, cachedColor:GetRGB())
+		tooltip:AddLine(data.leftText, (cachedColor or data.leftColor):GetRGB())
 	end
 
 	return true -- we're replacing the line, so prevent the original one from rendering
