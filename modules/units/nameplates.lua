@@ -5,8 +5,10 @@ local oUF = addon.oUF
 local function updateAnchors(self)
 	if self.Castbar:IsShown() then
 		self.TargetOutline:SetPoint('BOTTOM', self.Castbar, 0, -4)
+		self.TargetOutline.Bottom:SetPoint('TOP', self.Castbar, 'BOTTOM')
 	else
 		self.TargetOutline:SetPoint('BOTTOM', self.Health, 0, -4)
+		self.TargetOutline.Bottom:SetPoint('TOP', self.Health, 'BOTTOM')
 	end
 end
 
@@ -313,15 +315,42 @@ oUF:RegisterStyle(styleName, function(self)
 	CastbarText:SetFrameLevel(10)
 	Castbar.Text = CastbarText
 
-	local TargetOutline = Health:CreateBackdropStatusBar()
+	local TargetOutline = Health:CreateBackdropFrame()
 	TargetOutline:SetPoint('TOPLEFT', -4, 4)
 	TargetOutline:SetPoint('TOPRIGHT', 4, 4)
 	TargetOutline:SetPoint('BOTTOM', 0, -4)
 	TargetOutline:SetFrameStrata('BACKGROUND')
-	TargetOutline:SetMinMaxValues(0, 1)
-	TargetOutline:SetValue(1)
+	TargetOutline:SetBackgroundColor(0, 0, 0, 0)
 	TargetOutline:Hide()
 	self.TargetOutline = TargetOutline
+
+	local TargetOutlineLeft = TargetOutline:CreateTexture()
+	TargetOutlineLeft:SetPoint('TOPLEFT')
+	TargetOutlineLeft:SetPoint('BOTTOMLEFT')
+	TargetOutlineLeft:SetPoint('RIGHT', Health, 'LEFT')
+	TargetOutlineLeft:SetColorTexture(1, 1, 1)
+	TargetOutline.Left = TargetOutlineLeft
+
+	local TargetOutlineRight = TargetOutline:CreateTexture()
+	TargetOutlineRight:SetPoint('TOPRIGHT')
+	TargetOutlineRight:SetPoint('BOTTOMRIGHT')
+	TargetOutlineRight:SetPoint('LEFT', Health, 'RIGHT')
+	TargetOutlineRight:SetColorTexture(1, 1, 1)
+	TargetOutline.Right = TargetOutlineRight
+
+	local TargetOutlineTop = TargetOutline:CreateTexture()
+	TargetOutlineTop:SetPoint('TOPLEFT')
+	TargetOutlineTop:SetPoint('TOPRIGHT')
+	TargetOutlineTop:SetPoint('BOTTOM', Health, 'TOP')
+	TargetOutlineTop:SetColorTexture(1, 1, 1)
+	TargetOutline.Top = TargetOutlineTop
+
+	local TargetOutlineBottom = TargetOutline:CreateTexture()
+	TargetOutlineBottom:SetPoint('BOTTOMLEFT')
+	TargetOutlineBottom:SetPoint('BOTTOMRIGHT')
+	TargetOutlineBottom:SetPoint('TOP', Health, 'BOTTOM')
+	TargetOutlineBottom:SetColorTexture(1, 1, 1)
+	TargetOutline.Bottom = TargetOutlineBottom
 
 	self:RegisterEvent('PLAYER_REGEN_DISABLED', updateOnAdded, true) -- for combat state changes
 	self:RegisterEvent('PLAYER_REGEN_ENABLED', updateOnAdded, true) -- for combat state changes
