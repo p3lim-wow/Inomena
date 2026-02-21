@@ -170,6 +170,13 @@ oUF:RegisterStyle(styleName, function(self)
 
 	addon:PixelPerfect(self)
 
+	-- nameplates take up the space by visible anchored widgets, so to ensure
+	-- spacing is consistent and to prevent stuff from jumping too much when something
+	-- like the castbar appears we add an invisible texture on top of the entire frame
+	local filler = self:CreateTexture()
+	filler:SetAllPoints()
+	filler:SetColorTexture(0, 0, 0, 0)
+
 	local Health = self:CreateBackdropStatusBar()
 	Health:SetPoint('LEFT')
 	Health:SetPoint('RIGHT')
