@@ -77,7 +77,7 @@ local function updateOnAdded(self)
 
 	if fullSize then
 		self.Name:Show()
-		self.Health:SetHeight(20)
+		self.Health:SetHeight(28)
 		self.HealthValue:Show()
 	else
 		self.Health:SetHeight(4)
@@ -193,7 +193,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Health.DamageAbsorb = DamageAbsorb
 
 	local HealthValue = Health:CreateText()
-	HealthValue:SetPoint('RIGHT', Health, 'TOPRIGHT', -2, -1)
+	HealthValue:SetPoint('RIGHT', Health, -3, -1)
 	HealthValue:SetJustifyH('RIGHT')
 	HealthValue:SetFrameLevel(8)
 	HealthValue:Hide()
@@ -209,7 +209,7 @@ oUF:RegisterStyle(styleName, function(self)
 	self:RegisterEvent('WORLD_CURSOR_TOOLTIP_UPDATE', updateHighlight, true)
 
 	local Name = Health:CreateText(14)
-	Name:SetPoint('LEFT', Health, 'TOPLEFT', 2, -1)
+	Name:SetPoint('LEFT', Health, 4, -1)
 	Name:SetPoint('RIGHT', HealthValue, 'LEFT', 1, 0)
 	Name:SetJustifyH('LEFT')
 	Name:SetWordWrap(false)
@@ -333,7 +333,7 @@ oUF:SetActiveStyle(styleName)
 local nameplates = oUF:SpawnNamePlates()
 nameplates:SetAddedCallback(updateOnAdded)
 nameplates:SetRemovedCallback(updateOnRemoved)
-nameplates:SetSize(200, 40) -- we keep it wide just because of stupid long names, no other reason
+nameplates:SetSize(200, 50) -- we keep it wide just because of stupid long names, no other reason
 
 nameplates:SetCVars({
 	-- from the settings, in order
