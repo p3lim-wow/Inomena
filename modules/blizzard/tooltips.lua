@@ -64,6 +64,13 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitOwner, function
 	return true
 end)
 
+-- remove some lines
+TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitThreat, function(tooltip)
+	if not tooltip:IsForbidden() then
+		return true
+	end
+end)
+
 -- replace border
 local function skin(tooltipName)
 	local tooltip = _G[tooltipName]
