@@ -54,6 +54,16 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 	return true -- we're replacing the line, so prevent the original one from rendering
 end)
 
+-- color unit ownership
+TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitOwner, function(tooltip, data)
+	if tooltip:IsForbidden() or not tooltip:IsTooltipType(Enum.TooltipDataType.Unit) then
+		return
+	end
+
+	tooltip:AddLine(data.leftText, 1/2, 1/2, 1/2) -- TODO: move to colors
+	return true
+end)
+
 -- replace border
 local function skin(tooltipName)
 	local tooltip = _G[tooltipName]
