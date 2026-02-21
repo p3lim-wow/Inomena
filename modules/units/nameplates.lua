@@ -1,16 +1,11 @@
 local _, addon = ...
 local oUF = addon.oUF
 
-local function updateAnchors(self)
-	self.Health:ClearAllPoints()
 
+local function updateAnchors(self)
 	if self.Castbar:IsShown() then
-		self.Health:SetPoint('BOTTOMLEFT', self, 'LEFT')
-		self.Health:SetPoint('BOTTOMRIGHT', self, 'RIGHT')
 		self.TargetOutline:SetPoint('BOTTOM', self.Castbar, 0, -4)
 	else
-		self.Health:SetPoint('LEFT')
-		self.Health:SetPoint('RIGHT')
 		self.TargetOutline:SetPoint('BOTTOM', self.Health, 0, -4)
 	end
 end
