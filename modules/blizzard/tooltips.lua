@@ -19,7 +19,7 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 	end
 
 	local name
-	if unit ~= nil and issecretvalue(unit) then
+	if issecretvalue(unit) then
 		local _, classToken, _, _, _, playerName = GetPlayerInfoByGUID(guid)
 		name = playerName
 
@@ -28,7 +28,7 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 		else
 			cachedColor = data.leftColor
 		end
-	else
+	elseif unit ~= nil then
 		if UnitIsPlayer(unit) or UnitTreatAsPlayerForDisplay(unit) then
 			local _, classToken = UnitClass(unit)
 			cachedColor = C_ClassColor.GetClassColor(classToken)
