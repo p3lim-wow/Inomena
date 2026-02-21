@@ -297,6 +297,7 @@ read_globals = {
 	'UnitCanAttack',
 	'UnitClass',
 	'UnitClassBase',
+	'UnitClassFromGUID',
 	'UnitClassification',
 	'UnitCreatureID',
 	'UnitEffectiveLevel',

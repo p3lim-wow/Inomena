@@ -32,12 +32,11 @@ function addon.unitShared.PostInterruptedCast(element, _, interruptedByGUID)
 	-- try to display who interrupted the cast
 	if element.holdTime and element.holdTime > 0 then
 		if interruptedByGUID ~= nil then
-			local _, classToken, _, _, _, name = GetPlayerInfoByGUID(interruptedByGUID)
-			if name ~= nil and classToken ~= nil then -- this happens in follower dungeons
+			local _, classToken = UnitClassFromGUID(interruptedByGUID)
+			local name = UnitNameFromGUID()
+			if classToken ~= nil then
 				local color = C_ClassColor.GetClassColor(classToken) -- can't use oUF colors for secrets
 				name = color:WrapTextInColorCode(name)
-			else
-				name = UnitNameFromGUID(interruptedByGUID)
 			end
 
 			element.Text:SetFormattedText('%s (%s)', _G.INTERRUPTED, name)
