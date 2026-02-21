@@ -122,7 +122,6 @@ function dataTypeHandlers:Macro(--[[data]])
 end
 
 dataTypeHandlers.Corpse = dataTypeHandlers.Unit
-dataTypeHandlers.UnitAura = dataTypeHandlers.Spell
 dataTypeHandlers.Toy = dataTypeHandlers.Item
 
 -- add caster name to aura tooltips
@@ -136,11 +135,11 @@ do
 		GetUnitDebuffByAuraInstanceID = C_UnitAuras.GetAuraDataByAuraInstanceID,
 	}
 
-	TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.UnitAura, function(tooltip, data)
-		if not tooltip:IsForbidden() and data.id then
-			local getter = getters[tooltip.processingInfo.getterName]
+	function dataTypeHandlers:UnitAura(data)
+		if data.id then
+			local getter = getters[self.processingInfo.getterName]
 			if getter then
-				local auraInfo = getter(unpack(tooltip.processingInfo.getterArgs))
+				local auraInfo = getter(unpack(self.processingInfo.getterArgs))
 				if auraInfo and auraInfo.sourceUnit ~= nil then
 					local name = UnitName(auraInfo.sourceUnit)
 
@@ -151,12 +150,14 @@ do
 						end
 					end
 
-					tooltip:AddLine(' ') -- a little spacer here is nice
-					addTooltipLine(tooltip, 'caster', name, true)
+					self:AddLine(' ') -- a little spacer here is nice
+					addTooltipLine(self, 'caster', name, true)
 				end
 			end
+
+			addTooltipLine(self, 'spell', data.id)
 		end
-	end)
+	end
 end
 
 for dataType, key in next, Enum.TooltipDataType do
