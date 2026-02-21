@@ -2,7 +2,7 @@ local _, addon = ...
 
 -- skin tooltips
 
--- title and statusbar color
+-- name and statusbar color
 local cachedColor
 local function updateColor(self)
 	self:SetStatusBarColor((cachedColor or WHITE_FONT_COLOR):GetRGB())
@@ -13,22 +13,42 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 		return
 	end
 
-	local _, _, guid = tooltip:GetUnit()
+	local _, unit, guid = tooltip:GetUnit()
 	if not guid then
 		return
 	end
 
-	local _, classToken, _, _, _, name = GetPlayerInfoByGUID(guid)
-	if classToken ~= nil then
-		data.leftText = name
-		data.leftColor = C_ClassColor.GetClassColor(classToken)
+	local name
+	if issecretvalue(unit) then
+		local _, classToken, _, _, _, playerName = GetPlayerInfoByGUID(guid)
+		name = playerName
+
+		if classToken ~= nil then
+			cachedColor = C_ClassColor.GetClassColor(classToken)
+		else
+			cachedColor = data.leftColor
+		end
+	else
+		if UnitIsPlayer(unit) or UnitTreatAsPlayerForDisplay(unit) then
+			local _, classToken = UnitClass(unit)
+			cachedColor = C_ClassColor.GetClassColor(classToken)
+
+			-- grab name from GUID regardless so we can avoid realm name
+			name = UnitNameFromGUID(guid)
+		else
+			cachedColor = data.leftColor
+		end
 	end
 
-	-- broken for follower NPCs, they should preferably be class colored too,
-	-- as well as battle pets - they don't trigger UnitName
-
-	cachedColor = data.leftColor
 	updateColor(tooltip.StatusBar)
+
+	if name ~= nil then
+		tooltip:AddLine(name, cachedColor:GetRGB())
+	else
+		tooltip:AddLine(data.leftText, cachedColor:GetRGB())
+	end
+
+	return true -- we're replacing the line, so prevent the original one from rendering
 end)
 
 -- replace border
