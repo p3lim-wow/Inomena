@@ -19,7 +19,7 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 	end
 
 	local name
-	if issecretvalue(unit) then
+	if unit ~= nil and issecretvalue(unit) then
 		local _, classToken, _, _, _, playerName = GetPlayerInfoByGUID(guid)
 		name = playerName
 
