@@ -111,6 +111,7 @@ read_globals = {
 	'CHAT_FRAMES',
 	'INVENTORY_ALERT_STATUS_SLOTS',
 	'SELECTED_CHAT_FRAME',
+	'WHITE_FONT_COLOR',
 
 	-- FrameXML utils
 	'ActionButtonUtil',

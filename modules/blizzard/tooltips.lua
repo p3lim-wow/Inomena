@@ -2,6 +2,35 @@ local _, addon = ...
 
 -- skin tooltips
 
+-- title and statusbar color
+local cachedColor
+local function updateColor(self)
+	self:SetStatusBarColor((cachedColor or WHITE_FONT_COLOR):GetRGB())
+end
+
+TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(tooltip, data)
+	if tooltip:IsForbidden() or not tooltip:IsTooltipType(Enum.TooltipDataType.Unit) then
+		return
+	end
+
+	local _, _, guid = tooltip:GetUnit()
+	if not guid then
+		return
+	end
+
+	local _, classToken, _, _, _, name = GetPlayerInfoByGUID(guid)
+	if classToken ~= nil then
+		data.leftText = name
+		data.leftColor = C_ClassColor.GetClassColor(classToken)
+	end
+
+	-- broken for follower NPCs, they should preferably be class colored too,
+	-- as well as battle pets - they don't trigger UnitName
+
+	cachedColor = data.leftColor
+	updateColor(tooltip.StatusBar)
+end)
+
 -- replace border
 local function skin(tooltipName)
 	local tooltip = _G[tooltipName]
@@ -25,6 +54,7 @@ local function skin(tooltipName)
 		tooltip.StatusBar:SetPoint('BOTTOMRIGHT')
 		tooltip.StatusBar:SetHeight(3)
 		tooltip.StatusBar:SetStatusBarTexture(addon.TEXTURE)
+		tooltip.StatusBar:HookScript('OnValueChanged', updateColor)
 	end
 end
 
