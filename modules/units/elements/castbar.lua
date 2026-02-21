@@ -33,7 +33,7 @@ function addon.unitShared.PostInterruptedCast(element, _, interruptedByGUID)
 	if element.holdTime and element.holdTime > 0 then
 		if interruptedByGUID ~= nil then
 			local _, classToken = UnitClassFromGUID(interruptedByGUID)
-			local name = UnitNameFromGUID()
+			local name = UnitNameFromGUID(interruptedByGUID)
 			if classToken ~= nil then
 				local color = C_ClassColor.GetClassColor(classToken) -- can't use oUF colors for secrets
 				name = color:WrapTextInColorCode(name)
