@@ -35,6 +35,9 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 
 			-- grab name from GUID regardless so we can avoid realm name
 			name = UnitNameFromGUID(guid)
+		elseif UnitIsMinion(unit) then
+			-- TODO: this is a bit wasteful, pre-create the colors and use the other API
+			cachedColor = addon:CreateColor(UnitSelectionColor(unit, true))
 		else
 			cachedColor = data.leftColor
 		end
