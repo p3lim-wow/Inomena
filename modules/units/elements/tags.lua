@@ -87,6 +87,36 @@ tags.Methods['inomena:classificationcolor'] = function(unit)
 	return '|cffffffff'
 end
 
+tags.Events['inomena:nameplatecolor'] = 'UNIT_NAME_UPDATE UNIT_CLASSIFICATION_CHANGED'
+tags.Methods['inomena:nameplatecolor'] = function(unit)
+	if addon:IsInDungeon() and not addon:IsInRaid() then
+		local classification = UnitClassification(unit)
+		if classification == 'elite' or classification == 'rareelite' then
+			local playerLevel = UnitEffectiveLevel('player')
+			local level = UnitEffectiveLevel(unit)
+			if level >= (playerLevel + 2) then
+				return addon.colors.creature.boss:GenerateHexColorMarkup()
+			elseif level >= (playerLevel + 1) then
+				return addon.colors.creature.lieutenant:GenerateHexColorMarkup()
+			elseif level >= playerLevel then
+				if UnitClassBase(unit) == 'PALADIN' then
+					return addon.colors.creature.caster:GenerateHexColorMarkup()
+				else
+					return addon.colors.creature.melee:GenerateHexColorMarkup()
+				end
+			else
+				return addon.colors.creature.trivial:GenerateHexColorMarkup()
+			end
+		else
+			return addon.colors.creature.trivial:GenerateHexColorMarkup()
+		end
+	elseif UnitIsTapDenied(unit) then
+		return _COLORS.tapped:GenerateHexColorMarkup()
+	else
+		return '|cffffffff'
+	end
+end
+
 tags.Events['inomena:leader'] = 'PARTY_LEADER_CHANGED'
 tags.Methods['inomena:leader'] = function(unit)
 	if UnitIsGroupLeader(unit) then

@@ -350,6 +350,7 @@ read_globals = {
 
 	-- luacheck gets confused about oUF's tag environment
 	'_TAGS',
+	'_COLORS',
 	'Hex',
 
 	-- exposed from other addons
