@@ -77,6 +77,7 @@ modules\widgets\mail.lua
 modules\widgets\petbattle.lua
 modules\widgets\resurrect.lua
 modules\widgets\skyriding.lua
+modules\widgets\strip.lua
 modules\widgets\talents.lua
 
 modules\blizzard\actionbar.lua
