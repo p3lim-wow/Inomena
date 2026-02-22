@@ -82,7 +82,12 @@ local function updateOnAdded(self)
 	updateAnchors(self)
 
 	self.PetIcon:SetShown(UnitIsOtherPlayersPet(unit))
-	C_Timer.After(0, GenerateClosure(self.Health.ForceUpdate, self.Health)) -- temp fix
+
+	-- we need to force-update the health sub-widgets one frame after they've been initialized by
+	-- UAE because the game rendering engine will have incorrect sizes for them during creation with
+	-- a custom scale (which we apply with our PixelPerfect method during spawn). Blizzard is aware
+	-- of this bug, but they don't really have a solution for it.
+	C_Timer.After(0, GenerateClosure(self.Health.ForceUpdate, self.Health))
 end
 
 local function updateOnRemoved(self)
