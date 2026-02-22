@@ -88,7 +88,7 @@ function addon:UPDATE_INVENTORY_DURABILITY()
 	end
 
 	local color = addon.colors.durability[worstStatus]
-	if color then
+	if worstStatus > 0 and color then
 		Minimap:SetBorderColor(color:GetRGB())
 	else
 		Minimap:SetBorderColor(0, 0, 0)
