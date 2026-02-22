@@ -15,8 +15,14 @@ local TRACKING_TEXTURES = {
 -- there are some things we want to not automatically handle tracking for
 local IGNORED_TRACKING_TEXTURES = {
 	[237607] = true, -- Low-Level Quests
-	[4675649] = true, -- Warband Completed Quests
 }
+
+if UnitLevel('player') < GetMaxLevelForPlayerExpansion() then
+	-- track "Warband Completed Quests" when low level
+	TRACKING_TEXTURES[4675649] = true
+else
+	IGNORED_TRACKING_TEXTURES[4675649] = true
+end
 
 function addon:OnLogin()
 	for index = 1, C_Minimap.GetNumTrackingTypes() do
