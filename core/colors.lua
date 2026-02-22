@@ -58,8 +58,9 @@ addon.colors.power.DevourerStar = addon:CreateColor(175, 112, 230)
 
 addon.colors.durability = {
 	-- alternative to INVENTORY_ALERT_COLORS
-	CreateColor(1, 0.82, 0.18),
-	CreateColor(0.93, 0.07, 0.07),
+	[0] = addon:CreateColor(100, 198, 53),
+	[1] = addon:CreateColor(255, 209, 46),
+	[2] = addon:CreateColor(237, 18, 18),
 }
 
 addon.colors.skyriding = {

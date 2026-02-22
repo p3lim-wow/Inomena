@@ -77,3 +77,10 @@ for powerType, direction in next, {
 
 	addon.curves.PowerIdleAlpha[powerType] = alphaCurve
 end
+
+-- curve for durability percentage color
+addon.curves.Durability = C_CurveUtil.CreateColorCurve()
+addon.curves.Durability:SetType(Enum.LuaCurveType.Linear)
+addon.curves.Durability:AddPoint(0, addon.colors.durability[2])
+addon.curves.Durability:AddPoint(0.5, addon.colors.durability[1])
+addon.curves.Durability:AddPoint(1, addon.colors.durability[0])

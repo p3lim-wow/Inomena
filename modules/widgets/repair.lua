@@ -2,8 +2,8 @@ local _, addon = ...
 
 -- add repair info to the character frame
 
-local TEXT_AVERAGE = 'Average: %d%%'
-local TEXT_LOWEST = 'Lowest: %d%%'
+local TEXT_AVERAGE = '|cffffffffAverage:|r %d%%'
+local TEXT_LOWEST = '|cffffffffLowest:|r %d%%'
 
 local Frame = addon:CreateFrame('Frame', nil, CharacterFrame)
 Frame:SetPoint('TOPLEFT', 55, -25)
@@ -36,8 +36,8 @@ Frame:SetScript('OnEnter', function(self)
 	if numItems > 1 then
 		average = average / numItems
 
-		tooltip:AddLine(TEXT_AVERAGE:format(average * 100), 1, 1, 1)
-		tooltip:AddLine(TEXT_LOWEST:format(lowest * 100), 1, 1, 1)
+		tooltip:AddLine(TEXT_AVERAGE:format(average * 100), addon.curves.Durability:Evaluate(average):GetRGB())
+		tooltip:AddLine(TEXT_LOWEST:format(lowest * 100), addon.curves.Durability:Evaluate(lowest):GetRGB())
 	end
 
 	tooltip:Show()

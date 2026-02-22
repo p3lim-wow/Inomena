@@ -14,8 +14,8 @@ templates.xml
 
 core\enums.lua
 core\constants.lua
-core\curves.lua
 core\colors.lua
+core\curves.lua
 core\assets.lua
 core\widgets.lua
 core\backdrop.lua
