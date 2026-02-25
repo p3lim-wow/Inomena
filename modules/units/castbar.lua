@@ -19,7 +19,7 @@ local function overrideCastbarVisibility(element, unit)
 end
 
 local function postStartCast(element)
-	element:SetStatusBarColor(1, 1, 1) -- need to reset here after fake GCDs
+	element:SetStatusBarColorFromBoolean(element.notInterruptible, addon.colors.cast.shielded, addon.colors.cast.normal)
 end
 
 local timer
