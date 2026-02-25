@@ -38,7 +38,7 @@ local function updateGlobalCooldown(self)
 	end
 
 	local info = C_Spell.GetSpellCooldown(61304) -- super secret GCD spell, never secret
-	if info and info.duration > 0 then
+	if info and info.isOnGCD and info.duration > 0 then
 		-- reset manually
 		element.castID = nil
 		element.delay = 0
