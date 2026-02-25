@@ -28,7 +28,6 @@ globals = {
 
 	-- savedvariables
 	'InomenaPlayed',
-	'InomenaSeen',
 	'OPie_SavedData', -- we mutate OPie's savedvariables
 }
 
@@ -65,7 +64,6 @@ read_globals = {
 	'MerchantFrame',
 	'Minimap',
 	'MinimapCluster',
-	'MovieFrame',
 	'OverlayPlayerCastingBarFrame',
 	'PaperDollSidebarTab3',
 	'PetActionBar',
