@@ -350,7 +350,6 @@ local RINGS = addon:T({
 
 		-- most convenient rings first
 		{'ring', 'CommonHearth', fastClick=true, rotationMode='shuffle'},
-		{'spell', 556, show='[me:shaman]'}, -- Astral Recall
 		{'opie.ext', 'mythport', show='[mythport]'}, -- dynamic Hero's Path teleport
 
 		-- continent/expansion specific rings
