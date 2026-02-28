@@ -510,7 +510,7 @@ addon:HookAddOn('OPie', function()
 		OPie_SavedData.ProfileStorage.default.Bindings = {}
 	end
 
-	-- ripped out of OPie/Bundle/Editable.lua
+	-- ripped out of OPie/Bundle/Editable.lua and OPie/Bundle/Tracking.lua
 	OPie_SavedData.ProfileStorage.default.Bindings.CommonTrades = false
 	OPie_SavedData.ProfileStorage.default.Bindings.DKCombat = false
 	OPie_SavedData.ProfileStorage.default.Bindings.DruidFeral = false
@@ -521,6 +521,7 @@ addon:HookAddOn('OPie', function()
 	OPie_SavedData.ProfileStorage.default.Bindings.MageTools = false
 	OPie_SavedData.ProfileStorage.default.Bindings.MageTravel = false
 	OPie_SavedData.ProfileStorage.default.Bindings.OPieAutoQuest = false
+	OPie_SavedData.ProfileStorage.default.Bindings.OPieTracking = false
 	OPie_SavedData.ProfileStorage.default.Bindings.PaladinTools = false
 	OPie_SavedData.ProfileStorage.default.Bindings.RaidSymbols = false
 	OPie_SavedData.ProfileStorage.default.Bindings.SpecMenu = false
