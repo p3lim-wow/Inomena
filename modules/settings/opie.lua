@@ -396,7 +396,8 @@ local RINGS = addon:T({
 		{'item', 249699, show='[zone:Manaforge Omega]'}, -- Shadowguard Translocator
 		{'spell', 312370, show='[race:vulpera]'}, -- Make Camp
 		{'spell', 312372, show='[race:vulpera]'}, -- Return to Camp
-		{'spell', 265225, show='[race:darkirondwarf]'}, -- Mole Machine (Dark Iron Dwarf)
+		{'spell', 265225, show='[race:darkirondwarf]'}, -- Mole Machine
+		{'spell', 1238686, show='[race:haranir]'}, -- Rootwalking
 		{'item', 217930}, -- Nostwin's Voucher (Timerunning 2024)
 		{'item', 238727}, -- Nostwin's Voucher (Timerunning 2025)
 
