@@ -57,17 +57,19 @@ function dataTypeHandlers:Unit(data)
 
 			-- https://warcraft.wiki.gg/wiki/GUID#Spawn_UIDs
 			local _, _, _, _, _, spawnUID = string.split('-', data.guid)
-			local serverTime = GetServerTime()
-			local spawnEpoch = serverTime - (serverTime % 2^23)
-			local spawnEpochOffset = bit.band(tonumber(spawnUID, 16), 0x7fffff)
-			local spawnTime = spawnEpoch + spawnEpochOffset
+			if spawnUID ~= nil then
+				local serverTime = GetServerTime()
+				local spawnEpoch = serverTime - (serverTime % 2^23)
+				local spawnEpochOffset = bit.band(tonumber(spawnUID, 16), 0x7fffff)
+				local spawnTime = spawnEpoch + spawnEpochOffset
 
-			if spawnTime > serverTime then
-				-- if epoch has rolled over since the unit spawned
-				spawnTime = spawnTime - ((2^23) - 1)
+				if spawnTime > serverTime then
+					-- if epoch has rolled over since the unit spawned
+					spawnTime = spawnTime - ((2^23) - 1)
+				end
+
+				addTooltipLine(self, 'age', addon:FormatTime(serverTime - spawnTime))
 			end
-
-			addTooltipLine(self, 'age', addon:FormatTime(serverTime - spawnTime))
 		end
 	end
 end
