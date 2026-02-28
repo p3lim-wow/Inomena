@@ -210,6 +210,17 @@ local function style(self, unit)
 	PrivateAuras.maxCols = 99 -- make sure it never wraps
 	self.PrivateAuras = PrivateAuras
 
+	local Phase = self:CreateFrame('Frame', 'InomenaPropagateClicks')
+	Phase:SetSize(28, 28)
+	Phase:SetPoint('CENTER')
+	Phase:EnableMouse(true) -- for tooltips
+	Phase:SetFrameLevel(10) -- above all else
+	self.PhaseIndicator = Phase
+
+	local PhaseIcon = Phase:CreateIcon()
+	PhaseIcon:SetAllPoints()
+	Phase.Icon = PhaseIcon
+
 	local Threat = self:CreateFrame('Frame', 'BackdropTemplate')
 	Threat:SetPoint('TOPLEFT', -5, 5)
 	Threat:SetPoint('BOTTOMRIGHT', 5, -5)
