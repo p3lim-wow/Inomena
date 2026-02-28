@@ -86,6 +86,7 @@ local CVARS = { -- exposed settings from the interface options
 	cooldownViewerEnabled = 1,
 	externalDefensivesEnabled = 0, -- (default)
 	damageMeterEnabled = 1,
+	damageMeterResetOnNewInstance = 1,
 	spellDiminishPVPEnemiesEnabled = 0,
 	spellDiminishPVPOnlyTriggerableByMe = 0, -- (default)
 
