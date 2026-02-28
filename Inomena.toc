@@ -67,6 +67,7 @@ modules\automations\tracking.lua
 modules\automations\trash.lua
 
 modules\widgets\buffs.lua
+modules\widgets\character.lua
 modules\widgets\chef.lua
 modules\widgets\commands.lua
 modules\widgets\coordinates.lua

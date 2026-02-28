@@ -43,6 +43,11 @@ addon.colors.power[Enum.PowerType.RuneBlood] = addon:CreateColor(247, 65, 57)
 addon.colors.power[Enum.PowerType.RuneFrost] = addon:CreateColor(148, 203, 247)
 addon.colors.power[Enum.PowerType.RuneUnholy] = addon:CreateColor(173, 235, 66)
 
+addon.colors.faction = {}
+addon.colors.faction.Alliance = addon:CreateColor(PLAYER_FACTION_COLOR_ALLIANCE:GetRGB())
+addon.colors.faction.Horde = addon:CreateColor(PLAYER_FACTION_COLOR_HORDE:GetRGB())
+addon.colors.faction.Neutral = addon:CreateColor(1, 1, 1)
+
 -- custom colors
 
 addon.colors.healing = addon:CreateColor(140, 255, 46, 0.5)
