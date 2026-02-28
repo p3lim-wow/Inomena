@@ -5,10 +5,7 @@ addon.unitShared = {}
 addon.unitPrefix = C_AddOns.GetAddOnMetadata(addonName, 'X-oUF')
 
 function addon.unitShared.ShowTooltip(self)
-	local tooltip = addon:GetTooltip()
-
-	GameTooltip_SetDefaultAnchor(tooltip, self)
-
+	local tooltip = addon:GetTooltipWithDefaultAnchor(self)
 	if tooltip:SetUnit(self.unit) then
 		tooltip:Show()
 	end
