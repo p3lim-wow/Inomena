@@ -113,7 +113,7 @@ tags.Methods['inomena:nameplatecolor'] = function(unit)
 	elseif UnitIsTapDenied(unit) then
 		return _COLORS.tapped:GenerateHexColorMarkup()
 	else
-		return '|cffffffff'
+		return _TAGS['inomena:classificationcolor'](unit)
 	end
 end
 
