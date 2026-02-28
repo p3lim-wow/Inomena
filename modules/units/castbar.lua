@@ -61,7 +61,7 @@ local function updateGlobalCooldown(self)
 		element:Show()
 
 		-- reset after duration ends, adjusted by latency
-		timer = C_Timer.NewTimer(info.duration - GetTime() - info.startTime, GenerateClosure(resetCastbar, element))
+		timer = C_Timer.NewTimer(info.duration - (GetTime() - info.startTime), GenerateClosure(resetCastbar, element))
 	end
 end
 
