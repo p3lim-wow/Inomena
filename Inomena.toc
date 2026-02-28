@@ -2,7 +2,7 @@
 ## Author: p3lim
 ## Title: Inomena
 ## Notes: Collection of bits and bobs that make up my UI
-## Savedvariables: InomenaPlayed, InomenaSeen
+## Savedvariables: InomenaPlayed
 ## X-oUF: oUF_Inomena
 
 # files are loaded in order of importance and likelihood of breaking
