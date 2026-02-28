@@ -80,6 +80,7 @@ local RINGS = addon:T({
 		{'spell', 1259190, show='[me:mage]'}, -- Teleport: Silvermoon
 		{'spell', 1259194, show='[me:mage]'}, -- Portal: Silvermoon
 		{'toy', 248485}, -- Wormhole Generator: Quel'Thalas
+		{'toy', 253629}, -- Personal Key to the Arcantina
 		{'spell', 1254400}, -- Path of the Windrunners (Windrunner Spire)
 		{'spell', 1254559}, -- Path of Cavernous Depths (Maisara Caverns)
 		{'spell', 1254563}, -- Path of the Fractured Core (Nexus-Point Xenas)
