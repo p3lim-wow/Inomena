@@ -3,17 +3,6 @@ local _, addon = ...
 -- accept invites from friends
 
 local function IsFriend(guid)
-	-- update friend list
-	C_FriendList.ShowFriends()
-
-	-- check friends
-	for index = 1, C_FriendList.GetNumFriends() do
-		local friendInfo = C_FriendList.GetFriendInfoByIndex(index)
-		if friendInfo and friendInfo.guid == guid then
-			return true
-		end
-	end
-
 	-- check bnet friends
 	if C_BattleNet.GetAccountInfoByGUID(guid) then
 		return true
@@ -23,6 +12,17 @@ local function IsFriend(guid)
 	for index = 1, (GetNumGuildMembers()) do
 		local _, _, _, _, _, _, _, _, isOnline, _, _, _, _, _, _, _, memberGUID = GetGuildRosterInfo(index)
 		if isOnline and memberGUID == guid then
+			return true
+		end
+	end
+
+	-- update friend list
+	C_FriendList.ShowFriends()
+
+	-- check friends
+	for index = 1, C_FriendList.GetNumFriends() do
+		local friendInfo = C_FriendList.GetFriendInfoByIndex(index)
+		if friendInfo and friendInfo.guid == guid then
 			return true
 		end
 	end
@@ -36,8 +36,6 @@ local function HidePopup()
 	elseif StaticPopup_Visible('GROUP_INVITE_CONFIRMATION') then
 		StaticPopup_Hide('GROUP_INVITE_CONFIRMATION')
 	end
-
-	return true
 end
 
 function addon:PARTY_INVITE_REQUEST(_, isTank, isHealer, isDamager, _, _, inviterGUID)
@@ -52,8 +50,8 @@ function addon:PARTY_INVITE_REQUEST(_, isTank, isHealer, isDamager, _, _, invite
 	end
 
 	if IsFriend(inviterGUID) then
-		HidePopup()
 		AcceptGroup()
+		HidePopup()
 	end
 end
 
@@ -65,8 +63,8 @@ function addon:GROUP_INVITE_CONFIRMATION()
 
 	local requesterGUID = GetNextPendingInviteConfirmation()
 	if requesterGUID and IsFriend(requesterGUID) then
-		HidePopup()
 		RespondToInviteConfirmation(requesterGUID, true)
+		HidePopup()
 	end
 end
 
