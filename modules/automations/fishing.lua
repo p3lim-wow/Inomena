@@ -24,6 +24,8 @@ local FISHING_SPELLS = {
 	[377895] = true, -- Ice Fishing (best used with interact key, which also opens the hole)
 	[405274] = true, -- Zskera cauldron fishing (best used with interact key)
 	[463743] = true, -- Fishing during the anniversary secret
+	[1224771] = true, -- "Void Hole Fishing" on Oceanic Vortex in Voidstorm (just for the sounds)
+	[1239040] = true, -- fishing objective before first boss in Den of Nalorakk
 }
 
 local handler = CreateFrame('Frame', nil, nil, 'SecureHandlerStateTemplate, SecureHandlerAttributeTemplate')
