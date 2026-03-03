@@ -38,7 +38,7 @@ handler:SetAttribute('_onattributechanged', [[
 local storedCVars = {}
 local function restoreCVars()
 	for name, value in next, storedCVars do
-		C_CVar.SetCVar(name, value)
+		addon:Defer(C_CVar.SetCVar, name, value)
 	end
 end
 
@@ -66,7 +66,7 @@ addon:RegisterUnitEvent('UNIT_SPELLCAST_CHANNEL_START', 'player', function(_, _,
 			storedCVars[name] = C_CVar.GetCVar(name)
 
 			-- set our values
-			C_CVar.SetCVar(name, value)
+			addon:Defer(C_CVar.SetCVar, name, value)
 		end
 
 		if activeFishingSpell then
