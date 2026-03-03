@@ -166,6 +166,7 @@ tags.Methods['inomena:offline'] = function(unit)
 	end
 end
 
+tags.Events['inomena:quest'] = 'QUEST_LOG_UPDATE'
 tags.Methods['inomena:quest'] = function(unit)
 	if C_QuestLog.UnitIsRelatedToActiveQuest(unit) then
 		return '|A:questnormal:20:20|a'
