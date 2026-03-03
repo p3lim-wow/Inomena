@@ -172,3 +172,8 @@ tags.Methods['inomena:quest'] = function(unit)
 		return '|A:questnormal:20:20|a'
 	end
 end
+
+-- unitless events
+tags.SharedEvents.PARTY_LEADER_CHANGED = true
+tags.SharedEvents.PLAYER_UPDATE_RESTING = true
+tags.SharedEvents.QUEST_LOG_UPDATE = true
