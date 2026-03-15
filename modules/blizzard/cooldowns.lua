@@ -42,6 +42,7 @@ local function updateCooldown(button, _, spellID, baseSpellID)
 				local alpha = duration:EvaluateRemainingDuration(addon.curves.ActionAlphaMinor)
 				button:SetAlpha(alpha)
 				button:SetBorderAlpha(alpha)
+				button.CustomCooldown:SetAlpha(alpha)
 			else
 				button:SetAlpha(duration:EvaluateRemainingDuration(addon.curves.ActionAlpha))
 			end
