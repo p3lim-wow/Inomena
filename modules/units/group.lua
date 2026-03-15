@@ -9,7 +9,7 @@ local function overrideDisplayPower(element, unit)
 	if role == 'HEALER' then
 		if UnitPowerType(unit) == Enum.PowerType.Mana then
 			self:EnableElement('Power')
-			self.Health:SetHeight(self:GetHeight() - element:GetHeight() - 1)
+			self.Health.TempLoss:SetHeight(self:GetHeight() - element:GetHeight() - 1)
 
 			return Enum.PowerType.Mana
 		end
@@ -17,14 +17,14 @@ local function overrideDisplayPower(element, unit)
 		local _, classToken = UnitClass(unit)
 		if classToken == 'DEATHKNIGHT' then
 			self:EnableElement('Power')
-			self.Health:SetHeight(self:GetHeight() - element:GetHeight() - 1)
+			self.Health.TempLoss:SetHeight(self:GetHeight() - element:GetHeight() - 1)
 
 			return Enum.PowerType.RunicPower
 		end
 	end
 
 	self:DisableElement('Power')
-	self.Health:SetHeight(self:GetHeight())
+	self.Health.TempLoss:SetHeight(self:GetHeight())
 end
 
 local function wrapForceUpdatePower(self)
@@ -74,14 +74,22 @@ local function style(self, unit)
 	addon:AddBackdrop(self)
 	self:SetBackgroundColor(0, 0, 0, 0.7)
 
+	local HealthTempLoss = self:CreateStatusBar()
+	HealthTempLoss:SetPoint('TOPLEFT')
+	HealthTempLoss:SetPoint('TOPRIGHT')
+	HealthTempLoss:SetHeight(self:GetHeight())
+	HealthTempLoss:SetReverseFill(true)
+	HealthTempLoss:SetStatusBarTexture('UI-HUD-UnitFrame-Target-PortraitOn-Bar-TempHPLoss')
+
 	local Health = self:CreateStatusBar()
 	Health:SetPoint('TOPLEFT')
-	Health:SetPoint('TOPRIGHT')
-	Health:SetHeight(self:GetHeight())
+	Health:SetPoint('TOPRIGHT', HealthTempLoss:GetStatusBarTexture(), 'TOPLEFT')
+	Health:SetPoint('BOTTOMRIGHT', HealthTempLoss:GetStatusBarTexture(), 'BOTTOMLEFT')
 	Health.colorClass = true
 	Health.colorDisconnected = true
 	Health.colorReaction = true -- for vehicles
 	Health.incomingHealOverflow = 1
+	Health.TempLoss = HealthTempLoss
 	self.Health = Health
 
 	self.HealthPrediction = {}
