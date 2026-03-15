@@ -144,6 +144,7 @@ local function style(self, unit)
 	NameContainer:SetPoint('TOPLEFT', addon.SPACING, -addon.SPACING)
 	NameContainer:SetPoint('BOTTOMRIGHT', -addon.SPACING, addon.SPACING)
 	NameContainer:SetClipsChildren(true) -- first part of the trick
+	NameContainer:SetFrameLevel(HealAbsorb:GetFrameLevel() + 1) -- render high
 
 	local Name = Health:CreateText(14)
 	Name:SetParent(NameContainer) -- second part of the trick
