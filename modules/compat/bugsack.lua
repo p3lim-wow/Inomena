@@ -58,7 +58,7 @@ addon:HookAddOn('BugSack', function()
 		end
 	end
 
-	BugGrabber.RegisterCallback(button, 'BugGrabber_BugGrabbed', function()
+	addon:RegisterCallback('BugGrabber.BugGrabbed', function()
 		button:SetAlpha(1)
 		indicator:Show()
 	end)
