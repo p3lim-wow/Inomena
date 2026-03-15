@@ -57,6 +57,17 @@ local filterBuffs, filterDefensiveBuffs; do
 	end
 end
 
+local filterDebuffs; do
+	local DEBUFF_FILTER = {
+		-- deserter
+		[26013] = true,
+		[71041] = true,
+	}
+
+	function filterDebuffs(_, _, data)
+		return issecretvalue(data.spellId) or not UnitAffectingCombat('player') or not DEBUFF_FILTER[data.spellId]
+	end
+end
 local function updateCombat(self)
 	-- update buffs to force refresh our filters when combat changes
 	self.Buffs:ForceUpdate()
@@ -198,6 +209,7 @@ local function style(self, unit)
 	Debuffs.CreateButton = addon.unitShared.CreateAura
 	Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura
 	Debuffs.PostUpdate = addon.unitShared.PostUpdateAuras
+	Debuffs.FilterAura = filterDebuffs
 	self.Debuffs = Debuffs
 
 	local DefensiveBuffs = self:CreateFrame()
