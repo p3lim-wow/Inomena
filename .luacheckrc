@@ -106,7 +106,6 @@ read_globals = {
 	-- FrameXML mixins
 	'DressUpCustomSetDetailsSlotMixin',
 	'MinimapMixin',
-	'TextureLoadingGroupMixin',
 
 	-- FrameXML misc objects
 	'CVarCallbackRegistry',

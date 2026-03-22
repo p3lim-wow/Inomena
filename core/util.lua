@@ -1,11 +1,5 @@
 local _, addon = ...
 
--- safely set boolean(-ish) state on blizzard objects without taint.
--- this is _super_ hacky, but it's the only way we can do this safely
-function addon:SafeSetTrue(object, key)
-	TextureLoadingGroupMixin.AddTexture({textures = object}, key)
-end
-
 do
 	local SCALE = 768 / select(2, GetPhysicalScreenSize())
 	function addon:PixelPerfect(obj)
