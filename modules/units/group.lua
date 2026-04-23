@@ -8,17 +8,20 @@ local function overrideDisplayPower(element, unit)
 	local role = UnitGroupRolesAssigned(unit)
 	if role == 'HEALER' then
 		self.Health.TempLoss:SetHeight(self:GetHeight() - element:GetHeight() - 1)
+		element:SetHeight(5)
 		return Enum.PowerType.Mana
 	elseif role == 'TANK' then
 		local _, classToken = UnitClass(unit)
 		if classToken == 'DEATHKNIGHT' then
 			self.Health.TempLoss:SetHeight(self:GetHeight() - element:GetHeight() - 1)
+			element:SetHeight(5)
 
 			return Enum.PowerType.RunicPower
 		end
 	end
 
 	self.Health.TempLoss:SetHeight(self:GetHeight())
+	element:SetHeight(0)
 end
 
 local function wrapForceUpdatePower(self)
