@@ -14,10 +14,12 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 		return
 	end
 
-	local _, unit, guid = tooltip:GetUnit()
+	local guid = tooltip.processingInfo.tooltipData.guid
 	if not guid then
 		return
 	end
+
+	local unit = UnitTokenFromGUID(guid)
 
 	local name, realm
 	if issecretvalue(unit) then

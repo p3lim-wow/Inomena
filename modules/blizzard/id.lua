@@ -142,14 +142,12 @@ do
 			local getter = getters[self.processingInfo.getterName]
 			if getter then
 				local auraInfo = getter(unpack(self.processingInfo.getterArgs))
-				if auraInfo and auraInfo.sourceUnit ~= nil then
+				if auraInfo and auraInfo.sourceUnit ~= nil and not issecretvalue(auraInfo.sourceUnit) then
 					local name = UnitName(auraInfo.sourceUnit)
 
-					if not issecretvalue(auraInfo.sourceUnit) then -- sad bear noises
-						local _, classToken = UnitClass(auraInfo.sourceUnit)
-						if classToken then
-							name = C_ClassColor.GetClassColor(classToken):WrapTextInColorCode(name)
-						end
+					local _, classToken = UnitClass(auraInfo.sourceUnit)
+					if classToken then
+						name = C_ClassColor.GetClassColor(classToken):WrapTextInColorCode(name)
 					end
 
 					self:AddLine(' ') -- a little spacer here is nice
@@ -172,14 +170,14 @@ end
 function addon:MODIFIER_STATE_CHANGED(key)
 	if not InCombatLockdown() and key == 'LSHIFT' or key == 'RSHIFT' then
 		if GameTooltip:IsShown() and not GameTooltip:IsForbidden() then
-			if not issecretvalue(GameTooltip:GetUnit()) then
+			if GameTooltip.processingInfo and GameTooltip.processingInfo.tooltipData and not issecretvalue(GameTooltip.processingInfo.tooltipData.guid) then
 				GameTooltip:RefreshData() -- high taint contender
 			end
 		else
 			-- show this info in our custom tooltip too
 			local tooltip = addon:GetTooltip()
 			if tooltip:IsShown() and not tooltip:IsForbidden() then
-				if not issecretvalue(tooltip:GetUnit()) then
+				if tooltip.processingInfo and tooltip.processingInfo.tooltipData and not issecretvalue(tooltip.processingInfo.tooltipData.guid) then
 					tooltip:RefreshData() -- high taint contender
 				end
 			end
