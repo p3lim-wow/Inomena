@@ -77,7 +77,11 @@ function addon:CHAT_MSG_WHISPER(msg, _, _, _, _, _, _, _, _, _, _, requesterGUID
 	if (msg == 'inv' or msg == 'invite') and IsFriend(requesterGUID) then
 		-- have to use name and realm to invite cross realm or faction
 		local name, realm = UnitNameFromGUID(requesterGUID)
-		C_PartyInfo.InviteUnit(name .. '-' .. realm)
+		if realm ~= nil then
+			C_PartyInfo.InviteUnit(name .. '-' .. realm)
+		else
+			C_PartyInfo.InviteUnit(name)
+		end
 	end
 end
 
