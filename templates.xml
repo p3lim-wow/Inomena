@@ -1,4 +1,0 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Frame name="InomenaPropagateMotion" propagateMouseInput="Motion" virtual="true"/>
-  <Frame name="InomenaPropagateClicks" propagateMouseInput="Clicks" virtual="true"/>
-</Ui>

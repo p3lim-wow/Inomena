@@ -240,7 +240,7 @@ local function style(self, unit)
 	PrivateAuras.maxCols = 99 -- make sure it never wraps
 	self.PrivateAuras = PrivateAuras
 
-	local Phase = self:CreateFrame('Frame', 'InomenaPropagateClicks')
+	local Phase = self:CreateFrame('Frame', 'InsecureMouseClicksPropagatorTemplate')
 	Phase:SetSize(28, 28)
 	Phase:SetPoint('CENTER')
 	Phase:EnableMouse(true) -- for tooltips
