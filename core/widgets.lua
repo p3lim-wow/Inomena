@@ -81,7 +81,7 @@ end
 do
 	local textMixin = {}
 	function textMixin:SetFontSize(size)
-		self:SetFont(addon.FONT, size or 16, 'OUTLINE')
+		self:SetFont(addon.FONT, size or 16, 'SLUG,OUTLINE')
 	end
 
 	function textMixin:SetFrameLevel(level)

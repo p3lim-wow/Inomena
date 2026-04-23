@@ -449,5 +449,5 @@ for _, fontObject in next, {
 	'SystemFont_LargeNamePlateFixed',
 } do
 	-- font size doesn't seem to matter, they'll be resized anyways?
-	_G[fontObject]:SetFont(addon.FONT, 16, 'OUTLINE')
+	_G[fontObject]:SetFont(addon.FONT, 16, 'SLUG,OUTLINE')
 end

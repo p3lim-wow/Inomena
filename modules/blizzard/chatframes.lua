@@ -93,11 +93,11 @@ for chatIndex = 1, Constants.ChatFrameConstants.MaxChatWindows do
 		chatFrame:SetScript('OnMouseWheel', onChatScroll)
 
 		-- change chat font
-		chatFrame:SetFont(addon.FONT, 13, 'OUTLINE')
+		chatFrame:SetFont(addon.FONT, 13, 'SLUG,OUTLINE')
 		chatFrame:SetShadowOffset(0, 0)
 
 		-- change chat tab font
-		chatTab.Text:SetFont(addon.FONT, 12, 'OUTLINE')
+		chatTab.Text:SetFont(addon.FONT, 12, 'SLUG,OUTLINE')
 		chatTab.Text:SetShadowOffset(0, 0)
 
 		-- don't require holding alt key to navigate editbox
@@ -133,9 +133,9 @@ for chatIndex = 1, Constants.ChatFrameConstants.MaxChatWindows do
 end
 
 -- change edit box font
-ChatFrame1EditBox:SetFont(addon.FONT, 13, 'OUTLINE')
+ChatFrame1EditBox:SetFont(addon.FONT, 13, 'SLUG,OUTLINE')
 ChatFrame1EditBox:SetShadowOffset(0, 0)
-ChatFrame1EditBoxHeader:SetFont(addon.FONT, 13, 'OUTLINE')
+ChatFrame1EditBoxHeader:SetFont(addon.FONT, 13, 'SLUG,OUTLINE')
 ChatFrame1EditBoxHeader:SetShadowOffset(0, 0)
 
 -- expose API for other modules

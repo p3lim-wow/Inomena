@@ -103,7 +103,7 @@ for prefix, numButtons in next, {
 			-- reposition and change font of hotkey
 			button.HotKey:ClearAllPoints()
 			button.HotKey:SetPoint('TOPLEFT', button, 2, -4)
-			button.HotKey:SetFont(addon.FONT, 14, 'OUTLINE')
+			button.HotKey:SetFont(addon.FONT, 14, 'SLUG,OUTLINE')
 			button.HotKey:SetJustifyH('LEFT')
 			button.HotKey:SetIgnoreParentAlpha(true)
 
@@ -139,7 +139,7 @@ for prefix, numButtons in next, {
 		-- reposition and change font of count widget
 		button.Count:ClearAllPoints()
 		button.Count:SetPoint('BOTTOMRIGHT', -2, 2)
-		button.Count:SetFont(addon.FONT, 18, 'OUTLINE')
+		button.Count:SetFont(addon.FONT, 18, 'SLUG,OUTLINE')
 		button.Count:SetJustifyH('RIGHT')
 
 		-- replace highlight texture with color
