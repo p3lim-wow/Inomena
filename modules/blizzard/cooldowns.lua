@@ -20,11 +20,13 @@ local function updateCooldown(button, _, spellID, baseSpellID)
 		return
 	end
 
-	local duration
-	local charge = C_Spell.GetSpellChargeDuration(spellID)
+	local duration, charge
 	local cooldown = C_Spell.GetSpellCooldown(spellID)
-	if cooldown and not cooldown.isOnGCD then
-		duration = C_Spell.GetSpellCooldownDuration(spellID)
+	if cooldown and not cooldown.isOnGCD and cooldown.isActive then
+		duration = C_Spell.GetSpellCooldownDuration(spellID, true)
+	else
+		duration = C_Spell.GetSpellChargeDuration(spellID)
+		charge = C_Spell.GetSpellCharges(spellID) ~= nil
 	end
 
 	button.CustomCooldown:Hide()
@@ -32,10 +34,10 @@ local function updateCooldown(button, _, spellID, baseSpellID)
 	button:SetAlphaFromBoolean(not button.utility, 1, 0)
 	button:SetBorderAlpha(button.utility and 0 or 1)
 
-	if charge or duration then
-		button.CustomCooldown:SetCooldownFromDurationObject(charge or duration)
+	if duration then
+		button.CustomCooldown:SetCooldownFromDurationObject(duration)
 
-		if duration then
+		if duration and not charge then
 			button.Icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.ActionDesaturation))
 
 			if button.utility then
@@ -145,10 +147,12 @@ for _, group in next, {
 	RegisterStateDriver(listener, 'visibility', '[petbattle][vehicleui][bonusbar:5] hide; show')
 	listener:HookScript('OnAttributeChanged', function(_, _, shouldHide)
 		_G[group]:SetAlphaFromBoolean(not shouldHide, 1, 0)
+
 		for _, button in next, _G[group]:GetItemFrames() do
 			if button.CustomCooldown then
 				button.CustomCooldown:SetIgnoreParentAlpha(not shouldHide)
 			end
+
 			if button.SetBorderIgnoreParentAlpha then -- not ready yet
 				button:SetBorderIgnoreParentAlpha(not shouldHide)
 			end
