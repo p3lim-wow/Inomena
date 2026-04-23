@@ -193,6 +193,7 @@ read_globals = {
 	-- namespaces
 	'C_ActionBar',
 	'C_AddOns',
+	'C_AuctionHouse',
 	'C_BattleNet',
 	'C_ChallengeMode',
 	'C_ClassColor',
