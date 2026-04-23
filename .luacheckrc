@@ -221,6 +221,7 @@ read_globals = {
 	'C_PetJournal',
 	'C_PlayerInfo',
 	'C_QuestLog',
+	'C_Secrets',
 	'C_Sound',
 	'C_SpecializationInfo',
 	'C_Spell',
