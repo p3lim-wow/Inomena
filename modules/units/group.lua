@@ -7,23 +7,17 @@ local function overrideDisplayPower(element, unit)
 
 	local role = UnitGroupRolesAssigned(unit)
 	if role == 'HEALER' then
-		if UnitPowerType(unit) == Enum.PowerType.Mana then
-			self:EnableElement('Power')
-			self.Health.TempLoss:SetHeight(self:GetHeight() - element:GetHeight() - 1)
-
-			return Enum.PowerType.Mana
-		end
+		self.Health.TempLoss:SetHeight(self:GetHeight() - element:GetHeight() - 1)
+		return Enum.PowerType.Mana
 	elseif role == 'TANK' then
 		local _, classToken = UnitClass(unit)
 		if classToken == 'DEATHKNIGHT' then
-			self:EnableElement('Power')
 			self.Health.TempLoss:SetHeight(self:GetHeight() - element:GetHeight() - 1)
 
 			return Enum.PowerType.RunicPower
 		end
 	end
 
-	self:DisableElement('Power')
 	self.Health.TempLoss:SetHeight(self:GetHeight())
 end
 
