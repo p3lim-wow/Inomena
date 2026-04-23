@@ -222,9 +222,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Name:SetJustifyH('LEFT')
 	Name:SetWordWrap(false)
 	Name:SetFrameLevel(10)
-	if Name.SetSmoothScaling then
-		Name:SetSmoothScaling(true) -- new in 12.0.5, hopefully fixes jaggy strings
-	end
+	Name:SetSmoothScaling(true) -- new in 12.0.5, hopefully fixes jaggy strings
 	self.Name = Name
 	self:Tag(Name, '[inomena:quest][inomena:nameplatecolor][inomena:name<$|r]')
 
@@ -232,9 +230,7 @@ oUF:RegisterStyle(styleName, function(self)
 	FriendlyName:SetPoint('CENTER')
 	FriendlyName:SetJustifyH('CENTER')
 	FriendlyName:SetFrameLevel(10)
-	if FriendlyName.SetSmoothScaling then
-		FriendlyName:SetSmoothScaling(true) -- new in 12.0.5, hopefully fixes jaggy strings
-	end
+	FriendlyName:SetSmoothScaling(true) -- new in 12.0.5, hopefully fixes jaggy strings
 	self.FriendlyName = FriendlyName
 	self:Tag(FriendlyName, '[inomena:reactioncolor][inomena:name<$|r]')
 
