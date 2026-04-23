@@ -103,6 +103,22 @@ do
 end
 
 do
+	local timeFormatter = C_StringUtil.CreateNumericRuleFormatter()
+	timeFormatter:SetBreakpoints({
+		{
+			threshold = 0,
+			format = '%0.1f',
+		},
+		{
+			threshold = 3.01,
+			format = '%d',
+		},
+		{
+			threshold = 59,
+			format = '',
+		},
+	})
+
 	local cooldownMixin = {}
 	function cooldownMixin:SetTimeFont(size)
 		self:GetCountdownFontString():SetFont(addon.FONT, size or 16, 'OUTLINE')
@@ -128,6 +144,7 @@ do
 		cooldown:SetSwipeColor(0, 0, 0, 0.9)
 		cooldown:SetTimeFont()
 		cooldown:SetIgnoreGlobalCooldown(true)
+		cooldown:SetCountdownFormatter(timeFormatter)
 		return cooldown
 	end
 
