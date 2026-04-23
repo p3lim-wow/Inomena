@@ -68,6 +68,7 @@ modules\widgets\buffs.lua
 modules\widgets\chef.lua
 modules\widgets\commands.lua
 modules\widgets\coordinates.lua
+modules\widgets\character.lua
 modules\widgets\guild.lua
 modules\widgets\herotalents.lua
 modules\widgets\mail.lua
@@ -79,7 +80,6 @@ modules\widgets\strip.lua
 modules\widgets\talents.lua
 
 modules\blizzard\actionbar.lua
-modules\blizzard\character.lua
 modules\blizzard\chatfilter.lua
 modules\blizzard\chatframes.lua
 modules\blizzard\cooldowns.lua
