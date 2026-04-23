@@ -377,6 +377,7 @@ local nameplates = oUF:SpawnNamePlates()
 nameplates:SetAddedCallback(updateOnAdded)
 nameplates:SetRemovedCallback(updateOnRemoved)
 nameplates:SetSize(200, 50) -- we keep it wide just because of stupid long names, no other reason
+nameplates:SetFriendlyInteractible(false)
 
 nameplates:SetCVars({
 	-- from the settings, in order
