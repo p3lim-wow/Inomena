@@ -54,7 +54,7 @@ local function updateOnAdded(self)
 		fullSize = false
 	end
 
-	if UnitIsUnit(unit, 'target') then
+	if C_Secrets.CanCompareUnitTokens(unit, 'target') and UnitIsUnit(unit, 'target') then
 		fullSize = true
 
 		self.TargetOutline:Show()
@@ -101,7 +101,7 @@ local function updateHighlight(self, event, worldCursorAnchorType)
 		self.Highlight:Hide()
 	elseif event == 'UPDATE_MOUSEOVER_UNIT' then
 		-- mouse entered some unit
-		if UnitIsUnit(self.unit, 'mouseover') then
+		if C_Secrets.CanCompareUnitTokens(self.unit, 'mouseover') and UnitIsUnit(self.unit, 'mouseover') then
 			self.Highlight:Show()
 		else
 			self.Highlight:Hide()
@@ -122,7 +122,7 @@ local function updateHealthColor(self, event, unit)
 	local color
 	if addon:IsInDungeon() and not addon:IsInRaid() then
 		local inCombat = UnitAffectingCombat(unit)
-		if UnitIsUnit(unit, 'focus') then
+		if C_Secrets.CanCompareUnitTokens(unit, 'focus') and UnitIsUnit(unit, 'focus') then
 			color = addon.colors.focus
 		elseif inCombat then
 			color = addon.colors.nameplate
