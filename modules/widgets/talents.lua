@@ -7,8 +7,6 @@ local function resetSpecButtons()
 	for index, button in next, specButtons do
 		button:SetChecked(index == C_SpecializationInfo.GetSpecialization())
 	end
-
-	PlayerSpellsFrame.TalentsFrame.DisabledOverlay:Hide()
 end
 
 local function onSpecButtonClick(self)
@@ -16,8 +14,6 @@ local function onSpecButtonClick(self)
 
 	if not InCombatLockdown() and self:GetID() ~= C_SpecializationInfo.GetSpecialization() then
 		C_SpecializationInfo.SetSpecialization(self:GetID())
-
-		PlayerSpellsFrame.TalentsFrame.DisabledOverlay:Show()
 	end
 end
 
