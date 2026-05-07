@@ -121,7 +121,7 @@ do
 
 	local cooldownMixin = {}
 	function cooldownMixin:SetTimeFont(size)
-		self:GetCountdownFontString():SetFont(addon.FONT, size or 16, 'OUTLINE')
+		self:GetCountdownFontString():SetFont(addon.FONT, size or 16, 'SLUG,OUTLINE')
 	end
 
 	function cooldownMixin:ClearTimePoints()
