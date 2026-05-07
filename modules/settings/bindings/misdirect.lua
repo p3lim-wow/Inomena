@@ -71,7 +71,7 @@ local function updateTarget()
 	end
 
 	local name = UnitName(unit)
-	if not name or name == UNKNOWN then
+	if name == nil or issecretvalue(name) or name == UNKNOWN then
 		-- unit names aren't cached during loading/joining
 		return
 	end
