@@ -448,3 +448,6 @@ for _, fontObject in next, {
 	-- font size doesn't seem to matter, they'll be resized anyways?
 	_G[fontObject]:SetFont(addon.FONT, 16, 'SLUG,OUTLINE')
 end
+
+-- hide realm names for friendly nameplates in instances
+addon:SafeSetNil(NamePlateFriendlyFrameOptions, 'updateNameUsesGetUnitName')
