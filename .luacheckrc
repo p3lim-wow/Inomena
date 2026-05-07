@@ -58,6 +58,7 @@ read_globals = {
 	'DressUpFrame',
 	'EventToastManagerFrame',
 	'GameTooltip',
+	'GameTooltipDefaultContainer',
 	'GameTooltipStatusBar',
 	'HybridMinimap',
 	'LFDRoleCheckPopupAcceptButton',
@@ -110,6 +111,7 @@ read_globals = {
 	-- FrameXML misc objects
 	'CVarCallbackRegistry',
 	'Menu',
+	'NamePlateFriendlyFrameOptions',
 	'PaperDollSidebarTabs',
 	'PowerBarColor',
 	'SlashCmdList',
