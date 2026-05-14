@@ -82,7 +82,10 @@ local function generateMacro()
 	local macro
 	local mapID = addon:GetPlayerMapID()
 
-	if MAPS.Undermine[mapID] and C_SpellBook.IsSpellKnown(1215279) then
+	if mapID == 194 and C_Item.GetItemCount(46856) then
+		-- "Keys to the Hot Rod" in Kezan
+		macro = MACRO.Item:format(46856)
+	elseif MAPS.Undermine[mapID] and C_SpellBook.IsSpellKnown(1215279) then
 		-- "G-99 Breakneck" in Undermine
 		macro = MACRO.Spell:format(C_Spell.GetSpellName(460013))
 	elseif MAPS.Maw[mapID] and not C_QuestLog.IsQuestFlaggedCompleted(63994) then
