@@ -28,7 +28,7 @@ local CVARS = { -- exposed settings from the interface options
 	showTutorials = 0,
 	Outline = 1,
 	chatBubbles = 1, -- (default)
-	chatBubblesParty = 0,
+	chatBubblesParty = 1,
 	chatBubblesRaid = 0, -- (default)
 
 	-- Gameplay Action Bars
