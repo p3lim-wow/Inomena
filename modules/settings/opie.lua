@@ -394,6 +394,7 @@ local RINGS = addon:T({
 		{'toy', 205255, show='[zone:Zaralek Cavern]'}, -- Niffen Diggin' Mitts
 		{'item', 234389, show='[zone:Liberation of Undermine]'}, -- Gallagio Royalty Rewards Card: Silver
 		{'item', 249699, show='[zone:Manaforge Omega]'}, -- Shadowguard Translocator
+		{'toy', 276371, show='[zone:Naigtal][zone:Val]'}, -- Lightveil Recall Beacon
 		{'spell', 312370, show='[race:vulpera]'}, -- Make Camp
 		{'spell', 312372, show='[race:vulpera]'}, -- Return to Camp
 		{'spell', 265225, show='[race:darkirondwarf]'}, -- Mole Machine
