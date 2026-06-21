@@ -38,7 +38,7 @@ tags.Methods['inomena:hptarget'] = function(unit)
 		if UnitCanAttack('player', unit) then
 			return C_StringUtil.WrapString(_TAGS['inomena:hpper'](unit), '(', '|cff0090ff%|r)')
 		else
-			return C_StringUtil.WrapString(addon:AbbreviateNumbers(UnitHealth(unit)), '|cff0090ff/|r ')
+			return C_StringUtil.WrapString(addon:AbbreviateNumbers(UnitHealthMax(unit)), '|cff0090ff/|r ')
 		end
 	end
 end

@@ -329,6 +329,7 @@ read_globals = {
 	'UnitHasIncomingResurrection',
 	'UnitHasVehicleUI',
 	'UnitHealth',
+	'UnitHealthMax',
 	'UnitHealthMissing',
 	'UnitHealthPercent',
 	'UnitInVehicle',
