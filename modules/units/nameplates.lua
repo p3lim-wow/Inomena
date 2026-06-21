@@ -190,6 +190,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Health.colorSelection = true
 	Health.colorThreat = true
 	Health.UpdateColor = updateHealthColor
+	Health.UpdatePredictionSize = nop -- don't let oUF mess with sizes
 	self.Health = Health
 
 	local DamageAbsorb = Health:CreateStatusBar()
