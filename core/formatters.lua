@@ -20,3 +20,17 @@ addon.formatters.Countdown:SetBreakpoints({
 		format = '',
 	},
 })
+
+-- for time < 10 seconds this will render "9.8"
+-- for time > 10 seconds this will render nothing
+addon.formatters.Buff = C_StringUtil.CreateNumericRuleFormatter()
+addon.formatters.Buff:SetBreakpoints({
+	{
+		threshold = 0,
+		format = '%0.1f'
+	},
+	{
+		threshold = 9.99,
+		format = ''
+	}
+})

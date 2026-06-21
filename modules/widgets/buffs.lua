@@ -18,16 +18,6 @@ local function auraOnEnter(button)
 	end
 end
 
-local function auraOnUpdate(button)
-	if not button.duration then
-		return
-	end
-
-	local decimals = button.duration:EvaluateRemainingDuration(addon.curves.DurationDecimals)
-	button.Time:SetFormattedText('%.' .. decimals .. 'f', button.duration:GetRemainingDuration())
-	button.Time:SetAlpha(button.duration:EvaluateRemainingDuration(addon.curves.AuraAlpha))
-end
-
 local function auraUpdateBuff(button, auraIndex)
 	local unit = button:GetParent():GetAttribute('unit')
 	local auraInfo = C_UnitAuras.GetAuraDataByIndex(unit, auraIndex, 'HELPFUL')
@@ -36,23 +26,16 @@ local function auraUpdateBuff(button, auraIndex)
 
 		button.Icon:SetTexture(auraInfo.icon)
 		button.Count:SetText(C_UnitAuras.GetAuraApplicationDisplayCount(unit, instanceID, 2, 999))
-
-		button.duration = C_UnitAuras.GetAuraDuration(unit, instanceID)
-		if button.duration then
-			button:SetScript('OnUpdate', auraOnUpdate)
-		else
-			button:SetScript('OnUpdate', nil)
-			button.Time:SetText('')
-		end
+		button.Time.Binding:SetDuration(C_UnitAuras.GetAuraDuration(unit, instanceID))
 	end
 end
 
 local function auraUpdateEnchant(button, inventorySlotIndex)
-	local duration, count, _
+	local expiration, count, _
 	if inventorySlotIndex == 16 then -- main hand
-		_, duration, count = GetWeaponEnchantInfo()
+		_, expiration, count = GetWeaponEnchantInfo()
 	elseif inventorySlotIndex == 17 then -- off hand
-		_, _, _, _, _, duration, count = GetWeaponEnchantInfo()
+		_, _, _, _, _, expiration, count = GetWeaponEnchantInfo()
 	else
 		return
 	end
@@ -61,14 +44,9 @@ local function auraUpdateEnchant(button, inventorySlotIndex)
 	button.Count:SetText(count and count > 1 or '')
 	button:SetBorderColor(0.6, 0, 1) -- visual indicator that this is a weapon enchant
 
-	button.duration = C_DurationUtil.CreateDuration()
-	button.duration:SetTimeFromStart(GetTime(), duration)
-	if button.duration then
-		button:SetScript('OnUpdate', auraOnUpdate)
-	else
-		button:SetScript('OnUpdate', nil)
-		button.Time:SetText('')
-	end
+	local duration = C_DurationUtil.CreateDuration()
+	duration:SetTimeFromStart(GetTime(), expiration)
+	button.Time.Binding:SetDuration(duration)
 end
 
 local function auraOnAttributeChanged(button, attribute, ...)
@@ -96,6 +74,12 @@ local function auraButtonInit(button)
 	button.Time = button:CreateText(13)
 	button.Time:SetPoint('TOPLEFT', 1, -1)
 	button.Time:SetJustifyH('LEFT')
+
+	local timeBinding = C_DurationUtil.CreateDurationTextBinding()
+	timeBinding:SetFontString(button.Time)
+	timeBinding:SetFormatter(addon.formatters.Buff)
+	timeBinding:Enable()
+	button.Time.Binding = timeBinding
 
 	-- add script handlers
 	button:HookScript('OnAttributeChanged', auraOnAttributeChanged)
