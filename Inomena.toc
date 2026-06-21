@@ -31,6 +31,7 @@ modules\settings\bindings\reload.lua
 modules\settings\bindings\resurrect.lua
 modules\settings\bindings\skyriding.lua
 
+modules\settings\chat.lua
 modules\settings\cvars.lua
 modules\settings\played.lua
 modules\settings\tracking.lua
