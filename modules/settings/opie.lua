@@ -426,6 +426,9 @@ local RINGS = addon:T({
 		name = addonName .. 'TradeSkill',
 		extends = 'CommonTrades', -- base off of a ring provided by OPie
 
+		-- Pierre companion acts as an instant mobile campfire
+		{'battlepet', (select(2, C_PetJournal.FindPetIDByName((C_PetJournal.GetPetInfoBySpeciesID(1204)))))}, -- Pierre
+
 		-- misc utility that aren't really tradeskills but I like to have them in this ring
 		{'spell', 83958}, -- Mobile Banking
 		{'spell', 460905}, -- Warband Bank Distance Inhibitor
