@@ -198,6 +198,7 @@ read_globals = {
 	'C_AuctionHouse',
 	'C_BattleNet',
 	'C_ChallengeMode',
+	'C_ChatInfo',
 	'C_ClassColor',
 	'C_ClassTalents',
 	'C_ColorUtil',

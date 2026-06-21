@@ -112,3 +112,17 @@ addon:RegisterSlash('/paste', function()
 
 	paste:Show()
 end)
+
+-- tell the target, just a shell of what it used to be...
+addon:RegisterSlash('/tt', function(msg)
+	if UnitIsPlayer('target') and UnitIsFriend('player', 'target') and msg and msg:len() > 0 then
+		local name, realm = UnitName('target')
+		if realm and realm ~= '' then
+			name = name .. '-' .. realm
+		end
+
+		C_ChatInfo.SendChatMessage(msg, 'WHISPER', nil, name)
+	else
+		addon:Print('Can\'t whisper that target')
+	end
+end)
