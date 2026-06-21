@@ -472,6 +472,7 @@ do
 			-- https://www.townlong-yak.com/addons/opie/dev/slice-token-requirements
 			slice.sliceToken = ring.name .. '_' .. (slice._t or (slice[1] .. (slice[2] or '')))
 			slice.sliceToken = slice.sliceToken:gsub('%.', '_') -- token doesn't support "."
+			slice.sliceToken = slice.sliceToken:gsub('%-', '_') -- token doesn't support "-"
 			assert(not sliceTokens[slice.sliceToken], 'sliceToken ' .. slice.sliceToken .. ' is not unique')
 			sliceTokens[slice.sliceToken] = true
 		end
