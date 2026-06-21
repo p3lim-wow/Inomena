@@ -98,6 +98,6 @@ addon:RegisterUnitEvent('UNIT_PET', 'player', updateTarget)
 addon:RegisterSlash('/md', function()
 	local unit = 'target'
 	local unitGUID = UnitExists(unit) and UnitGUID(unit)
-	forcedGUID = unitGUID and (IsGUIDInGroup(unitGUID) or UnitIsUnit(unit, 'pet')) and unitGUID
+	forcedGUID = unitGUID and (C_PartyInfo.IsGUIDInGroup(unitGUID) or UnitIsUnit(unit, 'pet')) and unitGUID
 	updateTarget()
 end)
