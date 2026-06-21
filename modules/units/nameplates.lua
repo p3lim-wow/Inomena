@@ -28,7 +28,6 @@ local function updateOnAdded(self)
 		self.Name:Hide()
 		self.FriendlyName:Show()
 		self.PetIcon:Hide()
-		self.Health:Hide()
 		self:DisableElement('Health')
 		self:DisableElement('Auras')
 		self:DisableElement('Castbar')
@@ -36,8 +35,8 @@ local function updateOnAdded(self)
 	else
 		self.Name:Hide() -- we change this later
 		self.FriendlyName:Hide()
-		self.Health:Show()
 		self:EnableElement('Health')
+		self.Health:Show()
 		self:EnableElement('Auras')
 		self:EnableElement('Castbar')
 	end
