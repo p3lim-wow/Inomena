@@ -66,6 +66,7 @@ modules\automations\pierre.lua
 modules\automations\repair.lua
 modules\automations\tracking.lua
 modules\automations\trash.lua
+modules\automations\travelform.lua
 
 modules\widgets\buffs.lua
 modules\widgets\chef.lua
