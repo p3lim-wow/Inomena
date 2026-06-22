@@ -131,3 +131,9 @@ for _, tooltipFontString in next, {
 	_G[tooltipFontString]:SetFont(addon.FONT, 12, 'OUTLINE')
 	_G[tooltipFontString]:SetShadowOffset(0, 0)
 end
+
+-- replace money frame on tooltip with string alternative, which we can skin
+TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.SellPrice, function(tooltip, lineData)
+	tooltip:AddLine(SELL_PRICE .. ': ' .. GetMoneyString(lineData.price), WHITE_FONT_COLOR:GetRGB())
+	return true
+end)
