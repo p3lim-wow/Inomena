@@ -5,11 +5,11 @@ local function filterBuffs(_, unit)
 	return UnitIsEnemy('player', unit)
 end
 
-local function updateFocusOutline(self)
+local function updateOutline(self)
 	self.FocusOutline:SetShown(UnitIsUnit(self.unit, 'focus'))
 end
 
-local function updateFocusAnchors(self)
+local function updateOutlineAnchors(self)
 	if self.Castbar:IsShown() then
 		self.FocusOutline:SetPoint('BOTTOM', self.Castbar, 0, -4)
 		self.FocusOutline.Bottom:SetPoint('TOP', self.Castbar, 'BOTTOM')
@@ -92,8 +92,8 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Castbar:SetPoint('TOPLEFT', self, 'BOTTOMLEFT', 0, -1)
 	Castbar:SetPoint('TOPRIGHT', self, 'BOTTOMRIGHT', 0, -1)
 	Castbar:SetHeight(18)
-	Castbar:HookScript('OnShow', GenerateFlatClosure(updateFocusAnchors, self))
-	Castbar:HookScript('OnHide', GenerateFlatClosure(updateFocusAnchors, self))
+	Castbar:HookScript('OnShow', GenerateFlatClosure(updateOutlineAnchors, self))
+	Castbar:HookScript('OnHide', GenerateFlatClosure(updateOutlineAnchors, self))
 	Castbar.timeToHold = 2.5
 	Castbar.PostCastStart = addon.unitShared.PostUpdateCast
 	Castbar.PostCastInterruptible = addon.unitShared.PostUpdateCast
@@ -120,45 +120,13 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	CastbarText:SetJustifyH('LEFT')
 	Castbar.Text = CastbarText
 
-	local FocusOutline = Health:CreateBackdropFrame()
-	FocusOutline:SetPoint('TOPLEFT', -4, 4)
-	FocusOutline:SetPoint('TOPRIGHT', 4, 4)
-	FocusOutline:SetPoint('BOTTOM', 0, -4)
-	FocusOutline:SetFrameStrata('BACKGROUND')
-	FocusOutline:SetBackgroundColor(0, 0, 0, 0)
+	local FocusOutline = addon:CreateOutline(Health)
+	FocusOutline:SetColor(1, 0, 0)
 	FocusOutline:Hide()
 	self.FocusOutline = FocusOutline
 
-	local TargetOutlineLeft = FocusOutline:CreateTexture()
-	TargetOutlineLeft:SetPoint('TOPLEFT')
-	TargetOutlineLeft:SetPoint('BOTTOMLEFT')
-	TargetOutlineLeft:SetPoint('RIGHT', Health, 'LEFT')
-	TargetOutlineLeft:SetColorTexture(1, 0, 0)
-	FocusOutline.Left = TargetOutlineLeft
-
-	local TargetOutlineRight = FocusOutline:CreateTexture()
-	TargetOutlineRight:SetPoint('TOPRIGHT')
-	TargetOutlineRight:SetPoint('BOTTOMRIGHT')
-	TargetOutlineRight:SetPoint('LEFT', Health, 'RIGHT')
-	TargetOutlineRight:SetColorTexture(1, 0, 0)
-	FocusOutline.Right = TargetOutlineRight
-
-	local TargetOutlineTop = FocusOutline:CreateTexture()
-	TargetOutlineTop:SetPoint('TOPLEFT')
-	TargetOutlineTop:SetPoint('TOPRIGHT')
-	TargetOutlineTop:SetPoint('BOTTOM', Health, 'TOP')
-	TargetOutlineTop:SetColorTexture(1, 0, 0)
-	FocusOutline.Top = TargetOutlineTop
-
-	local TargetOutlineBottom = FocusOutline:CreateTexture()
-	TargetOutlineBottom:SetPoint('BOTTOMLEFT')
-	TargetOutlineBottom:SetPoint('BOTTOMRIGHT')
-	TargetOutlineBottom:SetPoint('TOP', Health, 'BOTTOM')
-	TargetOutlineBottom:SetColorTexture(1, 0, 0)
-	FocusOutline.Bottom = TargetOutlineBottom
-
-	self:RegisterEvent('PLAYER_FOCUS_CHANGED', updateFocusOutline, true)
-	self:RegisterEvent('PLAYER_LOGIN', updateFocusOutline, true)
+	self:RegisterEvent('PLAYER_FOCUS_CHANGED', updateOutline, true)
+	self:RegisterEvent('PLAYER_LOGIN', updateOutline, true)
 end)
 
 oUF:SetActiveStyle(styleName)

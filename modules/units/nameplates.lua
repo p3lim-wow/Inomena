@@ -2,7 +2,7 @@ local _, addon = ...
 local oUF = addon.oUF
 
 
-local function updateAnchors(self)
+local function updateOutlineAnchors(self)
 	if self.Castbar:IsShown() then
 		self.TargetOutline:SetPoint('BOTTOM', self.Castbar, 0, -4)
 		self.TargetOutline.Bottom:SetPoint('TOP', self.Castbar, 'BOTTOM')
@@ -78,7 +78,7 @@ local function updateOnAdded(self)
 		self.HealthValue:Hide()
 	end
 
-	updateAnchors(self)
+	updateOutlineAnchors(self)
 
 	self.PetIcon:SetShown(UnitIsOtherPlayersPet(unit))
 
@@ -297,8 +297,8 @@ oUF:RegisterStyle(styleName, function(self)
 	Castbar:SetPoint('TOPLEFT', Health, 'BOTTOMLEFT', 0, -1)
 	Castbar:SetPoint('TOPRIGHT', Health, 'BOTTOMRIGHT', 0, -1)
 	Castbar:SetHeight(20)
-	Castbar:HookScript('OnShow', GenerateFlatClosure(updateAnchors, self))
-	Castbar:HookScript('OnHide', GenerateFlatClosure(updateAnchors, self))
+	Castbar:HookScript('OnShow', GenerateFlatClosure(updateOutlineAnchors, self))
+	Castbar:HookScript('OnHide', GenerateFlatClosure(updateOutlineAnchors, self))
 	Castbar.timeToHold = 2.5
 	Castbar.PostCastStart = addon.unitShared.PostUpdateCast
 	Castbar.PostCastInterruptible = addon.unitShared.PostUpdateCast
@@ -321,42 +321,10 @@ oUF:RegisterStyle(styleName, function(self)
 	CastbarText:SetFrameLevel(10)
 	Castbar.Text = CastbarText
 
-	local TargetOutline = Health:CreateBackdropFrame()
-	TargetOutline:SetPoint('TOPLEFT', -4, 4)
-	TargetOutline:SetPoint('TOPRIGHT', 4, 4)
-	TargetOutline:SetPoint('BOTTOM', 0, -4)
-	TargetOutline:SetFrameStrata('BACKGROUND')
-	TargetOutline:SetBackgroundColor(0, 0, 0, 0)
+	local TargetOutline = addon:CreateOutline(Health)
+	TargetOutline:SetColor(1, 1, 1)
 	TargetOutline:Hide()
 	self.TargetOutline = TargetOutline
-
-	local TargetOutlineLeft = TargetOutline:CreateTexture()
-	TargetOutlineLeft:SetPoint('TOPLEFT')
-	TargetOutlineLeft:SetPoint('BOTTOMLEFT')
-	TargetOutlineLeft:SetPoint('RIGHT', Health, 'LEFT')
-	TargetOutlineLeft:SetColorTexture(1, 1, 1)
-	TargetOutline.Left = TargetOutlineLeft
-
-	local TargetOutlineRight = TargetOutline:CreateTexture()
-	TargetOutlineRight:SetPoint('TOPRIGHT')
-	TargetOutlineRight:SetPoint('BOTTOMRIGHT')
-	TargetOutlineRight:SetPoint('LEFT', Health, 'RIGHT')
-	TargetOutlineRight:SetColorTexture(1, 1, 1)
-	TargetOutline.Right = TargetOutlineRight
-
-	local TargetOutlineTop = TargetOutline:CreateTexture()
-	TargetOutlineTop:SetPoint('TOPLEFT')
-	TargetOutlineTop:SetPoint('TOPRIGHT')
-	TargetOutlineTop:SetPoint('BOTTOM', Health, 'TOP')
-	TargetOutlineTop:SetColorTexture(1, 1, 1)
-	TargetOutline.Top = TargetOutlineTop
-
-	local TargetOutlineBottom = TargetOutline:CreateTexture()
-	TargetOutlineBottom:SetPoint('BOTTOMLEFT')
-	TargetOutlineBottom:SetPoint('BOTTOMRIGHT')
-	TargetOutlineBottom:SetPoint('TOP', Health, 'BOTTOM')
-	TargetOutlineBottom:SetColorTexture(1, 1, 1)
-	TargetOutline.Bottom = TargetOutlineBottom
 
 	self:RegisterEvent('PLAYER_REGEN_DISABLED', updateOnAdded, true) -- for combat state changes
 	self:RegisterEvent('PLAYER_REGEN_ENABLED', updateOnAdded, true) -- for combat state changes
