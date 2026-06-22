@@ -72,6 +72,7 @@ modules\widgets\chef.lua
 modules\widgets\commands.lua
 modules\widgets\coordinates.lua
 modules\widgets\character.lua
+modules\widgets\garrison.lua
 modules\widgets\guild.lua
 modules\widgets\herotalents.lua
 modules\widgets\mail.lua
