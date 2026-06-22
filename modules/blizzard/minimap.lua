@@ -33,7 +33,6 @@ addon:Hide('Minimap', 'ZoomIn')
 addon:Hide('Minimap', 'ZoomOut')
 addon:Hide('Minimap', 'ZoomHitArea')
 addon:Hide('GameTimeFrame')
-addon:Hide('ExpansionLandingPageMinimapButton')
 
 -- reanchor tracking so we can use the menu directly
 MinimapCluster.Tracking:SetParent(Minimap)

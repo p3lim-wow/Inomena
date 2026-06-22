@@ -57,6 +57,7 @@ read_globals = {
 	'DeveloperConsole',
 	'DressUpFrame',
 	'EventToastManagerFrame',
+	'ExpansionLandingPageMinimapButton',
 	'GameTooltip',
 	'GameTooltipDefaultContainer',
 	'GameTooltipStatusBar',
@@ -388,6 +389,7 @@ read_globals = {
 	'issecretvalue',
 
 	-- misc globals
+	'LE_EXPANSION_MIDNIGHT',
 	'NUM_LE_FRAME_TUTORIALS',
 
 	-- luacheck gets confused about oUF's tag environment

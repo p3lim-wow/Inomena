@@ -88,6 +88,7 @@ modules\blizzard\chatframes.lua
 modules\blizzard\chatmessages.lua
 modules\blizzard\cooldowns.lua
 modules\blizzard\dressingroom.lua
+modules\blizzard\ephemeral.lua
 modules\blizzard\hide.lua
 modules\blizzard\mail.lua
 modules\blizzard\minimap.lua
