@@ -27,6 +27,10 @@ addon.formatters.Buff = C_StringUtil.CreateNumericRuleFormatter()
 addon.formatters.Buff:SetBreakpoints({
 	{
 		threshold = 0,
+		format = ''
+	},
+	{
+		threshold = 0.01,
 		format = '%0.1f'
 	},
 	{
