@@ -113,7 +113,8 @@ function addon:OnLogin()
 	for chatIndex = 1, Constants.ChatFrameConstants.MaxChatWindows do
 		if chatIndex ~= 2 and chatIndex ~= 3 then
 			local name, _, _, _, _, _, _, _, isDocked = FCF_GetChatWindowInfo(chatIndex)
-			if not isDocked or name ~= CHAT_FRAMES[frameIndex].name then
+			local info = CHAT_FRAMES[frameIndex]
+			if (name and isDocked and not info) or (not isDocked and info and info.name ~= name) then
 				reset()
 				return -- we only loop to check for differences
 			end
