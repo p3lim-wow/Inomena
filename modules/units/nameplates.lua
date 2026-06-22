@@ -5,10 +5,10 @@ local oUF = addon.oUF
 local function updateOutlineAnchors(self)
 	if self.Castbar:IsShown() then
 		self.TargetOutline:SetPoint('BOTTOM', self.Castbar, 0, -4)
-		self.TargetOutline.Bottom:SetPoint('TOP', self.Castbar, 'BOTTOM')
+		self.TargetOutline.edges.Bottom:SetPoint('TOP', self.Castbar, 'BOTTOM')
 	else
 		self.TargetOutline:SetPoint('BOTTOM', self.Health, 0, -4)
-		self.TargetOutline.Bottom:SetPoint('TOP', self.Health, 'BOTTOM')
+		self.TargetOutline.edges.Bottom:SetPoint('TOP', self.Health, 'BOTTOM')
 	end
 end
 

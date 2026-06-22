@@ -12,10 +12,10 @@ end
 local function updateOutlineAnchors(self)
 	if self.Castbar:IsShown() then
 		self.FocusOutline:SetPoint('BOTTOM', self.Castbar, 0, -4)
-		self.FocusOutline.Bottom:SetPoint('TOP', self.Castbar, 'BOTTOM')
+		self.FocusOutline.edges.Bottom:SetPoint('TOP', self.Castbar, 'BOTTOM')
 	else
 		self.FocusOutline:SetPoint('BOTTOM', self.Health, 0, -4)
-		self.FocusOutline.Bottom:SetPoint('TOP', self.Health, 'BOTTOM')
+		self.FocusOutline.edges.Bottom:SetPoint('TOP', self.Health, 'BOTTOM')
 	end
 end
 
