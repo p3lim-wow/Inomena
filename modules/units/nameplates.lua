@@ -82,6 +82,9 @@ local function updateOnAdded(self)
 
 	self.PetIcon:SetShown(UnitIsOtherPlayersPet(unit))
 
+	self.Health:SetFrameLevel(4)
+	self.Name:SetFrameLevel(5)
+
 	-- we need to force-update the health sub-widgets one frame after they've been initialized by
 	-- UAE because the game rendering engine will have incorrect sizes for them during creation with
 	-- a custom scale (which we apply with our PixelPerfect method during spawn). Blizzard is aware
@@ -203,7 +206,6 @@ oUF:RegisterStyle(styleName, function(self)
 	local HealthValue = Health:CreateText()
 	HealthValue:SetPoint('RIGHT', Health, -3, -1)
 	HealthValue:SetJustifyH('RIGHT')
-	HealthValue:SetFrameLevel(8)
 	HealthValue:SetSmoothScaling(true)
 	HealthValue:Hide()
 	self.HealthValue = HealthValue
@@ -222,7 +224,6 @@ oUF:RegisterStyle(styleName, function(self)
 	Name:SetPoint('RIGHT', HealthValue, 'LEFT', 1, 0)
 	Name:SetJustifyH('LEFT')
 	Name:SetWordWrap(false)
-	Name:SetFrameLevel(10)
 	Name:SetSmoothScaling(true)
 	self.Name = Name
 	self:Tag(Name, '[inomena:quest][inomena:nameplatecolor][inomena:name<$|r]')
@@ -230,7 +231,6 @@ oUF:RegisterStyle(styleName, function(self)
 	local FriendlyName = self:CreateText(14)
 	FriendlyName:SetPoint('CENTER')
 	FriendlyName:SetJustifyH('CENTER')
-	FriendlyName:SetFrameLevel(10)
 	FriendlyName:SetSmoothScaling(true)
 	self.FriendlyName = FriendlyName
 	self:Tag(FriendlyName, '[inomena:reactioncolor][inomena:name<$|r]')
