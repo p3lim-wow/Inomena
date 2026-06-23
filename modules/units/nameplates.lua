@@ -223,7 +223,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Name:SetJustifyH('LEFT')
 	Name:SetWordWrap(false)
 	Name:SetFrameLevel(10)
-	Name:SetSmoothScaling(true) -- new in 12.0.5, hopefully fixes jaggy strings
+	Name:SetSmoothScaling(true)
 	self.Name = Name
 	self:Tag(Name, '[inomena:quest][inomena:nameplatecolor][inomena:name<$|r]')
 
@@ -231,7 +231,7 @@ oUF:RegisterStyle(styleName, function(self)
 	FriendlyName:SetPoint('CENTER')
 	FriendlyName:SetJustifyH('CENTER')
 	FriendlyName:SetFrameLevel(10)
-	FriendlyName:SetSmoothScaling(true) -- new in 12.0.5, hopefully fixes jaggy strings
+	FriendlyName:SetSmoothScaling(true)
 	self.FriendlyName = FriendlyName
 	self:Tag(FriendlyName, '[inomena:reactioncolor][inomena:name<$|r]')
 
@@ -320,6 +320,7 @@ oUF:RegisterStyle(styleName, function(self)
 	CastbarText:SetPoint('BOTTOMRIGHT', 0, -3)
 	CastbarText:SetJustifyH('CENTER')
 	CastbarText:SetFrameLevel(10)
+	CastbarText:SetSmoothScaling(true)
 	Castbar.Text = CastbarText
 
 	local TargetOutline = addon:CreateOutline(Health)
