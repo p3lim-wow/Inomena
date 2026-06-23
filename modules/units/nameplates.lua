@@ -204,6 +204,7 @@ oUF:RegisterStyle(styleName, function(self)
 	HealthValue:SetPoint('RIGHT', Health, -3, -1)
 	HealthValue:SetJustifyH('RIGHT')
 	HealthValue:SetFrameLevel(8)
+	HealthValue:SetSmoothScaling(true)
 	HealthValue:Hide()
 	self.HealthValue = HealthValue
 	self:Tag(HealthValue, '[inomena:hpper]')
