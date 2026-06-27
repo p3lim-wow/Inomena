@@ -14,8 +14,8 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 		return
 	end
 
-	local guid = tooltip.processingInfo.tooltipData.guid
-	if not guid then
+	local _, _, unitGUID = tooltip:GetUnit() -- is this safe now?
+	if not unitGUID then
 		return
 	end
 
