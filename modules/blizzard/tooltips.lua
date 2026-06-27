@@ -29,6 +29,7 @@ local function getTooltipUnitColor(tooltip)
 	return WHITE_FONT_COLOR
 end
 
+-- color unit name
 local NAME_REALM_FORMAT = '%s |cff777777(%s)|r'
 TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(tooltip, data)
 	if tooltip:IsForbidden() or not tooltip:IsTooltipType(Enum.TooltipDataType.Unit) then
@@ -72,61 +73,63 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitThreat, functio
 	end
 end)
 
-local function tooltipOnShow(self)
-	if self.IsEmbedded then
-		self:SetBackgroundColor(0, 0, 0, 0)
-		self:SetBorderColor(0, 0, 0, 0)
-	elseif self.CompareHeader then
-		-- slight tint so we can differentiate them easily
-		self:SetBackgroundColor(0.1, 0.1, 0.1, 0.8)
-		self:SetBorderColor(0.2, 0.2, 0.2)
-	else
-		self:SetBackgroundColor(0, 0, 0, 0.8)
-		self:SetBorderColor(0, 0, 0, 1)
-	end
-end
-
-local function tooltipHealthChanged(self)
-	local tooltip = self:GetParent()
-	self:SetStatusBarColor(getTooltipUnitColor(tooltip):GetRGB())
-end
-
--- replace border
-local function skin(tooltip)
-	if addon:HasBackdrop(tooltip) then
-		-- we already skinned it
-		return
+-- skin tooltips and their health bars
+do
+	local function tooltipOnShow(self)
+		if self.IsEmbedded then
+			self:SetBackgroundColor(0, 0, 0, 0)
+			self:SetBorderColor(0, 0, 0, 0)
+		elseif self.CompareHeader then
+			-- slight tint so we can differentiate them easily
+			self:SetBackgroundColor(0.1, 0.1, 0.1, 0.8)
+			self:SetBorderColor(0.2, 0.2, 0.2)
+		else
+			self:SetBackgroundColor(0, 0, 0, 0.8)
+			self:SetBorderColor(0, 0, 0, 1)
+		end
 	end
 
-	addon:Hide(tooltip, 'NineSlice')
-	addon:AddBackdrop(tooltip)
-
-	tooltip:HookScript('OnShow', tooltipOnShow)
-
-	if tooltip.CompareHeader then
-		-- hide "Equipped" header
-		tooltip.CompareHeader:SetAlpha(0)
+	local function tooltipHealthChanged(self)
+		local tooltip = self:GetParent()
+		self:SetStatusBarColor(getTooltipUnitColor(tooltip):GetRGB())
 	end
 
-	if tooltip.StatusBar then
-		tooltip.StatusBar:ClearAllPoints()
-		tooltip.StatusBar:SetPoint('BOTTOMLEFT')
-		tooltip.StatusBar:SetPoint('BOTTOMRIGHT')
-		tooltip.StatusBar:SetHeight(3)
-		tooltip.StatusBar:SetStatusBarTexture(addon.TEXTURE)
-		tooltip.StatusBar:HookScript('OnValueChanged', tooltipHealthChanged)
-	end
-end
-
-local lastFrame
-function addon:ADDON_LOADED()
-	lastFrame = EnumerateFrames()
-	while lastFrame do
-		if lastFrame:GetObjectType() == 'GameTooltip' then
-			skin(lastFrame)
+	local function skin(tooltip)
+		if addon:HasBackdrop(tooltip) then
+			-- we already skinned it
+			return
 		end
 
-		lastFrame = EnumerateFrames(lastFrame)
+		addon:Hide(tooltip, 'NineSlice')
+		addon:AddBackdrop(tooltip)
+
+		tooltip:HookScript('OnShow', tooltipOnShow)
+
+		if tooltip.CompareHeader then
+			-- hide "Equipped" header
+			tooltip.CompareHeader:SetAlpha(0)
+		end
+
+		if tooltip.StatusBar then
+			tooltip.StatusBar:ClearAllPoints()
+			tooltip.StatusBar:SetPoint('BOTTOMLEFT')
+			tooltip.StatusBar:SetPoint('BOTTOMRIGHT')
+			tooltip.StatusBar:SetHeight(3)
+			tooltip.StatusBar:SetStatusBarTexture(addon.TEXTURE)
+			tooltip.StatusBar:HookScript('OnValueChanged', tooltipHealthChanged)
+		end
+	end
+
+	local lastFrame
+	function addon:ADDON_LOADED()
+		lastFrame = EnumerateFrames()
+		while lastFrame do
+			if lastFrame:GetObjectType() == 'GameTooltip' then
+				skin(lastFrame)
+			end
+
+			lastFrame = EnumerateFrames(lastFrame)
+		end
 	end
 end
 
