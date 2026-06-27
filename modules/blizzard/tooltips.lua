@@ -77,8 +77,7 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitThreat, functio
 end)
 
 -- replace border
-local function skin(tooltipName)
-	local tooltip = _G[tooltipName]
+local function skin(tooltip)
 	addon:Hide(tooltip, 'NineSlice')
 	addon:AddBackdrop(tooltip)
 
@@ -103,24 +102,17 @@ local function skin(tooltipName)
 	end
 end
 
-for _, tooltip in next, {
-	'GameTooltip',
-	'ShoppingTooltip1',
-	'ShoppingTooltip2',
-	addon:GetTooltip():GetName(), -- our own tooltip
-} do
-	skin(tooltip)
-end
+local lastFrame
+function addon:ADDON_LOADED()
+	lastFrame = EnumerateFrames()
+	while lastFrame do
+		if lastFrame:GetObjectType() == 'GameTooltip' then
+			skin(lastFrame)
+		end
 
-addon:HookAddOn('OPie', function()
-	skin('NotGameTooltip1') -- OPie uses a custom tooltip based on GameTooltip
-end)
-addon:HookAddOn('TomTom', function()
-	skin('TomTomTooltip') -- TomTom uses a custom tooltip too
-end)
-addon:HookAddOn('InteractiveWormholes', function()
-	skin('InteractiveWormholesTooltip')
-end)
+		lastFrame = EnumerateFrames(lastFrame)
+	end
+end
 
 -- set custom font
 for _, tooltipFontString in next, {

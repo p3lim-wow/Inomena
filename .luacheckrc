@@ -288,6 +288,7 @@ read_globals = {
 	'ConfirmLootSlot',
 	'CursorHasItem',
 	'EjectPassengerFromSeat',
+	'EnumerateFrames',
 	'EquipPendingItem',
 	'GetAchievementInfo',
 	'GetActionInfo',
