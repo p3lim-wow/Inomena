@@ -122,13 +122,14 @@ do
 
 	local lastFrame
 	function addon:ADDON_LOADED()
-		lastFrame = EnumerateFrames()
-		while lastFrame do
-			if lastFrame:GetObjectType() == 'GameTooltip' then
+		local frame = EnumerateFrames(lastFrame)
+		while frame do
+			if frame:GetObjectType() == 'GameTooltip' then
 				skin(lastFrame)
 			end
 
-			lastFrame = EnumerateFrames(lastFrame)
+			lastFrame = frame
+			frame = EnumerateFrames(frame)
 		end
 	end
 end
