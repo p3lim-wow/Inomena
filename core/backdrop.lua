@@ -64,6 +64,10 @@ function addon:AddBackdrop(frame, anchor)
 	frame:SetBorderColor(0, 0, 0)
 end
 
+function addon:HasBackdrop(frame)
+	return not not frame.backdropEdges
+end
+
 local outlineMixin = {}
 function outlineMixin:SetColor(...)
 	for _, edge in next, self.edges do

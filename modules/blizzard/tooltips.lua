@@ -78,6 +78,11 @@ end)
 
 -- replace border
 local function skin(tooltip)
+	if addon:HasBackdrop(tooltip) then
+		-- we already skinned it
+		return
+	end
+
 	addon:Hide(tooltip, 'NineSlice')
 	addon:AddBackdrop(tooltip)
 
