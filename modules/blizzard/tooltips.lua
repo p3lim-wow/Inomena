@@ -2,10 +2,31 @@ local _, addon = ...
 
 -- skin tooltips
 
--- name and statusbar color
-local cachedColor
-local function updateColor(self)
-	self:SetStatusBarColor((cachedColor or WHITE_FONT_COLOR):GetRGB())
+local function getTooltipUnitColor(tooltip)
+	local _, _, unitGUID = tooltip:GetUnit() -- is this safe now?
+	if unitGUID then
+		local unit = UnitTokenFromGUID(unitGUID)
+		if issecretvalue(unit) then
+			local _, classToken = GetPlayerInfoByGUID(unitGUID)
+			if classToken ~= nil then
+				-- it's a player
+				return C_ClassColor.GetClassColor(classToken)
+			else
+				return tooltip.processingInfo.tooltipData.lines[1].leftColor
+			end
+		elseif unit ~= nil then
+			if UnitIsPlayer(unit) or UnitTreatAsPlayerForDisplay(unit) then
+				local _, classToken = UnitClass(unit)
+				return C_ClassColor.GetClassColor(classToken)
+			elseif UnitIsMinion(unit) then
+				return addon:CreateColor(UnitSelectionColor(unit, true))
+			else
+				return tooltip.processingInfo.tooltipData.lines[1].leftColor
+			end
+		end
+	end
+
+	return WHITE_FONT_COLOR
 end
 
 local NAME_REALM_FORMAT = '%s |cff777777(%s)|r'
@@ -19,41 +40,16 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 		return
 	end
 
-	local unit = UnitTokenFromGUID(guid)
+	local r, g, b = getTooltipUnitColor(tooltip):GetRGB()
+	tooltip.StatusBar:SetStatusBarColor(r, g, b)
 
-	local name, realm
-	if issecretvalue(unit) then
-		local _, classToken = GetPlayerInfoByGUID(guid)
-		name, realm = UnitNameFromGUID(guid)
-
-		if classToken ~= nil then
-			cachedColor = C_ClassColor.GetClassColor(classToken)
-		else
-			cachedColor = data.leftColor
-		end
-	elseif unit ~= nil then
-		if UnitIsPlayer(unit) or UnitTreatAsPlayerForDisplay(unit) then
-			local _, classToken = UnitClass(unit)
-			cachedColor = C_ClassColor.GetClassColor(classToken)
-
-			-- grab name from GUID regardless so we can avoid realm name
-			name, realm = UnitNameFromGUID(guid)
-		elseif UnitIsMinion(unit) then
-			-- TODO: this is a bit wasteful, pre-create the colors and use the other API
-			cachedColor = addon:CreateColor(UnitSelectionColor(unit, true))
-		else
-			cachedColor = data.leftColor
-		end
-	end
-
-	updateColor(tooltip.StatusBar)
-
+	local name, realm = UnitNameFromGUID(unitGUID)
 	if realm ~= nil then
-		tooltip:AddLine(NAME_REALM_FORMAT:format(name, realm), cachedColor:GetRGB())
+		tooltip:AddLine(NAME_REALM_FORMAT:format(name, realm), r, g, b)
 	elseif name ~= nil then
-		tooltip:AddLine(name, cachedColor:GetRGB())
+		tooltip:AddLine(name, r, g, b)
 	else
-		tooltip:AddLine(data.leftText, (cachedColor or data.leftColor):GetRGB())
+		tooltip:AddLine(data.leftText, r, g, b)
 	end
 
 	return true -- we're replacing the line, so prevent the original one from rendering
@@ -76,6 +72,25 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitThreat, functio
 	end
 end)
 
+local function tooltipOnShow(self)
+	if self.IsEmbedded then
+		self:SetBackgroundColor(0, 0, 0, 0)
+		self:SetBorderColor(0, 0, 0, 0)
+	elseif self.CompareHeader then
+		-- slight tint so we can differentiate them easily
+		self:SetBackgroundColor(0.1, 0.1, 0.1, 0.8)
+		self:SetBorderColor(0.2, 0.2, 0.2)
+	else
+		self:SetBackgroundColor(0, 0, 0, 0.8)
+		self:SetBorderColor(0, 0, 0, 1)
+	end
+end
+
+local function tooltipHealthChanged(self)
+	local tooltip = self:GetParent()
+	self:SetStatusBarColor(getTooltipUnitColor(tooltip):GetRGB())
+end
+
 -- replace border
 local function skin(tooltip)
 	if addon:HasBackdrop(tooltip) then
@@ -86,15 +101,11 @@ local function skin(tooltip)
 	addon:Hide(tooltip, 'NineSlice')
 	addon:AddBackdrop(tooltip)
 
-	if tooltip.CompareHeader then
-		-- adjust color so it's less confusing
-		tooltip:SetBorderColor(0.2, 0.2, 0.2)
-		tooltip:SetBackgroundColor(0.1, 0.1, 0.1, 0.8)
+	tooltip:HookScript('OnShow', tooltipOnShow)
 
+	if tooltip.CompareHeader then
 		-- hide "Equipped" header
 		tooltip.CompareHeader:SetAlpha(0)
-	else
-		tooltip:SetBackgroundColor(0, 0, 0, 0.8) -- it's too transparent by default
 	end
 
 	if tooltip.StatusBar then
@@ -103,7 +114,7 @@ local function skin(tooltip)
 		tooltip.StatusBar:SetPoint('BOTTOMRIGHT')
 		tooltip.StatusBar:SetHeight(3)
 		tooltip.StatusBar:SetStatusBarTexture(addon.TEXTURE)
-		tooltip.StatusBar:HookScript('OnValueChanged', updateColor)
+		tooltip.StatusBar:HookScript('OnValueChanged', tooltipHealthChanged)
 	end
 end
 
