@@ -76,10 +76,7 @@ end)
 -- skin tooltips and their health bars
 do
 	local function tooltipOnShow(self)
-		if self.IsEmbedded then
-			self:SetBackgroundColor(0, 0, 0, 0)
-			self:SetBorderColor(0, 0, 0, 0)
-		elseif self.CompareHeader then
+		if self.CompareHeader then
 			-- slight tint so we can differentiate them easily
 			self:SetBackgroundColor(0.1, 0.1, 0.1, 0.8)
 			self:SetBorderColor(0.2, 0.2, 0.2)
