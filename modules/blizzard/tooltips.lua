@@ -125,7 +125,7 @@ do
 		local frame = EnumerateFrames(lastFrame)
 		while frame do
 			if frame:GetObjectType() == 'GameTooltip' then
-				skin(lastFrame)
+				skin(frame)
 			end
 
 			lastFrame = frame
