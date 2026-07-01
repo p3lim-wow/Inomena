@@ -95,6 +95,15 @@ do
 	end
 
 	local function skin(tooltip)
+		if tooltip:IsForbidden() then
+			return
+		end
+
+		if not tooltip.NineSlice or tooltip.IsEmbedded then
+			-- not a skinnable tooltip
+			return
+		end
+
 		if addon:HasBackdrop(tooltip) then
 			-- we already skinned it
 			return
