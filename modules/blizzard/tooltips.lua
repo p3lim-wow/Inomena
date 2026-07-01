@@ -3,7 +3,8 @@ local _, addon = ...
 -- skin tooltips
 
 local function getTooltipUnitColor(tooltip)
-	local _, _, unitGUID = tooltip:GetUnit() -- is this safe now?
+	-- local _, _, unitGUID = tooltip:GetUnit() -- this is not safe
+	local unitGUID = tooltip.processingInfo.tooltipData.guid
 	if unitGUID then
 		local unit = UnitTokenFromGUID(unitGUID)
 		if issecretvalue(unit) then
