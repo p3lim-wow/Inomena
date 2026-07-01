@@ -38,3 +38,51 @@ addon.formatters.Buff:SetBreakpoints({
 		format = ''
 	}
 })
+
+-- time suffixed with shorthands for hours, minutes or seconds,
+-- colored when it reaches expiration
+addon.formatters.Enchant = C_StringUtil.CreateNumericRuleFormatter()
+addon.formatters.Enchant:SetBreakpoints({
+	{
+		threshold = 0,
+		format = '|cffff0000%0.1fs|r',
+		components = {
+			{
+				step = 0.1,
+				rounding = Enum.NumericRuleFormatRounding.Up
+			}
+		}
+	},
+	{
+		threshold = 10,
+		format = '|cffffff00%ds|r',
+		components = {
+			{
+				step = 1,
+				rounding = Enum.NumericRuleFormatRounding.Up
+			}
+		}
+	},
+	{
+		threshold = 60,
+		format = "%dm",
+		components = {
+			{
+				div = 60,
+				step = 1,
+				rounding = Enum.NumericRuleFormatRounding.Nearest
+			}
+		}
+	},
+	{
+		threshold = 3600,
+		format = "%dh",
+		components = {
+			{
+				div = 3600,
+				step = 1,
+				rounding = Enum.NumericRuleFormatRounding.Nearest
+			}
+		}
+	}
+})
