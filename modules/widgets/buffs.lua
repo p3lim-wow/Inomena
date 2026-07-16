@@ -2,7 +2,77 @@ local _, addon = ...
 
 -- custom buff display
 
-if not addon:HasBuild(120100) then
+if addon:HasVersion(120100) then
+	local timeOptions = {
+		formatter = addon.formatters.Countdown,
+	}
+
+	local function createButton(button)
+		addon:AddBackdrop(button)
+
+		button:SetSize(36, 36)
+		button:SetCancelAuraButtons('RightButtonUp')
+
+		local Icon = addon.widgetMixin.CreateIcon(button, 'ARTWORK')
+		Icon:SetAllPoints()
+		button:SetIcon(Icon)
+
+		local Count = addon.widgetMixin.CreateText(button)
+		Count:SetPoint('CENTER', button, 'BOTTOM')
+		Count:SetJustifyH('CENTER')
+		button:SetApplicationCount(Count)
+
+		local Time = addon.widgetMixin.CreateText(button, 13)
+		Time:SetPoint('TOPLEFT', 1, -1)
+		Time:SetJustifyH('LEFT')
+		button:SetDurationText(Time, timeOptions)
+	end
+
+	local options = {
+		initializeFrame = createButton,
+		sortMethod = AuraContainerSortMethod.ExpirationOnly,
+		sortDirection = AuraContainerSortDirection.Reverse,
+		layout = {
+			elementSpacingX = 5,
+			elementSpacingY = 5,
+			gapX = 5, -- only necessary because of bug with item enchantments
+			gapY = 5,
+		},
+	}
+
+	local optionsEnchantment = {
+		initializeFrame = function(button)
+			createButton(button)
+			button:SetBorderColor(0.6, 0, 1)
+		end,
+		layout = {
+			elementSpacingX = 5,
+			elementSpacingY = 5,
+			gapX = 5, -- only necessary because of a bug
+		},
+	}
+
+	local Buffs = CreateFrame('AuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
+	Buffs:SetPoint('TOPRIGHT', Minimap, 'TOPLEFT', -25, 0)
+	Buffs:SetAuraLayoutAnchorPoint('TOPRIGHT')
+	Buffs:SetAuraLayoutGrowthDirection(AnchorUtil.FlowDirection.Left, AnchorUtil.FlowDirection.Down)
+	Buffs:SetAuraLayoutRowWidth(500) -- fits 12 buffs in each row
+	addon:PixelPerfect(Buffs)
+
+	local AttributeHandler = CreateFrame('Frame', nil, nil, 'SecureHandlerStateTemplate')
+	RegisterAttributeDriver(AttributeHandler, 'unit', '[vehicleui] vehicle; player')
+	AttributeHandler:SetScript('OnAttributeChanged', function(self, attribute, value)
+		if attribute == 'unit' and Buffs:GetUnit() ~= value then
+			Buffs:SetUnit(value)
+			Buffs:UpdateAllAuras()
+		end
+	end)
+
+	Buffs:AddAuraGroup(Buffs:GetDebugName(), 'HELPFUL', options)
+	Buffs:AddItemEnchantment(AuraContainerItemEnchantmentSlot.OffHand, optionsEnchantment)
+	Buffs:AddItemEnchantment(AuraContainerItemEnchantmentSlot.MainHand, optionsEnchantment)
+	-- the item enchantment stuff is a bit broken
+else
 	local function auraOnEnter(button)
 		local tooltip = addon:GetTooltip(button, 'ANCHOR_BOTTOMLEFT')
 

@@ -117,6 +117,9 @@ read_globals = {
 	'MinimapMixin',
 
 	-- FrameXML misc objects
+	'AuraContainerSortMethod',
+	'AuraContainerSortDirection',
+	'AuraContainerItemEnchantmentSlot',
 	'CVarCallbackRegistry',
 	'Menu',
 	'NamePlateFriendlyFrameOptions',
