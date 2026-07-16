@@ -163,18 +163,30 @@ local filterDebuffs; do
 	end
 end
 
+local function setBounds(self)
+	-- nameplates take up the space by the visibile anchored children by default, which changes
+	-- whenever we alter the health size, the castbar shows up, or buffs/debuffs gets added or
+	-- removed, resulting in a "bouncy" nameplate.
+	-- to prevent this we add a static frame to use as our bounds
+	local bounds = CreateFrame('Frame', nil, self)
+	bounds:SetAllPoints()
+
+	-- however, this still only works when there's something occupying the bounds frame, so we'll
+	-- add a texture to it but make it fully transparent
+	local filler = bounds:CreateTexture()
+	filler:SetAllPoints()
+	filler:SetColorTexture(0, 0, 0, 0)
+
+	self:GetParent():SetStackingBoundsFrame(bounds)
+end
+
 local styleName = addon.unitPrefix .. 'NamePlates'
 oUF:RegisterStyle(styleName, function(self)
 	Mixin(self, addon.widgetMixin)
 
 	addon:PixelPerfect(self)
 
-	-- nameplates take up the space by visible anchored widgets, so to ensure
-	-- spacing is consistent and to prevent stuff from jumping too much when something
-	-- like the castbar appears we add an invisible texture on top of the entire frame
-	local filler = self:CreateTexture()
-	filler:SetAllPoints()
-	filler:SetColorTexture(0, 0, 0, 0)
+	setBounds(self)
 
 	local Health = self:CreateBackdropStatusBar()
 	Health:SetPoint('LEFT')
