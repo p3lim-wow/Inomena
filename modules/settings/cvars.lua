@@ -199,6 +199,7 @@ local UVARS = { -- unexposed (hidden) settings
 	cameraDistanceMaxZoomFactor = 2.6,
 	rawMouseEnable = 1,
 	SoftTargetInteractArc = 1,
+	encounterTimelineShowSequenceCount = 1,
 }
 
 function addon:OnLogin()
