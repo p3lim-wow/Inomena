@@ -81,31 +81,91 @@ addon.CLASS_BUFF_SPELLS = {
 	WARRIOR = 6673, -- Battle Shout
 }
 
-addon.CLASS_DISPEL_SPELLS = {
+addon.CLASS_HARMFUL_DISPEL_SPELLS = {
 	DRUID = {
-		88423, -- Nature's Cure
-		2782, -- Remove Corruption
+		[88423] = { -- Nature's Cure (Restoration only)
+			Magic = true,
+			Curse = true,
+			Poison = true,
+		},
+		[2782] = { -- Remove Corruption (non-Restoration)
+			Curse = true,
+			Poison = true,
+		},
 	},
 	EVOKER = {
-		360823, -- Naturalize
+		[360823] = { -- Naturalize (Preservation only)
+			Magic = true,
+			Poison = true,
+		},
+		[365585] = { -- Expunge (non-Preservation)
+			Poison = true,
+		},
+		[374251] = { -- Cauterizing Flame (1 min cooldown)
+			Bleed = true,
+			Poison = true,
+			Curse = true,
+			Disease = true,
+		},
 	},
 	MAGE = {
-		475, -- Remove Curse
+		[475] = { -- Remove Curse
+			Curse = true,
+		},
 	},
 	MONK = {
-		115450, -- Detox (mistweaver)
-		218164, -- Detox
+		[115450] = { -- Detox (Mistweaver only)
+			Magic = true,
+			Poison = 388874, -- with Improved Detox talent
+			Disease = 388874, -- with Improved Detox talent
+		},
+		[218164] = { -- Detox (non-Mistweaver)
+			Poison = true,
+			Disease = true,
+		},
 	},
 	PALADIN = {
-		4987, -- Cleanse
-		213644, -- Cleanse Toxins
+		[4987] = { -- Cleanse (Holy only)
+			Magic = true,
+			Poison = 393024, -- with Improved Cleanse talent
+			Disease = 393024, -- with Improved Cleanse talent
+		},
+		[213644] = { -- Cleanse Toxins (non-Holy)
+			Poison = true,
+			Disease = true,
+		},
 	},
 	PRIEST = {
-		527, -- Purify
-		213634, -- Purify Disease
+		[527] = { -- Purify (Holy and Discipline)
+			Magic = true,
+			Disease = 390632, -- with Improved Purify talent
+		},
+		[213634] = { -- Purify Disease (Shadow)
+			Disease = true,
+		},
 	},
 	SHAMAN = {
-		77130, -- Purify Spirit
-		51886, -- Cleanse Spirit
+		[77130] = { -- Purify Spirit (Restoration only)
+			Magic = true,
+			Curse = 383016, -- with Improved Purify Spirit talent
+		},
+		[51886] = { -- Cleanse Spirit (non-Restoration)
+			Curse = true,
+		},
+		[383013] = { -- Poison Cleansing Totem (2 min cooldown)
+			Poison = true,
+		},
+	},
+	WARLOCK = {
+		[688] = { -- Singe Magic (from Imp pet)
+			-- the actual spellID is 89808, but that's a pet spell and we can't count on it,
+			-- so we check for the summon spell instead
+			Magic = true,
+		},
+		[1276452] = { -- Singe Magic (from Grimoire: Imp Lord)
+			-- the actual spellID is 132411, but we can't check for that since it's an override
+			-- spell, so we check for the grimoire spell instead
+			Magic = true,
+		},
 	},
 }

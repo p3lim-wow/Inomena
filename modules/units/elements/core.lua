@@ -58,8 +58,8 @@ do
 
 	local function updateMiddleClick(self)
 		local macroTexts = addon:T()
-		if addon.CLASS_DISPEL_SPELLS[addon.PLAYER_CLASS] then
-			for _, spellID in next, addon.CLASS_DISPEL_SPELLS[addon.PLAYER_CLASS] do
+		if addon.CLASS_HARMFUL_DISPEL_SPELLS[addon.PLAYER_CLASS] then
+			for spellID in next, addon.CLASS_HARMFUL_DISPEL_SPELLS[addon.PLAYER_CLASS] do
 				if C_SpellBook.IsSpellInSpellBook(spellID) then
 					macroTexts:insert('/cast [@mouseover,exists,help,nodead] ' .. C_Spell.GetSpellName(spellID))
 					break -- can only do one with the same condition set
