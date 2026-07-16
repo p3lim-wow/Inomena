@@ -89,7 +89,7 @@ do
 
 	local function tooltipHealthChanged(self)
 		local tooltip = self:GetParent()
-		self:SetStatusBarColor(getTooltipUnitColor(tooltip):GetRGB())
+		self:SetStatusBarColor(tooltip.TextLeft1:GetTextColor())
 	end
 
 	local function skin(tooltip)
