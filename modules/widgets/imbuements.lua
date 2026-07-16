@@ -26,10 +26,11 @@ for parent, slot in next, {
 	CharacterMainHandSlot = 16,
 	CharacterSecondaryHandSlot = 17,
 } do
-	local Button = addon:CreateFrame('Button', nil, _G[parent], 'SecureAuraButtonTemplate')
+	local Button = addon:CreateFrame('Button', nil, _G[parent], 'SecureActionButtonTemplate')
 	Button:SetAllPoints()
 	Button:SetPassThroughButtons('LeftButton')
 	Button:SetPropagateMouseMotion(true)
+	Button:SetAttribute('type2', 'cancelaura')
 	Button:SetAttribute('target-slot', slot)
 	-- Button:RegisterEvent('WEAPON_ENCHANT_CHANGED', updateImbuement)
 	Button:RegisterUnitEvent('UNIT_INVENTORY_CHANGED', 'player', updateImbuement)
@@ -45,5 +46,5 @@ for parent, slot in next, {
 	binding:Enable()
 	Button.binding = binding
 
-	hooksecurefunc(Button:GetParent(), 'UpdateTooltip', appendSlotTooltip)
+	hooksecurefunc(_G[parent], 'UpdateTooltip', appendSlotTooltip)
 end
