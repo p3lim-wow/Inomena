@@ -11,6 +11,10 @@ local function auraOnEnter(button)
 		if tooltip:SetUnitAura(unit, auraIndex, 'HELPFUL') then
 			tooltip:Show()
 		end
+	elseif button:GetAttribute('target-slot') then
+		if tooltip:SetInventoryItem('player', button:GetID()) then
+			tooltip:Show()
+		end
 	end
 end
 
@@ -26,9 +30,30 @@ local function auraUpdateBuff(button, auraIndex)
 	end
 end
 
+local function auraUpdateEnchant(button, inventorySlotIndex)
+	local expiration, count, _
+	if inventorySlotIndex == 16 then -- main hand
+		_, expiration, count = GetWeaponEnchantInfo()
+	elseif inventorySlotIndex == 17 then -- off hand
+		_, _, _, _, _, expiration, count = GetWeaponEnchantInfo()
+	else
+		return
+	end
+
+	button.Icon:SetTexture(GetInventoryItemTexture('player', inventorySlotIndex))
+	button.Count:SetText(count and count > 1 or '')
+	button:SetBorderColor(0.6, 0, 1) -- visual indicator that this is a weapon enchant
+
+	local duration = C_DurationUtil.CreateDuration()
+	duration:SetTimeFromStart(GetTime(), expiration)
+	button.Time.Binding:SetDuration(duration)
+end
+
 local function auraOnAttributeChanged(button, attribute, ...)
 	if attribute == 'index' then
 		auraUpdateBuff(button, ...)
+	elseif attribute == 'target-slot' then
+		auraUpdateEnchant(button, ...)
 	end
 end
 
@@ -71,6 +96,8 @@ addon:PixelPerfect(buffs)
 buffs:SetAttribute('template', 'SecureAuraButtonTemplate')
 buffs:SetAttribute('unit', 'player')
 buffs:SetAttribute('filter', 'HELPFUL')
+buffs:SetAttribute('includeWeapons', 1)
+buffs:SetAttribute('weaponTemplate', 'SecureAuraButtonTemplate')
 
 -- sorting
 buffs:SetAttribute('sortMethod', 'TIME')
@@ -94,7 +121,7 @@ RegisterAttributeDriver(buffs, 'unit', '[vehicleui] vehicle; player')
 
 -- hook attribute changes so we can skin aura buttons
 buffs:HookScript('OnAttributeChanged', function(self, attribute, ...)
-	if attribute:match('^child%d+$') then
+	if attribute:match('^child%d+$') or attribute:match('^tempenchant%d$') then
 		auraButtonInit(...)
 	end
 end)
