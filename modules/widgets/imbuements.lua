@@ -1,5 +1,9 @@
 local _, addon = ...
 
+if addon:HasBuild(120100) then
+	return
+end
+
 -- embedded imbuements in character window
 
 local function updateImbuement(self)
