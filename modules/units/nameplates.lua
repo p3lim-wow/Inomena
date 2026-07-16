@@ -15,16 +15,7 @@ end
 local function updateOnAdded(self)
 	local unit = self.unit
 
-	if UnitNameplateShowsWidgetsOnly(unit) or UnitIsGameObject(unit) then
-		self.Name:Hide()
-		self.FriendlyName:Hide()
-		self.PetIcon:Hide()
-		self.Health:Hide()
-		self:DisableElement('Health')
-		self:DisableElement('Auras')
-		self:DisableElement('Castbar')
-		return
-	elseif UnitIsFriend('player', unit) and not UnitIsPossessed(unit) and not UnitIsCharmed(unit) then
+	if UnitIsFriend('player', unit) and not UnitIsPossessed(unit) and not UnitIsCharmed(unit) then
 		self.Name:Hide()
 		self.FriendlyName:Show()
 		self.PetIcon:Hide()
