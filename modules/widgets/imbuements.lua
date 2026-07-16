@@ -1,6 +1,6 @@
 local _, addon = ...
 
-if addon:HasBuild(120100) then
+if addon:HasVersion(120100) then
 	return
 end
 
