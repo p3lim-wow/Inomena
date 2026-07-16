@@ -93,10 +93,6 @@ do
 	end
 
 	local function skin(tooltip)
-		if tooltip:IsForbidden() then
-			return
-		end
-
 		if not tooltip.NineSlice or tooltip.IsEmbedded then
 			-- not a skinnable tooltip
 			return
@@ -131,7 +127,7 @@ do
 	function addon:ADDON_LOADED()
 		local frame = EnumerateFrames(lastFrame)
 		while frame do
-			if frame:GetObjectType() == 'GameTooltip' then
+			if not frame:IsForbidden() and frame:GetObjectType() == 'GameTooltip' then
 				skin(frame)
 			end
 
