@@ -121,6 +121,7 @@ read_globals = {
 	'AuraContainerSortDirection',
 	'AuraContainerItemEnchantmentSlot',
 	'CVarCallbackRegistry',
+	'GameEvent',
 	'Menu',
 	'NamePlateFriendlyFrameOptions',
 	'PaperDollSidebarTabs',
