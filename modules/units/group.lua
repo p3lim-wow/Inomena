@@ -24,10 +24,6 @@ local function overrideDisplayPower(element, unit)
 	element:SetHeight(0)
 end
 
-local function wrapForceUpdatePower(self)
-	self.Power:ForceUpdate()
-end
-
 local filterBuffs, filterDefensiveBuffs; do -- TODO: remove in 12.1
 	local function matches(filter, unit, data) -- shorthand
 		return not C_UnitAuras.IsAuraFilteredOutByInstanceID(unit, data.auraInstanceID, filter)
@@ -173,7 +169,7 @@ local function style(self, unit, isRaidStyle)
 	self.Power = Power
 
 	-- update power whenever a player's role changes
-	self:RegisterEvent('PLAYER_ROLES_ASSIGNED', wrapForceUpdatePower, true)
+	self:RegisterEvent('PLAYER_ROLES_ASSIGNED', GenerateFlatClosure(Power.ForceUpdate, Power), true)
 
 	-- use a custom parent for name to prevent truncating
 	local NameContainer = Health:CreateFrame('Frame')
