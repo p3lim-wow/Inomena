@@ -94,6 +94,42 @@ local function postCreateSlot(frame, _, button)
 	button:SetPoint('CENTER', frame.Health)
 end
 
+local function createDispelOverlay(frame, button)
+	button:EnableMouse(false)
+	button:SetAllPoints(frame)
+	button:SetFrameLevel(frame:GetFrameLevel() + 20) -- way above other containers
+
+	-- I'd like icon, gradient, AND border, but we can only do one right now :(
+
+	-- local DispelIcon = button:CreateTexture(nil, 'OVERLAY')
+	-- DispelIcon:SetPoint('CENTER', button, 'TOPRIGHT')
+	-- button:SetAuraBorder(DispelIcon, {
+	-- 	style = AuraButtonBorderStyle.Icon, -- NYI
+	-- })
+
+	local DispelGradient = button:CreateTexture(nil, 'OVERLAY')
+	DispelGradient:SetAllPoints()
+	DispelGradient:SetTexCoord(0, 1, 0, 1)
+	DispelGradient:SetAtlas('_RaidFrame-Dispel-Highlight-Horizontal', false, nil, nil, 'REPEAT', 'CLAMP')
+	button:SetAuraBorder(DispelGradient, {
+		style = AuraButtonBorderStyle.Color
+	})
+
+	-- local DispelBorder = button:CreateTexture(nil, 'OVERLAY')
+	-- DispelBorder:SetAllPoints()
+	-- DispelBorder:SetAtlas('RaidFrame-DispelHighlight')
+	-- button:SetAuraBorder(DispelBorder, {
+	-- 	style = AuraButtonBorderStyle.Color
+	-- })
+end
+
+local function updateDispelFilters(element)
+	-- automatically set to filter for whichever dispel types the player can dispel
+	element:SetAuraSlotCandidateFilters(element.dispelGroup, {
+		includeDispelTypes = addon:GetDispelTypes('HARMFUL')
+	})
+end
+
 local function style(self, unit, isRaidStyle)
 	Mixin(self, addon.widgetMixin)
 
@@ -294,6 +330,14 @@ local function style(self, unit, isRaidStyle)
 		})
 
 		Debuffs:AddGroup('HARMFUL') -- TODO: would like to filter some crap, but we can't right now
+
+		-- dispel overlay stuff
+		Debuffs.dispelGroup = Debuffs:AddSlot('HARMFUL|DISPELLABLE', {
+			initializeFrame = GenerateClosure(createDispelOverlay, self),
+		})
+
+		self:RegisterEvent('SPELLS_CHANGED', GenerateFlatClosure(updateDispelFilters, Debuffs), true)
+		updateDispelFilters(Debuffs) -- SPELLS_CHANGED does not trigger on fresh login? wtf?
 	else
 		-- DefensiveBuffs can be merged with Buffs as slots in 12.1
 		local DefensiveBuffs = self:CreateFrame()
