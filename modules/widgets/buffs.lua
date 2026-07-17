@@ -60,13 +60,13 @@ if addon:HasVersion(120100) then
 	addon:PixelPerfect(Buffs)
 
 	local AttributeHandler = CreateFrame('Frame', nil, nil, 'SecureHandlerStateTemplate')
-	RegisterAttributeDriver(AttributeHandler, 'unit', '[vehicleui] vehicle; player')
 	AttributeHandler:SetScript('OnAttributeChanged', function(self, attribute, value)
 		if attribute == 'unit' and Buffs:GetUnit() ~= value then
 			Buffs:SetUnit(value)
 			Buffs:UpdateAllAuras()
 		end
 	end)
+	RegisterAttributeDriver(AttributeHandler, 'unit', '[vehicleui] vehicle; player')
 
 	Buffs:AddAuraGroup(Buffs:GetDebugName(), 'HELPFUL', options)
 	Buffs:AddItemEnchantment(AuraContainerItemEnchantmentSlot.OffHand, optionsEnchantment)
