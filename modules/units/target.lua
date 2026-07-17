@@ -55,30 +55,76 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	RaidIcon:SetSize(24, 24)
 	self.RaidTargetIndicator = RaidIcon
 
-	local Buffs = self:CreateFrame()
+	local Buffs, Debuffs
+	if self.CreateAuras then
+		Buffs = self:CreateAuras({
+			maxWidth = 100, -- enough for 3
+			growthX = 'LEFT',
+			growthY = 'UP', -- default
+			initialAnchor = 'BOTTOMRIGHT',
+		})
+
+		Debuffs = self:CreateAuras({
+			maxWidth = 220, -- enough for 5
+			growthX = 'RIGHT',
+			growthY = 'UP', -- default
+			initialAnchor = 'BOTTOMLEFT'
+		})
+	else -- TODO: remove in 12.1
+		Buffs = self:CreateFrame()
+		Buffs:SetSize(self:GetWidth() * 1/3, self:GetHeight() * 2)
+		Buffs.growthX = 'LEFT'
+		Buffs.growthY = 'UP' -- default
+		Buffs.initialAnchor = 'BOTTOMRIGHT'
+		Buffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
+		self.Buffs = Buffs
+
+		Debuffs = self:CreateFrame()
+		Debuffs:SetSize(self:GetWidth() * 2/3, self:GetHeight() * 3)
+		Debuffs.growthX = 'RIGHT'
+		Debuffs.growthY = 'UP' -- default
+		Debuffs.initialAnchor = 'BOTTOMLEFT'
+		Debuffs.filter = 'HARMFUL|PLAYER'
+		Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
+		self.Debuffs = Debuffs
+	end
+
 	Buffs:SetPoint('BOTTOMRIGHT', self, 'TOPRIGHT', 0, addon.SPACING)
-	Buffs:SetSize(self:GetWidth() * 1/3, self:GetHeight() * 2)
-	Buffs.growthX = 'LEFT'
-	Buffs.growthY = 'UP'
-	Buffs.initialAnchor = 'BOTTOMRIGHT'
 	Buffs.size = self:GetHeight()
 	Buffs.spacing = addon.SPACING
 	Buffs.CreateButton = addon.unitShared.CreateAura
-	Buffs.PostUpdateButton = addon.unitShared.PostUpdateAura
-	self.Buffs = Buffs
 
-	local Debuffs = self:CreateFrame()
 	Debuffs:SetPoint('BOTTOMLEFT', self, 'TOPLEFT', 0, addon.SPACING)
-	Debuffs:SetSize(self:GetWidth() * 2/3, self:GetHeight() * 3)
-	Debuffs.growthX = 'RIGHT'
-	Debuffs.growthY = 'UP'
-	Debuffs.initialAnchor = 'BOTTOMLEFT'
-	Debuffs.filter = 'HARMFUL|PLAYER'
 	Debuffs.size = self:GetHeight() * 1.3
 	Debuffs.spacing = addon.SPACING
 	Debuffs.CreateButton = addon.unitShared.CreateAura
-	Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura
-	self.Debuffs = Debuffs
+
+	if self.CreateAuras then
+		Buffs:AddGroup('HELPFUL', {
+			showBuffBorder = true, -- custom option
+		})
+
+		if addon.PLAYER_CLASS == 'HUNTER' then
+			-- as a hunter I'd like to see Hunter's Mark from any hunter
+			-- TODO: I'd love if I could filter that to _friendly_ casters
+			Debuffs:AddGroup('HARMFUL|PLAYER', {
+				candidateFilters = {
+					excludeSpellIDs = {
+						[257284] = true, -- Hunter's Mark
+					}
+				}
+			})
+			Debuffs:AddGroup('HARMFUL', {
+				candidateFilters = {
+					includeSpellIDs = {
+						[257284] = true, -- Hunter's Mark
+					}
+				}
+			})
+		else
+			Debuffs:AddGroup('HARMFUL|PLAYER') -- TBD: filter some stuff?
+		end
+	end
 
 	local Castbar = self:CreateBackdropStatusBar()
 	Castbar:SetPoint('TOPLEFT', self, 'BOTTOMLEFT', 0, -15)

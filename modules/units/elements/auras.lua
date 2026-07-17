@@ -2,7 +2,7 @@ local _, addon = ...
 local oUF = addon.oUF
 
 do
-	local function onAuraEnter(Button)
+	local function onAuraEnter(Button) -- TODO: remove in 12.1
 		if not Button:IsVisible() then
 			return
 		end
@@ -15,50 +15,121 @@ do
 		end
 	end
 
-	function addon.unitShared.CreateAura(element)
-		local Button = element:CreateBackdropFrame('Button', 'InsecureMouseMotionPropagatorTemplate,InsecureMouseClicksPropagatorTemplate')
-		Button:SetScript('OnEnter', onAuraEnter)
-		Button:SetScript('OnLeave', addon.HideTooltip)
+	local AURAPOCALYPSE = addon:HasVersion(120100)
+	function addon.unitShared.CreateAura(element, options, button)
+		if AURAPOCALYPSE then
+			addon:AddBackdrop(button)
 
-		local Icon = Button:CreateIcon()
-		Icon:SetAllPoints()
-		Button.Icon = Icon
-
-		local Cooldown = Button:CreateCooldown()
-		Cooldown:SetReverse(true)
-		Cooldown:SetUseAuraDisplayTime(true) -- no idea what this does
-		Button.Cooldown = Cooldown
-
-		if element.disableCooldownText then
-			Cooldown:SetHideCountdownNumbers(true)
+			local width = options.width or options.size or element.width or element.size or 16
+			local height = options.height or options.size or element.height or element.size or 16
+			button:SetSize(width, height)
 		else
-			Cooldown:ClearTimePoints()
-			Cooldown:SetTimePoint('TOPLEFT', 1, -1)
+			button = element:CreateBackdropFrame('Button', 'InsecureMouseMotionPropagatorTemplate,InsecureMouseClicksPropagatorTemplate')
+			button:SetScript('OnEnter', onAuraEnter)
+			button:SetScript('OnLeave', addon.HideTooltip)
 		end
 
-		local Count = Button:CreateText()
-		Count:SetPoint('BOTTOMRIGHT', 2, 1)
-		Button.Count = Count
+		if (options and options.raiseLevels) or element.raiseLevels then
+			button:SetFrameLevel(element:GetFrameLevel() + ((options and options.raiseLevels) or element.raiseLevels))
+		end
 
-		if element.PostCreateButton then
-			element:PostCreateButton(Button)
+		local Icon = addon.widgetMixin.CreateIcon(button)
+		Icon:SetAllPoints()
+		if AURAPOCALYPSE then
+			button:SetIcon(Icon)
+		else
+			button.Icon = Icon
+		end
+
+		local Cooldown = addon.widgetMixin.CreateCooldown(button)
+		Cooldown:SetReverse(true)
+		Cooldown:SetUseAuraDisplayTime(true) -- still no idea what this does
+		Cooldown:SetSwipeColor(0, 0, 0, 0.7) -- adjust our default swipe color, it's too dark
+
+		local CooldownText = Cooldown:GetCountdownFontString()
+		CooldownText:SetSmoothScaling(true) -- for nameplates
+
+		if (options and options.cooldownTextSize) or element.cooldownTextSize then
+			Cooldown:SetTimeFont((options and options.cooldownTextSize) or element.cooldownTextSize)
+		end
+
+		if (options and options.disableCooldownText) or element.disableCooldownText then
+			Cooldown:SetHideCountdownNumbers(true)
+		else
+			CooldownText:ClearAllPoints()
+
+			if (options and options.centerCooldownText) or element.centerCooldownText then
+				CooldownText:SetPoint('CENTER')
+				CooldownText:SetJustifyH('CENTER')
+			else
+				CooldownText:SetPoint('TOPLEFT', 1, -1)
+				CooldownText:SetJustifyH('LEFT')
+			end
+		end
+
+		if AURAPOCALYPSE then
+			button:SetDurationCooldown(Cooldown)
+		else
+			button.Cooldown = Cooldown
+		end
+
+		if AURAPOCALYPSE then
+			-- SetAuraBorder only supports _one_ texture, and it doesn't allow a default/None color,
+			-- so we need to keep our default backdrop border and overlay a new backdrop texture :(
+
+			local borderOptions = {
+				style = AuraButtonBorderStyle.Color,
+				showIcon = false,
+				showWhenHarmful = not (options.hideDebuffBorder or element.hideDebuffBorder),
+				showWhenHelpful = (options.showBuffBorder or element.showBuffBorder),
+				-- no color customization (yet)
+			}
+
+			local Border = addon.widgetMixin.CreateTexture(button, 'BORDER', 1) -- above the backdrop border
+			Border:SetPoint('TOPLEFT', -1, 1)
+			Border:SetPoint('BOTTOMRIGHT', 1, -1)
+			Border:SetTexture(addon.TEXTURE) -- it needs to be an actual texture
+			button:SetAuraBorder(Border, borderOptions)
+		end
+
+		local Count = addon.widgetMixin.CreateText(button)
+		Count:SetPoint('BOTTOMRIGHT', 2, 1)
+		Count:SetSmoothScaling(true) -- for nameplates
+		if AURAPOCALYPSE then
+			button:SetApplicationCount(Count) -- TODO: add a custom formatter once it's been fixed
+		else
+			button.Count = Count
+		end
+
+		if AURAPOCALYPSE and (options.cancelButton or element.cancelButton) then
+			button:SetCancelAuraButtons(options.cancelButton or element.cancelButton)
 		end
 
 		if element.disableMouse then
-			Button:EnableMouse(false)
+			button:EnableMouse(false)
 		end
 
-		return Button
+		if AURAPOCALYPSE and options.postCreateButton then
+			options.postCreateButton(element, button, options)
+		end
+
+		if element.PostCreateButton then
+			element:PostCreateButton(button, options)
+		end
+
+		if not AURAPOCALYPSE then
+			return button
+		end
 	end
 end
 
-function addon.unitShared.PostUpdateAura(element, Button, unit, data)
+function addon.unitShared.PostUpdateAura(element, Button, unit, data) -- TODO: remove in 12.1
 	-- color by dispel type
 	local color = C_UnitAuras.GetAuraDispelTypeColor(unit, data.auraInstanceID, element.dispelColorCurve)
 	Button:SetBorderColor((color or oUF.colors.dispel[oUF.Enum.DispelType.None]):GetRGB())
 end
 
-function addon.unitShared.PostUpdateAuras(element)
+function addon.unitShared.PostUpdateAuras(element) -- TODO: remove in 12.1
 	-- dynamic width based on visible auras
 	local spacing = element.spacingX or element.spacing or 0
 	local width = element.width or element.size or 16

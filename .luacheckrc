@@ -33,14 +33,19 @@ globals = {
 
 read_globals = {
 	-- stdlib
+	bit = {
+		fields = {
+			'band',
+		},
+	},
 	string = {
 		fields = {
 			'split',
 		},
 	},
-	bit = {
+	table = {
 		fields = {
-			'band',
+			'wipe',
 		},
 	},
 
@@ -117,6 +122,7 @@ read_globals = {
 	'MinimapMixin',
 
 	-- FrameXML misc objects
+	'AuraButtonBorderStyle',
 	'AuraContainerSortMethod',
 	'AuraContainerSortDirection',
 	'AuraContainerItemEnchantmentSlot',

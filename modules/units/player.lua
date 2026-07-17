@@ -105,29 +105,44 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		Power.CostPrediction = PowerPrediction
 	end
 
-	local Debuffs = self:CreateFrame()
+	local Debuffs
+	if self.CreateAuras then
+		Debuffs = self:CreateAuras({
+			growthX = 'LEFT',
+			growthY = 'UP', -- default
+			initialAnchor = 'BOTTOMRIGHT',
+		})
+	else -- TODO: remove in 12.1
+		Debuffs = self:CreateFrame()
+		Debuffs:SetHeight(self:GetHeight() * 1.5)
+		Debuffs.growthX = 'LEFT'
+		Debuffs.initialAnchor = 'BOTTOMRIGHT'
+		Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
+		Debuffs.maxCols = 99 -- for nowrap
+		Debuffs.PostUpdate = addon.unitShared.PostUpdateAuras -- for nowrap
+		self.Debuffs = Debuffs
+	end
+
 	Debuffs:SetPoint('BOTTOMRIGHT', self, 'TOPRIGHT', 0, addon.SPACING)
-	Debuffs:SetHeight(self:GetHeight() * 1.5)
-	Debuffs.growthX = 'LEFT'
-	Debuffs.initialAnchor = 'BOTTOMRIGHT'
 	Debuffs.size = self:GetHeight() * 1.2
 	Debuffs.spacing = addon.SPACING
-	Debuffs.maxCols = 99 -- make sure it never wraps
 	Debuffs.CreateButton = addon.unitShared.CreateAura
-	Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura
-	Debuffs.PostUpdate = addon.unitShared.PostUpdateAuras
-	self.Debuffs = Debuffs
 
-	local PrivateAuras = self:CreateFrame()
-	PrivateAuras:SetPoint('BOTTOMRIGHT', Debuffs, 'BOTTOMLEFT', 1, 0) -- is this safe?
-	PrivateAuras:SetSize(self:GetWidth(), Debuffs:GetHeight())
-	PrivateAuras.size = Debuffs.size
-	PrivateAuras.spacing = Debuffs.spacing
-	PrivateAuras.growthX = Debuffs.growthX
-	PrivateAuras.initialAnchor = Debuffs.initialAnchor
-	PrivateAuras.maxCols = Debuffs.maxCols
-	PrivateAuras.borderScale = 2.5
-	self.PrivateAuras = PrivateAuras
+	if self.CreateAuras then
+		Debuffs:AddGroup('HARMFUL')
+	else
+		-- private auras are merged in the new aura system, so we don't need them in 12.1
+		local PrivateAuras = self:CreateFrame()
+		PrivateAuras:SetPoint('BOTTOMRIGHT', Debuffs, 'BOTTOMLEFT', 1, 0)
+		PrivateAuras:SetSize(self:GetWidth(), Debuffs:GetHeight())
+		PrivateAuras.size = Debuffs.size
+		PrivateAuras.spacing = Debuffs.spacing
+		PrivateAuras.growthX = Debuffs.growthX
+		PrivateAuras.initialAnchor = Debuffs.initialAnchor
+		PrivateAuras.maxCols = Debuffs.maxCols
+		PrivateAuras.borderScale = 2.5
+		self.PrivateAuras = PrivateAuras
+	end
 
 	local RaidIcon = HealthValue:GetParent():CreateTexture('OVERLAY') -- higher parent
 	RaidIcon:SetPoint('CENTER', self, 'TOP')

@@ -75,6 +75,45 @@ do
 	end
 end
 
+do
+	local function inject(list, spellData)
+		for spellID, dispelTypes in next, spellData do
+			if C_SpellBook.IsSpellKnown(spellID) then
+				for dispelType, requiredSpellID in next, dispelTypes do
+					if type(requiredSpellID) == 'number' then
+						if C_SpellBook.IsSpellKnown(requiredSpellID) then
+							list[dispelType] = true
+						end
+					else
+						list[dispelType] = true
+					end
+				end
+			end
+		end
+	end
+
+	local dispelTypes = {} -- intentionally use a normal table here
+	function addon:GetDispelTypes(kind, ignoreRacial)
+		table.wipe(dispelTypes)
+
+		if kind == 'HELPFUL' then
+			if addon.RACE_HELPFUL_DISPEL_SPELLS[addon.PLAYER_RACE] and not ignoreRacial then
+				inject(dispelTypes, addon.RACE_HELPFUL_DISPEL_SPELLS[addon.PLAYER_RACE])
+			end
+
+			if addon.CLASS_HELPFUL_DISPEL_SPELLS[addon.PLAYER_CLASS] then
+				inject(dispelTypes, addon.CLASS_HELPFUL_DISPEL_SPELLS[addon.PLAYER_CLASS])
+			end
+		elseif kind == 'HARMFUL' then
+			if addon.CLASS_HARMFUL_DISPEL_SPELLS[addon.PLAYER_CLASS] then
+				inject(dispelTypes, addon.CLASS_HARMFUL_DISPEL_SPELLS[addon.PLAYER_CLASS])
+			end
+		end
+
+		return dispelTypes
+	end
+end
+
 function addon:ResizePillsToFit(pills, numPills, spacing)
 	local maxWidth = math.floor(pills:GetWidth())
 	local barWidth = math.floor((maxWidth / numPills) - (spacing or addon.SPACING) + ((spacing or addon.SPACING) / numPills))

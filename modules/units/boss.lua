@@ -1,7 +1,7 @@
 local _, addon = ...
 local oUF = addon.oUF
 
-local function filterBuffs(_, unit)
+local function filterBuffs(_, unit) -- TODO: remove in 12.1
 	return UnitIsEnemy('player', unit)
 end
 
@@ -75,18 +75,38 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	RaidIcon:SetSize(24, 24)
 	self.RaidTargetIndicator = RaidIcon
 
-	local Buffs = self:CreateFrame()
+	local Buffs
+	if self.CreateAuras then
+		Buffs = self:CreateAuras({
+			growthX = 'LEFT',
+			growthY = 'UP', -- default
+			initialAnchor = 'RIGHT'
+		})
+	else -- TODO: remove in 12.1
+		Buffs = self:CreateFrame()
+		Buffs:SetSize(self:GetWidth() * 1/3, self:GetHeight())
+		Buffs.growthX = 'LEFT'
+		Buffs.growthY = 'UP' -- default
+		Buffs.initialAnchor = 'RIGHT'
+		Buffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
+		Buffs.FilterAura = filterBuffs
+		self.Buffs = Buffs
+	end
+
 	Buffs:SetPoint('RIGHT', self, 'LEFT', -addon.SPACING, 0)
-	Buffs:SetSize(self:GetWidth() * 1/3, self:GetHeight())
-	Buffs.growthX = 'LEFT'
-	Buffs.growthY = 'UP'
-	Buffs.initialAnchor = 'RIGHT'
 	Buffs.size = self:GetHeight() - 2
 	Buffs.spacing = addon.SPACING
 	Buffs.CreateButton = addon.unitShared.CreateAura
-	Buffs.PostUpdateButton = addon.unitShared.PostUpdateAura
-	Buffs.FilterAura = filterBuffs
-	self.Buffs = Buffs
+
+	if self.CreateAuras then
+		-- we only really care about boss/role specific auras
+		Buffs:AddGroup('HELPFUL', {
+			candidateFilters = {
+				isBossOrRoleAura = true,
+			}
+		})
+		-- would like to show HELPFUL unconditionally for hostile mobs, but HELPFUL|PLAYER for friendly mobs
+	end
 
 	local Castbar = self:CreateBackdropStatusBar()
 	Castbar:SetPoint('TOPLEFT', self, 'BOTTOMLEFT', 0, -1)

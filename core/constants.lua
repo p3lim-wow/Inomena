@@ -3,6 +3,7 @@ local _, addon = ...
 addon.SPACING = 5
 
 addon.PLAYER_CLASS = UnitClassBase('player')
+addon.PLAYER_RACE = select(3, UnitRace('player'))
 addon.PLAYER_FACTION = UnitFactionGroup('player')
 addon.PLAYER_FACTION_ID = Enum.PvPFaction[addon.PLAYER_FACTION]
 addon.PLAYER_GUID = UnitGUID('player')
@@ -165,6 +166,100 @@ addon.CLASS_HARMFUL_DISPEL_SPELLS = {
 		[1276452] = { -- Singe Magic (from Grimoire: Imp Lord)
 			-- the actual spellID is 132411, but we can't check for that since it's an override
 			-- spell, so we check for the grimoire spell instead
+			Magic = true,
+		},
+	},
+}
+
+addon.CLASS_HELPFUL_DISPEL_SPELLS = {
+	DEMONHUNTER = {
+		[278326] = { -- Consume Magic
+			Magic = true,
+		},
+	},
+	DRUID = {
+		[2908] = { -- Soothe
+			Enrage = true,
+		},
+	},
+	HUNTER = {
+		[19801] = { -- Tranquilizing Shot
+			Enrage = true,
+			Magic = true,
+		},
+	},
+	MAGE = {
+		[30449] = { -- Spellsteal
+			Magic = true, -- can it only take away magic buffs that are considered stealable, or all magic buffs?
+		},
+	},
+	MONK = {
+		[115078] = { -- Paralysis
+			Enrage = 450432, -- with Pressure Points talent
+		},
+	},
+	PRIEST = {
+		[528] = { -- Dispel Magic
+			Magic = true,
+		},
+		[32375] = { -- Mass Dispel
+			Magic = true,
+		},
+	},
+	ROGUE = {
+		[5938] = { -- Shiv
+			Enrage = true,
+		},
+	},
+	SHAMAN = {
+		[370] = { -- Purge
+			Magic = true,
+		},
+		[378773] = { -- Greater Purge
+			Magic = true,
+		},
+	},
+	WARLOCK = {
+		[691] = { -- Devour Magic (from Felhunter pet)
+			-- the actual spellID is 19505, but that's a pet spell and we can't count on it,
+			-- so we check for the summon spell instead
+			Magic = true,
+		},
+		[1276467] = { -- Devour Magic (from Grimoire: Fel Ravager)
+			-- the actual spellID is 388215, but we can't check for that since it's an override
+			-- spell, so we check for the grimoire spell instead
+			Magic = true,
+		},
+	},
+}
+
+addon.RACE_HELPFUL_DISPEL_SPELLS = {
+	[10] = { -- Blood Elf
+		[25046] = { -- Arcane Torrent (Rogue)
+			Magic = true,
+		},
+		[28730] = { -- Arcane Torrent (Mage/Warlock)
+			Magic = true,
+		},
+		[50613] = { -- Arcane Torrent (Death Knight)
+			Magic = true,
+		},
+		[69179] = { -- Arcane Torrent (Warrior)
+			Magic = true,
+		},
+		[80483] = { -- Arcane Torrent (Hunter)
+			Magic = true,
+		},
+		[129597] = { -- Arcane Torrent (Monk)
+			Magic = true,
+		},
+		[155145] = { -- Arcane Torrent (Paladin)
+			Magic = true,
+		},
+		[202719] = { -- Arcane Torrent (Demon Hunter)
+			Magic = true,
+		},
+		[232633] = { -- Arcane Torrent (Priest)
 			Magic = true,
 		},
 	},

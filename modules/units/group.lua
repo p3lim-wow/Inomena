@@ -28,14 +28,7 @@ local function wrapForceUpdatePower(self)
 	self.Power:ForceUpdate()
 end
 
-local function postCreateBuff(_, Button)
-	-- make buffs a little more eligible since they're small
-	Button.Count:ClearAllPoints()
-	Button.Count:SetPoint('CENTER', Button, 'BOTTOM', 1, -1)
-	Button.Count:SetJustifyH('CENTER')
-end
-
-local filterBuffs, filterDefensiveBuffs; do
+local filterBuffs, filterDefensiveBuffs; do -- TODO: remove in 12.1
 	local function matches(filter, unit, data) -- shorthand
 		return not C_UnitAuras.IsAuraFilteredOutByInstanceID(unit, data.auraInstanceID, filter)
 	end
@@ -54,7 +47,7 @@ local filterBuffs, filterDefensiveBuffs; do
 	end
 end
 
-local filterDebuffs; do
+local filterDebuffs; do -- TODO: remove in 12.1
 	local DEBUFF_FILTER = {
 		-- bloodlust debuffs
 		[57723] = true,
@@ -74,12 +67,38 @@ local filterDebuffs; do
 		return issecretvalue(data.spellId) or not UnitAffectingCombat('player') or not DEBUFF_FILTER[data.spellId]
 	end
 end
-local function updateCombat(self)
-	-- update buffs to force refresh our filters when combat changes
-	self.Buffs:ForceUpdate()
+
+local updateCombat; do
+	if addon:HasVersion(120100) then
+		function updateCombat(element, groupKey)
+			-- TODO: there's no proper way to disable a group right now, so we have to do some shenanigans
+			if UnitAffectingCombat('player') then
+				element:SetAuraGroupMaxFrameCount(groupKey, 0)
+			else
+				element:SetAuraGroupMaxFrameCount(groupKey, 1)
+			end
+		end
+	else
+		function updateCombat(self) -- TODO: remove in 12.1
+			-- update buffs to force refresh our filters when combat changes
+			self.Buffs:ForceUpdate()
+		end
+	end
 end
 
-local function style(self, unit)
+local classBuffs = {}; do
+	for class, spellID in next, addon.CLASS_BUFF_SPELLS do
+		if addon.PLAYER_CLASS == class then
+			classBuffs[spellID] = true
+		end
+	end
+end
+
+local function postCreateSlot(frame, _, button)
+	button:SetPoint('CENTER', frame.Health)
+end
+
+local function style(self, unit, isRaidStyle)
 	Mixin(self, addon.widgetMixin)
 
 	self:SetScript('OnEnter', addon.unitShared.ShowTooltip)
@@ -188,54 +207,119 @@ local function style(self, unit)
 	ReadyCheck:SetIgnoreParentAlpha(true) -- so we can see status regardless of range
 	self.ReadyCheckIndicator = ReadyCheck
 
-	local Buffs = self:CreateFrame()
+	local Buffs, Debuffs
+	if self.CreateAuras then
+		Buffs = self:CreateAuras({
+			maxWidth = self:GetWidth() - 3,
+			growthX = 'RIGHT',
+			growthY = 'DOWN',
+			initialAnchor = 'TOPLEFT',
+		})
+
+		Debuffs = self:CreateAuras({
+			maxWidth = math.huge, -- never let them wrap
+			growthX = isRaidStyle and 'LEFT' or 'RIGHT',
+			initialAnchor = isRaidStyle and 'BOTTOMRIGHT' or 'LEFT',
+		})
+	else -- TODO: remove in 12.1
+		Buffs = self:CreateFrame()
+		Buffs:SetSize(self:GetWidth() - 3, 18)
+		Buffs:SetFrameLevel(Name:GetParent():GetFrameLevel() + 1) -- TBD for 12.1
+		Buffs.growthX = 'RIGHT'
+		Buffs.growthY = 'DOWN'
+		Buffs.initialAnchor = 'TOPLEFT'
+		Buffs.filter = 'HELPFUL|PLAYER' -- we filter it further in FilterAura override
+		Buffs.FilterAura = filterBuffs
+		self.Buffs = Buffs
+
+		-- force update auras on combat state change for filters
+		self:RegisterEvent('PLAYER_REGEN_DISABLED', updateCombat, true)
+		self:RegisterEvent('PLAYER_REGEN_ENABLED', updateCombat, true)
+
+		Debuffs = self:CreateFrame()
+		Debuffs:SetSize(self:GetWidth(), self.Debuffs.size)
+		Debuffs:SetFrameLevel(self.Name:GetParent():GetFrameLevel() + 1) -- TBD for 12.1
+		Debuffs.growthY = 'DOWN'
+		Debuffs.maxCols = 99 -- for nowrap
+		Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
+		Debuffs.PostUpdate = addon.unitShared.PostUpdateAuras -- for nowrap
+		Debuffs.filter = 'HARMFUL'
+		Debuffs.FilterAura = filterDebuffs
+		self.Debuffs = Debuffs
+	end
+
 	Buffs:SetPoint('TOPLEFT', 3, -3)
-	Buffs:SetSize(self:GetWidth() - 3, 18)
-	Buffs:SetFrameLevel(Name:GetParent():GetFrameLevel() + 1) -- render high
-	Buffs.growthX = 'RIGHT'
-	Buffs.growthY = 'DOWN'
-	Buffs.size = 16
 	Buffs.spacing = addon.SPACING
-	Buffs.initialAnchor = 'TOPLEFT'
 	Buffs.disableCooldownText = true -- custom option
-	Buffs.filter = 'HELPFUL|PLAYER' -- we filter it further in FilterAura override
 	Buffs.CreateButton = addon.unitShared.CreateAura
-	Buffs.PostCreateButton = postCreateBuff
-	Buffs.FilterAura = filterBuffs
-	self.Buffs = Buffs
 
-	-- force update auras on combat state change for filters
-	self:RegisterEvent('PLAYER_REGEN_DISABLED', updateCombat, true)
-	self:RegisterEvent('PLAYER_REGEN_ENABLED', updateCombat, true)
+	if isRaidStyle then
+		Debuffs:SetPoint('BOTTOMRIGHT', -3, 3)
+	else
+		Debuffs:SetPoint('LEFT', self, 'RIGHT', addon.SPACING + 2, 0) -- extra 2px because of threat border
+	end
 
-	local Debuffs = self:CreateFrame()
-	Debuffs.growthY = 'DOWN'
+	Debuffs.size = isRaidStyle and 16 or (self:GetHeight() * 2/3)
+	Debuffs.num = isRaidStyle and 3 or math.huge
 	Debuffs.spacing = addon.SPACING
-	Debuffs.maxCols = 99 -- make sure it never wraps
+	Debuffs.disableCooldownText = isRaidStyle -- custom option
 	Debuffs.CreateButton = addon.unitShared.CreateAura
-	Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura
-	Debuffs.PostUpdate = addon.unitShared.PostUpdateAuras
-	Debuffs.FilterAura = filterDebuffs
-	self.Debuffs = Debuffs
 
-	local DefensiveBuffs = self:CreateFrame()
-	DefensiveBuffs:SetPoint('CENTER')
-	DefensiveBuffs:SetSize(self:GetHeight() / 2, self:GetHeight() / 2)
-	DefensiveBuffs:SetFrameLevel(Name:GetParent():GetFrameLevel() + 2) -- render high
-	DefensiveBuffs.size = self:GetHeight() / 2
-	DefensiveBuffs.initialAnchor = 'CENTER'
-	DefensiveBuffs.numBuffs = 1
-	DefensiveBuffs.numDebuffs = 0
-	DefensiveBuffs.disableCooldownText = true -- custom option
-	DefensiveBuffs.buffFilter = 'HELPFUL' -- we filter it further in FilterAura override
-	DefensiveBuffs.CreateButton = addon.unitShared.CreateAura
-	DefensiveBuffs.FilterAura = filterDefensiveBuffs
-	self.Auras = DefensiveBuffs
+	if self.CreateAuras then
+		-- this is a bit broken with vehicles; filters randomly get ignored when exiting a vehicle
+		local classBuffGroup = Buffs:AddGroup('HELPFUL', {
+			candidateFilters = {
+				includeSpellIDs = classBuffs,
+			},
+		})
 
-	local PrivateAuras = self:CreateFrame()
-	PrivateAuras.spacing = addon.SPACING
-	PrivateAuras.maxCols = 99 -- make sure it never wraps
-	self.PrivateAuras = PrivateAuras
+		-- auto-hide class buffs in combat
+		self:RegisterEvent('PLAYER_REGEN_DISABLED', GenerateFlatClosure(updateCombat, Buffs, classBuffGroup), true)
+		self:RegisterEvent('PLAYER_REGEN_ENABLED', GenerateFlatClosure(updateCombat, Buffs, classBuffGroup), true)
+
+		Buffs:AddGroup('HELPFUL|PLAYER|RAID|!BIG_DEFENSIVE|!EXTERNAL_DEFENSIVE', {
+			-- TODO: we might want to filter _specific_ buffs on group frames
+			candidateFilters = {
+				excludeSpellIDs = classBuffs,
+			},
+		})
+
+		-- I wish we could combine BIG_ and EXTERNAL_
+		Buffs:AddSlot('HELPFUL|BIG_DEFENSIVE', {
+			size = self:GetHeight() / 2,
+			raiseLevels = 2,
+			postCreateButton = GenerateClosure(postCreateSlot, self),
+		})
+
+		Buffs:AddSlot('HELPFUL|EXTERNAL_DEFENSIVE', {
+			size = self:GetHeight() / 2,
+			raiseLevels = 3,
+			postCreateButton = GenerateClosure(postCreateSlot, self),
+		})
+
+		Debuffs:AddGroup('HARMFUL') -- TODO: would like to filter some crap, but we can't right now
+	else
+		-- DefensiveBuffs can be merged with Buffs as slots in 12.1
+		local DefensiveBuffs = self:CreateFrame()
+		DefensiveBuffs:SetPoint('CENTER')
+		DefensiveBuffs:SetSize(self:GetHeight() / 2, self:GetHeight() / 2)
+		DefensiveBuffs:SetFrameLevel(Name:GetParent():GetFrameLevel() + 2) -- render high
+		DefensiveBuffs.size = self:GetHeight() / 2
+		DefensiveBuffs.initialAnchor = 'CENTER'
+		DefensiveBuffs.numBuffs = 1
+		DefensiveBuffs.numDebuffs = 0
+		DefensiveBuffs.disableCooldownText = true -- custom option
+		DefensiveBuffs.buffFilter = 'HELPFUL' -- we filter it further in FilterAura override
+		DefensiveBuffs.CreateButton = addon.unitShared.CreateAura
+		DefensiveBuffs.FilterAura = filterDefensiveBuffs
+		self.Auras = DefensiveBuffs
+
+		-- private auras are merged in the new aura system, so we don't need them in 12.1
+		local PrivateAuras = self:CreateFrame()
+		PrivateAuras.spacing = addon.SPACING
+		PrivateAuras.maxCols = 99 -- make sure it never wraps
+		self.PrivateAuras = PrivateAuras
+	end
 
 	local Phase = self:CreateFrame('Frame', 'InsecureMouseClicksPropagatorTemplate')
 	Phase:SetSize(28, 28)
@@ -263,47 +347,32 @@ end
 
 local partyStyle = addon.unitPrefix .. 'Party'
 oUF:RegisterStyle(partyStyle, function(self, unit)
-	style(self, unit)
+	style(self, unit, false)
 
-	-- debuffs outside to the right
-	self.Debuffs.filter = 'HARMFUL'
-	self.Debuffs.size = self:GetHeight() * 2/3
-	self.Debuffs.growthX = 'RIGHT'
-	self.Debuffs.initialAnchor = 'LEFT'
-	self.Debuffs:SetPoint('LEFT', self, 'RIGHT', addon.SPACING + 2, 0) -- extra 2px because of threat border
-	self.Debuffs:SetHeight(self.Debuffs.size)
-
-	self.PrivateAuras:SetPoint('LEFT', self.Debuffs, 'RIGHT', -1, 0) -- god knows if this is safe
-	self.PrivateAuras:SetSize(self:GetWidth(), self.Debuffs:GetHeight())
-	self.PrivateAuras.size = self.Debuffs.size
-	self.PrivateAuras.growthX = self.Debuffs.growthX
-	self.PrivateAuras.initialAnchor = self.Debuffs.initialAnchor
-	self.PrivateAuras.borderScale = 2.5
+	if self.PrivateAuras then
+		self.PrivateAuras:SetPoint('LEFT', self.Debuffs, 'RIGHT', -1, 0) -- god knows if this is safe
+		self.PrivateAuras:SetSize(self:GetWidth(), self.Debuffs:GetHeight())
+		self.PrivateAuras.size = self.Debuffs.size
+		self.PrivateAuras.growthX = self.Debuffs.growthX
+		self.PrivateAuras.initialAnchor = self.Debuffs.initialAnchor
+		self.PrivateAuras.borderScale = 2.5
+	end
 end)
 
 local raidStyle = addon.unitPrefix .. 'Raid'
 oUF:RegisterStyle(raidStyle, function(self, unit)
-	style(self, unit)
+	style(self, unit, true)
 
-	-- debuffs inside the raid frame
-	self.Debuffs.filter = 'HARMFUL'
-	self.Debuffs.size = 16
-	self.Debuffs.num = 3
-	self.Debuffs.growthX = 'LEFT'
-	self.Debuffs.initialAnchor = 'BOTTOMRIGHT'
-	self.Debuffs.disableCooldownText = true -- custom option
-	self.Debuffs:SetPoint('BOTTOMRIGHT', -3, 3)
-	self.Debuffs:SetSize(self:GetWidth(), self.Debuffs.size)
-	self.Debuffs:SetFrameLevel(self.Name:GetParent():GetFrameLevel() + 1) -- render high
-
-	self.PrivateAuras:SetPoint('TOPRIGHT', -2, -4)
-	self.PrivateAuras:SetSize(self:GetWidth(), self.Debuffs:GetHeight())
-	self.PrivateAuras.spacing = 3
-	self.PrivateAuras.size = self.Debuffs.size + 3
-	self.PrivateAuras.growthX = self.Debuffs.growthX
-	self.PrivateAuras.initialAnchor = self.Debuffs.initialAnchor
-	self.PrivateAuras.disableCooldownText = self.Debuffs.disableCooldownText
-	self.PrivateAuras.borderScale = 1
+	if self.PrivateAuras then
+		self.PrivateAuras:SetPoint('TOPRIGHT', -2, -4)
+		self.PrivateAuras:SetSize(self:GetWidth(), self.Debuffs:GetHeight())
+		self.PrivateAuras.spacing = 3
+		self.PrivateAuras.size = self.Debuffs.size + 3
+		self.PrivateAuras.growthX = self.Debuffs.growthX
+		self.PrivateAuras.initialAnchor = self.Debuffs.initialAnchor
+		self.PrivateAuras.disableCooldownText = self.Debuffs.disableCooldownText
+		self.PrivateAuras.borderScale = 1
+	end
 end)
 
 oUF:Factory(function(self)

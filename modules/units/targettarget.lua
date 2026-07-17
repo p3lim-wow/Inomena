@@ -13,16 +13,35 @@ oUF:RegisterStyle(styleName, function(self)
 	Name:SetJustifyH('LEFT')
 	self:Tag(Name, '[inomena:reactioncolor][inomena:name<$|r]')
 
-	local Debuffs = self:CreateFrame()
+	local Debuffs
+	if self.CreateAuras then
+		Debuffs = self:CreateAuras({
+			growthX = 'RIGHT',
+			growthY = 'UP', -- default
+			initialAnchor = 'BOTTOMLEFT',
+		})
+	else -- TODO: remove in 12.1
+		Debuffs = self:CreateFrame()
+		Debuffs:SetSize(self:GetHeight() * 1.2 * 10, self:GetHeight() * 1.5)
+		Debuffs.growthX = 'RIGHT'
+		Debuffs.initialAnchor = 'BOTTOMLEFT'
+		Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
+		self.Debuffs = Debuffs
+	end
+
 	Debuffs:SetPoint('BOTTOMLEFT', self, 'TOPLEFT', 4, 5)
-	Debuffs:SetSize(self:GetHeight() * 1.2 * 10, self:GetHeight() * 1.5)
-	Debuffs.growthX = 'RIGHT'
-	Debuffs.initialAnchor = 'BOTTOMLEFT'
 	Debuffs.size = self:GetHeight() * 1.2
 	Debuffs.spacing = addon.SPACING
 	Debuffs.CreateButton = addon.unitShared.CreateAura
-	Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura
-	self.Debuffs = Debuffs
+
+	if self.CreateAuras then
+		-- these are mostly for showing debuffs on co-tank, useful for tank swapping
+		Debuffs:AddGroup('HARMFUL', {
+			candidateFilters = {
+				isBossOrRoleAura = true
+			}
+		})
+	end
 end)
 
 oUF:SetActiveStyle(styleName)
