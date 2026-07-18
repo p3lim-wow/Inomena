@@ -273,7 +273,7 @@ local function style(self, unit, isRaidStyle)
 		self:RegisterEvent('PLAYER_REGEN_ENABLED', updateCombat, true)
 
 		Debuffs = self:CreateFrame()
-		Debuffs:SetSize(self:GetWidth(), self.Debuffs.size)
+		Debuffs:SetSize(self:GetWidth(), isRaidStyle and 16 or (self:GetHeight() * 2/3))
 		Debuffs:SetFrameLevel(self.Name:GetParent():GetFrameLevel() + 1) -- TBD for 12.1
 		Debuffs.growthY = 'DOWN'
 		Debuffs.maxCols = 99 -- for nowrap
