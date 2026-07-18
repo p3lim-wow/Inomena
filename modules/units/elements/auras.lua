@@ -24,6 +24,7 @@ do
 			local height = options.height or options.size or element.height or element.size or 16
 			button:SetSize(width, height)
 		else
+			options = nil
 			button = element:CreateBackdropFrame('Button', 'InsecureMouseMotionPropagatorTemplate,InsecureMouseClicksPropagatorTemplate')
 			button:SetScript('OnEnter', onAuraEnter)
 			button:SetScript('OnLeave', addon.HideTooltip)
