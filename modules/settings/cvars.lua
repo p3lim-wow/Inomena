@@ -30,6 +30,8 @@ local CVARS = { -- exposed settings from the interface options
 	chatBubbles = 1, -- (default)
 	chatBubblesParty = 1,
 	chatBubblesRaid = 0, -- (default)
+	worldMapShowPlayerCoords = 0, -- I like my solution better
+	worldMapShowCursorCoords = 0,
 
 	-- Gameplay Action Bars
 	enableMultiActionBars = 79,
@@ -85,7 +87,7 @@ local CVARS = { -- exposed settings from the interface options
 	-- encounterWarningsTimelineIconographyHiddenMask = ------, TODO: bitfield
 	cooldownViewerEnabled = 1,
 	externalDefensivesEnabled = 0, -- (default)
-	damageMeterEnabled = 1,
+	damageMeterEnabled = 0, -- let Details deal with this
 	damageMeterResetOnNewInstance = 1,
 	spellDiminishPVPEnemiesEnabled = 0,
 	spellDiminishPVPOnlyTriggerableByMe = 0, -- (default)
@@ -128,8 +130,10 @@ local CVARS = { -- exposed settings from the interface options
 	SoftTargetTooltipInteract = 0, -- (default)
 	SoftTargetIconEnemy = 0, -- (default)
 	SoftTargetIconInteract = 0,
+	-- SoftTargetIconInteract = 1,
 	SoftTargetIconGameObject = 0, -- (default)
 	SoftTargetLowPriorityIcons = 0, -- (default)
+	-- SoftTargetLowPriorityIcons = 1, -- (default)
 	arachnophobiaMode = 0, -- (default)
 
 	-- Accessibility Colors
