@@ -98,17 +98,7 @@ do
 		self:SetStatusBarColor(tooltip.TextLeft1:GetTextColor())
 	end
 
-	local function skin(tooltip)
-		if not tooltip.NineSlice or tooltip.IsEmbedded then
-			-- not a skinnable tooltip
-			return
-		end
-
-		if addon:HasBackdrop(tooltip) then
-			-- we already skinned it
-			return
-		end
-
+	function addon:SkinTooltip(tooltip)
 		addon:Hide(tooltip, 'NineSlice')
 		addon:AddBackdrop(tooltip)
 
@@ -129,18 +119,16 @@ do
 		end
 	end
 
-	local lastFrame
-	function addon:ADDON_LOADED()
-		local frame = EnumerateFrames(lastFrame)
-		while frame do
-			if not frame:IsForbidden() and frame:GetObjectType() == 'GameTooltip' then
-				skin(frame)
-			end
-
-			lastFrame = frame
-			frame = EnumerateFrames(frame)
-		end
+	for _, tooltip in next, {
+		'GameTooltip',
+		'ShoppingTooltip1',
+		'ShoppingTooltip2',
+		-- 'AddonButtonTooltip', -- forbidden :(
+	} do
+		addon:SkinTooltip(_G[tooltip])
 	end
+
+	addon:SkinTooltip(addon:GetTooltip())
 end
 
 -- set custom font

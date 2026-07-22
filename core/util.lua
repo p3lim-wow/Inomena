@@ -127,6 +127,3 @@ function addon:ResizePillsToFit(pills, numPills, spacing)
 		end
 	end
 end
-
--- load early for skinning purposes
-addon:GetTooltip()
