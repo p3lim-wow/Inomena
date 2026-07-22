@@ -108,7 +108,7 @@ local function createDispelOverlay(frame, button)
 	-- local DispelIcon = button:CreateTexture(nil, 'OVERLAY')
 	-- DispelIcon:SetPoint('CENTER', button, 'TOPRIGHT')
 	-- button:SetAuraBorder(DispelIcon, {
-	-- 	style = AuraButtonBorderStyle.Icon, -- NYI
+	-- 	style = Enum.CustomAuraButtonBorderStyle.Icon, -- NYI
 	-- })
 
 	local DispelGradient = button:CreateTexture(nil, 'OVERLAY')
@@ -116,7 +116,7 @@ local function createDispelOverlay(frame, button)
 	DispelGradient:SetTexCoord(0, 1, 0, 1)
 	DispelGradient:SetAtlas('_RaidFrame-Dispel-Highlight-Horizontal', false, nil, nil, 'REPEAT', 'CLAMP')
 	button:SetAuraBorder(DispelGradient, {
-		style = AuraButtonBorderStyle.Color,
+		style = Enum.CustomAuraButtonBorderStyle.Color,
 		customDispelColorMap = frame.colors.dispel,
 	})
 
@@ -124,7 +124,7 @@ local function createDispelOverlay(frame, button)
 	-- DispelBorder:SetAllPoints()
 	-- DispelBorder:SetAtlas('RaidFrame-DispelHighlight')
 	-- button:SetAuraBorder(DispelBorder, {
-	-- 	style = AuraButtonBorderStyle.Color
+	-- 	style = Enum.CustomAuraButtonBorderStyle.Color
 	-- })
 end
 

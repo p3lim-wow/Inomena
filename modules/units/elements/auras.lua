@@ -79,7 +79,7 @@ do
 			-- so we need to keep our default backdrop border and overlay a new backdrop texture :(
 
 			local borderOptions = {
-				style = AuraButtonBorderStyle.Color,
+				style = Enum.CustomAuraButtonBorderStyle.Color,
 				showIcon = false,
 				showWhenHarmful = not (options.hideDebuffBorder or element.hideDebuffBorder),
 				showWhenHelpful = (options.showBuffBorder or element.showBuffBorder),
