@@ -2,34 +2,6 @@ local _, addon = ...
 
 -- skin tooltips
 
-local function getTooltipUnitColor(tooltip)
-	-- local _, _, unitGUID = tooltip:GetUnit() -- this is not safe
-	local unitGUID = tooltip.processingInfo.tooltipData.guid
-	if unitGUID then
-		local unit = UnitTokenFromGUID(unitGUID)
-		if issecretvalue(unit) then
-			local _, classToken = GetPlayerInfoByGUID(unitGUID)
-			if classToken ~= nil then
-				-- it's a player
-				return C_ClassColor.GetClassColor(classToken)
-			else
-				return tooltip.processingInfo.tooltipData.lines[1].leftColor
-			end
-		elseif unit ~= nil then
-			if UnitIsPlayer(unit) or UnitTreatAsPlayerForDisplay(unit) then
-				local _, classToken = UnitClass(unit)
-				return C_ClassColor.GetClassColor(classToken)
-			elseif UnitIsMinion(unit) then
-				return addon:CreateColor(UnitSelectionColor(unit, true))
-			else
-				return tooltip.processingInfo.tooltipData.lines[1].leftColor
-			end
-		end
-	end
-
-	return WHITE_FONT_COLOR
-end
-
 -- color unit name
 local NAME_REALM_FORMAT = '%s |cff777777(%s)|r'
 TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(tooltip, data)
@@ -42,7 +14,25 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 		return
 	end
 
-	local r, g, b = getTooltipUnitColor(tooltip):GetRGB()
+	local color
+	local _, classToken = GetPlayerInfoByGUID(unitGUID)
+	if classToken ~= nil then
+		-- this works for players, but not for player NPCs (like in follower dungeons),
+		-- which is a tradeoff I'm fine with as it's only an issue for raid/party frames
+		color = C_ClassColor.GetClassColor(classToken)
+	else
+		local unit = UnitTokenFromGUID(unitGUID)
+		if not issecretvalue(unit) and unit ~= nil then
+			if UnitIsPlayer(unit) or UnitTreatAsPlayerForDisplay(unit) then
+				_, classToken = UnitClass(unit)
+				color = C_ClassColor.GetClassColor(classToken)
+			elseif UnitIsMinion(unit) then
+				color = addon:CreateColor(UnitSelectionColor(unit, true)) -- TODO: cache this
+			end
+		end
+	end
+
+	local r, g, b = (color or data.leftColor):GetRGB()
 	tooltip.StatusBar:SetStatusBarColor(r, g, b)
 
 	local name, realm = UnitNameFromGUID(unitGUID)
