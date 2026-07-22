@@ -83,7 +83,7 @@ do
 				showIcon = false,
 				showWhenHarmful = not (options.hideDebuffBorder or element.hideDebuffBorder),
 				showWhenHelpful = (options.showBuffBorder or element.showBuffBorder),
-				-- no color customization (yet)
+				customDispelColorMap = element.__owner.colors.dispel,
 			}
 
 			local Border = addon.widgetMixin.CreateTexture(button, 'BORDER', 1) -- above the backdrop border
