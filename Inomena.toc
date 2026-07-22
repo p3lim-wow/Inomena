@@ -108,5 +108,6 @@ modules\compat\opie.lua
 modules\compat\opiehome.lua
 modules\compat\syndicator.lua
 modules\compat\handynotes.lua
+modules\compat\tooltips.lua
 
 modules\settings\opie.lua
