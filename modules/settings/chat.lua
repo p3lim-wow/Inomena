@@ -102,13 +102,19 @@ local function reset()
 	FCF_SelectDockFrame(DEFAULT_CHAT_FRAME)
 
 	-- TODO: reload edit mode layout (why?)
-	-- TODO: print message (is it still tainty?)
 	addon:Print('Chat frames reset, reloading is advised')
 end
 
 addon:RegisterSlash('/chatreset', reset)
 
 function addon:OnLogin()
+	-- set colors
+	ResetChatColors()
+	for group, color in next, addon.colors.chat do
+		ChangeChatColor(group, color:GetRGB())
+	end
+
+	-- reset chat settings if necessary
 	local frameIndex = 1
 	for chatIndex = 1, Constants.ChatFrameConstants.MaxChatWindows do
 		if chatIndex ~= 2 and chatIndex ~= 3 then
