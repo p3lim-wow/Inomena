@@ -28,28 +28,9 @@ if addon:HasVersion(120100) then
 		button:SetDurationText(Time, timeOptions)
 	end
 
-	local options = {
-		initializeFrame = createButton,
-		sortMethod = AuraContainerSortMethod.ExpirationOnly,
-		sortDirection = AuraContainerSortDirection.Reverse,
-		layout = {
-			elementSpacingX = 5,
-			elementSpacingY = 5,
-			gapX = 5, -- only necessary because of bug with item enchantments
-			gapY = 5,
-		},
-	}
-
-	local optionsEnchantment = {
-		initializeFrame = function(button)
-			createButton(button)
-			button:SetBorderColor(0.6, 0, 1)
-		end,
-		layout = {
-			elementSpacingX = 5,
-			elementSpacingY = 5,
-			gapX = 5, -- only necessary because of a bug
-		},
+	local layout = {
+		elementSpacingX = addon.SPACING,
+		elementSpacingY = addon.SPACING,
 	}
 
 	local Buffs = CreateFrame('AuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
@@ -68,10 +49,23 @@ if addon:HasVersion(120100) then
 	end)
 	RegisterAttributeDriver(AttributeHandler, 'unit', '[vehicleui] vehicle; player')
 
-	Buffs:AddAuraGroup(Buffs:GetDebugName(), 'HELPFUL', options)
-	Buffs:AddItemEnchantment(AuraContainerItemEnchantmentSlot.OffHand, optionsEnchantment)
-	Buffs:AddItemEnchantment(AuraContainerItemEnchantmentSlot.MainHand, optionsEnchantment)
-	-- the item enchantment stuff is a bit broken
+	Buffs:SetItemEnchantmentLayout(layout)
+	Buffs:AddAuraGroup(Buffs:GetDebugName(), 'HELPFUL', {
+		initializeFrame = createButton,
+		sortMethod = AuraContainerSortMethod.ExpirationOnly,
+		sortDirection = AuraContainerSortDirection.Reverse,
+		layout = layout,
+	})
+
+	local enchantmentOptions = {
+		initializeFrame = function(button)
+			createButton(button)
+			button:SetBorderColor(0.6, 0, 1)
+		end
+	}
+
+	Buffs:AddItemEnchantment(AuraContainerItemEnchantmentSlot.MainHand, enchantmentOptions)
+	Buffs:AddItemEnchantment(AuraContainerItemEnchantmentSlot.OffHand, enchantmentOptions)
 else
 	local function auraOnEnter(button)
 		local tooltip = addon:GetTooltip(button, 'ANCHOR_BOTTOMLEFT')
