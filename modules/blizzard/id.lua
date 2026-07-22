@@ -126,7 +126,11 @@ end
 dataTypeHandlers.Corpse = dataTypeHandlers.Unit
 dataTypeHandlers.Toy = dataTypeHandlers.Item
 
-do
+if addon:HasVersion(120100) then
+	function addon:MODIFIER_STATE_CHANGED()
+		C_CVar.SetCVar('tooltipShowAuraSpellIDs', IsShiftKeyDown() and 1 or 0)
+	end
+else -- TODO: remove in 12.1
 	local getters = {
 		GetUnitAura = C_UnitAuras.GetAuraDataByIndex,
 		GetUnitAuraByAuraInstanceID = C_UnitAuras.GetAuraDataByAuraInstanceID,
