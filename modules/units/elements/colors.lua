@@ -35,6 +35,9 @@ oUF.colors.runes[addon.enums.ClassSpecializations.DEATHKNIGHT.Unholy] = oUF:Crea
 oUF.colors.power.SOUL_FRAGMENTS[1] = oUF:CreateColor(addon.colors.power.DevourerMeta:GetRGB())
 oUF.colors.power.SOUL_FRAGMENTS[2] = oUF:CreateColor(addon.colors.power.DevourerStar:GetRGB())
 
--- "disable" the "None" debuff color in oUF by coloring it the same as the default border color,
--- don't want to mistake no type for bleeds
-oUF.colors.dispel[oUF.Enum.DispelType.None] = oUF:CreateColor(0, 0, 0)
+-- set the "None" debuff type to our default border color, otherwise it can be mistaken for bleeds
+if addon:HasVersion(120100) then
+	oUF.colors.dispel[""] = oUF:CreateColor(0, 0, 0)
+else -- TODO: remove in 12.1
+	oUF.colors.dispel[oUF.Enum.DispelType.None] = oUF:CreateColor(0, 0, 0)
+end
