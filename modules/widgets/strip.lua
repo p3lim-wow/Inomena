@@ -116,7 +116,7 @@ Tab:SetScript('OnClick', function(self, button)
 end)
 
 function addon:EQUIPMENT_SWAP_FINISHED(successful, setID)
-	if successful and setID == C_EquipmentSet.GetEquipmentSetID(SET_NAME) then
+	if successful and setID and setID == C_EquipmentSet.GetEquipmentSetID(SET_NAME) then
 		-- once equipped we delete the temporary set
 		C_EquipmentSet.DeleteEquipmentSet(setID)
 
