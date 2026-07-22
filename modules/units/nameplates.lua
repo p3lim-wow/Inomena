@@ -20,12 +20,7 @@ local function updateOnAdded(self)
 		self.FriendlyName:Show()
 		self.PetIcon:Hide()
 		self:DisableElement('Health')
-		if self.CreateAuras then
-			-- TODO: there's no proper way to disable a group right now, so we have to do some shenanigans
-			self.Buffs:SetAuraGroupMaxFrameCount(self.Buffs.buffsGroup, 0)
-		else
-			self:DisableElement('Auras') -- TODO: remove in 12.1
-		end
+		self:DisableElement('Auras')
 		self:DisableElement('Castbar')
 		return
 	else
@@ -33,12 +28,7 @@ local function updateOnAdded(self)
 		self.FriendlyName:Hide()
 		self:EnableElement('Health')
 		self.Health:Show()
-		if self.CreateAuras then
-			-- TODO: there's no proper way to disable a group right now, so we have to do some shenanigans
-			self.Buffs:SetAuraGroupMaxFrameCount(self.Buffs.buffsGroup, math.huge)
-		else
-			self:EnableElement('Auras') -- TODO: remove in 12.1
-		end
+		self:EnableElement('Auras')
 		self:EnableElement('Castbar')
 	end
 
