@@ -22,8 +22,12 @@ local function postStartCast(element)
 	element:SetStatusBarColorFromBoolean(element.notInterruptible, addon.colors.cast.shielded, addon.colors.cast.normal)
 end
 
-local timer
-local function resetCastbar(element)
+local function postGlobal(element)
+	element:SetStatusBarColor(0, 0.5, 1) -- TODO: move color
+end
+
+local timer -- TODO: remove in v14
+local function resetCastbar(element) -- TODO: remove in v14
 	if not element.castID then -- don't reset if it's in use
 		element.channeling = nil
 		element:Hide()
@@ -31,7 +35,7 @@ local function resetCastbar(element)
 	end
 end
 
-local function updateGlobalCooldown(self)
+local function updateGlobalCooldown(self) -- TODO: remove in v14
 	local element = self.Castbar
 	if element.castID then
 		return
@@ -39,6 +43,8 @@ local function updateGlobalCooldown(self)
 
 	local info = C_Spell.GetSpellCooldown(61304) -- super secret GCD spell, never secret
 	if info and info.isOnGCD and info.duration > 0 then
+		-- TODO: we need to revamp this for v14
+
 		-- reset manually
 		element.castID = nil
 		element.delay = 0
@@ -81,6 +87,8 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Castbar.PostCastStart = postStartCast
 	Castbar.ShouldShow = overrideCastbarVisibility
 	Castbar.CreatePip = overrideCreatePip
+	Castbar.showGlobalCooldown = true
+	Castbar.PostCastGlobal = postGlobal
 	self.Castbar = Castbar
 
 	local CastbarTime = Castbar:CreateText()
@@ -88,7 +96,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	CastbarTime:SetJustifyH('CENTER')
 	Castbar.Time = CastbarTime
 
-	if unit == 'player' then
+	if unit == 'player' and not self.CreateAuras then -- TODO: remove in v14
 		-- display global cooldown from instant casts as a fake channel spell
 		self:RegisterEvent('UNIT_SPELLCAST_SUCCEEDED', updateGlobalCooldown)
 	end
