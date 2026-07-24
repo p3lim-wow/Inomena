@@ -18,7 +18,8 @@ do
 	local AURAPOCALYPSE = addon:HasVersion(120100)
 	function addon.unitShared.CreateAura(element, options, button)
 		if AURAPOCALYPSE then
-			addon:AddBackdrop(button)
+			Mixin(button, addon.widgetMixin)
+			button:AddBackdrop()
 
 			local width = options.width or options.size or element.width or element.size or 16
 			local height = options.height or options.size or element.height or element.size or 16
@@ -36,7 +37,7 @@ do
 			button:SetFrameLevel(element:GetFrameLevel() + ((options and options.raiseLevels) or element.raiseLevels))
 		end
 
-		local Icon = addon.widgetMixin.CreateIcon(button)
+		local Icon = button:CreateIcon()
 		Icon:SetAllPoints()
 		if AURAPOCALYPSE then
 			button:SetIcon(Icon)
@@ -44,7 +45,7 @@ do
 			button.Icon = Icon
 		end
 
-		local Cooldown = addon.widgetMixin.CreateCooldown(button)
+		local Cooldown = button:CreateCooldown()
 		Cooldown:SetReverse(true)
 		Cooldown:SetUseAuraDisplayTime(true) -- still no idea what this does
 		Cooldown:SetSwipeColor(0, 0, 0, 0.7) -- adjust our default swipe color, it's too dark
@@ -95,7 +96,7 @@ do
 			button:SetAuraBorder(Border, borderOptions)
 		end
 
-		local Count = addon.widgetMixin.CreateText(button)
+		local Count = button:CreateText()
 		Count:SetPoint('BOTTOMRIGHT', 2, 1)
 		Count:SetSmoothScaling(true) -- for nameplates
 		if AURAPOCALYPSE then
