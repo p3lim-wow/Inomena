@@ -3,13 +3,8 @@ local _, addon = ...
 -- custom buff display
 
 if addon:HasVersion(120100) then
-	local binding = C_DurationUtil.CreateDurationTextBinding()
-	binding:SetFormatter(addon.formatters.Countdown)
-	binding:SetExpiredText('')
-	binding:SetZeroDurationText('')
-
 	local timeOptions = {
-		binding = binding
+		textFormatter = addon.formatters.Countdown
 	}
 
 	local function createButton(button)
