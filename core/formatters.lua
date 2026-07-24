@@ -2,21 +2,33 @@ local _, addon = ...
 
 addon.formatters = {}
 
--- for time < 3 seconds this will render "9.8"
--- for time > 3 seconds this will render "10"
--- for time > 59 seconds this will render nothing
+-- for time < 10 seconds this will render "9.8"
+-- for time > 10 seconds this will render "10"
+-- for time > 60 seconds this will render nothing
 addon.formatters.Countdown = C_StringUtil.CreateNumericRuleFormatter()
 addon.formatters.Countdown:SetBreakpoints({
 	{
-		threshold = 0,
+		threshold = 0.05,
+		format = '',
+	},
+	{
+		threshold = 0.1,
 		format = '%0.1f',
 	},
 	{
-		threshold = 3.01,
+		threshold = 9.8,
+		format = '%0.1f',
+	},
+	{
+		threshold = 10,
 		format = '%d',
 	},
 	{
 		threshold = 59,
+		format = '%d',
+	},
+	{
+		threshold = 60,
 		format = '',
 	},
 })
