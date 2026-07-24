@@ -80,7 +80,7 @@ local function updateTarget()
 
 	if name ~= lastName then
 		local _, class = UnitClass(unit)
-		local coloredName = addon.colors.class[class]:WrapTextInColorCode(name)
+		local coloredName = C_ClassColor.GetClassColor(class):WrapTextInColorCode(name)
 		local coloredSpell = WrapTextInColorCode(C_Spell.GetSpellName(SPELL_ID), 'ffffff00')
 		addon:Print(coloredName, 'is', coloredSpell, 'target', forcedGUID and '|cff90ffff(forced)|r' or '')
 
