@@ -8,7 +8,7 @@ function addon.unitShared.UpdateColorHealth(self, _, unit)
 	local color
 	if UnitIsPlayer(unit) or UnitTreatAsPlayerForDisplay(unit) then
 		local _, classToken = UnitClass(unit)
-		color = self.colors.class[classToken]
+		color = C_ClassColor.GetClassColor(classToken)
 	elseif UnitIsTapDenied(unit) then
 		color = self.colors.tapped
 	else
