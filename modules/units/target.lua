@@ -58,24 +58,35 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	local Buffs, Debuffs
 	if self.CreateAuras then
 		Buffs = self:CreateAuras({
-			maxWidth = 100, -- enough for 3
+			layoutLimit = 110, -- enough for 3
 			growthX = 'LEFT',
 			growthY = 'UP', -- default
 			initialAnchor = 'BOTTOMRIGHT',
 		})
+		Buffs.elementSpacing = addon.SPACING
+		Buffs.lineSpacing = addon.SPACING
+		Buffs.tooltipAnchor = 'ANCHOR_TOPLEFT'
+		Buffs.tooltipOffsetY = 3
+		Buffs.tooltipOffsetX = -1
 
 		Debuffs = self:CreateAuras({
-			maxWidth = 220, -- enough for 5
+			layoutLimit = 220, -- enough for 5
 			growthX = 'RIGHT',
 			growthY = 'UP', -- default
 			initialAnchor = 'BOTTOMLEFT'
 		})
+		Debuffs.elementSpacing = addon.SPACING
+		Debuffs.lineSpacing = addon.SPACING
+		Debuffs.tooltipAnchor = 'ANCHOR_TOPRIGHT'
+		Debuffs.tooltipOffsetY = 3
+		Debuffs.tooltipOffsetX = 1
 	else -- TODO: remove in 12.1
 		Buffs = self:CreateFrame()
 		Buffs:SetSize(self:GetWidth() * 1/3, self:GetHeight() * 2)
 		Buffs.growthX = 'LEFT'
 		Buffs.growthY = 'UP' -- default
 		Buffs.initialAnchor = 'BOTTOMRIGHT'
+		Buffs.spacing = addon.SPACING
 		Buffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
 		self.Buffs = Buffs
 
@@ -85,18 +96,17 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		Debuffs.growthY = 'UP' -- default
 		Debuffs.initialAnchor = 'BOTTOMLEFT'
 		Debuffs.filter = 'HARMFUL|PLAYER'
+		Debuffs.spacing = addon.SPACING
 		Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
 		self.Debuffs = Debuffs
 	end
 
 	Buffs:SetPoint('BOTTOMRIGHT', self, 'TOPRIGHT', 0, addon.SPACING)
 	Buffs.size = self:GetHeight()
-	Buffs.spacing = addon.SPACING
 	Buffs.CreateButton = addon.unitShared.CreateAura
 
 	Debuffs:SetPoint('BOTTOMLEFT', self, 'TOPLEFT', 0, addon.SPACING)
 	Debuffs.size = self:GetHeight() * 1.3
-	Debuffs.spacing = addon.SPACING
 	Debuffs.CreateButton = addon.unitShared.CreateAura
 
 	if self.CreateAuras then

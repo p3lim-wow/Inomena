@@ -112,11 +112,17 @@ oUF:RegisterStyle(styleName, function(self, unit)
 			growthY = 'UP', -- default
 			initialAnchor = 'BOTTOMRIGHT',
 		})
+		Debuffs.elementSpacing = addon.SPACING
+		Debuffs.lineSpacing = addon.SPACING
+		Debuffs.tooltipAnchor = 'ANCHOR_TOPLEFT'
+		Debuffs.tooltipOffsetY = 3
+		Debuffs.tooltipOffsetX = -1
 	else -- TODO: remove in 12.1
 		Debuffs = self:CreateFrame()
 		Debuffs:SetHeight(self:GetHeight() * 1.5)
 		Debuffs.growthX = 'LEFT'
 		Debuffs.initialAnchor = 'BOTTOMRIGHT'
+		Debuffs.spacing = addon.SPACING
 		Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
 		Debuffs.maxCols = 99 -- for nowrap
 		Debuffs.PostUpdate = addon.unitShared.PostUpdateAuras -- for nowrap
@@ -125,7 +131,6 @@ oUF:RegisterStyle(styleName, function(self, unit)
 
 	Debuffs:SetPoint('BOTTOMRIGHT', self, 'TOPRIGHT', 0, addon.SPACING)
 	Debuffs.size = self:GetHeight() * 1.2
-	Debuffs.spacing = addon.SPACING
 	Debuffs.CreateButton = addon.unitShared.CreateAura
 
 	if self.CreateAuras then

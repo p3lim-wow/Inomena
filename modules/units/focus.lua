@@ -16,23 +16,29 @@ oUF:RegisterStyle(styleName, function(self)
 	local Debuffs
 	if self.CreateAuras then
 		Debuffs = self:CreateAuras({
+			layoutLimit = math.huge,
 			growthX = 'LEFT',
 			growthY = 'UP', -- default
 			initialAnchor = 'BOTTOMRIGHT',
 		})
+		Debuffs.elementSpacing = addon.SPACING
+		Debuffs.lineSpacing = addon.SPACING
+		Debuffs.tooltipAnchor = 'ANCHOR_TOPRIGHT'
+		Debuffs.tooltipOffsetY = 3
+		Debuffs.tooltipOffsetX = 1
 	else -- TODO: remove in 12.1
 		Debuffs = self:CreateFrame()
 		Debuffs:SetSize(self:GetHeight() * 1.2 * 10, self:GetHeight() * 1.5)
 		Debuffs.growthX = 'LEFT'
 		Debuffs.initialAnchor = 'BOTTOMRIGHT'
 		Debuffs.filter = 'HARMFUL|PLAYER'
+		Debuffs.spacing = addon.SPACING
 		Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
 		self.Debuffs = Debuffs
 	end
 
 	Debuffs:SetPoint('BOTTOMRIGHT', self, 'TOPRIGHT', -4, 5)
 	Debuffs.size = self:GetHeight() * 1.2
-	Debuffs.spacing = addon.SPACING
 	Debuffs.CreateButton = addon.unitShared.CreateAura
 
 	if self.CreateAuras then

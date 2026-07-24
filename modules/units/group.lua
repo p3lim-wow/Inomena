@@ -247,17 +247,30 @@ local function style(self, unit, isRaidStyle)
 	local Buffs, Debuffs
 	if self.CreateAuras then
 		Buffs = self:CreateAuras({
-			maxWidth = self:GetWidth() - 3,
+			layoutLimit = self:GetWidth() - 3,
 			growthX = 'RIGHT',
 			growthY = 'DOWN',
 			initialAnchor = 'TOPLEFT',
 		})
+		Buffs.elementSpacing = addon.SPACING
+		Buffs.lineSpacing = addon.SPACING
+		Buffs.tooltipAnchor = 'ANCHOR_TOPRIGHT'
+		Buffs.tooltipOffsetY = 3
+		Buffs.tooltipOffsetX = 1
+		Buffs.tooltipHideInCombat = true
 
 		Debuffs = self:CreateAuras({
-			maxWidth = math.huge, -- never let them wrap
+			layoutLimit = math.huge, -- never let them wrap
 			growthX = isRaidStyle and 'LEFT' or 'RIGHT',
 			initialAnchor = isRaidStyle and 'BOTTOMRIGHT' or 'LEFT',
 		})
+		Debuffs.elementSpacing = addon.SPACING
+		Debuffs.lineSpacing = addon.SPACING
+		Debuffs.tooltipAnchor = 'ANCHOR_TOPLEFT'
+		Debuffs.tooltipOffsetY = 3
+		Debuffs.tooltipOffsetX = -1
+		Debuffs.maxFrameCount = isRaidStyle and 3 or math.huge
+		Debuffs.showDebuffIcon = true -- TEMP
 	else -- TODO: remove in 12.1
 		Buffs = self:CreateFrame()
 		Buffs:SetSize(self:GetWidth() - 3, 18)
@@ -266,6 +279,7 @@ local function style(self, unit, isRaidStyle)
 		Buffs.growthY = 'DOWN'
 		Buffs.initialAnchor = 'TOPLEFT'
 		Buffs.filter = 'HELPFUL|PLAYER' -- we filter it further in FilterAura override
+		Buffs.spacing = addon.SPACING
 		Buffs.FilterAura = filterBuffs
 		self.Buffs = Buffs
 
@@ -281,12 +295,13 @@ local function style(self, unit, isRaidStyle)
 		Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
 		Debuffs.PostUpdate = addon.unitShared.PostUpdateAuras -- for nowrap
 		Debuffs.filter = 'HARMFUL'
+		Debuffs.spacing = addon.SPACING
 		Debuffs.FilterAura = filterDebuffs
+		Debuffs.num = isRaidStyle and 3 or math.huge
 		self.Debuffs = Debuffs
 	end
 
 	Buffs:SetPoint('TOPLEFT', 3, -3)
-	Buffs.spacing = addon.SPACING
 	Buffs.disableCooldownText = true -- custom option
 	Buffs.CreateButton = addon.unitShared.CreateAura
 
@@ -297,8 +312,6 @@ local function style(self, unit, isRaidStyle)
 	end
 
 	Debuffs.size = isRaidStyle and 16 or (self:GetHeight() * 2/3)
-	Debuffs.num = isRaidStyle and 3 or math.huge
-	Debuffs.spacing = addon.SPACING
 	Debuffs.disableCooldownText = isRaidStyle -- custom option
 	Debuffs.CreateButton = addon.unitShared.CreateAura
 
