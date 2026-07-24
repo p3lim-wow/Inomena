@@ -3,8 +3,13 @@ local _, addon = ...
 -- custom buff display
 
 if addon:HasVersion(120100) then
+	local binding = C_DurationUtil.CreateDurationTextBinding()
+	binding:SetFormatter(addon.formatters.Countdown)
+	binding:SetExpiredText('')
+	binding:SetZeroDurationText('')
+
 	local timeOptions = {
-		formatter = addon.formatters.Countdown,
+		binding = binding
 	}
 
 	local function createButton(button)
@@ -29,16 +34,18 @@ if addon:HasVersion(120100) then
 	end
 
 	local layout = {
-		elementSpacingX = addon.SPACING,
-		elementSpacingY = addon.SPACING,
+		elementSpacing = addon.SPACING,
+		lineSpacing = addon.SPACING,
 	}
 
 	local Buffs = CreateFrame('AuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
 	Buffs:SetPoint('TOPRIGHT', Minimap, 'TOPLEFT', -25, 0)
-	Buffs:SetAuraLayoutAnchorPoint('TOPRIGHT')
-	Buffs:SetAuraLayoutGrowthDirection(AnchorUtil.FlowDirection.Left, AnchorUtil.FlowDirection.Down)
-	Buffs:SetAuraLayoutRowWidth(500) -- fits 12 buffs in each row
 	addon:PixelPerfect(Buffs)
+
+	Buffs:SetFlowLayoutAxis(AnchorUtil.FlowLayoutAxis.Horizontal) -- this is the default
+	Buffs:SetFlowLayoutAnchorPoint('TOPRIGHT')
+	Buffs:SetFlowLayoutGrowthDirection(AnchorUtil.FlowDirection.Left, AnchorUtil.FlowDirection.Down)
+	Buffs:SetFlowLayoutMaximumLineSize(500) -- fits 12 buffs in a line
 
 	local AttributeHandler = CreateFrame('Frame', nil, nil, 'SecureHandlerStateTemplate')
 	AttributeHandler:SetScript('OnAttributeChanged', function(self, attribute, value)
