@@ -89,15 +89,15 @@ addon.colors.cast = {
 }
 
 addon.colors.chat = { -- only the ones we override
-	OFFICER = addon:CreateColor(3/4, 1/2, 1/2),
-	RAID = addon:CreateColor(0, 1, 4/5),
-	RAID_LEADER = addon:CreateColor(0, 1, 4/5),
-	RAID_WARNING = addon:CreateColor(1, 1/4, 1/4),
-	BATTLEGROUND_LEADER = addon:CreateColor(1, 1/2, 0),
-	PARTY_LEADER = addon:CreateColor(2/3, 2/3, 1),
-	BN_WHISPER = addon:CreateColor(1, 1/2, 1),
-	BN_WHISPER_INFORM = addon:CreateColor(1, 1/2, 1),
-	INSTANCE_CHAT_LEADER = addon:CreateColor(1, 1/2, 0),
+	OFFICER = addon:CreateColor(191, 127, 127),
+	RAID = addon:CreateColor(0, 255, 204),
+	RAID_LEADER = addon:CreateColor(0, 255, 204),
+	RAID_WARNING = addon:CreateColor(255, 64, 64),
+	BATTLEGROUND_LEADER = addon:CreateColor(255, 127, 0),
+	PARTY_LEADER = addon:CreateColor(170, 170, 255),
+	BN_WHISPER = addon:CreateColor(255, 127, 255),
+	BN_WHISPER_INFORM = addon:CreateColor(255, 127, 255),
+	INSTANCE_CHAT_LEADER = addon:CreateColor(255, 127, 0),
 }
 
 addon.colors.chatTab = {
