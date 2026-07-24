@@ -27,7 +27,7 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 				_, classToken = UnitClass(unit)
 				color = C_ClassColor.GetClassColor(classToken)
 			elseif UnitIsMinion(unit) then
-				color = addon:CreateColor(UnitSelectionColor(unit, true)) -- TODO: cache this
+				color = addon:CreateColor(UnitSelectionColor(unit, true))
 			end
 		end
 	end
