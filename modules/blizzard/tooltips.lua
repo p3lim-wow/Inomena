@@ -15,7 +15,7 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 		return
 	end
 
-	local color
+	local color = data.leftColor
 	local _, classToken = GetPlayerInfoByGUID(unitGUID)
 	if classToken ~= nil then
 		-- this works for players, but not for player NPCs (like in follower dungeons),
@@ -33,7 +33,12 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 		end
 	end
 
-	local r, g, b = (color or data.leftColor):GetRGB()
+	if issecretvalue(color) then
+		-- the color can randomly be secret, most likely from Blizzard not sanitizing correctly
+		return
+	end
+
+	local r, g, b = color:GetRGB()
 	tooltip.StatusBar:SetStatusBarColor(r, g, b)
 
 	local name, realm = UnitNameFromGUID(unitGUID)
