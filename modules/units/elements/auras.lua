@@ -23,6 +23,8 @@ do
 			local width = options.width or options.size or element.width or element.size or 16
 			local height = options.height or options.size or element.height or element.size or 16
 			button:SetSize(width, height)
+			button:EnableMouse(not (options.disableMouse or element.disableMouse))
+
 		else
 			options = nil
 			button = element:CreateBackdropFrame('Button', 'InsecureMouseMotionPropagatorTemplate,InsecureMouseClicksPropagatorTemplate')
@@ -104,10 +106,6 @@ do
 
 		if AURAPOCALYPSE and (options.cancelButton or element.cancelButton) then
 			button:SetCancelAuraButtons(options.cancelButton or element.cancelButton)
-		end
-
-		if element.disableMouse then
-			button:EnableMouse(false)
 		end
 
 		if AURAPOCALYPSE and options.postCreateButton then
