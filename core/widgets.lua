@@ -132,14 +132,125 @@ do
 		return cooldown
 	end
 
-	-- expose creation globally
 	function addon:CreateCooldown(parent, anchor)
 		return widgetMixin.CreateCooldown(parent, anchor)
 	end
 end
 
-function widgetMixin:AddBackdrop(...)
-	addon:AddBackdrop(self, ...)
+do
+	local backdropMixin = {}
+	function backdropMixin:SetBackgroundColor(...)
+		self.backdropBackground:SetColorTexture(...)
+	end
+
+	function backdropMixin:SetBorderColor(...)
+		for _, edge in next, self.backdropEdges do
+			edge:SetColorTexture(...)
+		end
+	end
+
+	function backdropMixin:SetBorderAlpha(...)
+		for _, edge in next, self.backdropEdges do
+			edge:SetAlpha(...)
+		end
+	end
+
+	function backdropMixin:SetBorderIgnoreParentAlpha(state)
+		for _, edge in next, self.backdropEdges do
+			edge:SetIgnoreParentAlpha(state)
+		end
+	end
+
+	function widgetMixin:AddBackdrop(anchor)
+		Mixin(self, backdropMixin)
+
+		self.backdropEdges = addon:T()
+
+		local borderLeft = widgetMixin.CreateTexture(self, 'BORDER')
+		borderLeft:SetPoint('TOPLEFT', anchor or self, -1, 1)
+		borderLeft:SetPoint('BOTTOMLEFT', anchor or self, -1, -1)
+		borderLeft:SetWidth(1)
+		self.backdropEdges:insert(borderLeft)
+
+		local borderRight = widgetMixin.CreateTexture(self, 'BORDER')
+		borderRight:SetPoint('TOPRIGHT', anchor or self, 1, 1)
+		borderRight:SetPoint('BOTTOMRIGHT', anchor or self, 1, -1)
+		borderLeft:SetWidth(1)
+		self.backdropEdges:insert(borderRight)
+
+		local borderTop = widgetMixin.CreateTexture(self, 'BORDER')
+		borderTop:SetPoint('TOPLEFT', anchor or self, -1, 1)
+		borderTop:SetPoint('TOPRIGHT', anchor or self, 1, 1)
+		borderTop:SetHeight(1)
+		self.backdropEdges:insert(borderTop)
+
+		local borderBottom = widgetMixin.CreateTexture(self, 'BORDER')
+		borderBottom:SetPoint('BOTTOMLEFT', anchor or self, -1, -1)
+		borderBottom:SetPoint('BOTTOMRIGHT', anchor or self, 1, -1)
+		borderBottom:SetHeight(1)
+		self.backdropEdges:insert(borderBottom)
+
+		local background = widgetMixin.CreateTexture(self, 'BACKGROUND')
+		background:SetAllPoints(anchor or self)
+		self.backdropBackground = background
+
+		-- set defaults
+		self:SetBackgroundColor(0, 0, 0, 0.3)
+		self:SetBorderColor(0, 0, 0)
+	end
+
+	function addon:AddBackdrop(parent, anchor)
+		widgetMixin.AddBackdrop(parent, anchor)
+	end
+end
+
+do
+	local outlineMixin = {}
+	function outlineMixin:SetColor(...)
+		for _, edge in next, self.edges do
+			edge:SetColorTexture(...)
+		end
+	end
+
+	function widgetMixin:CreateOutline()
+		local Outline = Mixin(widgetMixin.CreateBackdropFrame(self), outlineMixin)
+		Outline:SetPoint('TOPLEFT', -4, 4)
+		Outline:SetPoint('TOPRIGHT', 4, 4)
+		Outline:SetPoint('BOTTOM', 0, -4)
+		Outline:SetFrameStrata('BACKGROUND')
+		Outline:SetBackgroundColor(0, 0, 0, 0)
+		Outline.edges = {}
+
+		local Left = Outline:CreateTexture()
+		Left:SetPoint('TOPLEFT')
+		Left:SetPoint('BOTTOMLEFT')
+		Left:SetPoint('RIGHT', self, 'LEFT')
+		Outline.edges.Left = Left
+
+		local Right = Outline:CreateTexture()
+		Right:SetPoint('TOPRIGHT')
+		Right:SetPoint('BOTTOMRIGHT')
+		Right:SetPoint('LEFT', self, 'RIGHT')
+		Outline.edges.Right = Right
+
+		local Top = Outline:CreateTexture()
+		Top:SetPoint('TOPLEFT')
+		Top:SetPoint('TOPRIGHT')
+		Top:SetPoint('BOTTOM', self, 'TOP')
+		Outline.edges.Top = Top
+
+		local Bottom = Outline:CreateTexture()
+		Bottom:SetPoint('BOTTOMLEFT')
+		Bottom:SetPoint('BOTTOMRIGHT')
+		Bottom:SetPoint('TOP', self, 'BOTTOM')
+		Outline.edges.Bottom = Bottom
+
+		return Outline
+	end
+
+	function addon:CreateOutline(parent)
+		return widgetMixin.CreateOutline(parent)
+	end
 end
 
 -- expose internally

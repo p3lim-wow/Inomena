@@ -17,7 +17,6 @@ core\curves.lua
 core\formatters.lua
 core\assets.lua
 core\widgets.lua
-core\backdrop.lua
 core\util.lua
 core\bind.lua
 
