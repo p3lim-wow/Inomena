@@ -117,16 +117,6 @@ do
 			BorderBottom:SetHeight(1)
 			BorderBottom:SetTexture(addon.TEXTURE)
 			button:AddDispelTypeTexture(BorderBottom, borderOptions)
-
-			if options.showDebuffIcon or element.showDebuffIcon then
-				local DispelIcon = button:CreateTexture('ARTWORK', 1) -- above the icon
-				DispelIcon:SetPoint('CENTER', button, 'TOP', 0, -1)
-				DispelIcon:SetSize(18, 18)
-				button:AddDispelTypeTexture(DispelIcon, {
-					style = Enum.CustomAuraButtonDispelTypeTextureStyle.Icon,
-					showWhenHarmful = true,
-				})
-			end
 		end
 
 		local Count = button:CreateText()

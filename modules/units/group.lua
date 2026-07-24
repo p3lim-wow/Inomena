@@ -270,7 +270,6 @@ local function style(self, unit, isRaidStyle)
 		Debuffs.tooltipOffsetY = 3
 		Debuffs.tooltipOffsetX = -1
 		Debuffs.maxFrameCount = isRaidStyle and 3 or math.huge
-		Debuffs.showDebuffIcon = not isRaidStyle
 	else -- TODO: remove in 12.1
 		Buffs = self:CreateFrame()
 		Buffs:SetSize(self:GetWidth() - 3, 18)
