@@ -316,7 +316,6 @@ local function style(self, unit, isRaidStyle)
 	Debuffs.CreateButton = addon.unitShared.CreateAura
 
 	if self.CreateAuras then
-		-- this is a bit broken with vehicles; filters randomly get ignored when exiting a vehicle
 		local classBuffGroup = Buffs:AddGroup('HELPFUL', {
 			candidateFilters = {
 				includeSpellIDs = classBuffs,
