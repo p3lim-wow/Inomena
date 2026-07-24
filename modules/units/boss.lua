@@ -82,11 +82,17 @@ oUF:RegisterStyle(styleName, function(self, unit)
 			growthY = 'UP', -- default
 			initialAnchor = 'RIGHT'
 		})
+		Buffs.elementSpacing = addon.SPACING
+		Buffs.lineSpacing = addon.SPACING
+		Buffs.tooltipAnchor = 'ANCHOR_BOTTOMLEFT'
+		Buffs.tooltipOffsetY = self:GetHeight() - 4 -- this is some jank
+		Buffs.tooltipOffsetX = -3
 	else -- TODO: remove in 12.1
 		Buffs = self:CreateFrame()
 		Buffs:SetSize(self:GetWidth() * 1/3, self:GetHeight())
 		Buffs.growthX = 'LEFT'
 		Buffs.growthY = 'UP' -- default
+		Buffs.spacing = addon.SPACING
 		Buffs.initialAnchor = 'RIGHT'
 		Buffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
 		Buffs.FilterAura = filterBuffs
@@ -95,7 +101,6 @@ oUF:RegisterStyle(styleName, function(self, unit)
 
 	Buffs:SetPoint('RIGHT', self, 'LEFT', -addon.SPACING, 0)
 	Buffs.size = self:GetHeight() - 2
-	Buffs.spacing = addon.SPACING
 	Buffs.CreateButton = addon.unitShared.CreateAura
 
 	if self.CreateAuras then
