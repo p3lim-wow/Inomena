@@ -128,7 +128,7 @@ do
 		Count:SetPoint('BOTTOMRIGHT', 2, 1)
 		Count:SetSmoothScaling(true) -- for nameplates
 		if AURAPOCALYPSE then
-			button:SetApplicationCount(Count) -- TODO: add a custom formatter once it's been fixed
+			button:SetApplicationCount(Count) -- TODO: add a custom formatter?
 		else
 			button.Count = Count
 		end
