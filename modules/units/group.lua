@@ -99,33 +99,34 @@ local function postCreateSlot(frame, _, button)
 end
 
 local function createDispelOverlay(frame, button)
+	Mixin(button, addon.widgetMixin)
 	button:EnableMouse(false)
 	button:SetAllPoints(frame)
 	button:SetFrameLevel(frame:GetFrameLevel() + 20) -- way above other containers
 
-	-- I'd like icon, gradient, AND border, but we can only do one right now :(
-
-	-- local DispelIcon = button:CreateTexture(nil, 'OVERLAY')
-	-- DispelIcon:SetPoint('CENTER', button, 'TOPRIGHT')
-	-- button:SetAuraBorder(DispelIcon, {
-	-- 	style = Enum.CustomAuraButtonBorderStyle.Icon, -- NYI
-	-- })
-
-	local DispelGradient = button:CreateTexture(nil, 'OVERLAY')
+	local DispelGradient = button:CreateTexture('OVERLAY')
 	DispelGradient:SetAllPoints()
 	DispelGradient:SetTexCoord(0, 1, 0, 1)
 	DispelGradient:SetAtlas('_RaidFrame-Dispel-Highlight-Horizontal', false, nil, nil, 'REPEAT', 'CLAMP')
-	button:SetAuraBorder(DispelGradient, {
-		style = Enum.CustomAuraButtonBorderStyle.Color,
+	button:AddDispelTypeTexture(DispelGradient, {
+		style = Enum.CustomAuraButtonDispelTypeTextureStyle.PreserveAsset,
 		customDispelColorMap = frame.colors.dispel,
 	})
 
-	-- local DispelBorder = button:CreateTexture(nil, 'OVERLAY')
-	-- DispelBorder:SetAllPoints()
-	-- DispelBorder:SetAtlas('RaidFrame-DispelHighlight')
-	-- button:SetAuraBorder(DispelBorder, {
-	-- 	style = Enum.CustomAuraButtonBorderStyle.Color
-	-- })
+	local DispelBorder = button:CreateTexture('OVERLAY')
+	DispelBorder:SetAllPoints()
+	DispelBorder:SetAtlas('RaidFrame-DispelHighlight')
+	button:AddDispelTypeTexture(DispelBorder, {
+		style = Enum.CustomAuraButtonDispelTypeTextureStyle.PreserveAsset,
+		customDispelColorMap = frame.colors.dispel,
+	})
+
+	local DispelIcon = button:CreateTexture('OVERLAY', 1) -- above the other two
+	DispelIcon:SetPoint('CENTER', button, 'TOPRIGHT', -1, -1)
+	DispelIcon:SetSize(24, 24)
+	button:AddDispelTypeTexture(DispelIcon, {
+		style = Enum.CustomAuraButtonDispelTypeTextureStyle.Icon,
+	})
 end
 
 local function updateDispelFilters(element)
@@ -348,7 +349,7 @@ local function style(self, unit, isRaidStyle)
 
 		Debuffs:AddGroup('HARMFUL') -- TODO: would like to filter some crap, but we can't right now
 
-		-- dispel overlay stuff
+		-- dispel overlay
 		Debuffs.dispelGroup = Debuffs:AddSlot('HARMFUL|DISPELLABLE', {
 			initializeFrame = GenerateClosure(createDispelOverlay, self),
 		})
