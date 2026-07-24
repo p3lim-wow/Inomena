@@ -106,3 +106,7 @@ addon.colors.chatTab = {
 	active = addon:CreateColor(1, 1, 1),
 	inactive = addon:CreateColor(127, 127, 127),
 }
+
+addon.colors.tooltip = {
+	greyed = addon:CreateColor(127, 127, 127),
+}

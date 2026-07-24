@@ -54,7 +54,7 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitOwner, function
 		return
 	end
 
-	tooltip:AddLine(data.leftText, 1/2, 1/2, 1/2) -- TODO: move to colors
+	tooltip:AddLine(data.leftText, addon.colors.tooltip.greyed:GetRGB())
 	return true
 end)
 
