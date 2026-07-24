@@ -123,6 +123,7 @@ read_globals = {
 
 	-- FrameXML misc objects
 	'AuraButtonBorderStyle',
+	'AuraContainerInbound',
 	'AuraContainerSortMethod',
 	'AuraContainerSortDirection',
 	'AuraContainerItemEnchantmentSlot',
