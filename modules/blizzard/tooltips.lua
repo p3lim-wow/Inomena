@@ -2,8 +2,9 @@ local _, addon = ...
 
 -- skin tooltips
 
+local REALM_SUFFIX = addon.colors.tooltip.greyed:WrapTextInColorCode(' (%s)')
+local FORMAT_NAME_REALM = '%s' .. REALM_SUFFIX
 -- color unit name
-local NAME_REALM_FORMAT = '%s |cff777777(%s)|r'
 TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(tooltip, data)
 	if tooltip:IsForbidden() or not tooltip:IsTooltipType(Enum.TooltipDataType.Unit) then
 		return
@@ -37,7 +38,7 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 
 	local name, realm = UnitNameFromGUID(unitGUID)
 	if realm ~= nil then
-		tooltip:AddLine(NAME_REALM_FORMAT:format(name, realm), r, g, b)
+		tooltip:AddLine(FORMAT_NAME_REALM:format(name, realm), r, g, b)
 	elseif name ~= nil then
 		tooltip:AddLine(name, r, g, b)
 	else
