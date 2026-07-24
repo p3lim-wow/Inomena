@@ -326,6 +326,7 @@ local function style(self, unit, isRaidStyle)
 		-- auto-hide class buffs in combat
 		self:RegisterEvent('PLAYER_REGEN_DISABLED', GenerateFlatClosure(updateCombat, Buffs, classBuffGroup), true)
 		self:RegisterEvent('PLAYER_REGEN_ENABLED', GenerateFlatClosure(updateCombat, Buffs, classBuffGroup), true)
+		updateCombat(Buffs, classBuffGroup)
 
 		Buffs:AddGroup('HELPFUL|PLAYER|RAID|!BIG_DEFENSIVE|!EXTERNAL_DEFENSIVE', {
 			-- TODO: we might want to filter _specific_ buffs on group frames
