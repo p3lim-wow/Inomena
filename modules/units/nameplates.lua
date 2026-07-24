@@ -346,26 +346,7 @@ oUF:RegisterStyle(styleName, function(self)
 		self:RegisterEvent('SPELLS_CHANGED', GenerateFlatClosure(updateBuffFilters, Buffs), true)
 		updateBuffFilters(Buffs) -- SPELLS_CHANGED does not trigger on fresh login? wtf?
 
-		if addon.PLAYER_CLASS == 'HUNTER' then
-			-- as a hunter I'd like to see Hunter's Mark from any hunter
-			-- TODO: I'd love if I could filter that to _friendly_ casters
-			Debuffs:AddGroup('HARMFUL|PLAYER|!CROWD_CONTROL', {
-				candidateFilters = {
-					excludeSpellIDs = {
-						[257284] = true, -- Hunter's Mark
-					}
-				}
-			})
-			Debuffs:AddGroup('HARMFUL|!CROWD_CONTROL', {
-				candidateFilters = {
-					includeSpellIDs = {
-						[257284] = true, -- Hunter's Mark
-					}
-				}
-			})
-		else
-			Debuffs:AddGroup('HARMFUL|PLAYER|!CROWD_CONTROL')
-		end
+		Debuffs:AddGroup('HARMFUL|PLAYER|!CROWD_CONTROL')
 
 		CrowdControl:AddGroup('HARMFUL|CROWD_CONTROL', {
 			hideDebuffBorder = true,

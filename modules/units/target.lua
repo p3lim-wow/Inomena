@@ -114,26 +114,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 			showBuffBorder = true, -- custom option
 		})
 
-		if addon.PLAYER_CLASS == 'HUNTER' then
-			-- as a hunter I'd like to see Hunter's Mark from any hunter
-			-- TODO: I'd love if I could filter that to _friendly_ casters
-			Debuffs:AddGroup('HARMFUL|PLAYER', {
-				candidateFilters = {
-					excludeSpellIDs = {
-						[257284] = true, -- Hunter's Mark
-					}
-				}
-			})
-			Debuffs:AddGroup('HARMFUL', {
-				candidateFilters = {
-					includeSpellIDs = {
-						[257284] = true, -- Hunter's Mark
-					}
-				}
-			})
-		else
-			Debuffs:AddGroup('HARMFUL|PLAYER') -- TBD: filter some stuff?
-		end
+		Debuffs:AddGroup('HARMFUL|PLAYER') -- TBD: filter some stuff?
 	end
 
 	local Castbar = self:CreateBackdropStatusBar()
