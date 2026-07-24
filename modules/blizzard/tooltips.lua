@@ -128,6 +128,6 @@ for _, tooltipFontString in next, {
 	'GameTooltipText',
 	'GameTooltipTextSmall',
 } do
-	_G[tooltipFontString]:SetFont(addon.FONT, 12, 'OUTLINE')
+	_G[tooltipFontString]:SetFont(addon.FONT, 12, 'SLUG,OUTLINE')
 	_G[tooltipFontString]:SetShadowOffset(0, 0)
 end
