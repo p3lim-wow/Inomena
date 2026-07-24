@@ -78,22 +78,41 @@ do
 		end
 
 		if AURAPOCALYPSE then
-			-- SetAuraBorder only supports _one_ texture, and it doesn't allow a default/None color,
-			-- so we need to keep our default backdrop border and overlay a new backdrop texture :(
-
 			local borderOptions = {
-				style = Enum.CustomAuraButtonBorderStyle.Color,
-				showIcon = false,
+				style = Enum.CustomAuraButtonDispelTypeTextureStyle.PreserveAsset,
 				showWhenHarmful = not (options.hideDebuffBorder or element.hideDebuffBorder),
 				showWhenHelpful = (options.showBuffBorder or element.showBuffBorder),
 				customDispelColorMap = element.__owner.colors.dispel,
 			}
 
-			local Border = addon.widgetMixin.CreateTexture(button, 'BORDER', 1) -- above the backdrop border
-			Border:SetPoint('TOPLEFT', -1, 1)
-			Border:SetPoint('BOTTOMRIGHT', 1, -1)
-			Border:SetTexture(addon.TEXTURE) -- it needs to be an actual texture
-			button:SetAuraBorder(Border, borderOptions)
+			local BorderLeft = button:CreateTexture('BORDER', 1) -- above the backdrop border
+			BorderLeft:SetPoint('TOPLEFT', button, -1, 1)
+			BorderLeft:SetPoint('BOTTOMLEFT', button, -1, -1)
+			BorderLeft:SetTexture(addon.TEXTURE)
+			BorderLeft:SetWidth(1)
+			button:AddDispelTypeTexture(BorderLeft, borderOptions)
+
+			local BorderRight = button:CreateTexture('BORDER', 1) -- above the backdrop border
+			BorderRight:SetPoint('TOPRIGHT', button, 1, 1)
+			BorderRight:SetPoint('BOTTOMRIGHT', button, 1, -1)
+			BorderRight:SetTexture(addon.TEXTURE)
+			BorderRight:SetWidth(1)
+			button:AddDispelTypeTexture(BorderRight, borderOptions)
+
+			local BorderTop = button:CreateTexture('BORDER', 1) -- above the backdrop border
+			BorderTop:SetPoint('TOPLEFT', button, -1, 1)
+			BorderTop:SetPoint('TOPRIGHT', button, 1, 1)
+			BorderTop:SetTexture(addon.TEXTURE)
+			BorderTop:SetHeight(1)
+			button:AddDispelTypeTexture(BorderTop, borderOptions)
+
+			local BorderBottom = button:CreateTexture('BORDER', 1) -- above the backdrop border
+			BorderBottom:SetPoint('BOTTOMLEFT', -1, -1)
+			BorderBottom:SetPoint('BOTTOMRIGHT', 1, -1)
+			BorderBottom:SetHeight(1)
+			BorderBottom:SetTexture(addon.TEXTURE)
+			button:AddDispelTypeTexture(BorderBottom, borderOptions)
+
 		end
 
 		local Count = button:CreateText()
