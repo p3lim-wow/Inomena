@@ -44,7 +44,6 @@ if addon:HasVersion(120100) then
 	AttributeHandler:SetScript('OnAttributeChanged', function(self, attribute, value)
 		if attribute == 'unit' and Buffs:GetUnit() ~= value then
 			Buffs:SetUnit(value)
-			Buffs:UpdateAllAuras()
 		end
 	end)
 	RegisterAttributeDriver(AttributeHandler, 'unit', '[vehicleui] vehicle; player')
