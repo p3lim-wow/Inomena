@@ -26,6 +26,11 @@ do
 			button:SetSize(width, height)
 			button:EnableMouse(not (options.disableMouse or element.disableMouse))
 
+			local tooltipAnchor = options.tooltipAnchor or element.tooltipAnchor or 'ANCHOR_BOTTOMLEFT'
+			local tooltipOffsetX = options.tooltipOffsetX or element.tooltipOffsetX or 0
+			local tooltipOffsetY = options.tooltipOffsetY or element.tooltipOffsetY or 0
+			button:SetTooltipAnchorPoint(tooltipAnchor, tooltipOffsetX, tooltipOffsetY)
+			button:SetHideTooltipInCombat(options.tooltipHideInCombat or element.tooltipHideInCombat)
 		else
 			options = nil
 			button = element:CreateBackdropFrame('Button', 'InsecureMouseMotionPropagatorTemplate,InsecureMouseClicksPropagatorTemplate')
