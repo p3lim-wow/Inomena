@@ -51,3 +51,16 @@ end
 function addon:PLAYER_REGEN_DISABLED()
 	UIErrorsFrame:AddMessage('+ Combat', 1, 1, 1)
 end
+
+-- remind me which key I joined, with a journal link
+local FORMAT_DUNGEON = '%s |cff66bbff|Hjournal:0:%d:%d|h[%s]|h|r'
+function addon:LFG_LIST_JOINED_GROUP(searchResultID)
+	local searchInfo = C_LFGList.GetSearchResultInfo(searchResultID)
+	local activityID = searchInfo.activityIDs[1]
+	local activityInfo = C_LFGList.GetActivityInfoTable(activityID)
+
+	local instanceID = C_EncounterJournal.GetInstanceForGameMap(activityInfo.mapID)
+	local instanceName = EJ_GetInstanceInfo(instanceID)
+	local difficulty = 23 -- Mythic dungeon
+	addon:Printf(FORMAT_DUNGEON, LFG_LIST_APP_INVITE_ACCEPTED, instanceID, difficulty, instanceName)
+end
