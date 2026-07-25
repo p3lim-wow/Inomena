@@ -455,8 +455,10 @@ nameplates:SetCVars({
 	},
 
 	-- hidden cvars
-	nameplateShowOnlyNameForFriendlyPlayerUnits = 1,
-	nameplateUseClassColorForFriendlyPlayerUnitNames = 1,
+	nameplateShowOnlyNameForFriendlyPlayerUnits = 1, -- for friendly nameplates in dungeons
+	nameplateUseClassColorForFriendlyPlayerUnitNames = 1, -- for friendly nameplates in dungeons
+	nameplateShowFriendlyRealmName = 0, -- for friendly nameplates in dungeons
+	nameplatePlayRemovalAnimation = 0,
 })
 
 -- use our font for friendly nameplates in instances
