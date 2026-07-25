@@ -17,7 +17,7 @@ button:SetAttribute('type', 'spell')
 button:SetAttribute('spell', SPELL_ID)
 
 local function unitIsTank(unit, isRaid, raidIndex)
-	if UnitGroupRolesAssigned(unit) == 'TANK' then
+	if UnitGroupRolesAssignedEnum(unit) == Enum.LFGRole.Tank then
 		return true
 	elseif isRaid then
 		local _, _, _, _, _, _, _, _, _, _, _, combatRole = GetRaidRosterInfo(raidIndex)

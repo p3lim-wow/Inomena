@@ -5,12 +5,12 @@ local function overrideDisplayPower(element, unit)
 	-- only show power for healers' mana or blood death knights' runic power
 	local self = element:GetParent()
 
-	local role = UnitGroupRolesAssigned(unit)
-	if role == 'HEALER' then
+	local role = UnitGroupRolesAssignedEnum(unit)
+	if role == Enum.LFGRole.Healer then
 		self.Health.TempLoss:SetHeight(self:GetHeight() - element:GetHeight() - 1)
 		element:SetHeight(5)
 		return Enum.PowerType.Mana
-	elseif role == 'TANK' then
+	elseif role == Enum.LFGRole.Tank then
 		local _, classToken = UnitClass(unit)
 		if classToken == 'DEATHKNIGHT' then
 			self.Health.TempLoss:SetHeight(self:GetHeight() - element:GetHeight() - 1)

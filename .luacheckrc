@@ -380,7 +380,6 @@ read_globals = {
 	'UnitFactionGroup',
 	'UnitGUID',
 	'UnitGetTotalAbsorbs',
-	'UnitGroupRolesAssigned',
 	'UnitGroupRolesAssignedEnum',
 	'UnitHasIncomingResurrection',
 	'UnitHasVehicleUI',
