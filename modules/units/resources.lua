@@ -41,16 +41,20 @@ local function overrideDisplayPower(_, unit)
 	end
 end
 
-local function postUpdatePower(element, unit)
+local function postUpdatePower(element, unit, _, _, _, displayType)
+	if displayType == nil then -- TODO: remove in v14
+		displayType = element.displayType
+	end
+
 	-- hide power if no display power or if player is idle
 	local shouldShow = false
-	if element.displayType then
+	if displayType then
 		shouldShow = true
 
 		if UnitAffectingCombat('player') then
 			element:SetAlpha(1)
 		else
-			local alphaCurve = addon.curves.PowerIdleAlpha[element.displayType]
+			local alphaCurve = addon.curves.PowerIdleAlpha[displayType]
 			element:SetAlpha(UnitPowerPercent(unit, nil, true, alphaCurve))
 		end
 	end
@@ -122,6 +126,11 @@ local function postUpdateClassPower(element, cur, max, maxChanged, powerType, ..
 	end
 end
 
+local function postUpdateClassPower14(element, cur, max, _, ...)
+	 -- TODO: clean up in v14
+	postUpdateClassPower(element, cur, max, ...)
+end
+
 local function updateCombat(self)
 	self.Power:ForceUpdate()
 	self.ClassPower:ForceUpdate()
@@ -168,7 +177,7 @@ oUF:RegisterStyle(styleName, function(self)
 	ClassPower:SetPoint('BOTTOMLEFT', Power, 'TOPLEFT', 0, addon.SPACING)
 	ClassPower:SetPoint('BOTTOMRIGHT', Power, 'TOPRIGHT', 0, addon.SPACING)
 	ClassPower:SetHeight(12)
-	ClassPower.PostUpdate = postUpdateClassPower
+	ClassPower.PostUpdate = self.CreateAuras and postUpdateClassPower14 or postUpdateClassPower -- TODO: clean up in v14
 	ClassPower.ChargedComboPoints = {}
 	self.ClassPower = ClassPower
 
