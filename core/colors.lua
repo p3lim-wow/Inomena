@@ -50,6 +50,8 @@ addon.colors.faction.Neutral = addon:CreateColor(1, 1, 1)
 
 -- custom colors
 
+addon.colors.white = addon:CreateColor(1, 1, 1)
+
 addon.colors.healing = addon:CreateColor(140, 255, 46, 0.5)
 addon.colors.absorb = addon:CreateColor(67, 235, 231)
 
@@ -86,6 +88,7 @@ addon.colors.cast = {
 	shielded = addon:CreateColor(132, 132, 132),
 	important = addon:CreateColor(252, 89, 0),
 	normal = addon:CreateColor(253, 219, 0),
+	interrupted = addon:CreateColor(76, 76, 76),
 	global = addon:CreateColor(0, 127, 255),
 }
 

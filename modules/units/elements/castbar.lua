@@ -1,7 +1,5 @@
 local _, addon = ...
 
-local WHITE_COLOR = addon:CreateColor(1, 1, 1)
-
 function addon.unitShared.PostUpdateCast(element, unit, spellName, _, _, notInterruptible, spellID)
 	if spellID == nil then -- TODO: remove in v14
 		spellID = element.spellID
@@ -31,7 +29,7 @@ function addon.unitShared.PostUpdateCast(element, unit, spellName, _, _, notInte
 			local color = C_ClassColor.GetClassColor(classToken)
 			spellTargetname = color:WrapTextInColorCode(spellTargetname)
 		else
-			spellTargetname = WHITE_COLOR:WrapTextInColorCode(spellTargetname)
+			spellTargetname = addon.colors.white:WrapTextInColorCode(spellTargetname)
 		end
 
 		element.Text:SetFormattedText('%s (|cff999999@|r%s)', spellName, spellTargetname)
@@ -51,5 +49,5 @@ function addon.unitShared.PostInterruptedCast(element, _, interruptedByGUID)
 		element.Text:SetFormattedText('%s (%s)', _G.INTERRUPTED, name)
 	end
 
-	element:SetStatusBarColor(0.3, 0.3, 0.3)
+	element:SetStatusBarColor(addon.colors.cast.interrupted:GetRGB())
 end
