@@ -377,6 +377,8 @@ oUF:RegisterStyle(styleName, function(self)
 	TargetOutline:Hide()
 	self.TargetOutline = TargetOutline
 
+	-- TODO: focus outline or something
+
 	self:RegisterEvent('PLAYER_REGEN_DISABLED', updateOnAdded, true) -- for combat state changes
 	self:RegisterEvent('PLAYER_REGEN_ENABLED', updateOnAdded, true) -- for combat state changes
 	self:RegisterEvent('PLAYER_FOCUS_CHANGED', updateHealthColor, true)
