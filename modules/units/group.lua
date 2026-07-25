@@ -94,8 +94,8 @@ local classBuffs = {}; do
 	end
 end
 
-local function postCreateSlot(frame, _, button)
-	button:SetPoint('CENTER', frame.Health)
+local function postCreateDefensiveSlot(element, button)
+	button:SetPoint('CENTER', element.__owner.Health)
 end
 
 local function style(self, unit, isRaidStyle)
@@ -300,13 +300,13 @@ local function style(self, unit, isRaidStyle)
 		Buffs:AddSlot('HELPFUL|BIG_DEFENSIVE', {
 			size = self:GetHeight() / 2,
 			raiseLevels = 2,
-			postCreateButton = GenerateClosure(postCreateSlot, self),
+			postCreateButton = postCreateDefensiveSlot,
 		})
 
 		Buffs:AddSlot('HELPFUL|EXTERNAL_DEFENSIVE', {
 			size = self:GetHeight() / 2,
 			raiseLevels = 3,
-			postCreateButton = GenerateClosure(postCreateSlot, self),
+			postCreateButton = postCreateDefensiveSlot,
 		})
 
 		Debuffs:AddGroup('HARMFUL') -- TODO: would like to filter some crap, but we can't right now
