@@ -70,12 +70,12 @@ end
 
 local updateCombat; do
 	if addon:HasVersion(120100) then
-		function updateCombat(element, groupKey)
-			-- TODO: there's no proper way to disable a group right now, so we have to do some shenanigans
+		function updateCombat(element)
+			-- TODO: there's no proper way to disable a group right now
 			if UnitAffectingCombat('player') then
-				element:SetAuraGroupMaxFrameCount(groupKey, 0)
+				element:SetAuraGroupMaxFrameCount(element.classBuffGroup, 0)
 			else
-				element:SetAuraGroupMaxFrameCount(groupKey, 1)
+				element:SetAuraGroupMaxFrameCount(element.classBuffGroup, 1)
 			end
 		end
 	else
@@ -278,16 +278,16 @@ local function style(self, unit, isRaidStyle)
 	Debuffs.CreateButton = addon.unitShared.CreateAura
 
 	if self.CreateAuras then
-		local classBuffGroup = Buffs:AddGroup('HELPFUL', {
+		Buffs.classBuffGroup = Buffs:AddGroup('HELPFUL', {
 			candidateFilters = {
 				includeSpellIDs = classBuffs,
 			},
 		})
 
 		-- auto-hide class buffs in combat
-		self:RegisterEvent('PLAYER_REGEN_DISABLED', GenerateFlatClosure(updateCombat, Buffs, classBuffGroup), true)
-		self:RegisterEvent('PLAYER_REGEN_ENABLED', GenerateFlatClosure(updateCombat, Buffs, classBuffGroup), true)
-		updateCombat(Buffs, classBuffGroup)
+		self:RegisterEvent('PLAYER_REGEN_DISABLED', GenerateFlatClosure(updateCombat, Buffs), true)
+		self:RegisterEvent('PLAYER_REGEN_ENABLED', GenerateFlatClosure(updateCombat, Buffs), true)
+		updateCombat(Buffs)
 
 		Buffs:AddGroup('HELPFUL|PLAYER|RAID|!BIG_DEFENSIVE|!EXTERNAL_DEFENSIVE', {
 			-- TODO: we might want to filter _specific_ buffs on group frames
