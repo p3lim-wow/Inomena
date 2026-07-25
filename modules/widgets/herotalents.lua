@@ -89,7 +89,6 @@ end
 -- we create this button early because SetPassThroughButtons is protected, then we re-parent it
 -- once the talents UI is loaded
 local overlay = addon:CreateFrame('Button')
-overlay:RegisterForClicks('RightButtonUp')
 overlay:SetPassThroughButtons('LeftButton') -- don't override normal click functionality
 overlay:SetPropagateMouseMotion(true) -- so we own the tooltip
 overlay:SetScript('OnClick', onOverlayClick)

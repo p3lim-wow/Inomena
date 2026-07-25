@@ -5,6 +5,7 @@ local widgetMixin = {}
 do
 	local frameMixin = {}
 	function frameMixin:SetThrottledUpdate(interval, callback)
+		-- I wish they'd add :SetOnUpdateInterval
 		if interval and callback then
 			local total = 0
 			self:SetScript('OnUpdate', function(_, elapsed)
@@ -19,19 +20,53 @@ do
 		end
 	end
 
+	local KEY_DIRECTION_CVAR = 'ActionButtonUseKeyDown'
+	local function updateKeyDirection(self)
+		-- TODO: support other clicks than Any
+		if C_CVar.GetCVarBool(KEY_DIRECTION_CVAR) then
+			self:RegisterForClicks('AnyDown')
+		else
+			self:RegisterForClicks('AnyUp')
+		end
+	end
+
+	function frameMixin:UpdateClickDirection(cvar)
+		if cvar == KEY_DIRECTION_CVAR then
+			addon:Defer(updateKeyDirection, self)
+		end
+	end
+
+	local function createFrame(frameType, ...)
+		local frame = Mixin(CreateFrame(frameType, ...), widgetMixin, addon.eventMixin, frameMixin)
+		if frameType:match('Button') then
+			frame:RegisterEvent('CVAR_UPDATE', frame.UpdateClickDirection)
+			frame:UpdateClickDirection(KEY_DIRECTION_CVAR) -- force update on creation
+		end
+
+		return frame
+	end
+
+	local function createBackdropFrame(...)
+		local frame = createFrame(...)
+		frame:AddBackdrop()
+		return frame
+	end
+
 	function widgetMixin:CreateFrame(frameType, template)
-		return Mixin(addon:CreateFrame(frameType or 'Frame', nil, self, template), widgetMixin, frameMixin)
+		return createFrame(frameType or 'Frame', nil, self, template)
+	end
+
+	function widgetMixin:CreateBackdropFrame(frameType, template)
+		return createBackdropFrame(frameType or 'Frame', nil, self, template)
 	end
 
 	function addon:CreateFrame(...)
-		return Mixin(CreateFrame(...), widgetMixin, addon.eventMixin, frameMixin)
+		return createFrame(...)
 	end
-end
 
-function widgetMixin:CreateBackdropFrame(frameType, template)
-	local frame = self:CreateFrame(frameType, template)
-	frame:AddBackdrop()
-	return frame
+	function addon:CreateBackdropFrame(...)
+		return createBackdropFrame(...)
+	end
 end
 
 do
@@ -121,7 +156,7 @@ do
 	end
 
 	function widgetMixin:CreateCooldown(anchor)
-		local cooldown = Mixin(addon:CreateFrame('Cooldown', nil, self, 'CooldownFrameTemplate'), cooldownMixin)
+		local cooldown = Mixin(widgetMixin.CreateFrame(self, 'Cooldown', 'CooldownFrameTemplate'), cooldownMixin)
 		cooldown:SetAllPoints(anchor or self)
 		cooldown:SetDrawEdge(false)
 		cooldown:SetDrawBling(false)

@@ -74,9 +74,8 @@ addon:RegisterSlash('/paste', function()
 	end
 
 	if not paste then
-		paste = addon:CreateFrame('EditBox', nil, UIParent)
+		paste = addon:CreateBackdropFrame('EditBox', nil, UIParent)
 		paste:Hide()
-		paste:AddBackdrop()
 		paste:SetPoint('TOPLEFT', UIParent, 'CENTER', -300, 200)
 		paste:SetPoint('BOTTOMRIGHT', UIParent, 'CENTER', 300, -200)
 		paste:SetBackgroundColor(0, 0, 0, 0.8)
