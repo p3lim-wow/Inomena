@@ -56,9 +56,17 @@ tags.Methods['inomena:reactioncolor'] = function(unit)
 	if UnitIsTapDenied(unit) or not UnitIsConnected(unit) then
 		return '|cff999999'
 	elseif UnitIsPlayer(unit) or UnitTreatAsPlayerForDisplay(unit) then
+		local color
 		local _, classToken = UnitClass(unit)
-		local color = C_ClassColor.GetClassColor(classToken)
-		return color ~= nil and color:GenerateHexColorMarkup()
+		if classToken ~= nil then
+			color = C_ClassColor.GetClassColor(classToken)
+		end
+
+		if color == nil then
+			color = addon.colors.white
+		end
+
+		return color:GenerateHexColorMarkup()
 	elseif not UnitIsPlayer(unit) and reaction then
 		return addon.colors.reaction[reaction] and Hex(addon.colors.reaction[reaction])
 	elseif UnitFactionGroup(unit) and UnitIsEnemy(unit, 'player') and UnitIsPVP(unit) then
