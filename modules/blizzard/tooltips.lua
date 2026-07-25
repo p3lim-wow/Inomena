@@ -26,7 +26,9 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 		if not issecretvalue(unit) and unit ~= nil then
 			if UnitIsPlayer(unit) or UnitTreatAsPlayerForDisplay(unit) then
 				_, classToken = UnitClass(unit)
-				color = C_ClassColor.GetClassColor(classToken)
+				if classToken ~= nil then
+					color = C_ClassColor.GetClassColor(classToken)
+				end
 			elseif UnitIsMinion(unit) then
 				color = addon:CreateColor(UnitSelectionColor(unit, true))
 			end
