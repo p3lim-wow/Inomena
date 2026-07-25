@@ -136,9 +136,12 @@ read_globals = {
 	'SlashCmdList',
 	'TooltipComparisonManager',
 	'CHAT_FRAMES',
+	'GREEN_FONT_COLOR_CODE',
 	'INVENTORY_ALERT_STATUS_SLOTS',
+	'RED_FONT_COLOR_CODE',
 	'SELECTED_CHAT_FRAME',
 	'WHITE_FONT_COLOR',
+	'YELLOW_FONT_COLOR_CODE',
 
 	-- FrameXML utils
 	'ActionButtonUtil',
@@ -307,6 +310,7 @@ read_globals = {
 	'GetBattlefieldStatus',
 	'GetBindingKey',
 	'GetClassInfo',
+	'GetFramerate',
 	'GetGuildBankMoney',
 	'GetGuildInfo',
 	'GetGuildRosterInfo',
@@ -321,6 +325,7 @@ read_globals = {
 	'GetMacroItem',
 	'GetMaxLevelForPlayerExpansion',
 	'GetMoney',
+	'GetNetStats',
 	'GetNextPendingInviteConfirmation',
 	'GetNumClasses',
 	'GetNumGroupMembers',
