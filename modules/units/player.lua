@@ -135,6 +135,9 @@ oUF:RegisterStyle(styleName, function(self, unit)
 
 	if self.CreateAuras then
 		Debuffs:AddGroup('HARMFUL')
+		Debuffs:AddSlot('HARMFUL|RAID', {
+			CreateButton = addon.unitShared.CreateDispelOverlay,
+		})
 	else
 		-- private auras are merged in the new aura system, so we don't need them in 12.1
 		local PrivateAuras = self:CreateFrame()
