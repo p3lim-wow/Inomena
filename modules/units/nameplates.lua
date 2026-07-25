@@ -113,25 +113,15 @@ local function updateHealthColor(self, event, unit)
 	end
 
 	local color
-	if addon:IsInDungeon() and not addon:IsInRaid() then
-		local inCombat = UnitAffectingCombat(unit)
-		if C_Secrets.CanCompareUnitTokens(unit, 'focus') and UnitIsUnit(unit, 'focus') then
-			color = addon.colors.focus
-		elseif inCombat then
-			color = addon.colors.nameplate
+	if addon:IsInDungeon() then
+		local groupRole = UnitGroupRolesAssignedEnum('player')
+		if groupRole >= 0 then -- no role = -1, missing enum value
+			local threatStatus = UnitThreatSituation('player', unit)
+			color = addon.unitShared.GetThreatColor(groupRole, threatStatus)
 		end
 
-		-- override colors with threat status
-		if inCombat then
-			local threatStatus = UnitThreatSituation('player', unit)
-			local groupRole = UnitGroupRolesAssigned('player')
-			if groupRole == 'TANK' and threatStatus and threatStatus < 3 then
-				-- player is low on aggro
-				color = addon.colors.threat
-			elseif groupRole ~= 'NONE' and threatStatus and threatStatus > 1 then
-				-- player has aggro
-				color = addon.colors.threat
-			end
+		if not color then
+			color = addon.colors.nameplate
 		end
 	end
 
@@ -394,6 +384,7 @@ oUF:RegisterStyle(styleName, function(self)
 	self:RegisterEvent('UNIT_FLAGS', updateOnAdded) -- for reaction state changes (?)
 	self:RegisterEvent('UNIT_HEALTH', updateOnAdded) -- extra updates
 	self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', updateHealthColor)
+	self:RegisterEvent('UNIT_THREAT_LIST_UPDATE', updateHealthColor) -- unsure if needed
 end)
 
 oUF:SetActiveStyle(styleName)
