@@ -86,6 +86,7 @@ addon.colors.cast = {
 	shielded = addon:CreateColor(132, 132, 132),
 	important = addon:CreateColor(252, 89, 0),
 	normal = addon:CreateColor(253, 219, 0),
+	global = addon:CreateColor(0, 127, 255),
 }
 
 addon.colors.chat = { -- only the ones we override

@@ -25,8 +25,8 @@ local function postStartCast(element, _, _, _, _, notInterruptible)
 	element:SetStatusBarColorFromBoolean(notInterruptible, addon.colors.cast.shielded, addon.colors.cast.normal)
 end
 
-local function postGlobal(element)
-	element:SetStatusBarColor(0, 0.5, 1) -- TODO: move color
+local function postGlobalCast(element)
+	element:SetStatusBarColor(addon.colors.cast.global:GetRGB())
 end
 
 local timer -- TODO: remove in v14
@@ -91,7 +91,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Castbar.ShouldShow = overrideCastbarVisibility
 	Castbar.CreatePip = overrideCreatePip
 	Castbar.showGlobalCooldown = true
-	Castbar.PostCastGlobal = postGlobal
+	Castbar.PostCastGlobal = postGlobalCast
 	self.Castbar = Castbar
 
 	local CastbarTime = Castbar:CreateText()
