@@ -92,7 +92,7 @@ local CVARS = { -- exposed settings from the interface options
 	spellDiminishPVPEnemiesEnabled = 0,
 	spellDiminishPVPOnlyTriggerableByMe = 0, -- (default)
 
-	-- Gameplay Nameplates
+	-- Gameplay Nameplates (the settings for names, not nameplates)
 	UnitNameOwn = 0, -- (default)
 	UnitNameHostleNPC = 0,
 	ShowQuestUnitCircles = 0,
