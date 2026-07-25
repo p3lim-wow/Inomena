@@ -75,7 +75,6 @@ modules\widgets\character.lua
 modules\widgets\garrison.lua
 modules\widgets\guild.lua
 modules\widgets\herotalents.lua
-modules\widgets\imbuements.lua
 modules\widgets\mail.lua
 modules\widgets\petbattle.lua
 modules\widgets\repair.lua
