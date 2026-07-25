@@ -68,9 +68,9 @@ local filterDebuffs; do -- TODO: remove in 12.1
 	end
 end
 
-local updateCombat; do
+local updateBuffsCombat; do
 	if addon:HasVersion(120100) then
-		function updateCombat(element)
+		function updateBuffsCombat(element)
 			-- TODO: there's no proper way to disable a group right now
 			if UnitAffectingCombat('player') then
 				element:SetAuraGroupMaxFrameCount(element.classBuffGroup, 0)
@@ -79,7 +79,7 @@ local updateCombat; do
 			end
 		end
 	else
-		function updateCombat(self) -- TODO: remove in 12.1
+		function updateBuffsCombat(self) -- TODO: remove in 12.1
 			-- update buffs to force refresh our filters when combat changes
 			self.Buffs:ForceUpdate()
 		end
@@ -246,8 +246,8 @@ local function style(self, unit, isRaidStyle)
 		self.Buffs = Buffs
 
 		-- force update auras on combat state change for filters
-		self:RegisterEvent('PLAYER_REGEN_DISABLED', updateCombat, true)
-		self:RegisterEvent('PLAYER_REGEN_ENABLED', updateCombat, true)
+		self:RegisterEvent('PLAYER_REGEN_DISABLED', updateBuffsCombat, true)
+		self:RegisterEvent('PLAYER_REGEN_ENABLED', updateBuffsCombat, true)
 
 		Debuffs = self:CreateFrame()
 		Debuffs:SetSize(self:GetWidth(), isRaidStyle and 16 or (self:GetHeight() * 2/3))
@@ -285,9 +285,9 @@ local function style(self, unit, isRaidStyle)
 		})
 
 		-- auto-hide class buffs in combat
-		self:RegisterEvent('PLAYER_REGEN_DISABLED', GenerateFlatClosure(updateCombat, Buffs), true)
-		self:RegisterEvent('PLAYER_REGEN_ENABLED', GenerateFlatClosure(updateCombat, Buffs), true)
-		updateCombat(Buffs)
+		self:RegisterEvent('PLAYER_REGEN_DISABLED', GenerateFlatClosure(updateBuffsCombat, Buffs), true)
+		self:RegisterEvent('PLAYER_REGEN_ENABLED', GenerateFlatClosure(updateBuffsCombat, Buffs), true)
+		updateBuffsCombat(Buffs) -- so it works with reloading too
 
 		Buffs:AddGroup('HELPFUL|PLAYER|RAID|!BIG_DEFENSIVE|!EXTERNAL_DEFENSIVE', {
 			-- TODO: we might want to filter _specific_ buffs on group frames
