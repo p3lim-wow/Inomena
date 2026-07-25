@@ -57,8 +57,12 @@ addon.colors.absorb = addon:CreateColor(67, 235, 231)
 
 addon.colors.nameplate = addon:CreateColor(131, 130, 203)
 addon.colors.focus = addon:CreateColor(56, 188, 255)
-addon.colors.threat = addon:CreateColor(227, 68, 68)
 addon.colors.highlight = addon:CreateColor(1, 1, 1, 0.5)
+
+addon.colors.threat = {
+	high = addon:CreateColor(227, 68, 68),
+	low = addon:CreateColor(227, 147, 68),
+}
 
 addon.colors.power.DevourerMeta = addon:CreateColor(97, 137, 210)
 addon.colors.power.DevourerStar = addon:CreateColor(175, 112, 230)
