@@ -123,14 +123,21 @@ do
 		self:GetParent():SetFrameLevel(level)
 	end
 
-	function widgetMixin:CreateText(size)
-		if not self.overlayParent then
-			-- make sure text renders above other widgets
-			self.overlayParent = CreateFrame('Frame', nil, self)
-			self.overlayParent:SetAllPoints() -- needs a size so children can render
+	function widgetMixin:CreateText(size, noOverlay)
+		local parent
+		if noOverlay then
+			parent = self
+		else
+			if not self.overlayParent then
+				-- make sure text renders above other widgets
+				self.overlayParent = CreateFrame('Frame', nil, self)
+				self.overlayParent:SetAllPoints() -- needs a size so children can render
+			end
+
+			parent = self.overlayParent
 		end
 
-		local text = Mixin(self.overlayParent:CreateFontString(nil, 'OVERLAY'), textMixin)
+		local text = Mixin(parent:CreateFontString(nil, 'OVERLAY'), textMixin)
 		text:SetFontSize(size)
 		text:SetWordWrap(false)
 		return text
