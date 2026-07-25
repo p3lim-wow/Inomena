@@ -26,6 +26,7 @@ do
 	local CLASS_ASSIST_SPELLS = {
 		SHAMAN = 974, -- Earth Shield
 		PRIEST = 10060, -- Power Infusion
+		PALADIN = 85673, -- Word of Glory (TBD Lay on Hands instead?)
 		DRUID = {
 			combat = 29166, -- Innervate
 			nocombat = 474750, -- Symbiotic Relationship
