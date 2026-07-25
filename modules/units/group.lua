@@ -98,44 +98,6 @@ local function postCreateSlot(frame, _, button)
 	button:SetPoint('CENTER', frame.Health)
 end
 
-local function createDispelOverlay(frame, button)
-	Mixin(button, addon.widgetMixin)
-	button:EnableMouse(false)
-	button:SetAllPoints(frame)
-	button:SetFrameLevel(frame:GetFrameLevel() + 20) -- way above other containers
-
-	local DispelGradient = button:CreateTexture('OVERLAY')
-	DispelGradient:SetAllPoints()
-	DispelGradient:SetTexCoord(0, 1, 0, 1)
-	DispelGradient:SetAtlas('_RaidFrame-Dispel-Highlight-Horizontal', false, nil, nil, 'REPEAT', 'CLAMP')
-	button:AddDispelTypeTexture(DispelGradient, {
-		style = Enum.CustomAuraButtonDispelTypeTextureStyle.PreserveAsset,
-		customDispelColorMap = frame.colors.dispel,
-	})
-
-	local DispelBorder = button:CreateTexture('OVERLAY')
-	DispelBorder:SetAllPoints()
-	DispelBorder:SetAtlas('RaidFrame-DispelHighlight')
-	button:AddDispelTypeTexture(DispelBorder, {
-		style = Enum.CustomAuraButtonDispelTypeTextureStyle.PreserveAsset,
-		customDispelColorMap = frame.colors.dispel,
-	})
-
-	local DispelIcon = button:CreateTexture('OVERLAY', 1) -- above the other two
-	DispelIcon:SetPoint('CENTER', button, 'TOPRIGHT', -1, -1)
-	DispelIcon:SetSize(24, 24)
-	button:AddDispelTypeTexture(DispelIcon, {
-		style = Enum.CustomAuraButtonDispelTypeTextureStyle.Icon,
-	})
-end
-
-local function updateDispelFilters(element)
-	-- automatically set to filter for whichever dispel types the player can dispel
-	element:SetAuraSlotCandidateFilters(element.dispelGroup, {
-		includeDispelTypes = addon:GetDispelTypes('HARMFUL')
-	})
-end
-
 local function style(self, unit, isRaidStyle)
 	Mixin(self, addon.widgetMixin)
 
@@ -349,13 +311,9 @@ local function style(self, unit, isRaidStyle)
 
 		Debuffs:AddGroup('HARMFUL') -- TODO: would like to filter some crap, but we can't right now
 
-		-- dispel overlay
-		Debuffs.dispelGroup = Debuffs:AddSlot('HARMFUL|DISPELLABLE', {
-			initializeFrame = GenerateClosure(createDispelOverlay, self),
+		Debuffs:AddSlot('HARMFUL|RAID', {
+			CreateButton = addon.unitShared.CreateDispelOverlay,
 		})
-
-		self:RegisterEvent('SPELLS_CHANGED', GenerateFlatClosure(updateDispelFilters, Debuffs), true)
-		updateDispelFilters(Debuffs) -- SPELLS_CHANGED does not trigger on fresh login? wtf?
 	else
 		-- DefensiveBuffs can be merged with Buffs as slots in 12.1
 		local DefensiveBuffs = self:CreateFrame()

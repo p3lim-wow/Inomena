@@ -146,6 +146,38 @@ do
 	end
 end
 
+function addon.unitShared.CreateDispelOverlay(element, _, button)
+	Mixin(button, addon.widgetMixin)
+
+	button:EnableMouse(false)
+	button:SetAllPoints(element.__owner) -- cover entire unit frame
+	button:SetFrameLevel(element.__owner:GetFrameLevel() + 20) -- way above other containers
+
+	local DispelGradient = button:CreateTexture('OVERLAY')
+	DispelGradient:SetAllPoints()
+	DispelGradient:SetTexCoord(0, 1, 0, 1)
+	DispelGradient:SetAtlas('_RaidFrame-Dispel-Highlight-Horizontal', false, nil, nil, 'REPEAT', 'CLAMP')
+	button:AddDispelTypeTexture(DispelGradient, {
+		style = Enum.CustomAuraButtonDispelTypeTextureStyle.PreserveAsset,
+		customDispelColorMap = element.__owner.colors.dispel,
+	})
+
+	local DispelBorder = button:CreateTexture('OVERLAY')
+	DispelBorder:SetAllPoints()
+	DispelBorder:SetAtlas('RaidFrame-DispelHighlight')
+	button:AddDispelTypeTexture(DispelBorder, {
+		style = Enum.CustomAuraButtonDispelTypeTextureStyle.PreserveAsset,
+		customDispelColorMap = element.__owner.colors.dispel,
+	})
+
+	local DispelIcon = button:CreateTexture('OVERLAY', 1) -- above the other two
+	DispelIcon:SetPoint('CENTER', button, 'TOPRIGHT', -1, -1)
+	DispelIcon:SetSize(24, 24)
+	button:AddDispelTypeTexture(DispelIcon, {
+		style = Enum.CustomAuraButtonDispelTypeTextureStyle.Icon,
+	})
+end
+
 function addon.unitShared.PostUpdateAura(element, Button, unit, data) -- TODO: remove in 12.1
 	-- color by dispel type
 	local color = C_UnitAuras.GetAuraDispelTypeColor(unit, data.auraInstanceID, element.dispelColorCurve)
