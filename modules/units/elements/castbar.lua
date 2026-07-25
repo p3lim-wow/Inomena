@@ -26,25 +26,25 @@ function addon.unitShared.PostUpdateCast(element, unit, spellName, _, _, notInte
 	-- display cast target name if it exists
 	local spellTargetname = UnitSpellTargetName(unit)
 	if spellTargetname ~= nil then
-		local color
 		local classToken = UnitSpellTargetClass(unit)
 		if classToken ~= nil then
-			color = C_ClassColor.GetClassColor(classToken) -- can't use oUF colors for this
+			local color = C_ClassColor.GetClassColor(classToken)
+			spellTargetname = color:WrapTextInColorCode(spellTargetname)
 		else
-			color = WHITE_COLOR
+			spellTargetname = WHITE_COLOR:WrapTextInColorCode(spellTargetname)
 		end
 
-		element.Text:SetFormattedText('%s (|cff999999@|r%s)', spellName, color:WrapTextInColorCode(spellTargetname))
+		element.Text:SetFormattedText('%s (|cff999999@|r%s)', spellName, spellTargetname)
 	end
 end
 
 function addon.unitShared.PostInterruptedCast(element, _, interruptedByGUID)
 	-- try to display who interrupted the cast
 	if interruptedByGUID ~= nil then
-		local _, classToken = UnitClassFromGUID(interruptedByGUID)
 		local name = UnitNameFromGUID(interruptedByGUID)
+		local _, classToken = UnitClassFromGUID(interruptedByGUID)
 		if classToken ~= nil then
-			local color = C_ClassColor.GetClassColor(classToken) -- can't use oUF colors for secrets
+			local color = C_ClassColor.GetClassColor(classToken)
 			name = color:WrapTextInColorCode(name)
 		end
 
