@@ -123,7 +123,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Castbar.PostCastStart = addon.unitShared.PostUpdateCast
 	Castbar.PostCastInterruptible = addon.unitShared.PostUpdateCast
 	Castbar.PostCastInterrupted = addon.unitShared.PostInterruptedCast
-	Castbar.PostCastFail = addon.unitShared.PostInterruptedCast
+	Castbar.PostCastFail = addon.unitShared.PostFailedCast
 	self.Castbar = Castbar
 
 	local CastbarInterruptible = Castbar:CreateTexture('OVERLAY', 1)

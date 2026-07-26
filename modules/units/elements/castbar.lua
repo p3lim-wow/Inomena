@@ -49,5 +49,8 @@ function addon.unitShared.PostInterruptedCast(element, _, interruptedByGUID)
 		element.Text:SetFormattedText('%s (%s)', _G.INTERRUPTED, name)
 	end
 
+end
+
+function addon.unitShared.PostFailedCast(element)
 	element:SetStatusBarColor(addon.colors.cast.interrupted:GetRGB())
 end
