@@ -42,10 +42,6 @@ local function overrideDisplayPower(_, unit)
 end
 
 local function postUpdatePower(element, unit, _, _, _, displayType)
-	if displayType == nil then -- TODO: remove in v14
-		displayType = element.displayType
-	end
-
 	-- hide power if no display power or if player is idle
 	local shouldShow = false
 	if displayType then
@@ -93,7 +89,7 @@ local function updateChargedComboPoint(element, ...)
 	end
 end
 
-local function postUpdateClassPower(element, cur, max, maxChanged, powerType, ...)
+local function postUpdateClassPower(element, cur, max, _, maxChanged, powerType, ...)
 	if maxChanged then -- need to resize each class power bar
 		addon:ResizePillsToFit(element, max)
 	end
@@ -124,11 +120,6 @@ local function postUpdateClassPower(element, cur, max, maxChanged, powerType, ..
 			element:SetAlpha(1)
 		end
 	end
-end
-
-local function postUpdateClassPower14(element, cur, max, _, ...)
-	 -- TODO: clean up in v14
-	postUpdateClassPower(element, cur, max, ...)
 end
 
 local function updateCombat(self)
@@ -177,7 +168,7 @@ oUF:RegisterStyle(styleName, function(self)
 	ClassPower:SetPoint('BOTTOMLEFT', Power, 'TOPLEFT', 0, addon.SPACING)
 	ClassPower:SetPoint('BOTTOMRIGHT', Power, 'TOPRIGHT', 0, addon.SPACING)
 	ClassPower:SetHeight(12)
-	ClassPower.PostUpdate = self.CreateAuras and postUpdateClassPower14 or postUpdateClassPower -- TODO: clean up in v14
+	ClassPower.PostUpdate = postUpdateClassPower
 	ClassPower.ChargedComboPoints = {}
 	self.ClassPower = ClassPower
 

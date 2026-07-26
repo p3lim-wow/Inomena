@@ -19,59 +19,11 @@ local function overrideCastbarVisibility(element, unit)
 end
 
 local function postStartCast(element, _, _, _, _, notInterruptible)
-	if notInterruptible == nil then -- TODO: remove in v14
-		notInterruptible = element.notInterruptible
-	end
 	element:SetStatusBarColorFromBoolean(notInterruptible, addon.colors.cast.shielded, addon.colors.cast.normal)
 end
 
 local function postGlobalCast(element)
 	element:SetStatusBarColor(addon.colors.cast.global:GetRGB())
-end
-
-local timer -- TODO: remove in v14
-local function resetCastbar(element) -- TODO: remove in v14
-	if not element.castID then -- don't reset if it's in use
-		element.channeling = nil
-		element:Hide()
-		timer = nil
-	end
-end
-
-local function updateGlobalCooldown(self) -- TODO: remove in v14
-	local element = self.Castbar
-	if element.castID then
-		return
-	end
-
-	local info = C_Spell.GetSpellCooldown(61304) -- super secret GCD spell, never secret
-	if info and info.isOnGCD and info.duration > 0 then
-		-- TODO: we need to revamp this for v14
-
-		-- reset manually
-		element.castID = nil
-		element.delay = 0
-		if timer then
-			timer:Cancel()
-		end
-
-		-- fake channeling
-		element.channeling = true
-
-		-- special color
-		element:SetStatusBarColor(0, 0.5, 1)
-
-		-- generate duration from spell info
-		local duration = C_DurationUtil.CreateDuration()
-		duration:SetTimeFromStart(info.startTime, info.duration, info.modRate)
-
-		-- render duration on castbar
-		element:SetTimerDuration(duration, element.smoothing, Enum.StatusBarTimerDirection.RemainingTime)
-		element:Show()
-
-		-- reset after duration ends, adjusted by latency
-		timer = C_Timer.NewTimer(info.duration - (GetTime() - info.startTime), GenerateClosure(resetCastbar, element))
-	end
 end
 
 local styleName = addon.unitPrefix .. 'Castbar'
@@ -98,11 +50,6 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	CastbarTime:SetPoint('CENTER')
 	CastbarTime:SetJustifyH('CENTER')
 	Castbar.Time = CastbarTime
-
-	if unit == 'player' and not self.CreateAuras then -- TODO: remove in v14
-		-- display global cooldown from instant casts as a fake channel spell
-		self:RegisterEvent('UNIT_SPELLCAST_SUCCEEDED', updateGlobalCooldown)
-	end
 end)
 
 oUF:SetActiveStyle(styleName)

@@ -1,16 +1,6 @@
 local _, addon = ...
 
 function addon.unitShared.PostUpdateCast(element, unit, spellName, _, _, notInterruptible, spellID)
-	if spellID == nil then -- TODO: remove in v14
-		spellID = element.spellID
-	end
-	if spellName == nil then -- TODO: remove in v14
-		spellName = element.spellName
-	end
-	if notInterruptible == nil then -- TODO: remove in v14
-		notInterruptible = element.notInterruptible
-	end
-
 	local colors = addon.colors.cast
 	local important = C_Spell.IsSpellImportant(spellID)
 
