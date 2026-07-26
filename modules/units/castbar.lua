@@ -50,6 +50,12 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	CastbarTime:SetPoint('CENTER')
 	CastbarTime:SetJustifyH('CENTER')
 	Castbar.Time = CastbarTime
+
+	local CastbarDelay = Castbar:CreateText()
+	CastbarDelay:SetPoint('LEFT', CastbarTime, 'RIGHT')
+	CastbarDelay:SetJustifyH('LEFT')
+	CastbarDelay:SetTextColor(1, 0, 0)
+	Castbar.Delay = CastbarDelay
 end)
 
 oUF:SetActiveStyle(styleName)
