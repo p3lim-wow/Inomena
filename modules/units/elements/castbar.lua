@@ -38,17 +38,15 @@ end
 
 function addon.unitShared.PostInterruptedCast(element, _, interruptedByGUID)
 	-- try to display who interrupted the cast
-	if interruptedByGUID ~= nil then
-		local name = UnitNameFromGUID(interruptedByGUID)
-		local _, classToken = UnitClassFromGUID(interruptedByGUID)
-		if classToken ~= nil then
-			local color = C_ClassColor.GetClassColor(classToken)
-			name = color:WrapTextInColorCode(name)
-		end
-
-		element.Text:SetFormattedText('%s (%s)', _G.INTERRUPTED, name)
+	local name = UnitNameFromGUID(interruptedByGUID)
+	local _, classToken = UnitClassFromGUID(interruptedByGUID)
+	if classToken ~= nil then
+		local color = C_ClassColor.GetClassColor(classToken)
+		name = color:WrapTextInColorCode(name)
 	end
 
+	element.Text:SetFormattedText('%s (%s)', INTERRUPTED, name)
+	element:SetStatusBarColor(addon.colors.cast.interrupted:GetRGB())
 end
 
 function addon.unitShared.PostFailedCast(element)
