@@ -3,8 +3,7 @@ local _, addon = ...
 -- add totems below the minimap
 
 local NUM_TOTEMS = 5 -- MAX_TOTEMS is incorrect
-local WIDTH = math.floor((Minimap:GetWidth() - ((NUM_TOTEMS - 1) * addon.SPACING)) / MAX_TOTEMS)
--- ^ this is a shit calculation but it'll do for now
+local WIDTH = 44
 
 local function update(self, slot)
 	if slot ~= self:GetID() then
@@ -25,9 +24,9 @@ end
 for index = 1, NUM_TOTEMS do
 	local Totem = addon:CreateBackdropFrame('Button', nil, UIParent, 'SecureActionButtonTemplate')
 	Totem:SetPoint('TOPLEFT', Minimap, 'BOTTOMLEFT', (index - 1) * (WIDTH + addon.SPACING), -addon.SPACING)
+	Totem:SetSize(WIDTH, WIDTH / 2)
 	Totem:SetAttribute('type2', 'destroytotem')
 	Totem:SetAttribute('totem-slot', index)
-	Totem:SetSize(WIDTH, WIDTH / 2)
 	Totem:SetID(index)
 	Totem:RegisterEvent('PLAYER_TOTEM_UPDATE', update)
 	Totem:RegisterEvent('PLAYER_ENTERING_WORLD', GenerateFlatClosure(update, Totem, index))
