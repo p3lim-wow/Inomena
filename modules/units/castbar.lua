@@ -32,7 +32,6 @@ oUF:RegisterStyle(styleName, function(self, unit)
 
 	self:SetSize(310, 1)
 	self:EnableMouse(false) -- non-interactable
-	self:SetFrameStrata('DIALOG')
 
 	local Castbar = self:CreateBackdropStatusBar()
 	Castbar:SetPoint('TOPLEFT')
@@ -61,8 +60,26 @@ end)
 oUF:SetActiveStyle(styleName)
 
 -- pet castbar overlapping for vehicle/possess support
+local castbars = {}
 for _, unit in next, {'player', 'pet'} do
 	local castbar = oUF:Spawn(unit, styleName .. unit:gsub('^%l', string.upper))
 	castbar:SetPoint('TOP', addon.units.resources, 'BOTTOM', 0, -addon.SPACING)
 	addon:PixelPerfect(castbar)
+	castbars[unit] = castbar
 end
+
+addon:RegisterCallback('PlayerSpellsFrame.TalentTab.Show', function()
+	if not InCombatLockdown() then
+		for _, castbar in next, castbars do
+			castbar:SetFrameStrata('DIALOG')
+		end
+	end
+end)
+
+addon:RegisterCallback('PlayerSpellsFrame.TalentTab.Hide', function()
+	if not InCombatLockdown() then
+		for _, castbar in next, castbars do
+			castbar:SetFrameStrata('LOW')
+		end
+	end
+end)
