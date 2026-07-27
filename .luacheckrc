@@ -187,6 +187,7 @@ read_globals = {
 	'SOUNDKIT',
 
 	-- GlobalStrings
+	'AFK',
 	'AZERITE_ISLANDS_XP_GAIN',
 	'AZERITE_XP_GAIN',
 	'BNET_CLIENT_APP',

@@ -231,7 +231,7 @@ oUF:RegisterStyle(styleName, function(self)
 	FriendlyName:SetJustifyH('CENTER')
 	FriendlyName:SetSmoothScaling(true)
 	self.FriendlyName = FriendlyName
-	self:Tag(FriendlyName, '[inomena:reactioncolor][inomena:name<$|r]')
+	self:Tag(FriendlyName, '|cffffce18[inomena:away]|r[inomena:reactioncolor][inomena:name<$|r]')
 
 	local RaidIcon = HealthValue:GetParent():CreateTexture('OVERLAY') -- higher parent
 	RaidIcon:SetPoint('CENTER', Health, 'TOP', 0, addon.SPACING)

@@ -182,6 +182,11 @@ tags.Methods['inomena:quest'] = function(unit)
 	end
 end
 
+tags.Events['inomena:away'] = 'PLAYER_FLAGS_CHANGED'
+tags.Methods['inomena:away'] = function(unit)
+	return UnitIsAFK(unit) and ('<' .. AFK .. '>') or ''
+end
+
 -- unitless events
 tags.SharedEvents.PARTY_LEADER_CHANGED = true
 tags.SharedEvents.PLAYER_UPDATE_RESTING = true
