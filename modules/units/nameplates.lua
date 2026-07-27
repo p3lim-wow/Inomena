@@ -403,7 +403,7 @@ nameplates:SetCVars({
 	nameplateShowEnemies = 1,
 	nameplateShowEnemyPets = 1,
 	nameplateShowEnemyMinus = 1,
-	nameplateShowFriendlyPlayers = 0,
+	-- nameplateShowFriendlyPlayers = 0,
 	nameplateShowFriendlyPlayerMinions = 0,
 	nameplateShowFriendlyNpcs = 0,
 	nameplateShowOffscreen = 0,
@@ -475,3 +475,14 @@ end
 
 -- hide realm names for friendly nameplates in instances
 addon:SafeSetNil(NamePlateFriendlyFrameOptions, 'updateNameUsesGetUnitName')
+
+-- auto-enable friendly player nameplates when not in a city
+local function updateZone()
+	local mapID = C_Map.GetBestMapForUnit('player')
+	if mapID then
+		C_CVar.SetCVar('nameplateShowFriendlyPlayers', C_Map.IsCityMap(mapID) and 0 or 1)
+	end
+end
+
+addon:RegisterEvent('ZONE_CHANGED_NEW_AREA', updateZone)
+addon:RegisterEvent('PLAYER_ENTERING_WORLD', updateZone)
