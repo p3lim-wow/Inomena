@@ -80,6 +80,7 @@ read_globals = {
 	'Minimap',
 	'MinimapCluster',
 	'OverlayPlayerCastingBarFrame',
+	'PVPArenaTextString',
 	'PaperDollFrame',
 	'PaperDollSidebarTab3',
 	'PetActionBar',
@@ -94,11 +95,13 @@ read_globals = {
 	'SendMailSubjectEditBox',
 	'ShoppingTooltip1',
 	'ShoppingTooltip2',
+	'SubZoneTextString',
 	'UIErrorsFrame',
 	'UIParent',
 	'WeeklyRewardsFrame',
 	'WorldMapFrame',
 	'WorldMapFrameTitleText',
+	'ZoneTextString',
 
 	-- FrameXML constants
 	'CurveConstants',
