@@ -184,7 +184,8 @@ end
 
 tags.Events['inomena:away'] = 'PLAYER_FLAGS_CHANGED'
 tags.Methods['inomena:away'] = function(unit)
-	return UnitIsAFK(unit) and ('<' .. AFK .. '>') or ''
+	local isAFK = UnitIsAFK(unit)
+	return not issecretvalue(isAFK) and isAFK and ('<' .. AFK .. '>') or ''
 end
 
 -- unitless events
