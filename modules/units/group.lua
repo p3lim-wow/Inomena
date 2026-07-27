@@ -309,7 +309,16 @@ local function style(self, unit, isRaidStyle)
 			postCreateButton = postCreateDefensiveSlot,
 		})
 
-		Debuffs:AddGroup('HARMFUL') -- TODO: would like to filter some crap, but we can't right now
+		if isRaidStyle then
+			-- emphasize CC debuffs
+			Debuffs:AddGroup('HARMFUL|CROWD_CONTROL', {
+				size = 20
+			})
+
+			Debuffs:AddGroup('HARMFUL|!CROWD_CONTROL')
+		else
+			Debuffs:AddGroup('HARMFUL')
+		end
 
 		Debuffs:AddSlot('HARMFUL|RAID', {
 			CreateButton = addon.unitShared.CreateDispelOverlay,
