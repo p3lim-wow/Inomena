@@ -83,15 +83,15 @@ function methods:SetIconVertexColor(r, g, b)
 end
 
 local function constructor(_, parent, size)
-	local Button = CreateFrame('CheckButton', nil, parent)
+	local Button = addon:CreateFrame('Frame', nil, parent)
 	Button:SetSize(size, size)
 
-	local Icon = Button:CreateTexture(nil, 'BACKGROUND')
+	local Icon = Button:CreateTexture('BACKGROUND')
 	Icon:SetAllPoints()
 	Icon:SetMask(CIRCLE_MASK)
 	Button.Icon = Icon
 
-	local Cooldown = addon:CreateCooldown(Button)
+	local Cooldown = Button:CreateCooldown()
 	Cooldown:SetUseCircularEdge(true)
 	Cooldown:SetSwipeTexture(CIRCLE_MASK)
 	Cooldown:SetSwipeColor(0, 0, 0, 0.6)
@@ -99,17 +99,17 @@ local function constructor(_, parent, size)
 	Button.Cooldown = Cooldown
 
 	-- render everything else above the cooldown
-	local OverlayFrame = CreateFrame('Frame', nil, Button)
+	local OverlayFrame = Button:CreateFrame('Frame')
 	OverlayFrame:SetAllPoints()
 
-	local Border = OverlayFrame:CreateTexture(nil, 'OVERLAY')
+	local Border = OverlayFrame:CreateTexture('OVERLAY')
 	Border:ClearAllPoints()
 	Border:SetPoint('TOPLEFT', Icon, -1, 1)
 	Border:SetPoint('BOTTOMRIGHT', Icon, 1, -1)
 	Border:SetTexture(CIRCLE_BORDER)
 	Button.Border = Border
 
-	local Highlight = OverlayFrame:CreateTexture(nil, 'OVERLAY')
+	local Highlight = OverlayFrame:CreateTexture('OVERLAY')
 	Highlight:SetAllPoints()
 	Highlight:SetTexture(CIRCLE_MASK)
 	Highlight:SetVertexColor(1, 1, 2/5, 1/4)
