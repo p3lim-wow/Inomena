@@ -182,12 +182,12 @@ end
 do
 	local backdropMixin = {}
 	function backdropMixin:SetBackgroundColor(...)
-		self.backdropBackground:SetColorTexture(...)
+		self.backdropBackground:SetVertexColor(...)
 	end
 
 	function backdropMixin:SetBorderColor(...)
 		for _, edge in next, self.backdropEdges do
-			edge:SetColorTexture(...)
+			edge:SetVertexColor(...)
 		end
 	end
 
@@ -211,29 +211,34 @@ do
 		local borderLeft = widgetMixin.CreateTexture(self, 'BORDER')
 		borderLeft:SetPoint('TOPLEFT', anchor or self, -1, 1)
 		borderLeft:SetPoint('BOTTOMLEFT', anchor or self, -1, -1)
+		borderLeft:SetTexture(addon.TEXTURE)
 		borderLeft:SetWidth(1)
 		self.backdropEdges:insert(borderLeft)
 
 		local borderRight = widgetMixin.CreateTexture(self, 'BORDER')
 		borderRight:SetPoint('TOPRIGHT', anchor or self, 1, 1)
 		borderRight:SetPoint('BOTTOMRIGHT', anchor or self, 1, -1)
+		borderRight:SetTexture(addon.TEXTURE)
 		borderRight:SetWidth(1)
 		self.backdropEdges:insert(borderRight)
 
 		local borderTop = widgetMixin.CreateTexture(self, 'BORDER')
 		borderTop:SetPoint('TOPLEFT', anchor or self, -1, 1)
 		borderTop:SetPoint('TOPRIGHT', anchor or self, 1, 1)
+		borderTop:SetTexture(addon.TEXTURE)
 		borderTop:SetHeight(1)
 		self.backdropEdges:insert(borderTop)
 
 		local borderBottom = widgetMixin.CreateTexture(self, 'BORDER')
 		borderBottom:SetPoint('BOTTOMLEFT', anchor or self, -1, -1)
 		borderBottom:SetPoint('BOTTOMRIGHT', anchor or self, 1, -1)
+		borderBottom:SetTexture(addon.TEXTURE)
 		borderBottom:SetHeight(1)
 		self.backdropEdges:insert(borderBottom)
 
 		local background = widgetMixin.CreateTexture(self, 'BACKGROUND')
 		background:SetAllPoints(anchor or self)
+		background:SetTexture(addon.TEXTURE)
 		self.backdropBackground = background
 
 		-- set defaults
