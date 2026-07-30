@@ -86,9 +86,13 @@ local function constructor(_, parent, size)
 	local Button = addon:CreateFrame('Frame', nil, parent)
 	Button:SetSize(size, size)
 
+	local Mask = Button:CreateMaskTexture()
+	Mask:SetTexture(CIRCLE_MASK)
+	Mask:SetAllPoints()
+
 	local Icon = Button:CreateTexture('BACKGROUND')
 	Icon:SetAllPoints()
-	Icon:SetMask(CIRCLE_MASK)
+	Icon:AddMaskTexture(Mask)
 	Button.Icon = Icon
 
 	local Cooldown = Button:CreateCooldown()
