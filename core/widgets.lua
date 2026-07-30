@@ -75,12 +75,15 @@ do
 		self:SetStatusBarColor(C_CurveUtil.EvaluateColorFromBoolean(...):GetRGB())
 	end
 
+	function statusBarMixin:SetDefaultOptions()
+		local texture = self:CreateTexture()
+		texture:SetTexture(addon.TEXTURE)
+		self:SetStatusBarTexture(texture)
+	end
+
 	function widgetMixin:CreateStatusBar(template)
 		local statusBar = Mixin(self:CreateFrame('StatusBar', template), statusBarMixin)
-		local texture = statusBar:CreateTexture()
-		texture:SetTexture(addon.TEXTURE)
-		statusBar:SetStatusBarTexture(texture)
-
+		statusBar:SetDefaultOptions()
 		return statusBar
 	end
 
@@ -106,9 +109,14 @@ do
 		return texture
 	end
 
+	local iconMixin = {}
+	function iconMixin:SetDefaultOptions()
+		self:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+	end
+
 	function widgetMixin:CreateIcon(layer, level)
-		local icon = self:CreateTexture(layer, level)
-		icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+		local icon = Mixin(self:CreateTexture(layer, level), iconMixin)
+		icon:SetDefaultOptions()
 		return icon
 	end
 end
@@ -121,6 +129,11 @@ do
 
 	function textMixin:SetFrameLevel(level)
 		self:GetParent():SetFrameLevel(level)
+	end
+
+	function textMixin:SetDefaultOptions(size)
+		self:SetFontSize(size)
+		self:SetWordWrap(false)
 	end
 
 	function widgetMixin:CreateText(size, noOverlay)
@@ -138,8 +151,7 @@ do
 		end
 
 		local text = Mixin(parent:CreateFontString(nil, 'OVERLAY'), textMixin)
-		text:SetFontSize(size)
-		text:SetWordWrap(false)
+		text:SetDefaultOptions(size)
 		return text
 	end
 end
@@ -162,15 +174,19 @@ do
 		self:SetMinimumCountdownDuration(state and 1500 or 0)
 	end
 
+	function cooldownMixin:SetDefaultOptions()
+		self:SetDrawEdge(false)
+		self:SetDrawBling(false)
+		self:SetSwipeColor(0, 0, 0, 0.9)
+		self:SetTimeFont()
+		self:SetIgnoreGlobalCooldown(true)
+		self:SetCountdownFormatter(addon.formatters.Countdown)
+	end
+
 	function widgetMixin:CreateCooldown(anchor)
 		local cooldown = Mixin(widgetMixin.CreateFrame(self, 'Cooldown', 'CooldownFrameTemplate'), cooldownMixin)
 		cooldown:SetAllPoints(anchor or self)
-		cooldown:SetDrawEdge(false)
-		cooldown:SetDrawBling(false)
-		cooldown:SetSwipeColor(0, 0, 0, 0.9)
-		cooldown:SetTimeFont()
-		cooldown:SetIgnoreGlobalCooldown(true)
-		cooldown:SetCountdownFormatter(addon.formatters.Countdown)
+		cooldown:SetDefaultOptions()
 		return cooldown
 	end
 
