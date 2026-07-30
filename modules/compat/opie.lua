@@ -32,8 +32,11 @@ function methods:SetActive(state)
 end
 
 function methods:SetCooldown(remaining, duration)
-	-- incredibly wasteful to set cooldown state in here because it's called like 20 times/sec
-	if (duration or 0) > 0 or (remaining or 0) > 0 then
+	-- no clue why this isn't handled by OPie
+	remaining = remaining or 0
+	duration = duration or 0
+
+	if duration > 0 or remaining > 0 then
 		self.Cooldown:SetCooldown(GetTime() - (duration - remaining), duration)
 		self.Icon:SetDesaturated(true)
 		self.Icon:SetAlpha(1/3)
@@ -46,36 +49,16 @@ function methods:SetCooldown(remaining, duration)
 	end
 end
 
-function methods:SetCooldownPH(hintID)
-	-- only spells have secret cooldowns, so OPie shouldn't ever need to call this for items or toys
+function methods:SetCooldownDuration(duration, isRecharge)
+	self.Cooldown:SetCooldownFromDurationObject(duration)
+	self.Cooldown:SetDrawEdge(isRecharge)
+	self.Cooldown:SetDrawSwipe(not isRecharge)
 
-	-- for some unknown reason, OPie appends ".5" to every hintID (which is the spellID), so
-	-- we'll need to remove that before rendering the cooldown
-	local spellID = math.floor(hintID)
-
-	local charge = C_Spell.GetSpellChargeDuration(spellID)
-	local duration = C_Spell.GetSpellCooldownDuration(spellID)
-
-	-- reset before we try to render the "cooldown state"
-	self.Cooldown:Hide()
-	self.Border:SetAlpha(1)
-	self.Icon:SetAlpha(1)
-	self.Icon:SetDesaturation(0)
-
-	if duration or charge then
-		self.Cooldown:SetCooldownFromDurationObject(charge or duration)
-
-		if duration then
-			local alpha = duration:EvaluateRemainingDuration(addon.curves.ActionAlpha)
-			self.Border:SetAlpha(alpha)
-			self.Icon:SetAlpha(alpha)
-			self.Icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.ActionDesaturation))
-			self.Cooldown:SetDrawEdge(false)
-			self.Cooldown:SetDrawSwipe(true)
-		else
-			self.Cooldown:SetDrawEdge(true)
-			self.Cooldown:SetDrawSwipe(false)
-		end
+	if not isRecharge then
+		local alpha = duration:EvaluateRemainingDuration(addon.curves.ActionAlpha)
+		self.Border:SetAlpha(alpha)
+		self.Icon:SetAlpha(alpha)
+		self.Icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.ActionDesaturation))
 	end
 end
 
@@ -111,8 +94,8 @@ local function constructor(_, parent, size)
 	local Cooldown = addon:CreateCooldown(Button)
 	Cooldown:SetUseCircularEdge(true)
 	Cooldown:SetSwipeTexture(CIRCLE_MASK)
+	Cooldown:SetSwipeColor(0, 0, 0, 0.6)
 	Cooldown:GetCountdownFontString():SetIgnoreParentAlpha(true)
-	Cooldown:SetAlpha(1/3)
 	Button.Cooldown = Cooldown
 
 	-- render everything else above the cooldown
@@ -139,10 +122,7 @@ addon:HookAddOn('OPie', function()
 	-- register skin
 	OPie.UI:RegisterIndicatorConstructor(addonName, {
 		name = addonName,
-		apiLevel = 3,
+		apiLevel = 4,
 		CreateIndicator = constructor,
-
-		-- OPie requires opt-in support for secret handling of spell cooldowns
-		supportsCooldownPH = true,
 	})
 end)
