@@ -5,27 +5,26 @@ local addonName, addon = ...
 local CIRCLE_BORDER = addon.PATH .. 'circle'
 local CIRCLE_MASK = [[Interface\CharacterFrame\TempPortraitAlphaMask]]
 
-local methods = {
-	-- SetActive = nop, -- (active)
-	SetBinding = nop, -- (binding)
-	-- SetCooldown = nop, -- (remain, duration, usable)
-	-- SetCooldownPH = nop, -- (hintID, qf, _holdCount)
-	SetCooldownTextShown = nop, -- (cooldownShown, rechargeShown)
-	SetCount = nop, -- (count)
-	-- SetDominantColor = nop, -- (r,g,b)
-	SetEquipState = nop, -- (isInContainer, isInInventory)
-	-- SetHighlighted = nop, -- (highlight)
-	-- SetIcon = nop, -- (texture, aspect)
-	-- SetIconAtlas = nop, -- (atlas, aspect)
-	SetIconTexCoord = nop, -- (a,b,c,dc, e,f,g,h)
-	-- SetIconVertexColor = nop, -- (r,g,b)
-	SetOuterGlow = nop, -- (shown)
-	SetOverlayIcon = nop, -- (tex, w, h, ...)
-	SetOverlayIconVertexColor = nop, -- (...)
-	SetQualityOverlay = nop, -- (qual)
-	SetShortLabel = nop, -- (text)
-	SetUsable = nop, -- (usable, _usableCharge, _cd, nomana, norange)
-}
+local methods = {}
+function methods:SetIcon(texture)
+	self.Icon:SetTexture(texture)
+end
+
+function methods:SetIconAtlas(atlas)
+	self.Icon:SetAtlas(atlas)
+end
+
+function methods:SetIconVertexColor(r, g, b)
+	self.Icon:SetVertexColor(r, g, b)
+end
+
+function methods:SetDominantColor(r, g, b)
+	self.Border:SetVertexColor(r, g, b)
+end
+
+function methods:SetHighlighted(state)
+	self.Highlight:SetShown(state)
+end
 
 function methods:SetActive(state)
 	self:SetAlphaFromBoolean(state, 0.2, 1)
@@ -62,24 +61,21 @@ function methods:SetCooldownDuration(duration, isRecharge)
 	end
 end
 
-function methods:SetDominantColor(r, g, b)
-	self.Border:SetVertexColor(r, g, b)
-end
-
-function methods:SetHighlighted(state)
-	self.Highlight:SetShown(state)
-end
-
-function methods:SetIcon(texture)
-	self.Icon:SetTexture(texture)
-end
-
-function methods:SetIconAtlas(atlas)
-	self.Icon:SetAtlas(atlas)
-end
-
-function methods:SetIconVertexColor(r, g, b)
-	self.Icon:SetVertexColor(r, g, b)
+-- disable methods we don't support
+for _, method in next, {
+	'SetIconTexCoord', -- can't set coords when icon has mask
+	'SetUsable',
+	'SetOverlayIcon',
+	'SetOverlayIconVertexColor',
+	'SetCount',
+	'SetBinding',
+	'SetCooldownTextShown',
+	'SetOuterGlow',
+	'SetEquipState',
+	'SetShortLabel',
+	'SetQualityOverlay',
+} do
+	methods[method] = nop
 end
 
 local function constructor(_, parent, size)
