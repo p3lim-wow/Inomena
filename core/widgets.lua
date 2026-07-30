@@ -217,7 +217,7 @@ do
 		local borderRight = widgetMixin.CreateTexture(self, 'BORDER')
 		borderRight:SetPoint('TOPRIGHT', anchor or self, 1, 1)
 		borderRight:SetPoint('BOTTOMRIGHT', anchor or self, 1, -1)
-		borderLeft:SetWidth(1)
+		borderRight:SetWidth(1)
 		self.backdropEdges:insert(borderRight)
 
 		local borderTop = widgetMixin.CreateTexture(self, 'BORDER')
