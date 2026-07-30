@@ -81,6 +81,8 @@ do
 		self:SetStatusBarTexture(texture)
 	end
 
+	widgetMixin.statusBarMixin = statusBarMixin
+
 	function widgetMixin:CreateStatusBar(template)
 		local statusBar = Mixin(self:CreateFrame('StatusBar', template), statusBarMixin)
 		statusBar:SetDefaultOptions()
@@ -114,6 +116,8 @@ do
 		self:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 	end
 
+	widgetMixin.iconMixin = iconMixin
+
 	function widgetMixin:CreateIcon(layer, level)
 		local icon = Mixin(self:CreateTexture(layer, level), iconMixin)
 		icon:SetDefaultOptions()
@@ -135,6 +139,8 @@ do
 		self:SetFontSize(size)
 		self:SetWordWrap(false)
 	end
+
+	widgetMixin.textMixin = textMixin
 
 	function widgetMixin:CreateText(size, noOverlay)
 		local parent
@@ -182,6 +188,8 @@ do
 		self:SetIgnoreGlobalCooldown(true)
 		self:SetCountdownFormatter(addon.formatters.Countdown)
 	end
+
+	widgetMixin.cooldownMixin = cooldownMixin
 
 	function widgetMixin:CreateCooldown(anchor)
 		local cooldown = Mixin(widgetMixin.CreateFrame(self, 'Cooldown', 'CooldownFrameTemplate'), cooldownMixin)
