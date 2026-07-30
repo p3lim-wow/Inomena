@@ -1,6 +1,8 @@
 local addonName, addon = ...
 
 -- custom rings and bindings
+local FACTION_COLOR = addon.colors.faction[addon.PLAYER_FACTION]
+local FACTION_COLOR_OTHER = addon.PLAYER_FACTION_ID == Enum.PvPFaction.Horde and addon.colors.faction.Alliance or addon.colors.faction.Horde
 
 -- semi-smart AIO pet macro because blizzard broke mend+revive
 local PET_MACRO = [[
@@ -344,6 +346,13 @@ local RINGS = addon:T({
 		{'spell', 445424}, -- Path of the Twilight Fortress (Grim Batol)
 		{'spell', 373262}, -- Path of the Fallen Guardian (Karazhan)
 	},
+	-- ring for housing teleports
+	{
+		name = addonName .. 'TeleportHousing',
+
+		{'housing', 'match', c=FACTION_COLOR:GenerateHexColorNoAlpha()},
+		{'housing', 'cross', c=FACTION_COLOR_OTHER:GenerateHexColorNoAlpha()},
+	},
 	-- combined teleport ring
 	{
 		name = addonName .. 'Teleport',
@@ -402,9 +411,9 @@ local RINGS = addon:T({
 		{'item', 217930}, -- Nostwin's Voucher (Timerunning 2024)
 		{'item', 238727}, -- Nostwin's Voucher (Timerunning 2025)
 
-		-- custom actions for housing teleportation at the end
-		{'inomena.housereturn', show='[house:inside/plot/editor/neighborhood]'},
-		{'ring', addonName .. 'Home'},
+		-- housing teleportation at the end
+		{'housing', 'return', show='[house:inside/plot/neighborhood]'},
+		{'ring', addonName .. 'TeleportHousing'},
 	},
 	-- common utility rings
 	{
@@ -515,7 +524,7 @@ addon:HookAddOn('OPie', function()
 		OPie_SavedData.ProfileStorage.default.Bindings = {}
 	end
 
-	-- ripped out of OPie/Bundle/Editable.lua and OPie/Bundle/Tracking.lua
+	-- ripped out of OPie/Bundle/
 	OPie_SavedData.ProfileStorage.default.Bindings.CommonTrades = false
 	OPie_SavedData.ProfileStorage.default.Bindings.DKCombat = false
 	OPie_SavedData.ProfileStorage.default.Bindings.DruidFeral = false
