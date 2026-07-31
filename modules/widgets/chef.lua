@@ -1,7 +1,6 @@
 local _, addon = ...
 
 local TOY_ID = 134020 -- Chef's Hat
-local BUFF_ID = 67556 -- Chef's Hat
 
 local function updateCooldown(self)
 	CooldownFrame_Set(self.Cooldown, C_Item.GetItemCooldown(TOY_ID))
@@ -21,10 +20,6 @@ local function showButton()
 		Button:Hide() -- so we can trigger OnShow after creation
 		Button:SetAttribute('type1', 'toy')
 		Button:SetAttribute('toy', TOY_ID)
-		Button:SetAttribute('type2', 'cancelaura')
-		Button:SetAttribute('spell', C_Spell.GetSpellName(BUFF_ID))
-		Button:SetAttribute('unit', 'player')
-		Button:SetAttribute('filter', 'HELPFUL')
 
 		Button.Cooldown = CreateFrame('Cooldown', nil, Button, 'CooldownFrameTemplate')
 
@@ -72,5 +67,4 @@ addon:RegisterCallback('ProfessionsFrame.Hide', function()
 	if Button then
 		addon:DeferMethod(Button, 'Hide')
 	end
-	addon:Defer(C_Spell.CancelSpellByID, BUFF_ID) -- remove the buff
 end)
