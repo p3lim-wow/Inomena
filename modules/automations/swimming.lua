@@ -82,6 +82,7 @@ end
 
 local eventCallbacks = {
 	PLAYER_REGEN_ENABLED = check,
+	PLAYER_IS_GLIDING_CHANGED = check,
 	-- we need to delay this event until next frame, as IsSwimming is not true right away
 	MOUNT_JOURNAL_USABILITY_CHANGED = GenerateFlatClosure(RunNextFrame, check),
 }
