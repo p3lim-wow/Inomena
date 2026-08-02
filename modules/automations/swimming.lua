@@ -44,12 +44,6 @@ local function check()
 		return
 	end
 
-	if C_QuestLog.IsOnQuest(76991) then
-		-- this quest breaks if we're walking on water, cancel the buff it it's active too
-		addon:Defer(C_Spell.CancelSpellByID, FISHING_EQUIPMENT_BUFF_ID)
-		return
-	end
-
 	local isEquipped = GetInventoryItemID('player', FISHING_TOOL_INVENTORY_ID) == UNDERLIGHT_ANGLER_ITEM_ID
 	if isEquipped then
 		if C_Secrets.ShouldAurasBeSecret() then
@@ -58,7 +52,12 @@ local function check()
 		end
 
 		if C_UnitAuras.GetPlayerAuraBySpellID(FISHING_EQUIPMENT_BUFF_ID) then
-			-- the fishing equipment buff is active, assume everything is ok?
+			-- the fishing equipment buff is active
+			if C_QuestLog.IsOnQuest(76991) then
+				-- this quest breaks if we're walking on water, cancel the buff it it's active
+				addon:Defer(C_Spell.CancelSpellByID, FISHING_EQUIPMENT_BUFF_ID)
+			end
+
 			return
 		end
 	end
