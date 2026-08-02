@@ -13,7 +13,7 @@ local PET_MACRO = [[
 /cast [@pet,nodead,exists] {{spell:136}}
 ]]
 
-local RINGS = addon:T({
+addon.RINGS = addon:T({
 	-- class utility rings
 	{
 		name = addonName .. 'Hunter',
@@ -497,12 +497,12 @@ do
 				local _, _, _, _, mountType = C_MountJournal.GetMountInfoExtraByID(mountID)
 				if mountType == 231 or mountType == 254 then -- turtle/swimming
 					local _, spellID = C_MountJournal.GetMountInfoByID(mountID)
-					table.insert(RINGS[RINGS:size()], 1, {'spell', spellID})
+					table.insert(addon.RINGS[addon.RINGS:size()], 1, {'spell', spellID})
 				end
 			end
 
 			-- add our custom rings
-			for _, ring in next, RINGS do
+			for _, ring in next, addon.RINGS do
 				AddRing(ring)
 			end
 		end

@@ -1,4 +1,4 @@
-local addonName, addon = ...
+local _, addon = ...
 
 -- restore previously equipped gear after equipping and using teleportation equipment
 
@@ -31,7 +31,6 @@ local function restoreEquipment()
 				local bagID, slotIndex = itemLocation:GetBagAndSlot()
 				if bagID and slotIndex then
 					-- finally equipping the item
-					addon:Print('Equipping', C_Item.GetItemLinkByGUID(cachedItem))
 					ClearCursor()
 					C_Container.PickupContainerItem(bagID, slotIndex)
 					AutoEquipCursorItem()
@@ -45,31 +44,22 @@ local function restoreEquipment()
 	return true
 end
 
-local function IsOPieItem(itemID)
-	-- just so I don't have to maintain two lists of the same items
-	if not OPie then
-		return
-	end
+local ITEMS
+function addon:PLAYER_EQUIPMENT_CHANGED(inventorySlot)
+	if not ITEMS then
+		ITEMS = {}
 
-	-- TODO: this shit doesn't seem to work any more, atleast not on first call
-	for _, slice in ipairs(OPie.CustomRings:GetDefaultDescription(addonName .. 'Teleport')) do
-		if slice[1] == 'ring' then
-			for _, ringSlice in ipairs(OPie.CustomRings:GetDefaultDescription(slice[2])) do
-				if ringSlice[1] == 'item' and ringSlice[2] == itemID then
-					return true
+		for _, ring in next, addon.RINGS do
+			for _, slice in ipairs(ring) do
+				if slice[1] == 'item' then
+					ITEMS[slice[2]] = true
 				end
 			end
-		elseif slice[1] == 'item' and slice[2] == itemID then
-			return true
 		end
 	end
-end
 
-function addon:PLAYER_EQUIPMENT_CHANGED(inventorySlot)
 	local itemID = GetInventoryItemID('player', inventorySlot)
-	if (IsOPieItem(itemID) or IsOPieItem(itemID)) and equipmentCache[inventorySlot] then
-		addon:Print('Teleportation item equipped, queueing', C_Item.GetItemLinkByGUID(equipmentCache[inventorySlot]), 'on next zone change')
-
+	if ITEMS[itemID] and equipmentCache[inventorySlot] then
 		-- the equipped item is a teleportation item, queue the slot for re-equipping
 		queuedInventorySlots:insert(inventorySlot)
 
