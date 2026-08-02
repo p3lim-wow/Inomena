@@ -66,6 +66,9 @@ function addon:PLAYER_EQUIPMENT_CHANGED(inventorySlot)
 		-- wait for next load screen
 		if not self:IsEventRegistered('PLAYER_ENTERING_WORLD', restoreEquipment) then
 			self:RegisterEvent('PLAYER_ENTERING_WORLD', restoreEquipment)
+
+			-- just in case we decide not to go
+			C_Timer.After(30, restoreEquipment)
 		end
 	else
 		-- item is not a teleportation item, update the cache
@@ -82,4 +85,9 @@ function addon:PLAYER_EQUIPMENT_CHANGED(inventorySlot)
 			end
 		end
 	end
+end
+
+function addon:PLAYER_LOGOUT()
+	-- just in case we logged out before the timer ended
+	restoreEquipment()
 end
