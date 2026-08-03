@@ -1,6 +1,6 @@
 local _, addon = ...
 
-function addon.unitShared.PostUpdateCast(element, unit, spellName, _, _, notInterruptible, spellID)
+function addon.unitShared.PostUpdateCast(element, unit, spellID, notInterruptible, spellName)
 	local colors = addon.colors.cast
 	local important = C_Spell.IsSpellImportant(spellID)
 
