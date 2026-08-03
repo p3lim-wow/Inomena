@@ -58,15 +58,14 @@ if addon:HasVersion(120100) then
 		layout = layout,
 	})
 
-	local enchantmentOptions = {
-		initializeFrame = function(button)
-			createButton(button)
-			button:SetBorderColor(0.6, 0, 1)
-		end
-	}
-
-	Buffs:AddItemEnchantment(AuraContainerItemEnchantmentSlot.MainHand, enchantmentOptions)
-	Buffs:AddItemEnchantment(AuraContainerItemEnchantmentSlot.OffHand, enchantmentOptions)
+	for _, slot in next, AuraContainerItemEnchantmentSlot do
+		Buffs:AddItemEnchantment(slot, {
+			initializeFrame = function(button)
+				createButton(button)
+				button:SetBorderColor(0.6, 0, 1)
+			end
+		})
+	end
 else
 	local function auraOnEnter(button)
 		local tooltip = addon:GetTooltip(button, 'ANCHOR_BOTTOMLEFT')
