@@ -11,18 +11,20 @@ function addon.unitShared.PostUpdateCast(element, unit, spellID, notInterruptibl
 	-- color based on non-shielded importance
 	element:SetStatusBarColorFromBoolean(important, colors.important, colors.normal)
 
-	-- display cast target name if it exists
-	local spellTargetname = UnitSpellTargetName(unit)
-	if spellTargetname ~= nil then
-		local classToken = UnitSpellTargetClass(unit)
-		if classToken ~= nil then
-			local color = C_ClassColor.GetClassColor(classToken)
-			spellTargetname = color:WrapTextInColorCode(spellTargetname)
-		else
-			spellTargetname = addon.colors.white:WrapTextInColorCode(spellTargetname)
-		end
+	if spellName then
+		-- display cast target name if it exists
+		local spellTargetname = UnitSpellTargetName(unit)
+		if spellTargetname ~= nil then
+			local classToken = UnitSpellTargetClass(unit)
+			if classToken ~= nil then
+				local color = C_ClassColor.GetClassColor(classToken)
+				spellTargetname = color:WrapTextInColorCode(spellTargetname)
+			else
+				spellTargetname = addon.colors.white:WrapTextInColorCode(spellTargetname)
+			end
 
-		element.Text:SetFormattedText('%s (|cff999999@|r%s)', spellName, spellTargetname)
+			element.Text:SetFormattedText('%s (|cff999999@|r%s)', spellName, spellTargetname)
+		end
 	end
 end
 
