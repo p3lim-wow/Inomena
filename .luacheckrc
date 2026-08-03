@@ -310,6 +310,7 @@ read_globals = {
 	'CancelShapeshiftForm',
 	'ChangeChatColor',
 	'ClearCursor',
+	'ClearOverrideBindings',
 	'ConfirmLootSlot',
 	'CursorHasItem',
 	'EJ_GetInstanceInfo',

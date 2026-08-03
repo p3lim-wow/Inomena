@@ -50,8 +50,10 @@ local function fishingStop(_, _, _, spellID)
 		restoreCVars()
 
 		-- clear bindings
-		addon:Defer('ClearOverrideBindings', handler)
-		addon:Defer('UnregisterStateDriver', handler, 'combat')
+		if not InCombatLockdown() then
+			-- the state driver handles it for combat
+			ClearOverrideBindings(handler)
+		end
 
 		-- unregister ourselves
 		addon:UnregisterEvent('PLAYER_LOGOUT', restoreCVars)
@@ -88,9 +90,6 @@ addon:RegisterUnitEvent('UNIT_SPELLCAST_CHANNEL_START', 'player', function(_, _,
 					end
 				end
 			end
-
-			-- register state driver to reset the binding when player enters combat
-			RegisterStateDriver(handler, 'combat', '[combat] clear; nothing')
 		end
 
 		-- wait for fishing to end
@@ -109,3 +108,6 @@ function addon:UNIT_SPELLCAST_SENT(unit, _, _, spellID)
 		activeFishingSpell = spellID
 	end
 end
+
+-- register state driver to reset the binding when player enters combat
+RegisterStateDriver(handler, 'combat', '[combat] clear; noop')
