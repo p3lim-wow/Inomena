@@ -18,7 +18,7 @@ local function overrideCastbarVisibility(element, unit)
 	end
 end
 
-local function postStartCast(element, _, _, _, _, notInterruptible)
+local function postStartCast(element, _, notInterruptible)
 	element:SetStatusBarColorFromBoolean(notInterruptible, addon.colors.cast.shielded, addon.colors.cast.normal)
 end
 
