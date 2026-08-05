@@ -68,6 +68,8 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		Buffs.tooltipAnchor = 'ANCHOR_TOPLEFT'
 		Buffs.tooltipOffsetY = 3
 		Buffs.tooltipOffsetX = -1
+		Buffs.showCount = true
+		Buffs.PostCreateButton = addon.unitShared.PostCreateAura
 
 		Debuffs = self:CreateAuras({
 			layoutLimit = 220, -- enough for 5
@@ -80,6 +82,8 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		Debuffs.tooltipAnchor = 'ANCHOR_TOPRIGHT'
 		Debuffs.tooltipOffsetY = 3
 		Debuffs.tooltipOffsetX = 1
+		Debuffs.showCount = true
+		Debuffs.PostCreateButton = addon.unitShared.PostCreateAura
 	else -- TODO: remove in 12.1
 		Buffs = self:CreateFrame()
 		Buffs:SetSize(self:GetWidth() * 1/3, self:GetHeight() * 2)
@@ -88,6 +92,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		Buffs.initialAnchor = 'BOTTOMRIGHT'
 		Buffs.spacing = addon.SPACING
 		Buffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
+		Buffs.CreateButton = addon.unitShared.CreateAura
 		self.Buffs = Buffs
 
 		Debuffs = self:CreateFrame()
@@ -98,16 +103,15 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		Debuffs.filter = 'HARMFUL|PLAYER'
 		Debuffs.spacing = addon.SPACING
 		Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
+		Debuffs.CreateButton = addon.unitShared.CreateAura
 		self.Debuffs = Debuffs
 	end
 
 	Buffs:SetPoint('BOTTOMRIGHT', self, 'TOPRIGHT', 0, addon.SPACING)
 	Buffs.size = self:GetHeight()
-	Buffs.CreateButton = addon.unitShared.CreateAura
 
 	Debuffs:SetPoint('BOTTOMLEFT', self, 'TOPLEFT', 0, addon.SPACING)
 	Debuffs.size = self:GetHeight() * 1.3
-	Debuffs.CreateButton = addon.unitShared.CreateAura
 
 	if self.CreateAuras then
 		Buffs:AddGroup('HELPFUL', {

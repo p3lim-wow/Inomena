@@ -221,6 +221,8 @@ local function style(self, unit, isRaidStyle)
 		Buffs.tooltipOffsetY = 3
 		Buffs.tooltipOffsetX = 1
 		Buffs.tooltipHideInCombat = true
+		Buffs.showCount = true
+		Buffs.PostCreateButton = addon.unitShared.PostCreateAura
 
 		Debuffs = self:CreateAuras({
 			layoutLimit = math.huge, -- never let them wrap
@@ -233,6 +235,8 @@ local function style(self, unit, isRaidStyle)
 		Debuffs.tooltipOffsetY = 3
 		Debuffs.tooltipOffsetX = -1
 		Debuffs.maxFrameCount = isRaidStyle and 3 or math.huge
+		Debuffs.showCount = true
+		Debuffs.PostCreateButton = addon.unitShared.PostCreateAura
 	else -- TODO: remove in 12.1
 		Buffs = self:CreateFrame()
 		Buffs:SetSize(self:GetWidth() - 3, 18)
@@ -243,6 +247,7 @@ local function style(self, unit, isRaidStyle)
 		Buffs.filter = 'HELPFUL|PLAYER' -- we filter it further in FilterAura override
 		Buffs.spacing = addon.SPACING
 		Buffs.FilterAura = filterBuffs
+		Buffs.CreateButton = addon.unitShared.CreateAura
 		self.Buffs = Buffs
 
 		-- force update auras on combat state change for filters
@@ -260,12 +265,12 @@ local function style(self, unit, isRaidStyle)
 		Debuffs.spacing = addon.SPACING
 		Debuffs.FilterAura = filterDebuffs
 		Debuffs.num = isRaidStyle and 3 or math.huge
+		Debuffs.CreateButton = addon.unitShared.CreateAura
 		self.Debuffs = Debuffs
 	end
 
 	Buffs:SetPoint('TOPLEFT', 3, -3)
 	Buffs.disableCooldownText = true -- custom option
-	Buffs.CreateButton = addon.unitShared.CreateAura
 
 	if isRaidStyle then
 		Debuffs:SetPoint('BOTTOMRIGHT', -3, 3)
@@ -275,7 +280,6 @@ local function style(self, unit, isRaidStyle)
 
 	Debuffs.size = isRaidStyle and 16 or (self:GetHeight() * 2/3)
 	Debuffs.disableCooldownText = isRaidStyle -- custom option
-	Debuffs.CreateButton = addon.unitShared.CreateAura
 
 	if self.CreateAuras then
 		Buffs.classBuffGroup = Buffs:AddGroup('HELPFUL', {

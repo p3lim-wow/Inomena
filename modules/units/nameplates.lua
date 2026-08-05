@@ -254,6 +254,8 @@ oUF:RegisterStyle(styleName, function(self)
 		})
 		Buffs.elementSpacing = addon.SPACING
 		Buffs.lineSpacing = addon.SPACING
+		Buffs.showCount = true
+		Buffs.PostCreateButton = addon.unitShared.PostCreateAura
 
 		Debuffs = self:CreateAuras({
 			layoutLimit = 135, -- 4 debuffs for each row
@@ -263,6 +265,8 @@ oUF:RegisterStyle(styleName, function(self)
 		})
 		Debuffs.elementSpacing = addon.SPACING
 		Debuffs.lineSpacing = addon.SPACING
+		Debuffs.showCount = true
+		Debuffs.PostCreateButton = addon.unitShared.PostCreateAura
 
 		CrowdControl = self:CreateAuras({
 			growthX = 'RIGHT',
@@ -271,6 +275,8 @@ oUF:RegisterStyle(styleName, function(self)
 		CrowdControl.elementSpacing = addon.SPACING
 		CrowdControl.lineSpacing = addon.SPACING
 		CrowdControl.maxFrameCount = 3
+		CrowdControl.showCount = true
+		CrowdControl.PostCreateButton = addon.unitShared.PostCreateAura
 	else
 		Debuffs = Health:CreateFrame()
 		Debuffs:SetSize(120, 140)
@@ -280,6 +286,7 @@ oUF:RegisterStyle(styleName, function(self)
 		Debuffs.spacing = addon.SPACING
 		Debuffs.filter = 'HARMFUL|PLAYER' -- we filter it further in FilterAura override
 		Debuffs.FilterAura = filterDebuffs
+		Debuffs.CreateButton = addon.unitShared.CreateAura
 		self.Debuffs = Debuffs
 
 		Buffs = Health:CreateFrame()
@@ -290,6 +297,7 @@ oUF:RegisterStyle(styleName, function(self)
 		Buffs.spacing = addon.SPACING
 		Buffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
 		Buffs.FilterAura = filterBuffs
+		Buffs.CreateButton = addon.unitShared.CreateAura
 		self.Buffs = Buffs
 
 		CrowdControl = self:CreateFrame()
@@ -301,6 +309,7 @@ oUF:RegisterStyle(styleName, function(self)
 		CrowdControl.numBuffs = 0
 		CrowdControl.spacing = addon.SPACING
 		CrowdControl.debuffFilter = 'HARMFUL|CROWD_CONTROL'
+		CrowdControl.CreateButton = addon.unitShared.CreateAura
 		self.Auras = CrowdControl
 	end
 
@@ -308,20 +317,17 @@ oUF:RegisterStyle(styleName, function(self)
 	Buffs.size = 28
 	Buffs.disableCooldownText = true -- custom option
 	Buffs.disableMouse = true -- custom option
-	Buffs.CreateButton = addon.unitShared.CreateAura
 
 	Debuffs:SetPoint('BOTTOMLEFT', Health, 'TOPLEFT', 0, addon.SPACING)
 	Debuffs.size = 30 -- TODO: make them rectangular (20x30) but deal with texcoords
 	Debuffs.disableCooldownText = true -- custom option
 	Debuffs.disableMouse = true -- custom option
-	Debuffs.CreateButton = addon.unitShared.CreateAura
 
 	CrowdControl:SetPoint('LEFT', Health, 'RIGHT', addon.SPACING, 0)
 	CrowdControl.size = 40
 	CrowdControl.disableMouse = true -- custom option
 	CrowdControl.centerCooldownText = true -- custom option
 	CrowdControl.cooldownTextSize = 18 -- custom option
-	CrowdControl.CreateButton = addon.unitShared.CreateAura
 
 	if self.CreateAuras then
 		-- store the buff groups' keys for dynamic candidate filters

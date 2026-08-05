@@ -87,6 +87,8 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		Buffs.tooltipAnchor = 'ANCHOR_BOTTOMLEFT'
 		Buffs.tooltipOffsetY = self:GetHeight() - 4 -- this is some jank
 		Buffs.tooltipOffsetX = -3
+		Buffs.showCount = true
+		Buffs.PostCreateButton = addon.unitShared.PostCreateAura
 	else -- TODO: remove in 12.1
 		Buffs = self:CreateFrame()
 		Buffs:SetSize(self:GetWidth() * 1/3, self:GetHeight())
@@ -95,13 +97,13 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		Buffs.spacing = addon.SPACING
 		Buffs.initialAnchor = 'RIGHT'
 		Buffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
+		Buffs.CreateButton = addon.unitShared.CreateAura
 		Buffs.FilterAura = filterBuffs
 		self.Buffs = Buffs
 	end
 
 	Buffs:SetPoint('RIGHT', self, 'LEFT', -addon.SPACING, 0)
 	Buffs.size = self:GetHeight() - 2
-	Buffs.CreateButton = addon.unitShared.CreateAura
 
 	if self.CreateAuras then
 		-- we only really care about boss/role specific auras

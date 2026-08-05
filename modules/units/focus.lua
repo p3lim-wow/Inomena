@@ -26,6 +26,8 @@ oUF:RegisterStyle(styleName, function(self)
 		Debuffs.tooltipAnchor = 'ANCHOR_TOPRIGHT'
 		Debuffs.tooltipOffsetY = 3
 		Debuffs.tooltipOffsetX = 1
+		Debuffs.showCount = true
+		Debuffs.PostCreateButton = addon.unitShared.PostCreateAura
 	else -- TODO: remove in 12.1
 		Debuffs = self:CreateFrame()
 		Debuffs:SetSize(self:GetHeight() * 1.2 * 10, self:GetHeight() * 1.5)
@@ -34,12 +36,12 @@ oUF:RegisterStyle(styleName, function(self)
 		Debuffs.filter = 'HARMFUL|PLAYER'
 		Debuffs.spacing = addon.SPACING
 		Debuffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
+		Debuffs.CreateButton = addon.unitShared.CreateAura
 		self.Debuffs = Debuffs
 	end
 
 	Debuffs:SetPoint('BOTTOMRIGHT', self, 'TOPRIGHT', -4, 5)
 	Debuffs.size = self:GetHeight() * 1.2
-	Debuffs.CreateButton = addon.unitShared.CreateAura
 
 	if self.CreateAuras then
 		Debuffs:AddGroup('HARMFUL|PLAYER') -- TBD
