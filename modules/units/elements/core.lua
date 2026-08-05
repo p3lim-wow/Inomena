@@ -12,7 +12,7 @@ function addon.unitShared.ShowTooltip(self)
 	GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
 	GameTooltip:SetPoint('BOTTOMRIGHT', GameTooltipDefaultContainer)
 
-	if GameTooltip:SetUnit(self.unit) then
+	if GameTooltip:SetUnit(self.__unit) then
 		GameTooltip:Show()
 	end
 end

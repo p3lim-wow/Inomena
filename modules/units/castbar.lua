@@ -11,9 +11,9 @@ end
 local function overrideCastbarVisibility(element, unit)
 	-- the two castbars to overlap, so only use the pet castbar for possess
 	local owner = element.__owner
-	if owner.unit == 'player' then
-		return owner.unit == unit or owner.realUnit == unit
-	elseif owner.unit == 'pet' then
+	if owner.__unit == 'player' then
+		return owner.__unit == unit or owner.__realUnit == unit
+	elseif owner.__unit == 'pet' then
 		return UnitIsPossessed(unit)
 	end
 end

@@ -1,7 +1,7 @@
 local _, addon = ...
 
 function addon.unitShared.UpdateColorHealth(self, _, unit)
-	if not unit or self.unit ~= unit then
+	if not unit or self.__unit ~= unit then
 		return
 	end
 

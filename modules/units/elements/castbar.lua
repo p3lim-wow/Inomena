@@ -28,7 +28,7 @@ function addon.unitShared.PostUpdateCast(element, unit, spellID, notInterruptibl
 	end
 end
 
-function addon.unitShared.PostInterruptedCast(element, _, interruptedByGUID)
+function addon.unitShared.PostInterruptedCast(element, _, _, interruptedByGUID)
 	-- try to display who interrupted the cast
 	local name = UnitNameFromGUID(interruptedByGUID)
 	local _, classToken = UnitClassFromGUID(interruptedByGUID)

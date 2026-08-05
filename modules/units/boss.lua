@@ -6,7 +6,7 @@ local function filterBuffs(_, unit) -- TODO: remove in 12.1
 end
 
 local function updateOutline(self)
-	self.FocusOutline:SetShown(UnitIsUnit(self.unit, 'focus'))
+	self.FocusOutline:SetShown(UnitIsUnit(self.__unit, 'focus'))
 end
 
 local function updateOutlineAnchors(self)

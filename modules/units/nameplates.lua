@@ -13,7 +13,7 @@ local function updateOutlineAnchors(self)
 end
 
 local function updateOnAdded(self)
-	local unit = self.unit
+	local unit = self.__unit
 
 	if UnitIsFriend('player', unit) and not UnitIsPossessed(unit) and not UnitIsCharmed(unit) then
 		self.Name:Hide()
@@ -94,7 +94,7 @@ local function updateHighlight(self, event, worldCursorAnchorType)
 		self.Highlight:Hide()
 	elseif event == 'UPDATE_MOUSEOVER_UNIT' then
 		-- mouse entered some unit
-		if C_Secrets.CanCompareUnitTokens(self.unit, 'mouseover') and UnitIsUnit(self.unit, 'mouseover') then
+		if C_Secrets.CanCompareUnitTokens(self.__unit, 'mouseover') and UnitIsUnit(self.__unit, 'mouseover') then
 			self.Highlight:Show()
 		else
 			self.Highlight:Hide()
@@ -105,10 +105,10 @@ end
 local function updateHealthColor(self, event, unit)
 	if event == 'PLAYER_FOCUS_CHANGED' then
 		-- it's unitless
-		unit = self.unit
+		unit = self.__unit
 	end
 
-	if not unit or self.unit ~= unit then
+	if not unit or self.__unit ~= unit then
 		return
 	end
 
