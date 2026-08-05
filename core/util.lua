@@ -15,6 +15,11 @@ end
 
 function addon:IsHalloween()
 	local date = C_DateAndTime.GetCurrentCalendarTime()
+	if not date or date.year == 1999 then
+		-- on PTR this API can yield invalid data, with year set to 1999
+		return false
+	end
+
 	local dateNum = tonumber(string.format('%02d%02d%02d', date.month, date.monthDay, date.hour))
 	return dateNum >= 101810 and dateNum <= 110111
 end
