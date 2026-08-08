@@ -9,11 +9,11 @@ local function updateCoordinates(canvas)
 		x, y = canvas:GetParent():GetNormalizedCursorPosition()
 		r, g, b = 0, 1, 0
 	else
-		local position = C_Map.GetPlayerMapPosition(WorldMapFrame:GetMapID(), 'player')
+		local position = addon:GetPlayerPosition(WorldMapFrame:GetMapID())
 		if not position then
-			local playerMapID = C_Map.GetBestMapForUnit('player')
+			local playerMapID = addon:GetPlayerMapID()
 			if playerMapID then
-				position = C_Map.GetPlayerMapPosition(playerMapID, 'player')
+				position = addon:GetPlayerPosition(playerMapID)
 
 				local mapInfo = C_Map.GetMapInfo(playerMapID)
 				if mapInfo and mapInfo.name then
