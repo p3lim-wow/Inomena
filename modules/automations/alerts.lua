@@ -45,11 +45,11 @@ end
 
 -- display combat state changes
 function addon:PLAYER_REGEN_ENABLED()
-	UIErrorsFrame:AddMessage('- Combat', 1, 1, 1)
+	UIErrorsFrame:AddMessage('- ' .. COMBAT, 1, 1, 1)
 end
 
 function addon:PLAYER_REGEN_DISABLED()
-	UIErrorsFrame:AddMessage('+ Combat', 1, 1, 1)
+	UIErrorsFrame:AddMessage('+ ' .. COMBAT, 1, 1, 1)
 end
 
 -- remind me which key I joined, with a journal link
