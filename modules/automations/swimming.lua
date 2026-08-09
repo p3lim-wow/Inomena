@@ -9,6 +9,7 @@ local _, addon = ...
 local FISHING_TOOL_INVENTORY_ID = 28
 local FISHING_EQUIPMENT_BUFF_ID = 394009
 local UNDERLIGHT_ANGLER_ITEM_ID = 133755
+local UNDERLIGHT_ANGLER_SPELL_ID = 188051
 local UNDERLIGHT_ANGLER_QUEST_ID = 41010
 
 local function equip()
@@ -16,11 +17,18 @@ local function equip()
 	return true -- ensure we don't trigger from BAG_UPDATE_DELAYED again
 end
 
-local function unequip(bagID, slotIndex)
+local function unequip()
+	local bagID, slotIndex = addon:GetEmptyBagSlot()
+	if not bagID then
+		UIErrorsFrame:AddMessage(ERR_INV_FULL, RED_FONT_COLOR:GetRGB())
+		return
+	end
+
 	-- delay equipping until the bag has received the rod
 	addon:DeferEvent('BAG_UPDATE_DELAYED', equip)
 
-	-- put the rod into the bags
+	-- put the rod into the empty bag slot
+	-- (I wish we could do this without involving the cursor)
 	ClearCursor()
 	PickupInventoryItem(FISHING_TOOL_INVENTORY_ID)
 	C_Container.PickupContainerItem(bagID, slotIndex)
@@ -36,37 +44,19 @@ local function check()
 		return
 	end
 
-	local isEquipped = GetInventoryItemID('player', FISHING_TOOL_INVENTORY_ID) == UNDERLIGHT_ANGLER_ITEM_ID
-	if isEquipped then
-		if C_Secrets.ShouldAurasBeSecret() then
-			-- can't check if the buff is active
-			return
-		end
-
-		if C_UnitAuras.GetPlayerAuraBySpellID(FISHING_EQUIPMENT_BUFF_ID) then
+	if GetInventoryItemID('player', FISHING_TOOL_INVENTORY_ID) ~= UNDERLIGHT_ANGLER_ITEM_ID then
+		addon:Defer(equip)
+	else
+		-- check if we have the buff first
+		if not C_Secrets.ShouldAurasBeSecret() and C_UnitAuras.GetPlayerAuraBySpellID(FISHING_EQUIPMENT_BUFF_ID) then
 			-- the fishing equipment buff is active
 			if C_QuestLog.IsOnQuest(76991) then
 				-- this quest breaks if we're walking on water, cancel the buff it it's active
 				addon:Defer(C_Spell.CancelSpellByID, FISHING_EQUIPMENT_BUFF_ID)
 			end
-
-			return
-		end
-	end
-
-	-- the fishing equipment buff is not active, we need to force it by equipping the rod
-	for bagID = Enum.BagIndex.Backpack, Constants.InventoryConstants.NumBagSlots do
-		for slotIndex = 1, C_Container.GetContainerNumSlots(bagID) do
-			if not isEquipped and C_Container.GetContainerItemID(bagID, slotIndex) == UNDERLIGHT_ANGLER_ITEM_ID then
-				-- rod was found in the bags, equip it, passing along itemGUID in case it moves
-				local itemLocation = ItemLocation:CreateFromBagAndSlot(bagID, slotIndex)
-				addon:Defer(equip, C_Item.GetItemGUID(itemLocation))
-				return
-			elseif isEquipped and not C_Container.GetContainerItemInfo(bagID, slotIndex) then
-				-- rod was equipped, unequp into empty bag slot
-				addon:Defer(unequip, bagID, slotIndex)
-				return
-			end
+		else
+			-- buff is not active, try re-equipping
+			addon:Defer(unequip)
 		end
 	end
 end
@@ -78,14 +68,26 @@ local eventCallbacks = {
 	MOUNT_JOURNAL_USABILITY_CHANGED = GenerateFlatClosure(RunNextFrame, check),
 }
 
+local function cast(_, _, _, spellID)
+	if InCombatLockdown() or issecretvalue(spellID) then
+		return
+	elseif spellID == UNDERLIGHT_ANGLER_SPELL_ID then
+		-- the hidden cast for the rod failed, as the fishing equipment buff is not active,
+		-- unequip the rod and re-equip it to activate the fishing equipment buff
+		addon:Defer(unequip)
+	end
+end
+
 local function bank()
 	-- check if the player either took the rod out of the bank or put it in
 	local itemCount = C_Item.GetItemCount(UNDERLIGHT_ANGLER_ITEM_ID)
 	if itemCount > 0 and not addon:IsEventRegistered('PLAYER_REGEN_ENABLED', check) then
+		addon:RegisterUnitEvent('UNIT_SPELLCAST_FAILED_QUIET', 'player', cast)
 		for event, callback in next, eventCallbacks do
 			addon:RegisterEvent(event, callback)
 		end
 	elseif itemCount == 0 and addon:IsEventRegistered('PLAYER_REGEN_ENABLED', check) then
+		addon:UnregisterUnitEvent('UNIT_SPELLCAST_FAILED_QUIET', 'player', cast)
 		for event, callback in next, eventCallbacks do
 			addon:UnregisterEvent(event, callback)
 		end
@@ -95,6 +97,7 @@ end
 local function quest(_, questID)
 	if questID == UNDERLIGHT_ANGLER_QUEST_ID then
 		-- player turned in the quest Fish Frenzy which awards the rod
+		addon:RegisterUnitEvent('UNIT_SPELLCAST_FAILED_QUIET', 'player', cast)
 		for event, callback in next, eventCallbacks do
 			addon:RegisterEvent(event, callback)
 		end
@@ -108,6 +111,7 @@ end
 
 function addon:OnLogin()
 	if C_Item.GetItemCount(UNDERLIGHT_ANGLER_ITEM_ID) > 0 then
+		addon:RegisterUnitEvent('UNIT_SPELLCAST_FAILED_QUIET', 'player', cast)
 		for event, callback in next, eventCallbacks do
 			addon:RegisterEvent(event, callback)
 		end
