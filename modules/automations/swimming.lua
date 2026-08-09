@@ -9,6 +9,7 @@ local _, addon = ...
 local FISHING_TOOL_INVENTORY_ID = 28
 local FISHING_EQUIPMENT_BUFF_ID = 394009
 local UNDERLIGHT_ANGLER_ITEM_ID = 133755
+local UNDERLIGHT_ANGLER_QUEST_ID = 41010
 
 local function equip()
 	C_Item.EquipItemByName(UNDERLIGHT_ANGLER_ITEM_ID)
@@ -92,7 +93,7 @@ local function bank()
 end
 
 local function quest(_, questID)
-	if questID == 41010 then
+	if questID == UNDERLIGHT_ANGLER_QUEST_ID then
 		-- player turned in the quest Fish Frenzy which awards the rod
 		for event, callback in next, eventCallbacks do
 			addon:RegisterEvent(event, callback)
