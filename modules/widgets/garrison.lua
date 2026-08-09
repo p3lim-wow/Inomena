@@ -101,6 +101,7 @@ local function createTab(index, info)
 	tab:SetScript('OnClick', onTabClick)
 	tab:SetScript('OnEnter', onTabEnter)
 	tab:SetScript('OnLeave', GameTooltip_Hide)
+	tab:SetHitRectInsets(15, 5, 5, 5)
 
 	-- why are these not atlases :/
 	tab:SetNormalTexture([[Interface\EncounterJournal\UI-EncounterJournalTextures]]) -- UI-EJ-Tab-UnSelected
