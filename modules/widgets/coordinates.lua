@@ -1,3 +1,4 @@
+local _, addon = ...
 
 -- replace world map title text with coordinates
 
