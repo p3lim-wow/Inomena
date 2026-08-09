@@ -10,23 +10,14 @@ local FISHING_TOOL_INVENTORY_ID = 28
 local FISHING_EQUIPMENT_BUFF_ID = 394009
 local UNDERLIGHT_ANGLER_ITEM_ID = 133755
 
-local function equip(bagID, slotIndex)
-	if not slotIndex then
-		-- triggered after checking, we need to find the bagID
-		local itemLocation = C_Item.GetItemLocation(bagID) -- it's an itemGUID
-		bagID, slotIndex = itemLocation:GetBagAndSlot()
-	end
-
-	ClearCursor()
-	C_Container.PickupContainerItem(bagID, slotIndex)
-	PickupInventoryItem(FISHING_TOOL_INVENTORY_ID)
-
+local function equip()
+	C_Item.EquipItemByName(UNDERLIGHT_ANGLER_ITEM_ID)
 	return true -- ensure we don't trigger from BAG_UPDATE_DELAYED again
 end
 
 local function unequip(bagID, slotIndex)
 	-- delay equipping until the bag has received the rod
-	addon:DeferEvent('BAG_UPDATE_DELAYED', equip, bagID, slotIndex)
+	addon:DeferEvent('BAG_UPDATE_DELAYED', equip)
 
 	-- put the rod into the bags
 	ClearCursor()
