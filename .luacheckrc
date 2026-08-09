@@ -185,6 +185,7 @@ read_globals = {
 	'ShowUIPanel',
 	'StaticPopup_Hide',
 	'StaticPopup_Visible',
+	'ToggleExpansionLandingPage',
 	'WrapTextInColorCode',
 	'nop',
 
@@ -229,6 +230,8 @@ read_globals = {
 	'LEADER',
 	'LFG_LIST_APP_INVITE_ACCEPTED',
 	'MACRO',
+	'MIDNIGHT_LANDING_PAGE_TITLE',
+	'MIDNIGHT_LANDING_PAGE_TOOLTIP',
 	'MINIMAP_TRACKING_MAILBOX',
 	'MINIMAP_TRACKING_REPAIR',
 	'MONEY',

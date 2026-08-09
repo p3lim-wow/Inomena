@@ -10,6 +10,7 @@ addon:Hide('MainMenuBarVehicleLeaveButton')
 addon:Hide('MicroMenuContainer')
 addon:Hide('StanceBar')
 addon:Hide('BagsBar')
+addon:Hide('ExpansionLandingPageMinimapButton')
 
 -- we create our own buffs (modules\widgets\buffs.lua)
 addon:Hide('BuffFrame')
