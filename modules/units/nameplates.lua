@@ -19,17 +19,16 @@ local function updateOnAdded(self)
 		self.Name:Hide()
 		self.FriendlyName:Show()
 		self.PetIcon:Hide()
-		self:DisableElement('Health')
-		self:DisableElement('Auras')
-		self:DisableElement('Castbar')
+
+		-- pause elements since they're not in use
+		self:PauseElement('Health')
+		self:PauseElement('Auras')
+		self:PauseElement('Castbar')
 		return
 	else
+		self:ResumeAllElements()
 		self.Name:Hide() -- we change this later
 		self.FriendlyName:Hide()
-		self:EnableElement('Health')
-		self.Health:Show()
-		self:EnableElement('Auras')
-		self:EnableElement('Castbar')
 	end
 
 	local fullSize = false
