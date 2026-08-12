@@ -131,22 +131,6 @@ local function updateHealthColor(self, event, unit)
 	end
 end
 
-local function filterBuffs(_, unit) -- TODO: remove in 12.1
-	-- we only use this to show buffs on mobs, for purge or de-enrage
-	return not UnitIsPlayer(unit)
-end
-
-local filterDebuffs; do -- TODO: remove in 12.1
-	local function matches(filter, unit, data) -- shorthand
-		return not C_UnitAuras.IsAuraFilteredOutByInstanceID(unit, data.auraInstanceID, filter)
-	end
-
-	function filterDebuffs(_, ...)
-		-- we only show player-applied debuffs, but not CC as it's handled by a different element
-		return matches('HARMFUL|PLAYER', ...) and not matches('HARMFUL|CROWD_CONTROL', ...)
-	end
-end
-
 local function updateBuffFilters(element)
 	local dispelTypes = addon:GetDispelTypes('HELPFUL')
 	element:SetAuraGroupCandidateFilters(element.dispelGroup, {
@@ -243,110 +227,63 @@ oUF:RegisterStyle(styleName, function(self)
 	PetIcon:SetSize(12, 12)
 	self.PetIcon = PetIcon
 
-	local Buffs, Debuffs, CrowdControl
-	if self.CreateAuras then
-		Buffs = self:CreateAuras({
-			layoutLimit = 95, -- will fit 2 emphasized or 3 non-emphasized
-			growthX = 'LEFT',
-			growthY = 'UP', -- default
-			initialAnchor = 'BOTTOMRIGHT',
-		})
-		Buffs.elementSpacing = addon.SPACING
-		Buffs.lineSpacing = addon.SPACING
-		Buffs.showCount = true
-		Buffs.PostCreateButton = addon.unitShared.PostCreateAura
-
-		Debuffs = self:CreateAuras({
-			layoutLimit = 135, -- 4 debuffs for each row
-			growthX = 'RIGHT',
-			growthY = 'UP', -- default
-			initialAnchor = 'BOTTOMLEFT',
-		})
-		Debuffs.elementSpacing = addon.SPACING
-		Debuffs.lineSpacing = addon.SPACING
-		Debuffs.showCount = true
-		Debuffs.PostCreateButton = addon.unitShared.PostCreateAura
-
-		CrowdControl = self:CreateAuras({
-			growthX = 'RIGHT',
-			initialAnchor = 'LEFT',
-		})
-		CrowdControl.elementSpacing = addon.SPACING
-		CrowdControl.lineSpacing = addon.SPACING
-		CrowdControl.maxFrameCount = 3
-		CrowdControl.showCount = true
-		CrowdControl.PostCreateButton = addon.unitShared.PostCreateAura
-	else
-		Debuffs = Health:CreateFrame()
-		Debuffs:SetSize(120, 140)
-		Debuffs.growthX = 'RIGHT'
-		Debuffs.growthY = 'UP'
-		Debuffs.initialAnchor = 'BOTTOMLEFT'
-		Debuffs.spacing = addon.SPACING
-		Debuffs.filter = 'HARMFUL|PLAYER' -- we filter it further in FilterAura override
-		Debuffs.FilterAura = filterDebuffs
-		Debuffs.CreateButton = addon.unitShared.CreateAura
-		self.Debuffs = Debuffs
-
-		Buffs = Health:CreateFrame()
-		Buffs:SetSize(80, 140)
-		Buffs.growthX = 'LEFT'
-		Buffs.growthY = 'UP'
-		Buffs.initialAnchor = 'BOTTOMRIGHT'
-		Buffs.spacing = addon.SPACING
-		Buffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
-		Buffs.FilterAura = filterBuffs
-		Buffs.CreateButton = addon.unitShared.CreateAura
-		self.Buffs = Buffs
-
-		CrowdControl = self:CreateFrame()
-		CrowdControl:SetSize(80, 140)
-		CrowdControl.growthX = 'RIGHT'
-		CrowdControl.growthY = 'UP'
-		CrowdControl.initialAnchor = 'LEFT'
-		CrowdControl.numDebuffs = 3
-		CrowdControl.numBuffs = 0
-		CrowdControl.spacing = addon.SPACING
-		CrowdControl.debuffFilter = 'HARMFUL|CROWD_CONTROL'
-		CrowdControl.CreateButton = addon.unitShared.CreateAura
-		self.Auras = CrowdControl
-	end
-
+	local Buffs = self:CreateAuras({
+		layoutLimit = 95, -- will fit 2 emphasized or 3 non-emphasized
+		growthX = 'LEFT',
+		growthY = 'UP', -- default
+		initialAnchor = 'BOTTOMRIGHT',
+	})
 	Buffs:SetPoint('BOTTOMRIGHT', Health, 'TOPRIGHT', 0, addon.SPACING)
-	Buffs.size = 28
 	Buffs.disableCooldownText = true -- custom option
-	Buffs.disableMouse = true -- custom option
+	Buffs.disableMouse = true
+	Buffs.elementSpacing = addon.SPACING
+	Buffs.lineSpacing = addon.SPACING
+	Buffs.showCount = true
+	Buffs.size = 28
+	Buffs.PostCreateButton = addon.unitShared.PostCreateAura
+	Buffs.dispelGroup = Buffs:AddGroup('HELPFUL', {
+		showCustomBuffBorder = true,
+		size = 40, -- emphasize!
+	})
+	Buffs.buffsGroup = Buffs:AddGroup('HELPFUL')
 
+	-- modify candidate filters based on dispel spells the player knows
+	self:RegisterEvent('SPELLS_CHANGED', GenerateFlatClosure(updateBuffFilters, Buffs), true)
+	updateBuffFilters(Buffs)
+
+	local Debuffs = self:CreateAuras({
+		layoutLimit = 135, -- 4 debuffs for each row
+		growthX = 'RIGHT',
+		growthY = 'UP', -- default
+		initialAnchor = 'BOTTOMLEFT',
+	})
 	Debuffs:SetPoint('BOTTOMLEFT', Health, 'TOPLEFT', 0, addon.SPACING)
-	Debuffs.size = 30 -- TODO: make them rectangular (20x30) but deal with texcoords
 	Debuffs.disableCooldownText = true -- custom option
-	Debuffs.disableMouse = true -- custom option
+	Debuffs.disableMouse = true
+	Debuffs.elementSpacing = addon.SPACING
+	Debuffs.lineSpacing = addon.SPACING
+	Debuffs.showCount = true
+	Debuffs.size = 30
+	Debuffs.PostCreateButton = addon.unitShared.PostCreateAura
+	Debuffs:AddGroup('HARMFUL|PLAYER|!CROWD_CONTROL')
 
+	local CrowdControl = self:CreateAuras({
+		growthX = 'RIGHT',
+		initialAnchor = 'LEFT',
+	})
 	CrowdControl:SetPoint('LEFT', Health, 'RIGHT', addon.SPACING, 0)
-	CrowdControl.size = 40
-	CrowdControl.disableMouse = true -- custom option
 	CrowdControl.centerCooldownText = true -- custom option
 	CrowdControl.cooldownTextSize = 18 -- custom option
-
-	if self.CreateAuras then
-		-- store the buff groups' keys for dynamic candidate filters
-		Buffs.dispelGroup = Buffs:AddGroup('HELPFUL', {
-			showBuffBorder = true,
-			size = 40, -- emphasize!
-		})
-		Buffs.buffsGroup = Buffs:AddGroup('HELPFUL')
-		self.Buffs = Buffs -- needed in updateOnAdded
-
-		-- modify candidate filters based on dispel spells the player knows
-		self:RegisterEvent('SPELLS_CHANGED', GenerateFlatClosure(updateBuffFilters, Buffs), true)
-		updateBuffFilters(Buffs) -- SPELLS_CHANGED does not trigger on fresh login? wtf?
-
-		Debuffs:AddGroup('HARMFUL|PLAYER|!CROWD_CONTROL')
-
-		CrowdControl:AddGroup('HARMFUL|CROWD_CONTROL', {
-			hideDebuffBorder = true,
-		})
-	end
+	CrowdControl.disableMouse = true
+	CrowdControl.elementSpacing = addon.SPACING
+	CrowdControl.lineSpacing = addon.SPACING
+	CrowdControl.maxFrameCount = 3
+	CrowdControl.showCount = true
+	CrowdControl.size = 40
+	CrowdControl.PostCreateButton = addon.unitShared.PostCreateAura
+	CrowdControl:AddGroup('HARMFUL|CROWD_CONTROL', {
+		hideDebuffBorder = true,
+	})
 
 	local Castbar = Health:CreateBackdropStatusBar()
 	Castbar:SetPoint('TOPLEFT', Health, 'BOTTOMLEFT', 0, -1)

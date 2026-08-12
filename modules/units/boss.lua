@@ -1,10 +1,6 @@
 local _, addon = ...
 local oUF = addon.oUF
 
-local function filterBuffs(_, unit) -- TODO: remove in 12.1
-	return UnitIsEnemy('player', unit)
-end
-
 local function updateOutline(self)
 	self.FocusOutline:SetShown(UnitIsUnit(self.__unit, 'focus'))
 end
@@ -75,45 +71,26 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	RaidIcon:SetSize(24, 24)
 	self.RaidTargetIndicator = RaidIcon
 
-	local Buffs
-	if self.CreateAuras then
-		Buffs = self:CreateAuras({
-			growthX = 'LEFT',
-			growthY = 'UP', -- default
-			initialAnchor = 'RIGHT'
-		})
-		Buffs.elementSpacing = addon.SPACING
-		Buffs.lineSpacing = addon.SPACING
-		Buffs.tooltipAnchor = 'ANCHOR_BOTTOMLEFT'
-		Buffs.tooltipOffsetY = self:GetHeight() - 4 -- this is some jank
-		Buffs.tooltipOffsetX = -3
-		Buffs.showCount = true
-		Buffs.PostCreateButton = addon.unitShared.PostCreateAura
-	else -- TODO: remove in 12.1
-		Buffs = self:CreateFrame()
-		Buffs:SetSize(self:GetWidth() * 1/3, self:GetHeight())
-		Buffs.growthX = 'LEFT'
-		Buffs.growthY = 'UP' -- default
-		Buffs.spacing = addon.SPACING
-		Buffs.initialAnchor = 'RIGHT'
-		Buffs.PostUpdateButton = addon.unitShared.PostUpdateAura -- for border colors
-		Buffs.CreateButton = addon.unitShared.CreateAura
-		Buffs.FilterAura = filterBuffs
-		self.Buffs = Buffs
-	end
-
+	local Buffs = self:CreateAuras({
+		growthX = 'LEFT',
+		growthY = 'UP', -- default
+		initialAnchor = 'RIGHT'
+	})
 	Buffs:SetPoint('RIGHT', self, 'LEFT', -addon.SPACING, 0)
+	Buffs.elementSpacing = addon.SPACING
+	Buffs.lineSpacing = addon.SPACING
+	Buffs.showCount = true
 	Buffs.size = self:GetHeight() - 2
-
-	if self.CreateAuras then
+	Buffs.tooltipAnchor = 'ANCHOR_BOTTOMLEFT'
+	Buffs.tooltipOffsetX = -3
+	Buffs.tooltipOffsetY = self:GetHeight() - 4 -- this is some jank
+	Buffs.PostCreateButton = addon.unitShared.PostCreateAura
+	Buffs:AddGroup('HELPFUL', {
 		-- we only really care about boss/role specific auras
-		Buffs:AddGroup('HELPFUL', {
-			candidateFilters = {
-				isBossOrRoleAura = true,
-			}
-		})
-		-- would like to show HELPFUL unconditionally for hostile mobs, but HELPFUL|PLAYER for friendly mobs
-	end
+		candidateFilters = {
+			isBossOrRoleAura = true,
+		}
+	})
 
 	local Castbar = self:CreateBackdropStatusBar()
 	Castbar:SetPoint('TOPLEFT', self, 'BOTTOMLEFT', 0, -1)

@@ -36,8 +36,4 @@ oUF.colors.power.SOUL_FRAGMENTS[1] = oUF:CreateColor(addon.colors.power.Devourer
 oUF.colors.power.SOUL_FRAGMENTS[2] = oUF:CreateColor(addon.colors.power.DevourerStar:GetRGB())
 
 -- set the "None" debuff type to our default border color, otherwise it can be mistaken for bleeds
-if addon:HasVersion(120100) then
-	oUF.colors.dispel.None = oUF:CreateColor(0, 0, 0)
-else -- TODO: remove in 12.1
-	oUF.colors.dispel[oUF.Enum.DispelType.None] = oUF:CreateColor(0, 0, 0)
-end
+oUF.colors.dispel.None = oUF:CreateColor(0, 0, 0)
