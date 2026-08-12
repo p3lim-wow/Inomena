@@ -121,6 +121,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Debuffs.PostCreateButton = addon.unitShared.PostCreateAura
 	Debuffs:AddGroup('HARMFUL')
 	Debuffs:AddSlot('HARMFUL', {
+		includePlayerOnly = true,
 		CreateButton = addon.unitShared.CreateDispelOverlay,
 	})
 

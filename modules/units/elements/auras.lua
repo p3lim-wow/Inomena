@@ -85,7 +85,7 @@ end
 
 local function dispelCallback(element, options)
 	element:SetAuraSlotCandidateFilters(options.__key, {
-		includeDispelTypes = addon:GetDispelTypes('HARMFUL')
+		includeDispelTypes = addon:GetDispelTypes('HARMFUL', options.includePlayerOnly)
 	})
 end
 

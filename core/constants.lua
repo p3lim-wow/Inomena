@@ -171,6 +171,49 @@ addon.CLASS_HARMFUL_DISPEL_SPELLS = {
 	},
 }
 
+addon.CLASS_HARMFUL_DISPEL_SELF_SPELLS = {
+	HUNTER = {
+		[459517] = { -- Emergency Salve
+			Poison = true,
+			Disease = true,
+		},
+		-- [212640] = { -- Mending Bandage
+		-- 	Bleed = true,
+		-- 	Poison = true,
+		-- 	Disease = true,
+		-- },
+	},
+	ROGUE = {
+		[31224] = { -- Cloak of Shadows
+			Magic = true,
+			Poison = true,
+			Curse = true,
+			Disease = true,
+		},
+	},
+}
+
+addon.RACE_HARMFUL_DISPEL_SPELLS = {
+	[3] = { -- Dwarf
+		[20594] = { -- Stoneform
+			Magic = true,
+			Bleed = true,
+			Poison = true,
+			Curse = true,
+			Disease = true,
+		},
+	},
+	[34] = { -- Dark Iron Dwarf
+		[265221] = { -- Fireblood
+			Magic = true,
+			Bleed = true,
+			Poison = true,
+			Curse = true,
+			Disease = true,
+		}
+	},
+}
+
 addon.CLASS_HELPFUL_DISPEL_SPELLS = {
 	DEMONHUNTER = {
 		[278326] = { -- Consume Magic
