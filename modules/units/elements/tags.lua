@@ -108,7 +108,7 @@ tags.Methods['inomena:nameplatecolor'] = function(unit)
 			elseif level >= (playerLevel + 1) then
 				return addon.colors.creature.lieutenant:GenerateHexColorMarkup()
 			elseif level >= playerLevel then
-				if UnitClassBase(unit) == 'PALADIN' then
+				if UnitHasPowerType(unit, Enum.PowerType.Mana) then
 					return addon.colors.creature.caster:GenerateHexColorMarkup()
 				else
 					return addon.colors.creature.melee:GenerateHexColorMarkup()

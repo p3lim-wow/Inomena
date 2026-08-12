@@ -409,6 +409,7 @@ read_globals = {
 	'UnitGetTotalAbsorbs',
 	'UnitGroupRolesAssignedEnum',
 	'UnitHasIncomingResurrection',
+	'UnitHasPowerType',
 	'UnitHasVehicleUI',
 	'UnitHealth',
 	'UnitHealthMax',
