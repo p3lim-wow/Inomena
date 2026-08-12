@@ -11,7 +11,6 @@ local PREFIXES = {
 	npc = PROF_CRAFTING_ORDER_TYPE_NPC:upper(),
 	age = 'Age',
 	quest = TRANSMOG_SOURCE_2,
-	caster = SPELL_TARGET_CENTER_CASTER:gsub('^%l', string.upper),
 }
 
 local SUFFIXES = {
@@ -25,7 +24,7 @@ local SUFFIXES = {
 }
 
 local LINE_FORMAT = '%s: |cff93ccea%s|r'
-local function addTooltipLine(tooltip, kind, value, forced)
+local function addTooltipLine(tooltip, kind, value)
 	if tooltip:IsForbidden() or not (forced or IsShiftKeyDown()) then
 		return
 	end
@@ -126,44 +125,6 @@ end
 dataTypeHandlers.Corpse = dataTypeHandlers.Unit
 dataTypeHandlers.Toy = dataTypeHandlers.Item
 
-if addon:HasVersion(120100) then
-	function addon:MODIFIER_STATE_CHANGED()
-		C_CVar.SetCVar('tooltipShowAuraSpellIDs', IsShiftKeyDown() and 1 or 0)
-	end
-else -- TODO: remove in 12.1
-	local getters = {
-		GetUnitAura = C_UnitAuras.GetAuraDataByIndex,
-		GetUnitAuraByAuraInstanceID = C_UnitAuras.GetAuraDataByAuraInstanceID,
-		GetUnitBuff = C_UnitAuras.GetBuffDataByIndex,
-		GetUnitBuffByAuraInstanceID = C_UnitAuras.GetAuraDataByAuraInstanceID,
-		GetUnitDebuff = C_UnitAuras.GetDebuffDataByIndex,
-		GetUnitDebuffByAuraInstanceID = C_UnitAuras.GetAuraDataByAuraInstanceID,
-	}
-
-	function dataTypeHandlers:UnitAura(data)
-		if data.id then
-			-- add caster name to aura tooltips
-			local getter = getters[self.processingInfo.getterName]
-			if getter then
-				local auraInfo = getter(unpack(self.processingInfo.getterArgs))
-				if auraInfo and auraInfo.sourceUnit ~= nil and not issecretvalue(auraInfo.sourceUnit) then
-					local name = UnitName(auraInfo.sourceUnit)
-
-					local _, classToken = UnitClass(auraInfo.sourceUnit)
-					if classToken then
-						name = C_ClassColor.GetClassColor(classToken):WrapTextInColorCode(name)
-					end
-
-					self:AddLine(' ') -- a little spacer here is nice
-					addTooltipLine(self, 'caster', name, true)
-				end
-			end
-
-			addTooltipLine(self, 'spell', data.id)
-		end
-	end
-end
-
 for dataType, key in next, Enum.TooltipDataType do
 	if dataTypeHandlers[dataType] then
 		TooltipDataProcessor.AddTooltipPostCall(key, dataTypeHandlers[dataType])
@@ -186,6 +147,10 @@ function addon:MODIFIER_STATE_CHANGED(key)
 				end
 			end
 		end
+	end
+
+	if not forced then
+		C_CVar.SetCVar('tooltipShowAuraSpellIDs', IsShiftKeyDown() and 1 or 0)
 	end
 end
 
