@@ -199,7 +199,7 @@ local function style(self, unit, isRaidStyle)
 	-- auto-hide class buffs in combat
 	self:RegisterEvent('PLAYER_REGEN_DISABLED', GenerateFlatClosure(updateBuffsCombat, Buffs), true)
 	self:RegisterEvent('PLAYER_REGEN_ENABLED', GenerateFlatClosure(updateBuffsCombat, Buffs), true)
-	updateBuffsCombat(Buffs) -- so it works with reloading too
+	self:RegisterEvent('PLAYER_LOGIN', GenerateFlatClosure(updateBuffsCombat, Buffs), true)
 
 	local Debuffs = self:CreateAuras({
 		layoutLimit = math.huge, -- never let them wrap
