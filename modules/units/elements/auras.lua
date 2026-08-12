@@ -1,5 +1,4 @@
 local _, addon = ...
-local oUF = addon.oUF
 
 function addon.unitShared.PostCreateAura(element, button, options)
 	Mixin(button, addon.widgetMixin)
