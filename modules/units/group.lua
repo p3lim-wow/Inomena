@@ -1,6 +1,14 @@
 local _, addon = ...
 local oUF = addon.oUF
 
+local CLASS_BUFFS = {}; do
+	for class, spellID in next, addon.CLASS_BUFF_SPELLS do
+		if addon.PLAYER_CLASS == class then
+			CLASS_BUFFS[spellID] = true
+		end
+	end
+end
+
 local function overrideDisplayPower(element, unit)
 	-- only show power for healers' mana or blood death knights' runic power
 	local self = element:GetParent()
@@ -26,23 +34,6 @@ end
 
 local function forceUpdatePower(self)
 	self.Power:ForceUpdate()
-end
-
-local function updateBuffsCombat(element)
-	-- there's no proper way to disable a group
-	if UnitAffectingCombat('player') then
-		element:SetAuraGroupMaxFrameCount(element.classBuffGroup, 0)
-	else
-		element:SetAuraGroupMaxFrameCount(element.classBuffGroup, 1)
-	end
-end
-
-local classBuffs = {}; do
-	for class, spellID in next, addon.CLASS_BUFF_SPELLS do
-		if addon.PLAYER_CLASS == class then
-			classBuffs[spellID] = true
-		end
-	end
 end
 
 local function postCreateDefensiveSlot(element, button)
@@ -174,14 +165,9 @@ local function style(self, unit, isRaidStyle)
 	Buffs.tooltipOffsetX = 1
 	Buffs.tooltipOffsetY = 3
 	Buffs.PostCreateButton = addon.unitShared.PostCreateAura
-	Buffs.classBuffGroup = Buffs:AddGroup('HELPFUL', {
-		candidateFilters = {
-			includeSpellIDs = classBuffs,
-		},
-	})
 	Buffs:AddGroup('HELPFUL|PLAYER|RAID|!BIG_DEFENSIVE|!EXTERNAL_DEFENSIVE', {
 		candidateFilters = {
-			excludeSpellIDs = classBuffs,
+			excludeSpellIDs = CLASS_BUFFS,
 		},
 	})
 	Buffs:AddSlot('HELPFUL|BIG_DEFENSIVE', {
@@ -195,11 +181,6 @@ local function style(self, unit, isRaidStyle)
 		raiseLevels = 3,
 		postCreateButton = postCreateDefensiveSlot,
 	})
-
-	-- auto-hide class buffs in combat
-	self:RegisterEvent('PLAYER_REGEN_DISABLED', GenerateFlatClosure(updateBuffsCombat, Buffs), true)
-	self:RegisterEvent('PLAYER_REGEN_ENABLED', GenerateFlatClosure(updateBuffsCombat, Buffs), true)
-	self:RegisterEvent('PLAYER_LOGIN', GenerateFlatClosure(updateBuffsCombat, Buffs), true)
 
 	local Debuffs = self:CreateAuras({
 		layoutLimit = math.huge, -- never let them wrap
