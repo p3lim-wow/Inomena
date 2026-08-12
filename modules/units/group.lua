@@ -216,7 +216,7 @@ local function style(self, unit, isRaidStyle)
 	Debuffs.tooltipOffsetX = -1
 	Debuffs.tooltipOffsetY = 3
 	Debuffs.PostCreateButton = addon.unitShared.PostCreateAura
-	Debuffs.overlayGroup = Debuffs:AddSlot('HARMFUL|RAID', {
+	Debuffs.overlayGroup = Debuffs:AddSlot('HARMFUL', {
 		CreateButton = addon.unitShared.CreateDispelOverlay,
 	})
 

@@ -84,6 +84,12 @@ function addon.unitShared.PostCreateAura(element, button, options)
 	end
 end
 
+local function dispelCallback(element, options)
+	element:SetAuraSlotCandidateFilters(options.__key, {
+		includeDispelTypes = addon:GetDispelTypes('HARMFUL')
+	})
+end
+
 function addon.unitShared.CreateDispelOverlay(element, options, button)
 	Mixin(button, addon.widgetMixin)
 
@@ -114,4 +120,8 @@ function addon.unitShared.CreateDispelOverlay(element, options, button)
 	button:AddDispelTypeTexture(DispelIcon, {
 		style = Enum.CustomAuraButtonDispelTypeTextureStyle.Icon,
 	})
+
+	local filterCallback = GenerateFlatClosure(dispelCallback, element, options)
+	element.__owner:RegisterEvent('SPELLS_CHANGED', filterCallback, true)
+	element.__owner:RegisterEvent('PLAYER_LOGIN', filterCallback, true)
 end
