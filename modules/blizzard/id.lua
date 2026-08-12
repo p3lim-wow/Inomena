@@ -23,6 +23,18 @@ local SUFFIXES = {
 	quest = ID,
 }
 
+local forced
+addon:RegisterSlash('/id', function()
+	forced = not forced
+	if forced then
+		addon:Print('Tooltip IDs are now |cff08bc06always shown|r')
+		C_CVar.SetCVar('tooltipShowAuraSpellIDs', 1)
+	else
+		addon:Print('Tooltip IDs are now |cffff0000conditionally shown|r')
+		C_CVar.SetCVar('tooltipShowAuraSpellIDs', 0)
+	end
+end)
+
 local LINE_FORMAT = '%s: |cff93ccea%s|r'
 local function addTooltipLine(tooltip, kind, value)
 	if tooltip:IsForbidden() or not (forced or IsShiftKeyDown()) then
