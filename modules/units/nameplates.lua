@@ -249,7 +249,7 @@ oUF:RegisterStyle(styleName, function(self)
 
 	-- modify candidate filters based on dispel spells the player knows
 	self:RegisterEvent('SPELLS_CHANGED', GenerateFlatClosure(updateBuffFilters, Buffs), true)
-	self:RegisterEvent('PLAYER_LOGIN', GenerateFlatClosure(updateBuffFilters, Buffs), true)
+	updateBuffFilters(Buffs)
 
 	local Debuffs = self:CreateAuras({
 		layoutLimit = 135, -- 4 debuffs for each row
