@@ -176,6 +176,10 @@ do
 		self:GetCountdownFontString():SetPoint(...)
 	end
 
+	function cooldownMixin:SetTimeJustifyH(...)
+		self:GetCountdownFontString():SetJustifyH(...)
+	end
+
 	function cooldownMixin:SetIgnoreGlobalCooldown(state)
 		self:SetMinimumCountdownDuration(state and 1500 or 0)
 	end
