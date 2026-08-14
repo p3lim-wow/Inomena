@@ -55,7 +55,6 @@ local function style(self, unit, isRaidStyle)
 	local HealthTempLoss = self:CreateStatusBar()
 	HealthTempLoss:SetPoint('TOPLEFT')
 	HealthTempLoss:SetPoint('TOPRIGHT')
-	HealthTempLoss:SetHeight(self:GetHeight())
 	HealthTempLoss:SetReverseFill(true)
 	HealthTempLoss:SetStatusBarTexture('UI-HUD-UnitFrame-Target-PortraitOn-Bar-TempHPLoss')
 
@@ -109,6 +108,7 @@ local function style(self, unit, isRaidStyle)
 	Power:SetPoint('BOTTOMLEFT')
 	Power:SetPoint('BOTTOMRIGHT')
 	Power:SetHeight(5)
+	Power:SetFrameLevel(Health:GetFrameLevel() + 2) -- above Health's sub-widgets
 	Power.colorPower = true
 	Power.GetDisplayPower = overrideDisplayPower
 	Power.displayAltPower = true -- needed for display override to work
@@ -122,7 +122,7 @@ local function style(self, unit, isRaidStyle)
 	NameContainer:SetPoint('TOPLEFT', addon.SPACING, -addon.SPACING)
 	NameContainer:SetPoint('BOTTOMRIGHT', -addon.SPACING, addon.SPACING)
 	NameContainer:SetClipsChildren(true) -- first part of the trick
-	NameContainer:SetFrameLevel(HealAbsorb:GetFrameLevel() + 1) -- render high
+	NameContainer:SetFrameLevel(Power:GetFrameLevel())
 
 	local Name = Health:CreateText(14)
 	Name:SetParent(NameContainer) -- second part of the trick
@@ -156,6 +156,7 @@ local function style(self, unit, isRaidStyle)
 		initialAnchor = 'TOPLEFT',
 	})
 	Buffs:SetPoint('TOPLEFT', 3, -3)
+	Buffs:SetFrameLevel(NameContainer:GetFrameLevel() + 1) -- above name
 	Buffs.disableCooldownText = true -- custom option
 	Buffs.elementSpacing = addon.SPACING
 	Buffs.lineSpacing = addon.SPACING
@@ -187,6 +188,7 @@ local function style(self, unit, isRaidStyle)
 		growthX = isRaidStyle and 'LEFT' or 'RIGHT',
 		initialAnchor = isRaidStyle and 'BOTTOMRIGHT' or 'LEFT',
 	})
+	Debuffs:SetFrameLevel(NameContainer:GetFrameLevel() + 1) -- above name
 	Debuffs.disableCooldownText = isRaidStyle -- custom option
 	Debuffs.elementSpacing = addon.SPACING
 	Debuffs.lineSpacing = addon.SPACING
