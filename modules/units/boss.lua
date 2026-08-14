@@ -36,13 +36,37 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Health.UpdateColor = addon.unitShared.UpdateColorHealth
 	self.Health = Health
 
+	local HealingPrediction = Health:CreateStatusBar()
+	HealingPrediction:SetPoint('TOP')
+	HealingPrediction:SetPoint('BOTTOM')
+	HealingPrediction:SetPoint('LEFT', Health:GetStatusBarTexture(), 'RIGHT')
+	HealingPrediction:SetStatusBarColor(addon.colors.healing:GetRGBA())
+	Health.HealingAll = HealingPrediction
 
 	local DamageAbsorb = Health:CreateStatusBar()
 	DamageAbsorb:SetPoint('TOP')
 	DamageAbsorb:SetPoint('BOTTOM')
-	DamageAbsorb:SetPoint('LEFT', Health:GetStatusBarTexture(), 'RIGHT')
-	DamageAbsorb:SetStatusBarColor(67/255, 235/255, 231/255)
+	DamageAbsorb:SetPoint('LEFT', HealingPrediction:GetStatusBarTexture(), 'RIGHT')
+	DamageAbsorb:SetStatusBarColor(addon.colors.absorb:GetRGB())
 	Health.DamageAbsorb = DamageAbsorb
+
+	local HealAbsorb = Health:CreateStatusBar()
+	HealAbsorb:SetPoint('TOP')
+	HealAbsorb:SetPoint('BOTTOM')
+	HealAbsorb:SetPoint('RIGHT', Health:GetStatusBarTexture())
+	HealAbsorb:GetStatusBarTexture():SetAtlas('RaidFrame-Absorb-Overlay', false, nil, nil, 'REPEAT', 'REPEAT')
+	HealAbsorb:GetStatusBarTexture():SetHorizTile(true)
+	HealAbsorb:GetStatusBarTexture():SetVertTile(true)
+	HealAbsorb:GetStatusBarTexture():SetVertexColor(0, 0, 0)
+	HealAbsorb:SetReverseFill(true)
+	Health.HealAbsorb = HealAbsorb
+
+	local OverHealAbsorbIndicator = Health:CreateTexture()
+	OverHealAbsorbIndicator:SetPoint('TOP', Health, 0, 2)
+	OverHealAbsorbIndicator:SetPoint('BOTTOM', Health, 0, -2)
+	OverHealAbsorbIndicator:SetPoint('RIGHT', Health, 'LEFT', 3, 0)
+	OverHealAbsorbIndicator:SetWidth(10)
+	Health.OverHealAbsorbIndicator = OverHealAbsorbIndicator
 
 	local HealthValue = Health:CreateText()
 	HealthValue:SetPoint('RIGHT', -addon.SPACING, 0)
