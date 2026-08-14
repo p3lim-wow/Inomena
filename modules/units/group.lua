@@ -80,9 +80,6 @@ local function style(self, unit, isRaidStyle)
 	Health.TempLoss = HealthTempLoss
 	self.Health = Health
 
-	self.HealthPrediction = {}
-	self.HealthPrediction.incomingHealOverflow = 1 -- don't let it escape bounds
-
 	local HealingPrediction = Health:CreateStatusBar()
 	HealingPrediction:SetPoint('TOP')
 	HealingPrediction:SetPoint('BOTTOM')

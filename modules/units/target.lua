@@ -20,8 +20,6 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Health.UpdateColor = addon.unitShared.UpdateColorHealth
 	self.Health = Health
 
-	self.HealthPrediction = {}
-
 	local DamageAbsorb = Health:CreateStatusBar()
 	DamageAbsorb:SetPoint('TOP')
 	DamageAbsorb:SetPoint('BOTTOM')
