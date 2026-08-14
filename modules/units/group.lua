@@ -9,6 +9,17 @@ local CLASS_BUFFS = {}; do
 	end
 end
 
+local DEBUFF_FILTER = {
+	-- bloodlust debuffs
+	[57723] = true,
+	[57724] = true,
+	[80354] = true,
+	[95809] = true,
+	[160455] = true,
+	[264689] = true,
+	[390435] = true,
+}
+
 local function overrideDisplayPower(element, unit)
 	-- only show power for healers' mana or blood death knights' runic power
 	local self = element:GetParent()
@@ -208,7 +219,11 @@ local function style(self, unit, isRaidStyle)
 		Debuffs:AddGroup('HARMFUL|CROWD_CONTROL', {
 			size = 20 -- emphasize!
 		})
-		Debuffs:AddGroup('HARMFUL|!CROWD_CONTROL')
+		Debuffs:AddGroup('HARMFUL|!CROWD_CONTROL', {
+			candidateFilters = {
+				excludeSpellIDs = DEBUFF_FILTER,
+			}
+		})
 	else
 		Debuffs:SetPoint('LEFT', self, 'RIGHT', addon.SPACING + 2, 0) -- extra 2px because of threat border
 		Debuffs:AddGroup('HARMFUL')
