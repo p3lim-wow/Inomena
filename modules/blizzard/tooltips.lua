@@ -129,19 +129,17 @@ do
 	addon:SkinTooltip(addon:GetTooltip())
 end
 
--- aura tooltip
-if addon:HasVersion(120100) then
+-- skin aura tooltip
+AuraContainerInbound.SetTooltipBackdrop({
 	-- we can't do pixel perfect borders, pretty much stuck with the old backdrop system
-	AuraContainerInbound.SetTooltipBackdrop({
-		backdropInfo = {
-			bgFile = addon.TEXTURE,
-			edgeFile = addon.TEXTURE,
-			edgeSize = 1,
-		},
-		borderColor = CreateColor(0, 0, 0, 1),
-		centerColor = CreateColor(0, 0, 0, 0.7),
-	})
-end
+	backdropInfo = {
+		bgFile = addon.TEXTURE,
+		edgeFile = addon.TEXTURE,
+		edgeSize = 1,
+	},
+	borderColor = CreateColor(0, 0, 0, 1),
+	centerColor = CreateColor(0, 0, 0, 0.7),
+})
 
 -- set custom font
 for _, tooltipFontString in next, {
