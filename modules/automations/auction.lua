@@ -16,12 +16,12 @@ end)
 
 function addon:AUCTION_HOUSE_BROWSE_RESULTS_UPDATED()
 	if #C_AuctionHouse.GetBrowseResults() == 0 then
-		if AuctionHouseFrame.SearchBar.FilterButton.filters[FILTER] then
+		if AuctionHouseFrame.SearchBar.FilterButton:GetFilters()[FILTER] then
 			-- remove filter and search again
 			AuctionHouseFrame.SearchBar.FilterButton:ToggleFilter(FILTER)
 			AuctionHouseFrame.SearchBar:StartSearch()
-		elseif not AuctionHouseFrame.SearchBar.FilterButton.filters[FILTER] then
-			-- enable filter again, no items found
+
+			-- reset filter afterwards
 			AuctionHouseFrame.SearchBar.FilterButton:ToggleFilter(FILTER)
 		end
 	end
