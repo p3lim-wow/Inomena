@@ -64,6 +64,5 @@ function addon:LFG_LIST_JOINED_GROUP(searchResultID)
 
 	local instanceID = C_EncounterJournal.GetInstanceForGameMap(activityInfo.mapID)
 	local instanceName = EJ_GetInstanceInfo(instanceID)
-	local difficulty = 23 -- Mythic dungeon
-	addon:Printf(FORMAT_DUNGEON, LFG_LIST_APP_INVITE_ACCEPTED, instanceID, difficulty, instanceName)
+	addon:Printf(FORMAT_DUNGEON, LFG_LIST_APP_INVITE_ACCEPTED, instanceID, activityInfo.difficultyID, instanceName)
 end
