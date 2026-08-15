@@ -7,6 +7,15 @@ local function dispelCallback(element, includePlayerOnly)
 	})
 end
 
+local function reactionCallback(element)
+	-- we only want this overlay on friendly units
+	if UnitCanAssist('player', element.__owner.__unit) then
+		element:SetAuraSlotFilterString(element.slotKey, 'HARMFUL')
+	else
+		element:SetAuraSlotFilterString(element.slotKey, 'HARMFUL|HELPFUL') -- invalid filter so it stops processing
+	end
+end
+
 local function createButton(element, _, button)
 	Mixin(button, addon.widgetMixin)
 
@@ -41,6 +50,7 @@ end
 
 function addon.unitShared.CreateDispelOverlay(frame, includePlayerOnly)
 	local DispelOverlay = frame:CreateAuras()
+	DispelOverlay.PostUpdate = reactionCallback
 	DispelOverlay.slotKey = DispelOverlay:AddSlot('HARMFUL', {
 		CreateButton = createButton
 	})
@@ -49,4 +59,7 @@ function addon.unitShared.CreateDispelOverlay(frame, includePlayerOnly)
 	local filterCallback = GenerateFlatClosure(dispelCallback, DispelOverlay, includePlayerOnly)
 	frame:RegisterEvent('SPELLS_CHANGED', filterCallback, true)
 	filterCallback()
+
+	-- adjust filter whenever the unit changes faction (i.e. reaction)
+	frame:RegisterEvent('UNIT_FACTION', GenerateFlatClosure(reactionCallback, DispelOverlay))
 end
