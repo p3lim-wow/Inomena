@@ -318,6 +318,7 @@ read_globals = {
 	'ClearCursor',
 	'ClearOverrideBindings',
 	'ConfirmLootSlot',
+	'CreateFromMixins',
 	'CursorHasItem',
 	'EJ_GetInstanceInfo',
 	'EjectPassengerFromSeat',
