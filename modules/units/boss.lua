@@ -110,8 +110,8 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Buffs.PostCreateButton = addon.unitShared.PostCreateAura
 	Buffs:AddGroup('HELPFUL|PLAYER')
 	Buffs:AddGroup('HELPFUL|!PLAYER|IMPORTANT')
-	Buffs:AddGroup('HELPFUL|!PLAYER|DISPELLABLE')
-	Buffs:AddGroup('HELPFUL|!PLAYER', {
+	Buffs:AddGroup('HELPFUL|!PLAYER|DISPELLABLE|!IMPORTANT')
+	Buffs:AddGroup('HELPFUL|!PLAYER|!DISPELLABLE|!IMPORTANT', {
 		candidateFilters = {
 			isBossOrRoleAura = true,
 		}

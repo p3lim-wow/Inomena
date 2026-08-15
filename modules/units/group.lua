@@ -181,7 +181,7 @@ local function style(self, unit, isRaidStyle)
 			excludeSpellIDs = CLASS_BUFFS,
 		},
 	})
-	Buffs:AddSlot('HELPFUL|BIG_DEFENSIVE', {
+	Buffs:AddSlot('HELPFUL|BIG_DEFENSIVE|!EXTERNAL_DEFENSIVE', {
 		-- I wish we could combine BIG_ and EXTERNAL_
 		size = self:GetHeight() / 2,
 		raiseLevels = 2,
