@@ -26,11 +26,7 @@ addon:HookAddOn('Blizzard_WeeklyRewards', function()
 end)
 
 -- confirm looting items that bind on pickup
-if GameEvent then -- 12.1
-	GameEvent.UnregisterInternalEvent('LOOT_BIND_CONFIRM')
-else
-	UIParent:UnregisterEvent('LOOT_BIND_CONFIRM')
-end
+GameEvent.UnregisterInternalEvent('LOOT_BIND_CONFIRM')
 function addon:LOOT_BIND_CONFIRM(lootSlot)
 	ConfirmLootSlot(lootSlot)
 end
@@ -47,11 +43,7 @@ hooksecurefunc(EventToastManagerFrame, 'DisplayToast', function(self)
 end)
 
 -- don't prompt for equipping shareable items
-if GameEvent then -- 12.1
-	GameEvent.UnregisterInternalEvent('EQUIP_BIND_TRADEABLE_CONFIRM')
-else
-	UIParent:UnregisterEvent('EQUIP_BIND_TRADEABLE_CONFIRM')
-end
+GameEvent.UnregisterInternalEvent('EQUIP_BIND_TRADEABLE_CONFIRM')
 function addon:EQUIP_BIND_TRADEABLE_CONFIRM(inventorySlot)
 	if not InCombatLockdown() then
 		EquipPendingItem(inventorySlot)
