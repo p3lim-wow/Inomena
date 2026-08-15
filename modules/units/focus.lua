@@ -19,7 +19,7 @@ oUF:RegisterStyle(styleName, function(self)
 		growthY = 'UP', -- default
 		initialAnchor = 'BOTTOMRIGHT',
 	})
-	Debuffs:SetPoint('BOTTOMRIGHT', self, 'TOPRIGHT', -4, 5)
+	Debuffs:SetPoint('BOTTOMRIGHT', self, 'TOPRIGHT', -4, 4)
 	Debuffs.elementSpacing = addon.SPACING
 	Debuffs.lineSpacing = addon.SPACING
 	Debuffs.showCount = true
