@@ -172,7 +172,7 @@ local function style(self, unit, isRaidStyle)
 	Buffs.tooltipOffsetX = 1
 	Buffs.tooltipOffsetY = 3
 	Buffs.PostCreateButton = addon.unitShared.PostCreateAura
-	Buffs:AddGroup('HELPFUL|PLAYER|RAID|!BIG_DEFENSIVE|!EXTERNAL_DEFENSIVE', {
+	Buffs:AddGroup('HELPFUL|PLAYER|!BIG_DEFENSIVE|!EXTERNAL_DEFENSIVE', {
 		candidateFilters = {
 			excludeSpellIDs = CLASS_BUFFS,
 		},
