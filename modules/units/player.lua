@@ -119,8 +119,8 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Buffs.tooltipOffsetY = 3
 	Buffs.size = self:GetHeight() - (addon.SPACING * 2)
 	Buffs.PostCreateButton = addon.unitShared.PostCreateAura
-	Buffs:AddGroup('HELPFUL|BIG_DEFENSIVE')
 	Buffs:AddGroup('HELPFUL|EXTERNAL_DEFENSIVE')
+	Buffs:AddGroup('HELPFUL|BIG_DEFENSIVE|!EXTERNAL_DEFENSIVE')
 
 	local Debuffs = self:CreateAuras({
 		growthX = 'LEFT',
