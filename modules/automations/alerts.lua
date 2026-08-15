@@ -58,6 +58,9 @@ function addon:LFG_LIST_JOINED_GROUP(searchResultID)
 	local searchInfo = C_LFGList.GetSearchResultInfo(searchResultID)
 	local activityID = searchInfo.activityIDs[1]
 	local activityInfo = C_LFGList.GetActivityInfoTable(activityID)
+	if activityInfo.mapID == 0 then
+		return
+	end
 
 	local instanceID = C_EncounterJournal.GetInstanceForGameMap(activityInfo.mapID)
 	local instanceName = EJ_GetInstanceInfo(instanceID)
