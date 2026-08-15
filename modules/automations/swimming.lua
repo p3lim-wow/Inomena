@@ -109,7 +109,7 @@ local function quest(_, questID)
 	end
 end
 
-function addon:OnLogin()
+addon:RegisterUnitEvent('UNIT_INVENTORY_CHANGED', 'player', function()
 	if C_Item.GetItemCount(UNDERLIGHT_ANGLER_ITEM_ID) > 0 then
 		addon:RegisterUnitEvent('UNIT_SPELLCAST_FAILED_QUIET', 'player', cast)
 		for event, callback in next, eventCallbacks do
@@ -128,4 +128,6 @@ function addon:OnLogin()
 			addon:RegisterEvent('QUEST_TURNED_IN', quest)
 		end
 	end
-end
+
+	return true -- stop listening
+end)
