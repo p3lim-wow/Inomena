@@ -109,6 +109,8 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Buffs.tooltipOffsetY = self:GetHeight() - 4 -- this is some jank
 	Buffs.PostCreateButton = addon.unitShared.PostCreateAura
 	Buffs:AddGroup('HELPFUL|PLAYER')
+	Buffs:AddGroup('HELPFUL|!PLAYER|IMPORTANT')
+	Buffs:AddGroup('HELPFUL|!PLAYER|DISPELLABLE')
 	Buffs:AddGroup('HELPFUL|!PLAYER', {
 		candidateFilters = {
 			isBossOrRoleAura = true,
