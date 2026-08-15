@@ -10,15 +10,19 @@ local CLASS_BUFFS = {}; do
 end
 
 local DEBUFF_FILTER = {
-	-- bloodlust debuffs
-	[57723] = true,
-	[57724] = true,
-	[80354] = true,
-	[95809] = true,
-	[160455] = true,
-	[264689] = true,
-	[390435] = true,
+	[71041] = true, -- Dungeon Deserter
+	[124255] = true, -- Stagger
+	[206151] = true, -- Challenger's Burden
 }
+
+local DEBUFF_FILTER_RAID = CreateFromMixins(DEBUFF_FILTER, {
+	-- bloodlust debuffs
+	[57723] = true, -- Exhaustion
+	[57724] = true, -- Sated
+	[80354] = true, -- Temporal Displacement
+	[264689] = true, -- Fatigued
+	[390435] = true, -- Exhaustion
+})
 
 local function overrideDisplayPower(element, unit)
 	-- only show power for healers' mana or blood death knights' runic power
@@ -213,12 +217,16 @@ local function style(self, unit, isRaidStyle)
 		})
 		Debuffs:AddGroup('HARMFUL|!CROWD_CONTROL', {
 			candidateFilters = {
-				excludeSpellIDs = DEBUFF_FILTER,
+				excludeSpellIDs = DEBUFF_FILTER_RAID,
 			}
 		})
 	else
 		Debuffs:SetPoint('LEFT', self, 'RIGHT', addon.SPACING + 2, 0) -- extra 2px because of threat border
-		Debuffs:AddGroup('HARMFUL')
+		Debuffs:AddGroup('HARMFUL', {
+			candidateFilters = {
+				excludeSpellIDs = DEBUFF_FILTER,
+			}
+		})
 	end
 
 	addon.unitShared.CreateDispelOverlay(self)
