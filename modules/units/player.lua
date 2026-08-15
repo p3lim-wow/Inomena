@@ -102,6 +102,26 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		Power.CostPrediction = PowerPrediction
 	end
 
+	local Buffs = self:CreateAuras({
+		-- TODO: set limit of how many total
+		layoutLimit = self:GetWidth() - (addon.SPACING * 2),
+		growthX = 'RIGHT',
+		growthY = 'DOWN',
+		initialAnchor = 'TOPLEFT',
+	})
+	Buffs:SetPoint('CENTER')
+	Buffs.disableCooldownText = true -- custom option
+	Buffs.elementSpacing = addon.SPACING
+	Buffs.lineSpacing = addon.SPACING
+	Buffs.tooltipAnchor = 'ANCHOR_TOPRIGHT'
+	Buffs.tooltipHideInCombat = true -- TBD
+	Buffs.tooltipOffsetX = 1
+	Buffs.tooltipOffsetY = 3
+	Buffs.size = self:GetHeight() - (addon.SPACING * 2)
+	Buffs.PostCreateButton = addon.unitShared.PostCreateAura
+	Buffs:AddGroup('HELPFUL|BIG_DEFENSIVE')
+	Buffs:AddGroup('HELPFUL|EXTERNAL_DEFENSIVE')
+
 	local Debuffs = self:CreateAuras({
 		growthX = 'LEFT',
 		growthY = 'UP', -- default
