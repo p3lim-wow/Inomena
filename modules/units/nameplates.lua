@@ -15,7 +15,7 @@ end
 local function updateOnAdded(self)
 	local unit = self.__unit
 
-	if UnitIsFriend('player', unit) and (not C_Secrets.ShouldAurasBeSecret() and not UnitIsPossessed(unit) and not UnitIsCharmed(unit)) then
+	if not UnitCanAttack('player', unit) then
 		self.Name:Hide()
 		self.FriendlyName:Show()
 		self.PetIcon:Hide()
