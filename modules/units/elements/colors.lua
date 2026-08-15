@@ -26,6 +26,13 @@ for _, color in next, oUF.colors.reaction do
 	color:SetRGB(C_ColorUtil.ConvertHSVToRGB(h, s, v * 0.6))
 end
 
+-- custom health curve colors based on reaction colors, the defaults are just too bright
+oUF.colors.health:SetCurve({
+	[0] = oUF.colors.reaction[1],
+	[0.5] = oUF.colors.reaction[4],
+	[1] = oUF.colors.reaction[5],
+})
+
 -- oUF doesn't use the rune power type for colors, so we have to map it when replacing
 oUF.colors.runes[addon.enums.ClassSpecializations.DEATHKNIGHT.Blood] = oUF:CreateColor(addon.colors.power[Enum.PowerType.RuneBlood]:GetRGB())
 oUF.colors.runes[addon.enums.ClassSpecializations.DEATHKNIGHT.Frost] = oUF:CreateColor(addon.colors.power[Enum.PowerType.RuneFrost]:GetRGB())
