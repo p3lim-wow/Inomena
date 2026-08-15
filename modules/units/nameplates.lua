@@ -419,12 +419,9 @@ end
 -- the new "nameplateShowFriendlyRealmName" cvar will still append "(*)"
 addon:SafeSetNil(NamePlateFriendlyFrameOptions, 'updateNameUsesGetUnitName')
 
--- auto-enable friendly player nameplates when not in a city
+-- auto-enable friendly player nameplates when in a dungeon
 local function updateZone()
-	local mapID = C_Map.GetBestMapForUnit('player')
-	if mapID then
-		C_CVar.SetCVar('nameplateShowFriendlyPlayers', C_Map.IsCityMap(mapID) and 0 or 1)
-	end
+	C_CVar.SetCVar('nameplateShowFriendlyPlayers', addon:IsInDungeon() and 1 or 0)
 end
 
 addon:RegisterEvent('ZONE_CHANGED_NEW_AREA', updateZone)
