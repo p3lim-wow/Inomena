@@ -117,10 +117,8 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Debuffs.tooltipOffsetY = 3
 	Debuffs.PostCreateButton = addon.unitShared.PostCreateAura
 	Debuffs:AddGroup('HARMFUL')
-	Debuffs:AddSlot('HARMFUL', {
-		includePlayerOnly = true,
-		CreateButton = addon.unitShared.CreateDispelOverlay,
-	})
+
+	addon.unitShared.CreateDispelOverlay(self, true)
 
 	local RaidIcon = HealthValue:GetParent():CreateTexture('OVERLAY') -- higher parent
 	RaidIcon:SetPoint('CENTER', self, 'TOP')

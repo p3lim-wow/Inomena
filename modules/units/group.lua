@@ -207,9 +207,6 @@ local function style(self, unit, isRaidStyle)
 	Debuffs.tooltipOffsetX = -1
 	Debuffs.tooltipOffsetY = 3
 	Debuffs.PostCreateButton = addon.unitShared.PostCreateAura
-	Debuffs.overlayGroup = Debuffs:AddSlot('HARMFUL', {
-		CreateButton = addon.unitShared.CreateDispelOverlay,
-	})
 
 	if isRaidStyle then
 		Debuffs:SetPoint('BOTTOMRIGHT', -3, 3)
@@ -225,6 +222,8 @@ local function style(self, unit, isRaidStyle)
 		Debuffs:SetPoint('LEFT', self, 'RIGHT', addon.SPACING + 2, 0) -- extra 2px because of threat border
 		Debuffs:AddGroup('HARMFUL')
 	end
+
+	addon.unitShared.CreateDispelOverlay(self)
 
 	local Phase = self:CreateFrame('Frame', 'InsecureMouseClicksPropagatorTemplate')
 	Phase:SetSize(28, 28)

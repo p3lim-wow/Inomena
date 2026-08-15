@@ -39,6 +39,7 @@ modules\units\elements\core.lua
 modules\units\elements\colors.lua
 modules\units\elements\auras.lua
 modules\units\elements\castbar.lua
+modules\units\elements\dispel.lua
 modules\units\elements\health.lua
 modules\units\elements\tags.lua
 modules\units\elements\threat.lua

@@ -115,6 +115,8 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		}
 	})
 
+	addon.unitShared.CreateDispelOverlay(self)
+
 	local Castbar = self:CreateBackdropStatusBar()
 	Castbar:SetPoint('TOPLEFT', self, 'BOTTOMLEFT', 0, -1)
 	Castbar:SetPoint('TOPRIGHT', self, 'BOTTOMRIGHT', 0, -1)
