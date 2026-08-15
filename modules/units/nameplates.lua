@@ -325,7 +325,8 @@ oUF:RegisterStyle(styleName, function(self)
 	self:RegisterEvent('PLAYER_REGEN_ENABLED', updateOnAdded, true) -- for combat state changes
 	self:RegisterEvent('PLAYER_FOCUS_CHANGED', updateHealthColor, true)
 	self:RegisterEvent('PLAYER_TARGET_CHANGED', updateOnAdded, true)
-	self:RegisterEvent('UNIT_FLAGS', updateOnAdded) -- for reaction state changes (?)
+	self:RegisterEvent('UNIT_FLAGS', updateOnAdded) -- for reaction state changes
+	self:RegisterEvent('UNIT_FACTION', updateOnAdded) -- for reaction state changes
 	self:RegisterEvent('UNIT_HEALTH', updateOnAdded) -- extra updates
 	self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', updateHealthColor)
 	self:RegisterEvent('UNIT_THREAT_LIST_UPDATE', updateHealthColor) -- unsure if needed
