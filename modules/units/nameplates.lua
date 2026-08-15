@@ -415,7 +415,8 @@ for _, fontObject in next, {
 	_G[fontObject]:SetFont(addon.FONT, 16, 'SLUG,OUTLINE')
 end
 
--- hide realm names for friendly nameplates in instances
+-- hide realm names for friendly nameplates in instances,
+-- the new "nameplateShowFriendlyRealmName" cvar will still append "(*)"
 addon:SafeSetNil(NamePlateFriendlyFrameOptions, 'updateNameUsesGetUnitName')
 
 -- auto-enable friendly player nameplates when not in a city
