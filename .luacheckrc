@@ -396,6 +396,7 @@ read_globals = {
 	'SetOverrideBinding',
 	'TaxiRequestEarlyLanding',
 	'UnitAffectingCombat',
+	'UnitCanAssist',
 	'UnitCanAttack',
 	'UnitClass',
 	'UnitClassBase',
