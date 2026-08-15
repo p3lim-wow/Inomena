@@ -22,25 +22,21 @@ local DEBUFF_FILTER = {
 
 local function overrideDisplayPower(element, unit)
 	-- only show power for healers' mana or blood death knights' runic power
-	local self = element:GetParent()
-
 	local role = UnitGroupRolesAssignedEnum(unit)
 	if role == Enum.LFGRole.Healer then
-		self.Health.TempLoss:SetHeight(self:GetHeight() - element:GetHeight() - 1)
-		element:SetHeight(5)
 		return Enum.PowerType.Mana
 	elseif role == Enum.LFGRole.Tank then
 		local _, classToken = UnitClass(unit)
 		if classToken == 'DEATHKNIGHT' then
-			self.Health.TempLoss:SetHeight(self:GetHeight() - element:GetHeight() - 1)
-			element:SetHeight(5)
-
 			return Enum.PowerType.RunicPower
 		end
 	end
 
-	self.Health.TempLoss:SetHeight(self:GetHeight())
-	element:SetHeight(0)
+	element.__owner.Health.TempLoss:SetPoint('BOTTOM')
+end
+
+local function postUpdatePower(element)
+	element.__owner.Health.TempLoss:SetPoint('BOTTOM', element, 'TOP')
 end
 
 local function forceUpdatePower(self)
@@ -118,8 +114,10 @@ local function style(self, unit, isRaidStyle)
 	Power:SetHeight(5)
 	Power:SetFrameLevel(Health:GetFrameLevel() + 2) -- above Health's sub-widgets
 	Power.colorPower = true
-	Power.GetDisplayPower = overrideDisplayPower
 	Power.displayAltPower = true -- needed for display override to work
+	Power.displayAltPowerOnly = true
+	Power.GetDisplayPower = overrideDisplayPower
+	Power.PostUpdate = postUpdatePower
 	self.Power = Power
 
 	-- update power whenever a player's role changes
