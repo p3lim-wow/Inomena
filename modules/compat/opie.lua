@@ -2,7 +2,7 @@ local addonName, addon = ...
 
 -- skin opie
 
-local CIRCLE_BORDER = addon.PATH .. 'circle'
+local CIRCLE_BORDER = addon.PATH .. 'circle.svg'
 local CIRCLE_MASK = [[Interface\CharacterFrame\TempPortraitAlphaMask]]
 
 local methods = {}
@@ -102,11 +102,11 @@ local function constructor(_, parent, size)
 	local OverlayFrame = Button:CreateFrame('Frame')
 	OverlayFrame:SetAllPoints()
 
-	local Border = OverlayFrame:CreateTexture('OVERLAY')
+	local Border = OverlayFrame:CreateGraphic('OVERLAY')
 	Border:ClearAllPoints()
 	Border:SetPoint('TOPLEFT', Icon, -1, 1)
 	Border:SetPoint('BOTTOMRIGHT', Icon, 1, -1)
-	Border:SetTexture(CIRCLE_BORDER)
+	Border:SetSVG(CIRCLE_BORDER)
 	Button.Border = Border
 
 	local Highlight = OverlayFrame:CreateTexture('OVERLAY')
