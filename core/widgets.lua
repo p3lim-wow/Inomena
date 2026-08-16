@@ -126,6 +126,15 @@ do
 end
 
 do
+	local createGraphic = CreateFrame('Frame').CreateVectorGraphics
+	function widgetMixin:CreateGraphic(layer, level)
+		local texture = createGraphic(self, nil, layer, nil, level)
+		addon:PixelPerfect(texture)
+		return texture
+	end
+end
+
+do
 	local textMixin = {}
 	function textMixin:SetFontSize(size)
 		self:SetFont(addon.FONT, size or 16, 'SLUG,OUTLINE')
