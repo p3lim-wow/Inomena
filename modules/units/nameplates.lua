@@ -25,6 +25,9 @@ local function updateOnAdded(self)
 		self:PauseElement('Auras')
 		self:PauseElement('Castbar')
 		return
+	elseif UnitIsPlayer(unit) and UnitReaction(unit, 'player') < 4 and not (GetPVPDesired() or IsPVPTimerRunning() or C_PvP.IsWarModeDesired()) then
+		self:PauseAllElements()
+		return
 	else
 		self:ResumeAllElements()
 		self.Name:Hide() -- we change this later
@@ -330,6 +333,7 @@ oUF:RegisterStyle(styleName, function(self)
 	self:RegisterEvent('UNIT_HEALTH', updateOnAdded) -- extra updates
 	self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', updateHealthColor)
 	self:RegisterEvent('UNIT_THREAT_LIST_UPDATE', updateHealthColor) -- unsure if needed
+	addon:RegisterUnitEvent('UNIT_FLAGS', 'player', GenerateFlatClosure(updateOnAdded, self))
 end)
 
 oUF:SetActiveStyle(styleName)
