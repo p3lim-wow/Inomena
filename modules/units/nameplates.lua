@@ -18,9 +18,6 @@ local function updateOnAdded(self)
 		self:PauseElement('Auras')
 		self:PauseElement('Castbar')
 		return
-	else
-		self.FriendlyName:Hide()
-		self.Name:Hide() -- we change this later
 	end
 
 	local isTarget = UnitIsUnit(unit, 'target')
@@ -33,55 +30,31 @@ local function updateOnAdded(self)
 
 	self:ResumeAllElements()
 
-	local fullSize = false
-	if IsInInstance() or UnitThreatSituation('player', unit) then
-		-- in instance or in combat with the player
-		fullSize = true
-	end
-
+	local fullSize = IsInInstance() or UnitThreatSituation('player', unit) or isTarget
 	local classification = UnitClassification(unit)
-	if classification == 'minus' then
+	if classification == 'minus' and not isTarget then
 		-- trivial mobs should be small unless targeted
 		fullSize = false
 	end
 
-	local auraOffset = 0
-	if isTarget then
-		fullSize = true
-		auraOffset = 3
+	local isQuest = C_QuestLog.UnitIsRelatedToActiveQuest(unit)
+	local isRare = classification == 'rare' or classification == 'rareelite'
+	self.Name:SetShown(isQuest or isRare or fullSize)
+	self.FriendlyName:Hide()
+	self.PetIcon:SetShown(UnitIsOtherPlayersPet(unit))
+	self.EliteIcon:SetShown(classification == 'elite' and not fullSize)
+	self.TargetOutline:SetShown(isTarget)
 
-		self.TargetOutline:Show()
-		updateOutlineAnchors(self)
-	else
-		self.TargetOutline:Hide()
-	end
-
+	local auraOffset = isTarget and 3 or 0
 	self.Buffs:SetPointsOffset(auraOffset, addon.SPACING + auraOffset)
 	self.Debuffs:SetPointsOffset(-auraOffset, addon.SPACING + auraOffset)
 	self.CrowdControl:SetPointsOffset(addon.SPACING + auraOffset, 0)
+	self.HealthValue:SetShown(fullSize)
+	self.Health:SetHeight(fullSize and 28 or 4)
 
-	if C_QuestLog.UnitIsRelatedToActiveQuest(unit) then
-		-- quest mobs always have name shown
-		self.Name:Show()
-	elseif classification == 'rare' or classification == 'rareelite' then
-		-- always show rare name
-		self.Name:Show()
+	if isTarget then
+		updateOutlineAnchors(self)
 	end
-
-	if fullSize then
-		self.Name:Show()
-		self.Health:SetHeight(28)
-		self.HealthValue:Show()
-	else
-		self.Health:SetHeight(4)
-		self.HealthValue:Hide()
-	end
-
-	self.PetIcon:SetShown(UnitIsOtherPlayersPet(unit))
-	self.EliteIcon:SetShown(classification == 'elite' and not fullSize)
-
-	self.Health:SetFrameLevel(4)
-	self.Name:SetFrameLevel(5)
 end
 
 local function updateOnRemoved(self)
