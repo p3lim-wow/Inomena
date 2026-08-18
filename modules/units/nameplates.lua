@@ -25,7 +25,9 @@ local function updateOnAdded(self)
 		self:PauseElement('Auras')
 		self:PauseElement('Castbar')
 		return
-	elseif UnitIsPlayer(unit) and UnitReaction(unit, 'player') < 4 and not (GetPVPDesired() or IsPVPTimerRunning() or C_PvP.IsWarModeDesired()) then
+	elseif (UnitIsPlayer(unit) or UnitIsOtherPlayersPet(unit)) and UnitReaction(unit, 'player') < 4 and not (GetPVPDesired() or IsPVPTimerRunning() or C_PvP.IsWarModeDesired()) then
+		-- "hide" nameplates for players (and pets) that have PvP enabled when the player doesn't
+		-- (this is something Blizzard should handle tbh)
 		self:PauseAllElements()
 		return
 	else
