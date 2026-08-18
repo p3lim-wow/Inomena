@@ -114,6 +114,12 @@ local function updateBuffFilters(element)
 	element:SetAuraGroupCandidateFilters(element.buffsGroup, {
 		excludeDispelTypes = dispelTypes
 	})
+
+	if UnitIsPlayer(element.__owner.__unit) or UnitCanAssist('player', element.__owner.__unit) then
+		element:SetAuraGroupMaxFrameCount(element.buffsGroup, 3)
+	else
+		element:SetAuraGroupMaxFrameCount(element.buffsGroup, 20)
+	end
 end
 
 local styleName = addon.unitPrefix .. 'NamePlates'
@@ -222,6 +228,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Buffs.showCount = true
 	Buffs.size = 28
 	Buffs.PostCreateButton = addon.unitShared.PostCreateAura
+	Buffs.PostUpdate = updateBuffFilters
 	Buffs.dispelGroup = Buffs:AddGroup('HELPFUL', {
 		showCustomBuffBorder = true,
 		size = 40, -- emphasize!
