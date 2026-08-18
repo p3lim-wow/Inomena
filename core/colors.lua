@@ -4,6 +4,13 @@ local _, addon = ...
 
 addon.colors = {}
 
+addon.colors.white = addon:CreateColor(1, 1, 1)
+addon.colors.grey = addon:CreateColor(127, 127, 127)
+addon.colors.red = addon:CreateColor(240, 25, 25)
+addon.colors.blue = addon:CreateColor(0, 144, 255)
+addon.colors.yellow = addon:CreateColor(253, 219, 0)
+addon.colors.magenta = addon:CreateColor(230, 95, 232)
+
 -- inject colors from existing sources
 
 addon.colors.class = {}
@@ -33,7 +40,7 @@ for powerToken, color in next, PowerBarColor do
 end
 
 -- replace some of the colors I don't agree with
-addon.colors.power[Enum.PowerType.Mana] = addon:CreateColor(0, 144, 255)
+addon.colors.power[Enum.PowerType.Mana] = addon.colors.blue
 addon.colors.power[Enum.PowerType.ArcaneCharges] = addon:CreateColor(186, 77, 188)
 addon.colors.power[Enum.PowerType.SoulShards] = addon:CreateColor(135, 136, 238)
 
@@ -46,11 +53,9 @@ addon.colors.power[Enum.PowerType.RuneUnholy] = addon:CreateColor(173, 235, 66)
 addon.colors.faction = {}
 addon.colors.faction.Alliance = addon:CreateColor(PLAYER_FACTION_COLOR_ALLIANCE:GetRGB())
 addon.colors.faction.Horde = addon:CreateColor(PLAYER_FACTION_COLOR_HORDE:GetRGB())
-addon.colors.faction.Neutral = addon:CreateColor(1, 1, 1)
+addon.colors.faction.Neutral = addon.colors.white
 
 -- custom colors
-
-addon.colors.white = addon:CreateColor(1, 1, 1)
 
 addon.colors.healing = addon:CreateColor(140, 255, 46, 0.5)
 addon.colors.absorb = addon:CreateColor(67, 235, 231)
@@ -88,12 +93,12 @@ addon.colors.creature = {
 }
 
 addon.colors.cast = {
-	importantshielded = addon:CreateColor(230, 95, 232),
-	shielded = addon:CreateColor(132, 132, 132),
+	importantshielded = addon.colors.magenta,
+	shielded = addon.colors.grey,
 	important = addon:CreateColor(252, 89, 0),
-	normal = addon:CreateColor(253, 219, 0),
+	normal = addon.colors.yellow,
 	interrupted = addon:CreateColor(76, 76, 76),
-	global = addon:CreateColor(0, 127, 255),
+	global = addon.colors.blue,
 }
 
 addon.colors.chat = { -- only the ones we override
@@ -109,12 +114,12 @@ addon.colors.chat = { -- only the ones we override
 }
 
 addon.colors.chatTab = {
-	alert = addon:CreateColor(1, 0, 0),
-	hover = addon:CreateColor(0, 153, 255),
-	active = addon:CreateColor(1, 1, 1),
-	inactive = addon:CreateColor(127, 127, 127),
+	alert = addon.colors.red,
+	hover = addon.colors.blue,
+	active = addon.colors.white,
+	inactive = addon.colors.grey,
 }
 
 addon.colors.tooltip = {
-	greyed = addon:CreateColor(127, 127, 127),
+	greyed = addon.colors.grey,
 }
