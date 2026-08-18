@@ -174,10 +174,10 @@ tags.Methods['inomena:quest'] = function(unit)
 	end
 end
 
-tags.Events['inomena:away'] = 'PLAYER_FLAGS_CHANGED'
-tags.Methods['inomena:away'] = function(unit)
+tags.Events['inomena:afk'] = 'PLAYER_FLAGS_CHANGED'
+tags.Methods['inomena:afk'] = function(unit)
 	local isAFK = UnitIsAFK(unit)
-	return not issecretvalue(isAFK) and isAFK and ('<' .. AFK .. '>') or ''
+	return not issecretvalue(isAFK) and isAFK and '|A:activities-clock-standard:0:0:0:0|a' or ''
 end
 
 -- unitless events
