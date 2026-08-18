@@ -4,6 +4,7 @@ local tags = oUF.Tags
 
 local SYMBOL_PERC = addon.colors.blue:WrapTextInColorCode('%')
 local SYMBOL_DIV = addon.colors.blue:WrapTextInColorCode('/')
+local SYMBOL_LEADER = addon.colors.yellow:WrapTextInColorCode('!')
 
 tags.Events['inomena:absorb'] = 'UNIT_ABSORB_AMOUNT_CHANGED'
 tags.Methods['inomena:absorb'] = function(unit)
@@ -81,12 +82,6 @@ tags.Methods['inomena:reactioncolor'] = function(unit)
 	return addon.colors.white:GenerateHexColorMarkup()
 end
 
-tags.Events['inomena:name'] = 'UNIT_NAME_UPDATE'
-tags.Methods['inomena:name'] = function(unit)
-	-- using unmodified name so toys and whatnot don't mask the unit
-	return UnitNameUnmodified(unit)
-end
-
 tags.Events['inomena:classificationcolor'] = 'UNIT_NAME_UPDATE UNIT_CLASSIFICATION_CHANGED'
 tags.Methods['inomena:classificationcolor'] = function(unit)
 	local color = addon.colors.classification[UnitClassification(unit) or 0]
@@ -121,10 +116,16 @@ tags.Methods['inomena:nameplatecolor'] = function(unit)
 	return _TAGS['inomena:classificationcolor'](unit)
 end
 
+tags.Events['inomena:name'] = 'UNIT_NAME_UPDATE'
+tags.Methods['inomena:name'] = function(unit)
+	-- using unmodified name so toys and whatnot don't mask the unit
+	return UnitNameUnmodified(unit)
+end
+
 tags.Events['inomena:leader'] = 'PARTY_LEADER_CHANGED'
 tags.Methods['inomena:leader'] = function(unit)
 	if UnitIsGroupLeader(unit) then
-		return addon.colors.yellow:WrapTextInColorCode('!')
+		return SYMBOL_LEADER
 	end
 end
 
