@@ -201,6 +201,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Name:SetPoint('LEFT', Health, 4, -1)
 	Name:SetPoint('RIGHT', HealthValue, 'LEFT', 1, 0)
 	Name:SetJustifyH('LEFT')
+	Name:SetFrameLevel(10)
 	Name:SetSmoothScaling(true)
 	self.Name = Name
 	self:Tag(Name, '[inomena:quest][inomena:nameplatecolor][inomena:name<$|r]')
