@@ -2,6 +2,9 @@ local _, addon = ...
 local oUF = addon.oUF
 local tags = oUF.Tags
 
+local SYMBOL_PERC = addon.colors.blue:WrapTextInColorCode('%')
+local SYMBOL_DIV = addon.colors.blue:WrapTextInColorCode('/')
+
 tags.Events['inomena:absorb'] = 'UNIT_ABSORB_AMOUNT_CHANGED'
 tags.Methods['inomena:absorb'] = function(unit)
 	if not UnitIsDeadOrGhost(unit) then
@@ -36,9 +39,9 @@ tags.Events['inomena:hptarget'] = 'UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PL
 tags.Methods['inomena:hptarget'] = function(unit)
 	if not UnitIsDeadOrGhost(unit) or not UnitIsConnected(unit) then
 		if UnitCanAttack('player', unit) then
-			return C_StringUtil.WrapString(_TAGS['inomena:hpper'](unit), '(', '|cff0090ff%|r)')
+			return C_StringUtil.WrapString(_TAGS['inomena:hpper'](unit), '(', SYMBOL_PERC .. ')')
 		else
-			return C_StringUtil.WrapString(addon:AbbreviateNumbers(UnitHealthMax(unit)), '|cff0090ff/|r ')
+			return C_StringUtil.WrapString(addon:AbbreviateNumbers(UnitHealthMax(unit)), SYMBOL_DIV .. ' ')
 		end
 	end
 end
@@ -83,17 +86,8 @@ end
 
 tags.Events['inomena:classificationcolor'] = 'UNIT_NAME_UPDATE UNIT_CLASSIFICATION_CHANGED'
 tags.Methods['inomena:classificationcolor'] = function(unit)
-	local classification = UnitClassification(unit)
-	if classification == 'rare' then
-		return '|cff0090ff'
-	elseif classification == 'rareelite' then
-		return '|cffe65fe8'
-	elseif classification == 'elite' or classification == 'worldboss' then
-		return '|cffffff00'
-	elseif classification == 'trivial' or classification == 'minus' then
-		return '|cff848484'
-	end
-	return '|cffffffff'
+	local color = addon.colors.classification[UnitClassification(unit) or 0]
+	return color and color:GenerateHexColorMarkup()
 end
 
 tags.Events['inomena:nameplatecolor'] = 'UNIT_NAME_UPDATE UNIT_CLASSIFICATION_CHANGED'
@@ -129,7 +123,7 @@ end
 tags.Events['inomena:leader'] = 'PARTY_LEADER_CHANGED'
 tags.Methods['inomena:leader'] = function(unit)
 	if UnitIsGroupLeader(unit) then
-		return '|cffffff00!|r'
+		return addon.colors.yellow:WrapTextInColorCode('!')
 	end
 end
 

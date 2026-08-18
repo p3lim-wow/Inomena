@@ -92,6 +92,13 @@ addon.colors.creature = {
 	trivial = addon:CreateColor(211, 211, 211),
 }
 
+addon.colors.classification = {
+	worldboss = addon.colors.red,
+	rare = addon.colors.blue,
+	elite = addon.colors.yellow,
+	rareelite = addon.colors.magenta,
+}
+
 addon.colors.cast = {
 	importantshielded = addon.colors.magenta,
 	shielded = addon.colors.grey,
