@@ -15,11 +15,8 @@ end
 local function updateOnAdded(self)
 	local unit = self.__unit
 	if not UnitCanAttack('player', unit) then
-		-- name-only
-		self.Name:ClearAllPoints()
-		self.Name:SetPoint('CENTER')
-		self.Name:SetJustifyH('CENTER')
-		self.Name:Show()
+		self.FriendlyName:Show()
+		self.Name:Hide()
 
 		-- pause elements to hide them
 		self:PauseElement('Health')
@@ -27,10 +24,7 @@ local function updateOnAdded(self)
 		self:PauseElement('Castbar')
 		return
 	else
-		self.Name:ClearAllPoints()
-		self.Name:SetPoint('LEFT', self.Health, 4, -1)
-		self.Name:SetPoint('RIGHT', self.HealthValue, 'LEFT', 1, 0)
-		self.Name:SetJustifyH('LEFT')
+		self.FriendlyName:Hide()
 		self.Name:Hide() -- we change this later
 	end
 
@@ -213,15 +207,20 @@ oUF:RegisterStyle(styleName, function(self)
 	self:RegisterEvent('UPDATE_MOUSEOVER_UNIT', updateHighlight, true)
 	self:RegisterEvent('WORLD_CURSOR_TOOLTIP_UPDATE', updateHighlight, true)
 
-	local Name = self:CreateText(14)
+	local Name = Health:CreateText(14)
 	Name:SetPoint('LEFT', Health, 4, -1)
 	Name:SetPoint('RIGHT', HealthValue, 'LEFT', 1, 0)
 	Name:SetJustifyH('LEFT')
-	Name:SetWordWrap(false)
 	Name:SetSmoothScaling(true)
-	Name:GetParent():SetFrameLevel(20) -- above everything else
 	self.Name = Name
-	self:Tag(Name, '[inomena:quest]|cffffce18[inomena:away]|r[inomena:nameplatecolor][inomena:name<$|r]')
+	self:Tag(Name, '[inomena:quest][inomena:nameplatecolor][inomena:name<$|r]')
+
+	local FriendlyName = self:CreateText(14)
+	FriendlyName:SetPoint('CENTER')
+	FriendlyName:SetJustifyH('CENTER')
+	FriendlyName:SetSmoothScaling(true)
+	self.FriendlyName = FriendlyName
+	self:Tag(FriendlyName, '[inomena:away][inomena:reactioncolor][inomena:name<$|r]')
 
 	local RaidIcon = HealthValue:GetParent():CreateTexture('OVERLAY') -- higher parent
 	RaidIcon:SetPoint('CENTER', Health, 'TOP', 0, addon.SPACING)
