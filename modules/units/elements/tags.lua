@@ -90,7 +90,7 @@ tags.Methods['inomena:classificationcolor'] = function(unit)
 	return color and color:GenerateHexColorMarkup()
 end
 
-tags.Events['inomena:nameplatecolor'] = 'UNIT_NAME_UPDATE UNIT_CLASSIFICATION_CHANGED'
+tags.Events['inomena:nameplatecolor'] = 'UNIT_NAME_UPDATE UNIT_FACTION UNIT_CLASSIFICATION_CHANGED'
 tags.Methods['inomena:nameplatecolor'] = function(unit)
 	if addon:IsInDungeon() and not addon:IsInRaid() then
 		local classification = UnitClassification(unit)
@@ -113,11 +113,9 @@ tags.Methods['inomena:nameplatecolor'] = function(unit)
 		else
 			return addon.colors.creature.trivial:GenerateHexColorMarkup()
 		end
-	elseif UnitIsTapDenied(unit) then
-		return _COLORS.tapped:GenerateHexColorMarkup()
-	else
-		return _TAGS['inomena:classificationcolor'](unit)
 	end
+
+	return _TAGS['inomena:classificationcolor'](unit)
 end
 
 tags.Events['inomena:leader'] = 'PARTY_LEADER_CHANGED'
