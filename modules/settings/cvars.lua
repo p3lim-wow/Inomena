@@ -94,7 +94,9 @@ local CVARS = { -- exposed settings from the interface options
 
 	-- Gameplay Nameplates (the settings for names, not nameplates)
 	UnitNameOwn = 0, -- (default)
+	UnitNameNPC = 0,
 	UnitNameHostleNPC = 0,
+	UnitNameFriendlySpecialNPCName = 1,
 	ShowQuestUnitCircles = 0,
 	UnitNameNonCombatCreatureName = 0, -- (default)
 	UnitNameFriendlyPlayerName = 1, -- (default)
