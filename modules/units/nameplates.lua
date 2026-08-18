@@ -367,48 +367,13 @@ nameplates:SetCVars({
 		[Enum.NamePlateStackType.Enemy] = true,
 		[Enum.NamePlateStackType.Friendly] = false,
 	},
-	nameplateSize = 2,
+
+	-- most of the remaining settings only affect the visibility of default nameplate
+	-- elements, which have no effect in oUF, but we'll manage the settings that do
+	nameplateSize = Enum.NamePlateSize.Medium,
+	nameplateStyle = Enum.NamePlateStyle.Modern,
 	nameplateAuraScale = 0.70, -- can't go lower, higher increases nameplate vertical offset
-	nameplateStyle = 0,
-	nameplateInfoDisplay = {
-		[Enum.NamePlateInfoDisplay.CurrentHealthPercent] = false,
-		[Enum.NamePlateInfoDisplay.CurrentHealthValue] = false,
-		[Enum.NamePlateInfoDisplay.RarityIcon] = false,
-	},
-	nameplateCastBarDisplay = {
-		[Enum.NamePlateCastBarDisplay.SpellName] = false,
-		[Enum.NamePlateCastBarDisplay.SpellIcon] = false,
-		[Enum.NamePlateCastBarDisplay.SpellTarget] = false,
-		[Enum.NamePlateCastBarDisplay.HighlightImportantCasts] = false,
-		[Enum.NamePlateCastBarDisplay.HighlightWhenCastTarget] = false,
-	},
-	nameplateThreatDisplay = {
-		[Enum.NamePlateThreatDisplay.Progressive] = false,
-		[Enum.NamePlateThreatDisplay.Flash] = false,
-		[Enum.NamePlateThreatDisplay.HealthBarColor] = false,
-	},
-	nameplateEnemyNpcAuraDisplay = {
-		[Enum.NamePlateEnemyNpcAuraDisplay.Buffs] = false,
-		[Enum.NamePlateEnemyNpcAuraDisplay.Debuffs] = false,
-		[Enum.NamePlateEnemyNpcAuraDisplay.CrowdControl] = false,
-	},
-	nameplateEnemyPlayerAuraDisplay = {
-		[Enum.NamePlateEnemyPlayerAuraDisplay.Buffs] = false,
-		[Enum.NamePlateEnemyPlayerAuraDisplay.Debuffs] = false,
-		[Enum.NamePlateEnemyPlayerAuraDisplay.LossOfControl] = false,
-	},
-	nameplateFriendlyPlayerAuraDisplay = {
-		[Enum.NamePlateFriendlyPlayerAuraDisplay.Buffs] = false,
-		[Enum.NamePlateFriendlyPlayerAuraDisplay.Debuffs] = false,
-		[Enum.NamePlateFriendlyPlayerAuraDisplay.LossOfControl] = false,
-	},
-	nameplateDebuffPadding = 0,
-	nameplateSimplifiedTypes = {
-		[Enum.NamePlateSimplifiedType.Minion] = false,
-		[Enum.NamePlateSimplifiedType.MinusMob] = false,
-		[Enum.NamePlateSimplifiedType.FriendlyPlayer] = false,
-		[Enum.NamePlateSimplifiedType.FriendlyNpc] = false,
-	},
+	nameplateDebuffPadding = 0, -- this messes with offsets
 
 	-- hidden cvars
 	nameplatePlayRemovalAnimation = 0,
