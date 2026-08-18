@@ -14,27 +14,35 @@ end
 
 local function updateOnAdded(self)
 	local unit = self.__unit
-
 	if not UnitCanAttack('player', unit) then
-		self.Name:Hide()
-		self.FriendlyName:Show()
-		self.PetIcon:Hide()
+		-- name-only
+		self.Name:ClearAllPoints()
+		self.Name:SetPoint('CENTER')
+		self.Name:SetJustifyH('CENTER')
+		self.Name:Show()
 
-		-- pause elements since they're not in use
+		-- pause elements to hide them
 		self:PauseElement('Health')
 		self:PauseElement('Auras')
 		self:PauseElement('Castbar')
 		return
-	elseif (UnitIsPlayer(unit) or UnitIsOtherPlayersPet(unit)) and UnitReaction(unit, 'player') < 4 and not (GetPVPDesired() or IsPVPTimerRunning() or C_PvP.IsWarModeDesired()) then
+	else
+		self.Name:ClearAllPoints()
+		self.Name:SetPoint('LEFT', self.Health, 4, -1)
+		self.Name:SetPoint('RIGHT', self.HealthValue, 'LEFT', 1, 0)
+		self.Name:SetJustifyH('LEFT')
+		self.Name:Hide() -- we change this later
+	end
+
+	local isTarget = UnitIsUnit(unit, 'target')
+	if (UnitIsPlayer(unit) or UnitIsOtherPlayersPet(unit)) and UnitReaction(unit, 'player') < 4 and not (GetPVPDesired() or IsPVPTimerRunning() or C_PvP.IsWarModeDesired()) and not isTarget then
 		-- "hide" nameplates for players (and pets) that have PvP enabled when the player doesn't
 		-- (this is something Blizzard should handle tbh)
 		self:PauseAllElements()
 		return
-	else
-		self:ResumeAllElements()
-		self.Name:Hide() -- we change this later
-		self.FriendlyName:Hide()
 	end
+
+	self:ResumeAllElements()
 
 	local fullSize = false
 	if IsInInstance() or UnitThreatSituation('player', unit) then
@@ -48,7 +56,7 @@ local function updateOnAdded(self)
 		fullSize = false
 	end
 
-	if C_Secrets.CanCompareUnitTokens(unit, 'target') and UnitIsUnit(unit, 'target') then
+	if isTarget then
 		fullSize = true
 
 		self.TargetOutline:Show()
@@ -205,21 +213,15 @@ oUF:RegisterStyle(styleName, function(self)
 	self:RegisterEvent('UPDATE_MOUSEOVER_UNIT', updateHighlight, true)
 	self:RegisterEvent('WORLD_CURSOR_TOOLTIP_UPDATE', updateHighlight, true)
 
-	local Name = Health:CreateText(14)
+	local Name = self:CreateText(14)
 	Name:SetPoint('LEFT', Health, 4, -1)
 	Name:SetPoint('RIGHT', HealthValue, 'LEFT', 1, 0)
 	Name:SetJustifyH('LEFT')
 	Name:SetWordWrap(false)
 	Name:SetSmoothScaling(true)
+	Name:GetParent():SetFrameLevel(20) -- above everything else
 	self.Name = Name
-	self:Tag(Name, '[inomena:quest][inomena:nameplatecolor][inomena:name<$|r]')
-
-	local FriendlyName = self:CreateText(14)
-	FriendlyName:SetPoint('CENTER')
-	FriendlyName:SetJustifyH('CENTER')
-	FriendlyName:SetSmoothScaling(true)
-	self.FriendlyName = FriendlyName
-	self:Tag(FriendlyName, '|cffffce18[inomena:away]|r[inomena:reactioncolor][inomena:name<$|r]')
+	self:Tag(Name, '[inomena:quest]|cffffce18[inomena:away]|r[inomena:nameplatecolor][inomena:name<$|r]')
 
 	local RaidIcon = HealthValue:GetParent():CreateTexture('OVERLAY') -- higher parent
 	RaidIcon:SetPoint('CENTER', Health, 'TOP', 0, addon.SPACING)
