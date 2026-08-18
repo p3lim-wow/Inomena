@@ -53,8 +53,14 @@ local function updateOnAdded(self)
 	if isTarget then
 		fullSize = true
 
+		self.Buffs:SetPointsOffset(3, addon.SPACING + 3)
+		self.Debuffs:SetPointsOffset(-3, addon.SPACING + 3)
+		self.CrowdControl:SetPointsOffset(addon.SPACING + 3, 0)
 		self.TargetOutline:Show()
 	else
+		self.Buffs:SetPointsOffset(0, addon.SPACING)
+		self.Debuffs:SetPointsOffset(0, addon.SPACING)
+		self.CrowdControl:SetPointsOffset(addon.SPACING, 0)
 		self.TargetOutline:Hide()
 	end
 
@@ -259,6 +265,7 @@ oUF:RegisterStyle(styleName, function(self)
 		size = 40, -- emphasize!
 	})
 	Buffs.buffsGroup = Buffs:AddGroup('HELPFUL')
+	self.Buffs = Buffs
 
 	-- modify candidate filters based on dispel spells the player knows
 	self:RegisterEvent('SPELLS_CHANGED', GenerateFlatClosure(updateBuffFilters, Buffs), true)
@@ -279,6 +286,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Debuffs.size = 30
 	Debuffs.PostCreateButton = addon.unitShared.PostCreateAura
 	Debuffs:AddGroup('HARMFUL|PLAYER|!CROWD_CONTROL')
+	self.Debuffs = Debuffs
 
 	local CrowdControl = self:CreateAuras({
 		growthX = 'RIGHT',
@@ -297,6 +305,7 @@ oUF:RegisterStyle(styleName, function(self)
 	CrowdControl:AddGroup('HARMFUL|CROWD_CONTROL', {
 		hideDebuffBorder = true,
 	})
+	self.CrowdControl = CrowdControl
 
 	local Castbar = Health:CreateBackdropStatusBar()
 	Castbar:SetPoint('TOPLEFT', Health, 'BOTTOMLEFT', 0, -1)
