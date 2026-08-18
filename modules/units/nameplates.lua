@@ -52,6 +52,7 @@ local function updateOnAdded(self)
 		self.Debuffs:SetPointsOffset(-3, addon.SPACING + 3)
 		self.CrowdControl:SetPointsOffset(addon.SPACING + 3, 0)
 		self.TargetOutline:Show()
+		updateOutlineAnchors(self)
 	else
 		self.Buffs:SetPointsOffset(0, addon.SPACING)
 		self.Debuffs:SetPointsOffset(0, addon.SPACING)
@@ -75,8 +76,6 @@ local function updateOnAdded(self)
 		self.Health:SetHeight(4)
 		self.HealthValue:Hide()
 	end
-
-	updateOutlineAnchors(self)
 
 	self.PetIcon:SetShown(UnitIsOtherPlayersPet(unit))
 	self.EliteIcon:SetShown(classification == 'elite' and not fullSize)
