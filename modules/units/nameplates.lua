@@ -7,6 +7,12 @@ local function updateOutlineAnchors(self)
 	self.TargetOutline.edges.Bottom:SetPoint('TOP', relative, 'BOTTOM')
 end
 
+local function isInvalidPvPUnit(unit)
+	return (UnitIsPlayer(unit) or UnitIsOtherPlayersPet(unit))
+		and UnitReaction(unit, 'player') < 4
+		and not (GetPVPDesired() or IsPVPTimerRunning() or C_PvP.IsWarModeDesired())
+end
+
 local function updateOnAdded(self)
 	local unit = self.__unit
 	if not UnitCanAttack('player', unit) then
@@ -21,8 +27,8 @@ local function updateOnAdded(self)
 	end
 
 	local isTarget = UnitIsUnit(unit, 'target')
-	if (UnitIsPlayer(unit) or UnitIsOtherPlayersPet(unit)) and UnitReaction(unit, 'player') < 4 and not (GetPVPDesired() or IsPVPTimerRunning() or C_PvP.IsWarModeDesired()) and not isTarget then
-		-- "hide" nameplates for players (and pets) that have PvP enabled when the player doesn't
+	if not isTarget and isInvalidPvPUnit(unit) then
+		-- "hide" nameplates for units with PvP enabled when the player doesn't
 		-- (this is something Blizzard should handle tbh)
 		self:PauseAllElements()
 		return
