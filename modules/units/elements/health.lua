@@ -9,7 +9,11 @@ function addon.unitShared.UpdateColorHealth(self, _, unit)
 	if UnitIsPlayer(unit) or UnitTreatAsPlayerForDisplay(unit) then
 		local _, classToken = UnitClass(unit)
 		if classToken ~= nil then
-			color = C_ClassColor.GetClassColor(classToken)
+			if issecretvalue(classToken) then
+				color = C_ClassColor.GetClassColor(classToken)
+			else
+				color = self.colors.class[classToken]
+			end
 		end
 	end
 
