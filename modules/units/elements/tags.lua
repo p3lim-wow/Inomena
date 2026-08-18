@@ -53,30 +53,32 @@ tags.Methods['inomena:power'] = function(unit)
 	end
 end
 
-tags.Events['inomena:reactioncolor'] = 'UNIT_FACTION UNIT_CONNECTION UNIT_NAME_UPDATE PLAYER_FLAGS_CHANGED PARTY_MEMBER_ENABLE PARTY_MEMBER_DISABLE'
-tags.Methods['inomena:reactioncolor'] = function(unit)
-	local reaction = UnitReaction(unit, 'player')
-	if UnitIsTapDenied(unit) or not UnitIsConnected(unit) then
-		return '|cff999999'
-	elseif UnitIsPlayer(unit) or UnitTreatAsPlayerForDisplay(unit) then
-		local color
+tags.Methods['inomena:playercolor'] = function(unit)
+	if UnitIsPlayer(unit) or UnitTreatAsPlayerForDisplay(unit) then
 		local _, classToken = UnitClass(unit)
 		if classToken ~= nil then
-			color = C_ClassColor.GetClassColor(classToken)
+			return C_ClassColor.GetClassColor(classToken):GenerateHexColorMarkup()
 		end
-
-		if color == nil then
-			color = addon.colors.white
-		end
-
-		return color:GenerateHexColorMarkup()
-	elseif not UnitIsPlayer(unit) and reaction then
-		return addon.colors.reaction[reaction] and Hex(addon.colors.reaction[reaction])
-	elseif UnitFactionGroup(unit) and UnitIsEnemy(unit, 'player') and UnitIsPVP(unit) then
-		return '|cffff0000'
-	else
-		return '|cffffffff'
 	end
+end
+
+tags.Events['inomena:reactioncolor'] = 'UNIT_FACTION UNIT_CONNECTION UNIT_NAME_UPDATE PLAYER_FLAGS_CHANGED PARTY_MEMBER_ENABLE PARTY_MEMBER_DISABLE'
+tags.Methods['inomena:reactioncolor'] = function(unit)
+	if UnitIsTapDenied(unit) or not UnitIsConnected(unit) then
+		return _COLORS.tapped:GenerateHexColorMarkup()
+	end
+
+	local color = _TAGS['inomena:playercolor'](unit)
+	if color then
+		return color
+	end
+
+	local reaction = UnitReaction(unit, 'player')
+	if reaction then
+		return addon.colors.reaction[reaction] and Hex(addon.colors.reaction[reaction])
+	end
+
+	return addon.colors.white:GenerateHexColorMarkup()
 end
 
 tags.Events['inomena:name'] = 'UNIT_NAME_UPDATE'
