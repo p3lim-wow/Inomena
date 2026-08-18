@@ -37,6 +37,14 @@ local function updateOnAdded(self)
 		fullSize = false
 	end
 
+	if addon:IsInDungeon() and not isTarget then
+		local reaction = UnitReaction('player', unit)
+		if reaction and reaction == 4 then
+			-- neutral mobs should be small unless targeted
+			fullSize = false
+		end
+	end
+
 	local isQuest = C_QuestLog.UnitIsRelatedToActiveQuest(unit)
 	local isRare = classification == 'rare' or classification == 'rareelite'
 	self.Name:SetShown(isQuest or isRare or fullSize)
@@ -58,7 +66,6 @@ local function updateOnAdded(self)
 end
 
 local function updateOnRemoved(self)
-	 -- reset highlight
 	self.Highlight:Hide()
 end
 
@@ -78,16 +85,13 @@ end
 
 local function updateHealthColor(self, event, unit)
 	if event == 'PLAYER_FOCUS_CHANGED' then
-		-- it's unitless
 		unit = self.__unit
-	end
-
-	if not unit or self.__unit ~= unit then
+	elseif not unit or unit ~= self.__unit then
 		return
 	end
 
-	local color
 	if addon:IsInDungeon() then
+		local color
 		local groupRole = UnitGroupRolesAssignedEnum('player')
 		if groupRole >= 0 then -- no role = -1, missing enum value
 			local threatStatus = UnitThreatSituation('player', unit)
@@ -95,11 +99,17 @@ local function updateHealthColor(self, event, unit)
 		end
 
 		if not color then
+			local reaction = UnitReaction('player', unit)
+			if reaction and reaction == 4 then
+				-- color neutral mobs differently
+				color = addon.colors.grey
+			end
+		end
+
+		if not color then
 			color = addon.colors.nameplate
 		end
-	end
 
-	if color then
 		self.Health:SetStatusBarColor(color:GetRGB())
 	else
 		addon.unitShared.UpdateColorHealth(self, event, unit)
