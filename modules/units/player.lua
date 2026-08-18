@@ -136,12 +136,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Debuffs.tooltipOffsetX = -1
 	Debuffs.tooltipOffsetY = 3
 	Debuffs.PostCreateButton = addon.unitShared.PostCreateAura
-	Debuffs:AddGroup('HARMFUL|CROWD_CONTROL', {
-		size = self:GetHeight() * 2, -- emphasize!
-		centerCooldownText = true, -- custom option
-		cooldownTextSize = 24, -- custom option
-	})
-	Debuffs:AddGroup('HARMFUL|!CROWD_CONTROL')
+	Debuffs:AddGroup('HARMFUL')
 
 	addon.unitShared.CreateDispelOverlay(self, true)
 
