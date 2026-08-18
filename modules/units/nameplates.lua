@@ -78,6 +78,7 @@ local function updateOnAdded(self)
 	updateOutlineAnchors(self)
 
 	self.PetIcon:SetShown(UnitIsOtherPlayersPet(unit))
+	self.EliteIcon:SetShown(classification == 'elite' and not fullSize)
 
 	self.Health:SetFrameLevel(4)
 	self.Name:SetFrameLevel(5)
@@ -232,6 +233,12 @@ oUF:RegisterStyle(styleName, function(self)
 	PetIcon:SetAtlas('wildbattlepetcapturable')
 	PetIcon:SetSize(12, 12)
 	self.PetIcon = PetIcon
+
+	local EliteIcon = HealthValue:GetParent():CreateTexture('OVERLAY') -- higher parent
+	EliteIcon:SetPoint('CENTER', Health)
+	EliteIcon:SetAtlas('Islands-AzeriteBoss')
+	EliteIcon:SetSize(30, 30)
+	self.EliteIcon = EliteIcon
 
 	local Buffs = self:CreateAuras({
 		layoutLimit = 95, -- will fit 2 emphasized or 3 non-emphasized
