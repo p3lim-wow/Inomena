@@ -81,6 +81,7 @@ end
 
 tags.Events['inomena:name'] = 'UNIT_NAME_UPDATE'
 tags.Methods['inomena:name'] = function(unit)
+	-- using unmodified name so toys and whatnot don't mask the unit
 	return UnitNameUnmodified(unit)
 end
 
