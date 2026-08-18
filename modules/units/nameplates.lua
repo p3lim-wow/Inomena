@@ -355,6 +355,9 @@ nameplates:SetCVars({
 	nameplateShowEnemyMinus = 1,
 	-- nameplateShowFriendlyPlayers = 0,
 	nameplateShowFriendlyPlayerMinions = 0,
+	nameplateShowOnlyNameForFriendlyPlayerUnits = 1,
+	nameplateUseClassColorForFriendlyPlayerUnitNames = 1,
+	nameplateShowFriendlyRealmName = 0,
 	nameplateShowFriendlyNpcs = 0,
 	nameplateShowOffscreen = 0,
 	nameplateStackingTypes = {
@@ -405,9 +408,6 @@ nameplates:SetCVars({
 	},
 
 	-- hidden cvars
-	nameplateShowOnlyNameForFriendlyPlayerUnits = 1, -- for friendly nameplates in dungeons
-	nameplateUseClassColorForFriendlyPlayerUnitNames = 1, -- for friendly nameplates in dungeons
-	nameplateShowFriendlyRealmName = 0, -- for friendly nameplates in dungeons
 	nameplatePlayRemovalAnimation = 0,
 })
 
