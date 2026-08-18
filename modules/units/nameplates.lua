@@ -45,20 +45,20 @@ local function updateOnAdded(self)
 		fullSize = false
 	end
 
+	local auraOffset = 0
 	if isTarget then
 		fullSize = true
+		auraOffset = 3
 
-		self.Buffs:SetPointsOffset(3, addon.SPACING + 3)
-		self.Debuffs:SetPointsOffset(-3, addon.SPACING + 3)
-		self.CrowdControl:SetPointsOffset(addon.SPACING + 3, 0)
 		self.TargetOutline:Show()
 		updateOutlineAnchors(self)
 	else
-		self.Buffs:SetPointsOffset(0, addon.SPACING)
-		self.Debuffs:SetPointsOffset(0, addon.SPACING)
-		self.CrowdControl:SetPointsOffset(addon.SPACING, 0)
 		self.TargetOutline:Hide()
 	end
+
+	self.Buffs:SetPointsOffset(auraOffset, addon.SPACING + auraOffset)
+	self.Debuffs:SetPointsOffset(-auraOffset, addon.SPACING + auraOffset)
+	self.CrowdControl:SetPointsOffset(addon.SPACING + auraOffset, 0)
 
 	if C_QuestLog.UnitIsRelatedToActiveQuest(unit) then
 		-- quest mobs always have name shown
