@@ -328,6 +328,7 @@ oUF:RegisterStyle(styleName, function(self)
 	CastbarText:SetJustifyH('CENTER')
 	CastbarText:SetFrameLevel(10)
 	CastbarText:SetSmoothScaling(true)
+	CastbarText:GetParent():SetClipsChildren(true)
 	Castbar.Text = CastbarText
 
 	local TargetOutline = addon:CreateOutline(Health)
