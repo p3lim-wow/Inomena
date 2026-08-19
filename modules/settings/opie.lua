@@ -360,7 +360,6 @@ addon.RINGS = addon:T({
 
 		-- most convenient rings first
 		{'ring', 'CommonHearth', fastClick=true, rotationMode='shuffle'},
-		{'opie.ext', 'mythport', show='[mythport]'}, -- dynamic Hero's Path teleport
 
 		-- continent/expansion specific rings
 		{'ring', addonName .. 'Teleport12'},
