@@ -351,6 +351,7 @@ oUF:SetActiveStyle(styleName)
 local nameplates = oUF:SpawnNamePlates()
 nameplates:SetAddedCallback(updateOnAdded)
 nameplates:SetRemovedCallback(updateOnRemoved)
+nameplates:SetSize(200, 50) -- extra height for spacing
 nameplates:SetFriendlyInteractible(false)
 
 nameplates:SetCVars({
