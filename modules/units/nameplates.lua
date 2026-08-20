@@ -152,7 +152,7 @@ local styleName = addon.unitPrefix .. 'NamePlates'
 oUF:RegisterStyle(styleName, function(self)
 	Mixin(self, addon.widgetMixin)
 
-	-- nameplates take up the space by the visibile anchored children by default, which changes
+	-- nameplates take up the space by the visible anchored children by default, which changes
 	-- whenever we alter the health size, the castbar shows up, or buffs/debuffs gets added or
 	-- removed, resulting in a "bouncy" nameplate.
 	-- to prevent this we add a static frame to use as our bounds
