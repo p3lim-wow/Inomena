@@ -69,6 +69,12 @@ local function updateOnAdded(self)
 	if isTarget then
 		updateOutlineAnchors(self)
 	end
+
+	-- we need to force-update the health sub-widgets one frame after they've been initialized by
+	-- UAE because the game rendering engine will have incorrect sizes for them during creation with
+	-- a custom scale (which we apply with our PixelPerfect method during spawn). Blizzard is aware
+	-- of this bug, but they don't really have a solution for it.
+	C_Timer.After(0, GenerateClosure(self.Health.ForceUpdate, self.Health))
 end
 
 local function updateOnRemoved(self)
@@ -122,6 +128,10 @@ local function updateHealthColor(self, event, unit)
 	end
 end
 
+local function updateHealth(element)
+	element.DamageAbsorb:SetWidth(element:GetWidth())
+end
+
 local function updateBuffFilters(element)
 	local dispelTypes = addon:GetDispelTypes('HELPFUL')
 	element:SetAuraGroupCandidateFilters(element.dispelGroup, {
@@ -142,18 +152,11 @@ local styleName = addon.unitPrefix .. 'NamePlates'
 oUF:RegisterStyle(styleName, function(self)
 	Mixin(self, addon.widgetMixin)
 
-	addon:PixelPerfect(self)
-
-	-- after scaling the oUF unit frame (which at 1440p would be 0.533), we also have to take
-	-- into account that nameplates (the unit frame parent) _will_ get scaled by UIParent, although
-	-- on creation the nameplate will not have this scale so we have to get it directly
-	local SCALED_WIDTH = self:GetWidth() * UIParent:GetScale()
-
 	-- nameplates take up the space by the visibile anchored children by default, which changes
 	-- whenever we alter the health size, the castbar shows up, or buffs/debuffs gets added or
 	-- removed, resulting in a "bouncy" nameplate.
 	-- to prevent this we add a static frame to use as our bounds
-	local bounds = CreateFrame('Frame', nil, self)
+	local bounds = CreateFrame('Frame', nil, self:GetParent())
 	bounds:SetAllPoints()
 	self:GetParent():SetStackingBoundsFrame(bounds)
 
@@ -163,6 +166,8 @@ oUF:RegisterStyle(styleName, function(self)
 	filler:SetAllPoints()
 	filler:SetColorTexture(0, 0, 0, 0)
 
+	addon:PixelPerfect(self)
+
 	local Health = self:CreateBackdropStatusBar()
 	Health:SetPoint('LEFT')
 	Health:SetPoint('RIGHT')
@@ -171,6 +176,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Health.colorSelection = true
 	Health.colorThreat = true
 	Health.UpdateColor = updateHealthColor
+	Health.PreUpdate = updateHealth
 	Health.UpdatePredictionSize = nop -- don't let oUF mess with sizes
 	self.Health = Health
 
@@ -178,7 +184,6 @@ oUF:RegisterStyle(styleName, function(self)
 	DamageAbsorb:SetPoint('TOP')
 	DamageAbsorb:SetPoint('BOTTOM')
 	DamageAbsorb:SetPoint('LEFT', Health:GetStatusBarTexture(), 'RIGHT')
-	DamageAbsorb:SetWidth(SCALED_WIDTH)
 	DamageAbsorb:SetStatusBarColor(addon.colors.absorb:GetRGB())
 	Health.DamageAbsorb = DamageAbsorb
 
