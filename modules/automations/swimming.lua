@@ -40,7 +40,7 @@ local function check()
 		return
 	end
 
-	if not IsSwimming() then
+	if not IsSwimming() or UnitIsDeadOrGhost('player') then
 		return
 	end
 
