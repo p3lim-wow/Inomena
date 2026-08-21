@@ -35,6 +35,18 @@ local function unequip()
 end
 
 local lastRodGUID
+local function equipLastRod()
+	local toolLocation = C_Item.GetItemLocation(lastRodGUID)
+	if toolLocation and toolLocation:IsValid() and toolLocation:IsBagAndSlot() then
+		local bagID, slotIndex = toolLocation:GetBagAndSlot()
+		if bagID >= 0 and bagID <= 4 and slotIndex >= 1 then
+			ClearCursor()
+			C_Container.PickupContainerItem(bagID, slotIndex)
+			PickupInventoryItem(FISHING_TOOL_INVENTORY_ID)
+		end
+	end
+end
+
 local function check()
 	if C_ChallengeMode.IsChallengeModeActive() or UnitIsDeadOrGhost('player') then
 		return
@@ -42,17 +54,7 @@ local function check()
 
 	if not IsSwimming() then
 		if lastRodGUID then
-			-- re-equip previous rod
-			local toolLocation = C_Item.GetItemLocation(lastRodGUID)
-			if toolLocation and toolLocation:IsValid() and toolLocation:IsBagAndSlot() then
-				local bagID, slotIndex = toolLocation:GetBagAndSlot()
-				if bagID >= 0 and bagID <= 4 and slotIndex >= 1 then
-					ClearCursor()
-					C_Container.PickupContainerItem(bagID, slotIndex)
-					PickupInventoryItem(FISHING_TOOL_INVENTORY_ID)
-				end
-			end
-
+			equipLastRod()
 			lastRodGUID = nil
 		end
 
@@ -157,5 +159,11 @@ addon:RegisterEvent('PLAYER_ENTERING_WORLD', function(_, isInitialLogin)
 		addon:RegisterUnitEvent('UNIT_INVENTORY_CHANGED', 'player', inventory)
 	else
 		return inventory()
+	end
+end)
+
+addon:RegisterEvent('PLAYER_LOGOUT', function()
+	if lastRodGUID then
+		equipLastRod()
 	end
 end)
