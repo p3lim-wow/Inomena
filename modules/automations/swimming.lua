@@ -34,17 +34,37 @@ local function unequip()
 	C_Container.PickupContainerItem(bagID, slotIndex)
 end
 
+local lastRodGUID
 local function check()
-	if C_ChallengeMode.IsChallengeModeActive() then
-		-- can't change equipment in challenges
+	if C_ChallengeMode.IsChallengeModeActive() or UnitIsDeadOrGhost('player') then
 		return
 	end
 
-	if not IsSwimming() or UnitIsDeadOrGhost('player') then
+	if not IsSwimming() then
+		if lastRodGUID then
+			-- re-equip previous rod
+			local toolLocation = C_Item.GetItemLocation(lastRodGUID)
+			if toolLocation and toolLocation:IsValid() and toolLocation:IsBagAndSlot() then
+				local bagID, slotIndex = toolLocation:GetBagAndSlot()
+				if bagID >= 0 and bagID <= 4 and slotIndex >= 1 then
+					ClearCursor()
+					C_Container.PickupContainerItem(bagID, slotIndex)
+					PickupInventoryItem(FISHING_TOOL_INVENTORY_ID)
+				end
+			end
+
+			lastRodGUID = nil
+		end
+
 		return
 	end
 
 	if GetInventoryItemID('player', FISHING_TOOL_INVENTORY_ID) ~= UNDERLIGHT_ANGLER_ITEM_ID then
+		local toolLocation = ItemLocation:CreateFromEquipmentSlot(FISHING_TOOL_INVENTORY_ID)
+		if toolLocation:IsValid() then
+			lastRodGUID = C_Item.GetItemGUID(toolLocation)
+		end
+
 		addon:Defer(equip)
 	else
 		-- check if we have the buff first
