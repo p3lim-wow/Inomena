@@ -45,6 +45,8 @@ local function equipLastRod()
 			PickupInventoryItem(FISHING_TOOL_INVENTORY_ID)
 		end
 	end
+
+	lastRodGUID = nil
 end
 
 local function check()
@@ -54,8 +56,7 @@ local function check()
 
 	if not IsSwimming() then
 		if lastRodGUID then
-			equipLastRod()
-			lastRodGUID = nil
+			addon:Defer(equipLastRod)
 		end
 
 		return
