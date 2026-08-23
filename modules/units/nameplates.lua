@@ -69,12 +69,6 @@ local function updateOnAdded(self)
 	if isTarget then
 		updateOutlineAnchors(self)
 	end
-
-	-- we need to force-update the health sub-widgets one frame after they've been initialized by
-	-- UAE because the game rendering engine will have incorrect sizes for them during creation with
-	-- a custom scale (which we apply with our PixelPerfect method during spawn). Blizzard is aware
-	-- of this bug, but they don't really have a solution for it.
-	C_Timer.After(0, GenerateClosure(self.Health.ForceUpdate, self.Health))
 end
 
 local function updateOnRemoved(self)
@@ -128,10 +122,6 @@ local function updateHealthColor(self, event, unit)
 	end
 end
 
-local function updateHealth(element)
-	element.DamageAbsorb:SetWidth(element:GetWidth())
-end
-
 local function updateBuffFilters(element)
 	local dispelTypes = addon:GetDispelTypes('HELPFUL')
 	element:SetAuraGroupCandidateFilters(element.dispelGroup, {
@@ -176,14 +166,14 @@ oUF:RegisterStyle(styleName, function(self)
 	Health.colorSelection = true
 	Health.colorThreat = true
 	Health.UpdateColor = updateHealthColor
-	Health.PreUpdate = updateHealth
 	Health.UpdatePredictionSize = nop -- don't let oUF mess with sizes
 	self.Health = Health
 
 	local DamageAbsorb = Health:CreateStatusBar()
-	DamageAbsorb:SetPoint('TOP')
-	DamageAbsorb:SetPoint('BOTTOM')
+	DamageAbsorb:SetPoint('TOP', Health:GetStatusBarTexture())
+	DamageAbsorb:SetPoint('BOTTOM', Health:GetStatusBarTexture())
 	DamageAbsorb:SetPoint('LEFT', Health:GetStatusBarTexture(), 'RIGHT')
+	DamageAbsorb:SetWidth(self:GetWidth() * UIParent:GetScale())
 	DamageAbsorb:SetStatusBarColor(addon.colors.absorb:GetRGB())
 	Health.DamageAbsorb = DamageAbsorb
 
