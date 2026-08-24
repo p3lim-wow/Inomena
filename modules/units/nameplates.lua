@@ -27,7 +27,7 @@ local function updateOnAdded(self)
 	end
 
 	local isTarget = UnitIsUnit(unit, 'target')
-	if not isTarget and isInvalidPvPUnit(unit) then
+	if not isTarget and not addon:IsInDungeon() and isInvalidPvPUnit(unit) then
 		-- "hide" nameplates for units with PvP enabled when the player doesn't
 		-- (this is something Blizzard should handle tbh)
 		self:PauseAllElements()
