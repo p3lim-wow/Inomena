@@ -103,16 +103,17 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	end
 
 	local Buffs = self:CreateAuras({
-		-- TODO: set limit of how many total
 		layoutLimit = self:GetWidth() - (addon.SPACING * 2),
 		growthX = 'RIGHT',
 		growthY = 'DOWN',
 		initialAnchor = 'TOPLEFT',
 	})
 	Buffs:SetPoint('CENTER')
+	Buffs:SetFrameLevel(10) -- high above
 	Buffs.disableCooldownText = true -- custom option
 	Buffs.elementSpacing = addon.SPACING
 	Buffs.lineSpacing = addon.SPACING
+	Buffs.maxFrameCount = 5 -- TODO: would like to set container max, this is group max
 	Buffs.tooltipAnchor = 'ANCHOR_TOPRIGHT'
 	Buffs.tooltipHideInCombat = true -- TBD
 	Buffs.tooltipOffsetX = 1
