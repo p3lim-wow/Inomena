@@ -88,6 +88,11 @@ addon.RINGS = addon:T({
 		{'spell', 1254559}, -- Path of Cavernous Depths (Maisara Caverns)
 		{'spell', 1254563}, -- Path of the Fractured Core (Nexus-Point Xenas)
 		{'spell', 1254572}, -- Path of Devoted Magistry (Magisters' Terrace)
+		{'spell', 1286801}, -- Path of the Blooming Verdure (The Blinding Vale)
+		{'spell', 1286804}, -- Path of the Brutal Combatant (Voidscar Arena)
+		{'spell', 1286807}, -- Path of the Worthy Aspirant (Den of Nalorakk)
+		{'spell', 1286809}, -- Path of the Devious Smuggler (Murder Row)
+		{'spell', 1286812}, -- Path of Venomous Evolution (Altar of Fangs)
 	},
 	{
 		name = addonName .. 'Teleport11', -- Khaz Algar
@@ -173,6 +178,8 @@ addon.RINGS = addon:T({
 		{'spell', 410074}, -- Path of Festering Rot (The Underrot)
 		{'spell', 424167}, -- Path of Heart's Bane (Waycrest Manor)
 		{'spell', 424187}, -- Path of the Golden Tomb (Atal'Dazar)
+		{'spell', 1286828}, -- Path of the Sacred Temple (Temple of Sethraliss)
+		{'spell', 1286831}, -- Path of the Slumbering Conqueror (Kings' Rest)
 		{'spell', 445418, show='[alliance]'}, -- Path of the Besieged Harbor (Siege of Boralus) (alliance version)
 		{'spell', 464256, show='[horde]'}, -- Path of the Besieged Harbor (Siege of Boralus) (horde version)
 		{'spell', 467553, show='[alliance]'}, -- Path of the Azerite Refinery (The MOTHERLODE!!) (alliance version)
