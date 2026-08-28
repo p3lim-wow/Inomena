@@ -131,7 +131,7 @@ local function updateBuffFilters(element)
 		excludeDispelTypes = dispelTypes
 	})
 
-	if UnitIsPlayer(element.__owner.__unit) or UnitCanAssist('player', element.__owner.__unit) then
+	if UnitIsPlayer(element.__owner.__unit) or UnitCanAssist('player', element.__owner.__unit, true, true) then
 		element:SetAuraGroupMaxFrameCount(element.buffsGroup, 3)
 	else
 		element:SetAuraGroupMaxFrameCount(element.buffsGroup, 20)
