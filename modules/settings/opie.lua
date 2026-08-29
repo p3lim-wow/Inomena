@@ -410,6 +410,7 @@ addon.RINGS = addon:T({
 		{'item', 234389, show='[zone:Liberation of Undermine]'}, -- Gallagio Royalty Rewards Card: Silver
 		{'item', 249699, show='[zone:Manaforge Omega]'}, -- Shadowguard Translocator
 		{'toy', 276371, show='[zone:Naigtal][zone:Val]'}, -- Lightveil Recall Beacon
+		{'item', 279550, show='[zone:Vaults of Atal\'Utek]'}, -- Potion of Venomous Return
 		{'spell', 312370, show='[race:vulpera]'}, -- Make Camp
 		{'spell', 312372, show='[race:vulpera]'}, -- Return to Camp
 		{'spell', 265225, show='[race:darkirondwarf]'}, -- Mole Machine
