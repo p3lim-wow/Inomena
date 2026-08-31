@@ -374,6 +374,11 @@ nameplates:SetCVars({
 
 	-- hidden cvars
 	nameplatePlayRemovalAnimation = 0,
+	nameplateMinAlpha = 1.0,
+	nameplateOccludedAlphaMult = 0.3, -- line of sight based alpha
+	nameplateMinScale = 1.0,
+	nameplateSelectedScale = 1.0,
+	nameplateTargetBehindMaxDistance = 30,
 })
 
 -- use our font for friendly nameplates in instances
