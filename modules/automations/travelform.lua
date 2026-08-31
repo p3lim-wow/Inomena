@@ -14,6 +14,11 @@ local function swap()
 		return
 	end
 
+	if not C_SpellBook.IsSpellKnown(276029) then
+		-- don't swap if the player doesn't have flight form
+		return
+	end
+
 	local shapeshiftID = GetShapeshiftFormID()
 	if trySwapNext then
 		-- if the form is (ground) travel form, try to fly
