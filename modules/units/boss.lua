@@ -71,7 +71,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	local HealthValue = Health:CreateText()
 	HealthValue:SetPoint('RIGHT', -addon.SPACING, 0)
 	HealthValue:SetJustifyH('RIGHT')
-	self:Tag(HealthValue, '[inomena:hpper<$|cff0090ff%|r]')
+	self:Tag(HealthValue, '[inomena:hpcur] [inomena:hpper<$|cff0090ff%|r]')
 
 	-- need to render texts higher than all the healpred stuff
 	HealthValue:GetParent():SetFrameLevel(Health:GetFrameLevel() + 5)
