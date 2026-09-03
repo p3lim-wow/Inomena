@@ -6,6 +6,7 @@ local button = Mixin(CreateFrame('Frame', nil, Minimap), addon.widgetMixin)
 button:SetPoint('TOPLEFT', 5, -5)
 button:SetSize(30, 30)
 button:SetScript('OnLeave', addon.HideTooltip)
+button:SetAlpha(0)
 button:SetScript('OnEnter', function(self)
 	local tooltip = addon:GetTooltip(self, 'ANCHOR_BOTTOMLEFT')
 
@@ -16,8 +17,6 @@ button:SetScript('OnEnter', function(self)
 			-- there's a caching issue with this API ^
 			tooltip:AddLine(DASH_WITH_TEXT:format(sender), 1, 1, 1)
 		end
-	else
-		tooltip:AddLine('No mail')
 	end
 
 	-- add lines for pending crafting orders
