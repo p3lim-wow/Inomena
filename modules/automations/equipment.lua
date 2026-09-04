@@ -76,7 +76,7 @@ function addon:PLAYER_EQUIPMENT_CHANGED(inventorySlot)
 
 		-- remove the item from the queue if it exists
 		if queuedInventorySlots:contains(inventorySlot) then
-			queuedInventorySlots:removeValue(inventorySlot)
+			queuedInventorySlots:removevalue(inventorySlot)
 
 			if #queuedInventorySlots == 0 then
 				if self:IsEventRegistered('PLAYER_ENTERING_WORLD', restoreEquipment) then
