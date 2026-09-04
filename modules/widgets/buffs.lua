@@ -11,6 +11,7 @@ local function createButton(button)
 
 	button:SetSize(36, 36)
 	button:SetCancelAuraButtons('RightButtonUp')
+	button:SetTooltipAnchorPoint('ANCHOR_BOTTOMLEFT', -3, -3)
 
 	local Icon = addon.widgetMixin.CreateIcon(button, 'ARTWORK')
 	Icon:SetAllPoints()
