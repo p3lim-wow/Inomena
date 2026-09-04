@@ -504,7 +504,7 @@ do
 				local _, _, _, _, mountType = C_MountJournal.GetMountInfoExtraByID(mountID)
 				if mountType == 231 or mountType == 254 then -- turtle/swimming
 					local _, spellID = C_MountJournal.GetMountInfoByID(mountID)
-					table.insert(addon.RINGS[addon.RINGS:size()], 1, {'spell', spellID})
+					table.insert(addon.RINGS[(addon.RINGS:count())], 1, {'spell', spellID})
 				end
 			end
 
