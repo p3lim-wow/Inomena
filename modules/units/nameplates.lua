@@ -334,6 +334,10 @@ oUF:RegisterStyle(styleName, function(self)
 	self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', updateHealthColor)
 	self:RegisterEvent('UNIT_THREAT_LIST_UPDATE', updateHealthColor) -- unsure if needed
 	addon:RegisterUnitEvent('UNIT_FLAGS', 'player', GenerateFlatClosure(updateOnAdded, self))
+
+	if addon:HasVersion(120105) then
+		PixelUtil.SetRoundLayoutToNearestPixelRecursively(self, true)
+	end
 end)
 
 oUF:SetActiveStyle(styleName)

@@ -7,8 +7,12 @@ do
 			obj:SetTexelSnappingBias(0)
 			obj:SetSnapToPixelGrid(false)
 		elseif obj.GetObjectType then
+			-- TODO: remove this in 12.1.5 and adjust the size of everything we have
 			obj:SetIgnoreParentScale(true)
 			obj:SetScale(SCALE)
+		end
+		if obj.SetRoundLayoutToNearestPixel then
+			obj:SetRoundLayoutToNearestPixel(true)
 		end
 	end
 end

@@ -155,6 +155,7 @@ read_globals = {
 	'Item',
 	'ItemLocation',
 	'MenuUtil',
+	'PixelUtil',
 	'TooltipDataProcessor',
 
 	-- FrameXML functions
