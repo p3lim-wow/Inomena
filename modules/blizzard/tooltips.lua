@@ -115,12 +115,16 @@ do
 			tooltip.StatusBar:SetStatusBarTexture(addon.TEXTURE)
 			tooltip.StatusBar:HookScript('OnValueChanged', tooltipHealthChanged)
 		end
+
+		if tooltip.shoppingTooltips then
+			for _, shoppingTooltip in next, tooltip.shoppingTooltips do
+				addon:SkinTooltip(shoppingTooltip)
+			end
+		end
 	end
 
 	for _, tooltip in next, {
 		'GameTooltip',
-		'ShoppingTooltip1',
-		'ShoppingTooltip2',
 		-- 'AddonButtonTooltip', -- forbidden :(
 	} do
 		addon:SkinTooltip(_G[tooltip])
