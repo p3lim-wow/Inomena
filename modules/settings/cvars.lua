@@ -32,6 +32,7 @@ local CVARS = { -- exposed settings from the interface options
 	chatBubblesRaid = 0, -- (default)
 	worldMapShowPlayerCoords = 0, -- I like my solution better
 	worldMapShowCursorCoords = 0,
+	minimapShowPlayerCoords = 0,
 
 	-- Gameplay Action Bars
 	enableMultiActionBars = 79,
