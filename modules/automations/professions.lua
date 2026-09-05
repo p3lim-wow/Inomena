@@ -32,7 +32,7 @@ end)
 
 local FISHING_EQUIPMENT_BUFFS = {
 	394009, -- Fishing
-	1303610, -- Fishing (another one? added in 12.1)
+	1303610, -- Fishing (for The Coiled Huntress)
 }
 
 -- remove fishing equipment buff when taking off on a skyriding mount
