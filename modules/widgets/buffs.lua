@@ -3,7 +3,7 @@ local _, addon = ...
 -- custom buff display
 
 local timeOptions = {
-	textFormatter = addon.formatters.Countdown
+	textFormatter = addon.formatters.Buff
 }
 
 local function createButton(button)

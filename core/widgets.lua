@@ -199,7 +199,7 @@ do
 		self:SetSwipeColor(0, 0, 0, 0.9)
 		self:SetTimeFont()
 		self:SetIgnoreGlobalCooldown(true)
-		self:SetCountdownFormatter(addon.formatters.Countdown)
+		self:SetCountdownFormatter(addon.formatters.Cooldown)
 	end
 
 	widgetMixin.cooldownMixin = cooldownMixin
