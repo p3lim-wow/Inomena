@@ -50,8 +50,8 @@ local function postUpdatePower(element, unit, _, _, _, displayType)
 		if UnitAffectingCombat('player') then
 			element:SetAlpha(1)
 		else
-			local alphaCurve = addon.curves.PowerIdleAlpha[displayType]
-			element:SetAlpha(UnitPowerPercent(unit, nil, true, alphaCurve))
+			local curve = addon.curves.PowerIdle[displayType]
+			element:SetAlpha(UnitPowerPercent(unit, nil, true, curve))
 		end
 	end
 

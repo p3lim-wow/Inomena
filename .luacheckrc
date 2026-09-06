@@ -446,6 +446,7 @@ read_globals = {
 	'UnitNameplateShowsWidgetsOnly',
 	'UnitOnTaxi',
 	'UnitPower',
+	'UnitPowerMax',
 	'UnitPowerPercent',
 	'UnitPowerType',
 	'UnitRace',

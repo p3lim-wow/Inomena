@@ -54,10 +54,10 @@ function methods:SetCooldownDuration(duration, isRecharge)
 	self.Cooldown:SetDrawSwipe(not isRecharge)
 
 	if not isRecharge then
-		local alpha = duration:EvaluateRemainingDuration(addon.curves.ActionAlpha)
+		local alpha = duration:EvaluateRemainingDuration(addon.curves.AlphaCooldown)
 		self.Border:SetAlpha(alpha)
 		self.Icon:SetAlpha(alpha)
-		self.Icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.ActionDesaturation))
+		self.Icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.DesaturateCooldown))
 	end
 end
 

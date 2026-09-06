@@ -38,15 +38,15 @@ local function updateCooldown(button, _, spellID, baseSpellID)
 		button.CustomCooldown:SetCooldownFromDurationObject(duration)
 
 		if duration and not charge then
-			button.Icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.ActionDesaturation))
+			button.Icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.DesaturateCooldown))
 
 			if button.utility then
-				local alpha = duration:EvaluateRemainingDuration(addon.curves.ActionAlphaMinor)
+				local alpha = duration:EvaluateRemainingDuration(addon.curves.AlphaCooldownMinor)
 				button:SetAlpha(alpha)
 				button:SetBorderAlpha(alpha)
 				button.CustomCooldown:SetAlpha(alpha)
 			else
-				button:SetAlpha(duration:EvaluateRemainingDuration(addon.curves.ActionAlpha))
+				button:SetAlpha(duration:EvaluateRemainingDuration(addon.curves.AlphaCooldown))
 			end
 		end
 	end

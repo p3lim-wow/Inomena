@@ -22,8 +22,8 @@ local function updateCooldown(button)
 	end
 
 	if duration then
-		button.Icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.ActionDesaturation))
-		button:SetAlpha(duration:EvaluateRemainingDuration(addon.curves.ActionAlpha))
+		button.Icon:SetDesaturation(duration:EvaluateRemainingDuration(addon.curves.DesaturateCooldown))
+		button:SetAlpha(duration:EvaluateRemainingDuration(addon.curves.AlphaCooldown))
 	else
 		button.Icon:SetDesaturation(0)
 		button:SetAlpha(1)
