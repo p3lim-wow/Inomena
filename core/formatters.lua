@@ -12,8 +12,7 @@ addon.formatters.Cooldown:SetBreakpoints({
 	{threshold = 60, format = ''},
 })
 
--- for time < 10 seconds this will render one decimal point
--- for time > 10 seconds this will render nothing
+-- render time with different precision and suffix
 addon.formatters.Buff = C_StringUtil.CreateNumericRuleFormatter()
 addon.formatters.Buff:SetBreakpoints({
 	{threshold = 0,        format = '%0.1f', step = 0.1, rounding = Enum.NumericRuleFormatRounding.Down},
