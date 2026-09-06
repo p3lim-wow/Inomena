@@ -64,3 +64,10 @@ addon.curves.Durability:SetType(Enum.LuaCurveType.Linear)
 addon.curves.Durability:AddPoint(0, addon.colors.durability[2])
 addon.curves.Durability:AddPoint(0.5, addon.colors.durability[1])
 addon.curves.Durability:AddPoint(1, addon.colors.durability[0])
+
+-- curve for turning buffs' duration red when they get low
+addon.curves.Buff = C_CurveUtil.CreateColorCurve()
+addon.curves.Buff:SetType(Enum.LuaCurveType.Linear)
+addon.curves.Buff:AddPoint(0, addon.colors.red)
+addon.curves.Buff:AddPoint(60, addon.colors.yellow)
+addon.curves.Buff:AddPoint(600, addon.colors.white)

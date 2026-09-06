@@ -3,7 +3,11 @@ local _, addon = ...
 -- custom buff display
 
 local timeOptions = {
-	textFormatter = addon.formatters.Buff
+	textFormatter = addon.formatters.Buff,
+	textColor = {
+		curve = addon.curves.Buff,
+		property = Enum.DurationTextBindingProperty.RemainingDuration,
+	},
 }
 
 local function createButton(button)
@@ -23,7 +27,7 @@ local function createButton(button)
 	button:SetApplicationCount(Count)
 
 	local Time = addon.widgetMixin.CreateText(button, 13)
-	Time:SetPoint('TOPLEFT', 1, -1)
+	Time:SetPoint('TOPLEFT', 0, -2)
 	Time:SetJustifyH('LEFT')
 	button:SetDurationText(Time, timeOptions)
 end
