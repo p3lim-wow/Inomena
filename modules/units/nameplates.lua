@@ -233,7 +233,8 @@ oUF:RegisterStyle(styleName, function(self)
 	})
 	Buffs:SetPoint('BOTTOMRIGHT', Health, 'TOPRIGHT', 0, addon.SPACING)
 	Buffs.disableCooldownText = true -- custom option
-	Buffs.disableMouse = true
+	Buffs.tooltipHideInCombat = true
+	Buffs.tooltipAnchor = 'ANCHOR_CURSOR'
 	Buffs.elementSpacing = addon.SPACING
 	Buffs.lineSpacing = addon.SPACING
 	Buffs.showCount = true
@@ -259,7 +260,8 @@ oUF:RegisterStyle(styleName, function(self)
 	})
 	Debuffs:SetPoint('BOTTOMLEFT', Health, 'TOPLEFT', 0, addon.SPACING)
 	Debuffs.disableCooldownText = true -- custom option
-	Debuffs.disableMouse = true
+	Debuffs.tooltipHideInCombat = true
+	Debuffs.tooltipAnchor = 'ANCHOR_CURSOR'
 	Debuffs.elementSpacing = addon.SPACING
 	Debuffs.lineSpacing = addon.SPACING
 	Debuffs.showCount = true
