@@ -78,7 +78,7 @@ addon.CLASS_BUFF_SPELLS = {
 	EVOKER = 364342, -- Blessing of the Bronze
 	MAGE = 1459, -- Arcane Intellect
 	PRIEST = 21562, -- Power Word: Fortitude
-	SHAMAN = 462854, -- Skyfury
+	SHAMAN = {462854, {52127, 192106}}, -- Skyfury + Water/Lightning Shield
 	WARRIOR = 6673, -- Battle Shout
 }
 
