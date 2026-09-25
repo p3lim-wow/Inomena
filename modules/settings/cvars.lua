@@ -35,7 +35,7 @@ local CVARS = { -- exposed settings from the interface options
 	minimapShowPlayerCoords = 0,
 
 	-- Gameplay Action Bars
-	enableMultiActionBars = 79,
+	enableMultiActionBars = addon:IsRetail() and 79 or 15,
 	lockActionBars = 1,
 	countdownForCooldowns = 1,
 
@@ -88,7 +88,7 @@ local CVARS = { -- exposed settings from the interface options
 	-- encounterWarningsTimelineIconographyHiddenMask = ------, TODO: bitfield
 	cooldownViewerEnabled = 1,
 	externalDefensivesEnabled = 0, -- (default)
-	damageMeterEnabled = 0, -- let Details deal with this
+	damageMeterEnabled = addon:IsRetail() and 0 or 1, -- let Details deal with this
 	damageMeterResetOnNewInstance = 1,
 	spellDiminishPVPEnemiesEnabled = 0,
 	spellDiminishPVPOnlyTriggerableByMe = 0, -- (default)
@@ -166,7 +166,7 @@ local CVARS = { -- exposed settings from the interface options
 
 	-- Sound
 	Sound_EnableAllSound = 1, -- (default)
-	Sound_MasterVolume = 0.15,
+	Sound_MasterVolume = addon:IsRetail() and 0.15 or 0.4,
 	Sound_MusicVolume = 0.2,
 	Sound_SFXVolume = 0.3,
 	Sound_AmbienceVolume = 0.4,
