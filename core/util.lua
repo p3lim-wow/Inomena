@@ -158,6 +158,10 @@ do
 			name = name .. NAME_SPACING .. realmOrSurname
 		end
 
+		if C_Intl then -- TODO: remove check in 12.1.5/1.60.x
+			name = C_Intl.Transliterate(name, 'Any-Latin')
+		end
+
 		if addon:IsForever() then
 			return name
 		else

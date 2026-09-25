@@ -32,6 +32,10 @@ end
 
 local FORMAT_PLAYER = '|Hplayer:%s|h%s|h'
 local function formatPlayer(info, name)
+	if C_Intl then -- TODO: remove check in 12.1.5/1.60.x
+		name = C_Intl.Transliterate(name, 'Any-Latin')
+	end
+
 	return FORMAT_PLAYER:format(info, (name:gsub('%-[^|]+', '')))
 end
 
