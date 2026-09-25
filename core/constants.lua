@@ -7,7 +7,6 @@ addon.PLAYER_RACE = select(3, UnitRace('player'))
 addon.PLAYER_FACTION = UnitFactionGroup('player')
 addon.PLAYER_FACTION_ID = Enum.PvPFaction[addon.PLAYER_FACTION]
 addon.PLAYER_GUID = UnitGUID('player')
-addon.PLAYER_REALM = GetRealmName()
 
 addon.POWER_TYPE_TOKEN = {
 	[Enum.PowerType.Mana] = 'MANA',

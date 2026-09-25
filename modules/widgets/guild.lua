@@ -24,7 +24,7 @@ Menu.ModifyMenu('MENU_UNIT_FRIEND', function(_, menu, data)
 		name = name .. '-' .. data.server
 	else
 		-- we need to use full name with realm for everyone
-		name = name .. '-' .. addon.PLAYER_REALM
+		name = name .. '-' .. GetRealmName()
 	end
 
 	if members[name] then

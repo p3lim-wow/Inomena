@@ -76,7 +76,7 @@ modules\widgets\commands.lua
 modules\widgets\coordinates.lua
 modules\widgets\character.lua [AllowLoadGameType standard]
 modules\widgets\garrison.lua [AllowLoadGameType standard]
-modules\widgets\guild.lua
+modules\widgets\guild.lua [AllowLoadGameType standard]
 modules\widgets\herotalents.lua [AllowLoadGameType standard]
 modules\widgets\mail.lua
 modules\widgets\petbattle.lua [AllowLoadGameType standard]
