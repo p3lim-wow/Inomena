@@ -54,7 +54,6 @@ AttributeHandler:SetScript('OnAttributeChanged', function(self, attribute, value
 end)
 RegisterAttributeDriver(AttributeHandler, 'unit', '[vehicleui] vehicle; player')
 
-Buffs:SetItemEnchantmentLayout(layout)
 Buffs:AddAuraGroup(Buffs:GetDebugName(), 'HELPFUL', {
 	initializeFrame = createButton,
 	sortMethod = AuraContainerSortMethod.ExpirationOnly,
@@ -62,6 +61,7 @@ Buffs:AddAuraGroup(Buffs:GetDebugName(), 'HELPFUL', {
 	layout = layout,
 })
 
+Buffs:SetItemEnchantmentLayout(layout)
 for _, slot in next, AuraContainerItemEnchantmentSlot do
 	Buffs:AddItemEnchantment(slot, {
 		initializeFrame = function(button)
