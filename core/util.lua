@@ -148,14 +148,13 @@ function addon:ResizePillsToFit(pills, numPills, spacing)
 end
 
 do
-	local NAME_SPACING = Constants.CharacterNameSeparatorConsts.CHARACTERNAME_SURNAME_SEPARATOR
 	local function unitName(isHuman, name, realmOrSurname)
 		if name == nil then
 			return -- this can happen with UnitNameFromGUID (?)
 		end
 
 		if addon:IsForever() and isHuman then
-			name = name .. NAME_SPACING .. realmOrSurname
+			name = name .. Constants.CharacterNameSeparatorConsts.CHARACTERNAME_SURNAME_SEPARATOR .. realmOrSurname
 		end
 
 		if C_Intl then -- TODO: remove check in 12.1.5/1.60.x
