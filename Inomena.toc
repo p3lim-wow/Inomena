@@ -20,15 +20,15 @@ core\widgets.lua
 core\util.lua
 core\bind.lua
 
-modules\settings\bindings\auction.lua
-modules\settings\bindings\buff.lua
-modules\settings\bindings\drive.lua
-modules\settings\bindings\eject.lua
-modules\settings\bindings\misdirect.lua
+modules\settings\bindings\auction.lua [AllowLoadGameType standard]
+modules\settings\bindings\buff.lua [AllowLoadGameType standard]
+modules\settings\bindings\drive.lua [AllowLoadGameType standard]
+modules\settings\bindings\eject.lua [AllowLoadGameType standard]
+modules\settings\bindings\misdirect.lua [AllowLoadGameType standard]
 modules\settings\bindings\mount.lua
 modules\settings\bindings\reload.lua
-modules\settings\bindings\resurrect.lua
-modules\settings\bindings\skyriding.lua
+modules\settings\bindings\resurrect.lua [AllowLoadGameType standard]
+modules\settings\bindings\skyriding.lua [AllowLoadGameType standard]
 
 modules\settings\chat.lua
 modules\settings\cvars.lua
@@ -57,34 +57,34 @@ modules\units\castbar.lua
 
 modules\automations\alerts.lua
 modules\automations\auction.lua
-modules\automations\equipment.lua
-modules\automations\fishing.lua
+modules\automations\equipment.lua [AllowLoadGameType standard]
+modules\automations\fishing.lua [AllowLoadGameType standard]
 modules\automations\gossip.lua
-modules\automations\invites.lua
+modules\automations\invites.lua [AllowLoadGameType standard]
 modules\automations\loot.lua
-modules\automations\swimming.lua
-modules\automations\pierre.lua
-modules\automations\professions.lua
+modules\automations\swimming.lua [AllowLoadGameType standard]
+modules\automations\pierre.lua [AllowLoadGameType standard]
+modules\automations\professions.lua [AllowLoadGameType standard]
 modules\automations\repair.lua
 modules\automations\tracking.lua
 modules\automations\trash.lua
 modules\automations\travelform.lua
 
 modules\widgets\buffs.lua
-modules\widgets\chef.lua
+modules\widgets\chef.lua [AllowLoadGameType standard]
 modules\widgets\commands.lua
 modules\widgets\coordinates.lua
-modules\widgets\character.lua
-modules\widgets\garrison.lua
+modules\widgets\character.lua [AllowLoadGameType standard]
+modules\widgets\garrison.lua [AllowLoadGameType standard]
 modules\widgets\guild.lua
-modules\widgets\herotalents.lua
+modules\widgets\herotalents.lua [AllowLoadGameType standard]
 modules\widgets\mail.lua
-modules\widgets\petbattle.lua
-modules\widgets\repair.lua
-modules\widgets\skyriding.lua
+modules\widgets\petbattle.lua [AllowLoadGameType standard]
+modules\widgets\repair.lua [AllowLoadGameType standard]
+modules\widgets\skyriding.lua [AllowLoadGameType standard]
 modules\widgets\stats.lua
-modules\widgets\strip.lua
-modules\widgets\talents.lua
+modules\widgets\strip.lua [AllowLoadGameType standard]
+modules\widgets\talents.lua [AllowLoadGameType standard]
 modules\widgets\totems.lua
 
 modules\blizzard\bugs.lua
@@ -94,21 +94,21 @@ modules\blizzard\chatframes.lua
 modules\blizzard\chatmessages.lua
 modules\blizzard\cooldowns.lua
 modules\blizzard\dressingroom.lua
-modules\blizzard\ephemeral.lua
+modules\blizzard\ephemeral.lua [AllowLoadGameType standard]
 modules\blizzard\hide.lua
 modules\blizzard\mail.lua
 modules\blizzard\minimap.lua
 modules\blizzard\id.lua
 modules\blizzard\popups.lua
-modules\blizzard\queue.lua
-modules\blizzard\skyriding.lua
+modules\blizzard\queue.lua [AllowLoadGameType standard]
+modules\blizzard\skyriding.lua [AllowLoadGameType standard]
 modules\blizzard\tooltips.lua
 
 modules\compat\minimap.lua
 modules\compat\bugsack.lua
-modules\compat\opie.lua
-modules\compat\syndicator.lua
-modules\compat\handynotes.lua
+modules\compat\opie.lua [AllowLoadGameType standard]
+modules\compat\syndicator.lua [AllowLoadGameType standard]
+modules\compat\handynotes.lua [AllowLoadGameType standard]
 modules\compat\tooltips.lua
 
-modules\settings\opie.lua
+modules\settings\opie.lua [AllowLoadGameType standard]
