@@ -26,3 +26,13 @@ function addon:AUCTION_HOUSE_BROWSE_RESULTS_UPDATED()
 		end
 	end
 end
+
+-- same thing but for crafting orders
+
+function addon:CRAFTINGORDERS_SHOW_CUSTOMER()
+	-- this triggers after Blizzard_ProfessionsCustomerOrders has loaded
+	local filter = ProfessionsCustomerOrdersFrame.BrowseOrders.SearchBar.FilterDropdown
+	filter:Reset()
+	addon:SafeSetTrue(filter.filters, FILTER)
+	-- TODO: it is set now, but the "X" button does not appear
+end

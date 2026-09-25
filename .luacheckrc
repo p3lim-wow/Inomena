@@ -85,6 +85,7 @@ read_globals = {
 	'PaperDollSidebarTab3',
 	'PetActionBar',
 	'PlayerSpellsFrame',
+	'ProfessionsCustomerOrdersFrame',
 	'ProfessionsFrame',
 	'QueueStatusButton',
 	'SendMailMailButton',
