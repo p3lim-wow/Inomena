@@ -115,9 +115,15 @@ end)
 -- tell the target, just a shell of what it used to be...
 addon:RegisterSlash('/tt', function(msg)
 	if UnitIsPlayer('target') and UnitIsFriend('player', 'target') and msg and msg:len() > 0 then
-		local name, realm = UnitName('target')
-		if realm and realm ~= '' then
-			name = name .. '-' .. realm
+		local name
+		if NameUtil.GetUnmodifiedUnitFullName then
+			name = NameUtil.GetUnmodifiedUnitFullName('target')
+		else -- TODO: remove in 12.1.5/1.60.x
+			local realm
+			name, realm = UnitName('target')
+			if realm and realm ~= '' then
+				name = name .. '-' .. realm
+			end
 		end
 
 		C_ChatInfo.SendChatMessage(msg, 'WHISPER', nil, name)

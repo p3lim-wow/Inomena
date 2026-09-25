@@ -155,6 +155,7 @@ read_globals = {
 	'Item',
 	'ItemLocation',
 	'MenuUtil',
+	'NameUtil',
 	'PixelUtil',
 	'TooltipDataProcessor',
 
