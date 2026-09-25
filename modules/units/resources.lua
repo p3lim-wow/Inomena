@@ -24,7 +24,7 @@ local function overrideDisplayPower(_, unit)
 				return Enum.PowerType.LunarPower
 			end
 		elseif PLAYER_CLASS == 'HUNTER' then
-			return Enum.PowerType.Focus
+			return addon:IsForever() and Enum.PowerType.Mana or Enum.PowerType.Focus
 		elseif PLAYER_CLASS == 'MAGE' and spec == PLAYER_SPECS.Arcane then
 			return Enum.PowerType.Mana -- it's a rotational important resource for this spec
 		elseif PLAYER_CLASS == 'MONK' and spec ~= PLAYER_SPECS.Mistweaver then
