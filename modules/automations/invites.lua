@@ -76,12 +76,14 @@ function addon:CHAT_MSG_WHISPER(msg, _, _, _, _, _, _, _, _, _, _, requesterGUID
 
 	if (msg == 'inv' or msg == 'invite') and IsFriend(requesterGUID) then
 		-- have to use name and realm to invite cross realm or faction
-		local name, realm = UnitNameFromGUID(requesterGUID)
-		if realm ~= nil then
-			C_PartyInfo.InviteUnit(name .. '-' .. realm)
-		else
-			C_PartyInfo.InviteUnit(name)
+		local name, realmOrSurname = UnitNameFromGUID(requesterGUID)
+		if addon:IsForever() then -- TODO: fixup for 12.1.5
+			name = name .. Constants.CharacterNameSeparatorConsts.CHARACTERNAME_SURNAME_SEPARATOR .. realmOrSurname
+		elseif realmOrSurname ~= nil then
+			name = name .. '-' .. realmOrSurname
 		end
+
+		C_PartyInfo.InviteUnit(name)
 	end
 end
 
