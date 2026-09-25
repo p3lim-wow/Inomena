@@ -177,6 +177,7 @@ read_globals = {
 	'GameTooltip_SetDefaultAnchor',
 	'GenerateClosure',
 	'GenerateFlatClosure',
+	'GetCreatureDifficultyColor',
 	'GetMoneyString',
 	'HideUIPanel',
 	'RegisterAttributeDriver',

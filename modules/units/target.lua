@@ -46,7 +46,12 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Name:SetPoint('LEFT', addon.SPACING, 0)
 	Name:SetPoint('RIGHT', HealthValue, 'LEFT', -addon.SPACING, 0)
 	Name:SetJustifyH('LEFT')
-	self:Tag(Name, '[inomena:classificationcolor][inomena:name<$|r]')
+
+	if addon:IsRetail() then
+		self:Tag(Name, '[inomena:quest][inomena:classificationcolor][inomena:name<$|r]')
+	else
+		self:Tag(Name, '[inomena:quest][inomena:level<$ ][inomena:classificationcolor][inomena:name<$|r]')
+	end
 
 	local RaidIcon = HealthValue:GetParent():CreateTexture('OVERLAY') -- higher parent
 	RaidIcon:SetPoint('CENTER', Health, 'TOP')

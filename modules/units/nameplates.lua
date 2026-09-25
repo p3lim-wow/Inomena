@@ -199,7 +199,12 @@ oUF:RegisterStyle(styleName, function(self)
 	Name:SetFrameLevel(10)
 	Name:SetSmoothScaling(true)
 	self.Name = Name
-	self:Tag(Name, '[inomena:quest][inomena:nameplatecolor][inomena:name<$|r]')
+
+	if addon:IsRetail() then
+		self:Tag(Name, '[inomena:quest][inomena:nameplatecolor][inomena:name<$|r]')
+	else
+		self:Tag(Name, '[inomena:quest][inomena:level<$ ][inomena:nameplatecolor][inomena:name<$|r]')
+	end
 
 	local FriendlyName = self:CreateText(14)
 	FriendlyName:SetPoint('CENTER')

@@ -121,6 +121,25 @@ tags.Methods['inomena:name'] = function(unit)
 	return addon:UnitName(unit)
 end
 
+tags.Events['inomena:level'] = 'UNIT_LEVEL PLAYER_LEVEL_UP UNIT_CLASSIFICATION_CHANGED'
+tags.Methods['inomena:level'] = function(unit)
+	local level = UnitEffectiveLevel(unit)
+	local text
+	if level > 0 then
+		local color = GetCreatureDifficultyColor(level)
+		text = Hex(color) .. level .. '|r'
+	else
+		text = '|cffff0000??|r'
+	end
+
+	local classification = UnitClassification(unit)
+	if classification == 'elite' or classification == 'rareelite' then
+		text = text .. '|cffffff00+|r'
+	end
+
+	return text
+end
+
 tags.Events['inomena:leader'] = 'PARTY_LEADER_CHANGED'
 tags.Methods['inomena:leader'] = function(unit)
 	if UnitIsGroupLeader(unit) then
