@@ -5,11 +5,17 @@ local _, addon = ...
 local AVG_VALUE = '%.2f hours/day'
 local LAUNCH_EU = 1108080000 -- Febrary 11th 2005
 
-local sessionStart, playerNameClass
+local sessionStart, playerIdentifier
 local chatFrameEvents = addon:T()
 function addon:OnLogin()
 	sessionStart = GetTime()
-	playerNameClass = UnitName('player') .. ':' .. addon.PLAYER_CLASS
+
+	if addon:IsForever() then
+		local name, surname = UnitName('player')
+		playerIdentifier = name .. '_' .. surname
+	else
+		playerIdentifier = GetRealmName() .. '-' .. UnitName('player')
+	end
 
 	-- prevent our request from triggering chat messages on login
 	for index = 1, Constants.ChatFrameConstants.MaxChatWindows do
@@ -23,16 +29,21 @@ function addon:OnLogin()
 end
 
 function addon:TIME_PLAYED_MSG(total)
-	if not InomenaPlayed then
-		InomenaPlayed = {}
+	if not InomenaPlayed2 then
+		InomenaPlayed2 = {}
 	end
 
-	if not InomenaPlayed[addon.PLAYER_REALM] then
-		InomenaPlayed[addon.PLAYER_REALM] = {}
+	if InomenaPlayed and addon:IsRetail() then
+		for realm, chars in next, InomenaPlayed do
+			for char, seconds in next, chars do
+				InomenaPlayed2[realm .. '-' .. char] = seconds
+			end
+		end
+
+		InomenaPlayed = nil
 	end
 
-	-- update stored play time with data from server
-	InomenaPlayed[addon.PLAYER_REALM][playerNameClass] = total
+	InomenaPlayed2[playerIdentifier] = total
 
 	if chatFrameEvents then
 		-- restore chat frame events
@@ -47,8 +58,8 @@ end
 
 function addon:OnLogout()
 	-- update stored play time on session end
-	local played = InomenaPlayed[addon.PLAYER_REALM][playerNameClass]
-	InomenaPlayed[addon.PLAYER_REALM][playerNameClass] = played + (sessionStart - GetTime())
+	local played = InomenaPlayed2[playerIdentifier]
+	InomenaPlayed2[playerIdentifier] = played + (sessionStart - GetTime())
 end
 
 local function formatAverage(total)
@@ -59,10 +70,8 @@ end
 hooksecurefunc(ChatFrameUtil, 'DisplayTimePlayed', function(chatFrame)
 	-- tally up total play time across all characters
 	local total = 0
-	for _, characters in next, InomenaPlayed do
-		for _, seconds in next, characters do
-			total = total + seconds
-		end
+	for _, seconds in next, InomenaPlayed2 do
+		total = total + seconds
 	end
 
 	-- format tally in a human readable way

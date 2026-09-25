@@ -28,6 +28,7 @@ globals = {
 
 	-- savedvariables
 	'InomenaPlayed',
+	'InomenaPlayed2',
 	'OPie_SavedData', -- we mutate OPie's savedvariables
 }
 
