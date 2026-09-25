@@ -146,3 +146,32 @@ function addon:ResizePillsToFit(pills, numPills, spacing)
 		end
 	end
 end
+
+do
+	local NAME_SPACING = Constants.CharacterNameSeparatorConsts.CHARACTERNAME_SURNAME_SEPARATOR
+	local function unitName(isHuman, name, realmOrSurname)
+		if name == nil then
+			return -- this can happen with UnitNameFromGUID (?)
+		end
+
+		if addon:IsForever() and isHuman then
+			name = name .. NAME_SPACING .. realmOrSurname
+		end
+
+		if addon:IsForever() then
+			return name
+		else
+			return name, realmOrSurname
+		end
+	end
+
+	function addon:UnitName(unit)
+		-- using unmodified name so toys and whatnot don't mask the unit
+		return unitName(UnitIsHumanPlayer(unit), UnitNameUnmodified(unit))
+	end
+
+	function addon:UnitNameFromGUID(unitGUID)
+		-- GetPlayerInfoByGUID is a stand-in for UnitIsHumanPlayer
+		return unitName((GetPlayerInfoByGUID(unitGUID)), UnitNameFromGUID(unitGUID))
+	end
+end

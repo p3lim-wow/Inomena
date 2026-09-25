@@ -43,7 +43,7 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 	local r, g, b = color:GetRGB()
 	tooltip.StatusBar:SetStatusBarColor(r, g, b)
 
-	local name, realm = UnitNameFromGUID(unitGUID)
+	local name, realm = addon:UnitNameFromGUID(unitGUID)
 	if realm ~= nil then
 		tooltip:AddLine(FORMAT_NAME_REALM:format(name, realm), r, g, b)
 	elseif name ~= nil then

@@ -30,7 +30,7 @@ end
 
 function addon.unitShared.PostInterruptedCast(element, _, _, interruptedByGUID)
 	-- try to display who interrupted the cast
-	local name = UnitNameFromGUID(interruptedByGUID)
+	local name = addon:UnitNameFromGUID(interruptedByGUID)
 	local _, classToken = UnitClassFromGUID(interruptedByGUID)
 	if classToken ~= nil then
 		local color = C_ClassColor.GetClassColor(classToken)
