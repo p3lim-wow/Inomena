@@ -33,6 +33,13 @@ oUF.colors.health:SetCurve({
 	[1] = oUF.colors.reaction[5],
 })
 
+-- custom happiness colors, the defaults are too bright
+oUF.colors.happiness = {
+	oUF:CreateColor(194, 42, 7),
+	oUF:CreateColor(192, 160, 40),
+	oUF:CreateColor(25, 113, 33),
+}
+
 -- oUF doesn't use the rune power type for colors, so we have to map it when replacing
 oUF.colors.runes[addon.enums.ClassSpecializations.DEATHKNIGHT.Blood] = oUF:CreateColor(addon.colors.power[Enum.PowerType.RuneBlood]:GetRGB())
 oUF.colors.runes[addon.enums.ClassSpecializations.DEATHKNIGHT.Frost] = oUF:CreateColor(addon.colors.power[Enum.PowerType.RuneFrost]:GetRGB())

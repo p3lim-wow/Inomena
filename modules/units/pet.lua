@@ -11,6 +11,7 @@ oUF:RegisterStyle(styleName, function(self)
 	local Health = self:CreateBackdropStatusBar()
 	Health:SetPoint('TOP')
 	Health:SetSize(self:GetWidth(), 10)
+	Health.colorHappiness = true
 	Health.colorSmooth = true
 	self.Health = Health
 
