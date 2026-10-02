@@ -207,6 +207,7 @@ local UVARS = { -- unexposed (hidden) settings
 	rawMouseEnable = 1,
 	SoftTargetInteractArc = 1,
 	encounterTimelineShowSequenceCount = 1,
+	tooltipShowAuraCasterNames = 1,
 }
 
 function addon:OnLogin()
