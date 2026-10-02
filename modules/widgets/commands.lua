@@ -116,7 +116,7 @@ end)
 addon:RegisterSlash('/tt', function(msg)
 	if UnitIsPlayer('target') and UnitIsFriend('player', 'target') and msg and msg:len() > 0 then
 		local name
-		if NameUtil.GetUnmodifiedUnitFullName then
+		if NameUtil and NameUtil.GetUnmodifiedUnitFullName then
 			name = NameUtil.GetUnmodifiedUnitFullName('target')
 		else -- TODO: remove in 12.1.5/1.60.x
 			local realm
