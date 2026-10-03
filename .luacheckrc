@@ -383,6 +383,7 @@ read_globals = {
 	'IsEncounterInProgress',
 	'IsFlyableArea',
 	'IsGUIDInGroup',
+	'IsInGroup',
 	'IsInInstance',
 	'IsInRaid',
 	'IsPVPTimerRunning',
