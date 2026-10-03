@@ -126,6 +126,10 @@ do
 				if addon.CLASS_HARMFUL_DISPEL_SELF_SPELLS[addon.PLAYER_CLASS] then
 					inject(dispelTypes, addon.CLASS_HARMFUL_DISPEL_SELF_SPELLS[addon.PLAYER_CLASS])
 				end
+			elseif unit == 'pet' then
+				if addon.CLASS_HARMFUL_DISPEL_PET_SPELLS[addon.PLAYER_CLASS] then
+					inject(dispelTypes, addon.CLASS_HARMFUL_DISPEL_PET_SPELLS[addon.PLAYER_CLASS])
+				end
 			end
 		end
 

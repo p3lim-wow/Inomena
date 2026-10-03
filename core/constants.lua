@@ -230,6 +230,53 @@ addon.CLASS_HARMFUL_DISPEL_SELF_SPELLS = {
 	},
 }
 
+addon.CLASS_HARMFUL_DISPEL_PET_SPELLS = {
+	HUNTER = {
+		[136] = { -- Mend Pet
+			Magic = addon:IsRetail() and 343242 or 19572, -- Wilderness Medicine / Improved Mend Pet
+			Poison = 19572, -- Improved Mend Pet
+			Curse = 19572, -- Improved Mend Pet
+			Disease = 19572, -- Improved Mend Pet
+		},
+		[3111] = { -- Mend Pet (rank 2)
+			Magic = 19572, -- Improved Mend Pet
+			Poison = 19572, -- Improved Mend Pet
+			Curse = 19572, -- Improved Mend Pet
+			Disease = 19572, -- Improved Mend Pet
+		},
+		[3661] = { -- Mend Pet (rank 3)
+			Magic = 19572, -- Improved Mend Pet
+			Poison = 19572, -- Improved Mend Pet
+			Curse = 19572, -- Improved Mend Pet
+			Disease = 19572, -- Improved Mend Pet
+		},
+		[3662] = { -- Mend Pet (rank 4)
+			Magic = 19572, -- Improved Mend Pet
+			Poison = 19572, -- Improved Mend Pet
+			Curse = 19572, -- Improved Mend Pet
+			Disease = 19572, -- Improved Mend Pet
+		},
+		[13542] = { -- Mend Pet (rank 5)
+			Magic = 19572, -- Improved Mend Pet
+			Poison = 19572, -- Improved Mend Pet
+			Curse = 19572, -- Improved Mend Pet
+			Disease = 19572, -- Improved Mend Pet
+		},
+		[13543] = { -- Mend Pet (rank 6)
+			Magic = 19572, -- Improved Mend Pet
+			Poison = 19572, -- Improved Mend Pet
+			Curse = 19572, -- Improved Mend Pet
+			Disease = 19572, -- Improved Mend Pet
+		},
+		[13544] = { -- Mend Pet (rank 7)
+			Magic = 19572, -- Improved Mend Pet
+			Poison = 19572, -- Improved Mend Pet
+			Curse = 19572, -- Improved Mend Pet
+			Disease = 19572, -- Improved Mend Pet
+		},
+	}
+}
+
 addon.RACE_HARMFUL_DISPEL_SPELLS = {
 	[2] = { -- Orc
 		[1299026] = { -- Shatter Curse

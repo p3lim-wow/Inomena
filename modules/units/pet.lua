@@ -49,6 +49,8 @@ oUF:RegisterStyle(styleName, function(self)
 	local Status = self:CreateText()
 	Status:SetPoint('CENTER', Health)
 	self:Tag(Status, '[inomena:dead]')
+
+	addon.unitShared.CreateDispelOverlay(self, true)
 end)
 
 oUF:SetActiveStyle(styleName)
