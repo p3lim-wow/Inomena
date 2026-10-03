@@ -102,7 +102,7 @@ do
 	end
 
 	local dispelTypes = {} -- intentionally use a normal table here
-	function addon:GetDispelTypes(kind, includePlayerOnly)
+	function addon:GetDispelTypes(kind, unit)
 		table.wipe(dispelTypes)
 
 		if kind == 'HELPFUL' then
@@ -118,7 +118,7 @@ do
 				inject(dispelTypes, addon.CLASS_HARMFUL_DISPEL_SPELLS[addon.PLAYER_CLASS])
 			end
 
-			if includePlayerOnly then
+			if unit == 'player' then
 				if addon.RACE_HARMFUL_DISPEL_SPELLS[addon.PLAYER_RACE] then
 					inject(dispelTypes, addon.RACE_HARMFUL_DISPEL_SPELLS[addon.PLAYER_RACE])
 				end

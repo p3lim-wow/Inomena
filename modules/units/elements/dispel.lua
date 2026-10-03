@@ -1,9 +1,9 @@
 local _, addon = ...
 
-local function dispelCallback(element, includePlayerOnly)
+local function dispelCallback(element, unit)
 	-- we only want this overlay for debuffs the player can dispel
 	element:SetAuraSlotCandidateFilters(element.slotKey, {
-		includeDispelTypes = addon:GetDispelTypes('HARMFUL', includePlayerOnly)
+		includeDispelTypes = addon:GetDispelTypes('HARMFUL', unit)
 	})
 end
 
@@ -48,7 +48,7 @@ local function createButton(element, _, button)
 	})
 end
 
-function addon.unitShared.CreateDispelOverlay(frame, includePlayerOnly)
+function addon.unitShared.CreateDispelOverlay(frame)
 	local DispelOverlay = frame:CreateAuras()
 	DispelOverlay.PostUpdate = reactionCallback
 	DispelOverlay.slotKey = DispelOverlay:AddSlot('HARMFUL', {
@@ -56,7 +56,7 @@ function addon.unitShared.CreateDispelOverlay(frame, includePlayerOnly)
 	})
 
 	-- adjust candidate filters whenever the player spells change, and on load
-	local filterCallback = GenerateFlatClosure(dispelCallback, DispelOverlay, includePlayerOnly)
+	local filterCallback = GenerateFlatClosure(dispelCallback, DispelOverlay, frame.__unit)
 	frame:RegisterEvent('SPELLS_CHANGED', filterCallback, true)
 	filterCallback()
 
