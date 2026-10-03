@@ -3,8 +3,8 @@ local oUF = addon.oUF
 
 local function updateOutlineAnchors(self)
 	local relative = self.Castbar:IsShown() and self.Castbar or self.Health
-	self.TargetOutline:SetPoint('BOTTOM', relative, 0, -4)
-	self.TargetOutline.edges.Bottom:SetPoint('TOP', relative, 'BOTTOM')
+	self.TargetIndicator:SetPoint('BOTTOM', relative, 0, -4)
+	self.TargetIndicator.edges.Bottom:SetPoint('TOP', relative, 'BOTTOM')
 end
 
 local function isInvalidPvPUnit(unit)
@@ -57,7 +57,6 @@ local function updateOnAdded(self)
 	self.FriendlyName:Hide()
 	self.PetIcon:SetShown(UnitIsOtherPlayersPet(unit))
 	self.EliteIcon:SetShown(classification == 'elite' and not fullSize)
-	self.TargetOutline:SetShown(isTarget)
 
 	local auraOffset = isTarget and 3 or 0
 	self.Buffs:SetPointsOffset(auraOffset, addon.SPACING + auraOffset)
@@ -326,15 +325,14 @@ oUF:RegisterStyle(styleName, function(self)
 
 	local TargetOutline = addon:CreateOutline(Health)
 	TargetOutline:SetColor(1, 1, 1)
-	TargetOutline:Hide()
-	self.TargetOutline = TargetOutline
+	TargetOutline.PostUpdate = GenerateFlatClosure(updateOnAdded, self)
+	self.TargetIndicator = TargetOutline
 
 	-- TODO: focus outline or something
 
 	self:RegisterEvent('PLAYER_REGEN_DISABLED', updateOnAdded, true) -- for combat state changes
 	self:RegisterEvent('PLAYER_REGEN_ENABLED', updateOnAdded, true) -- for combat state changes
 	self:RegisterEvent('PLAYER_FOCUS_CHANGED', updateHealthColor, true)
-	self:RegisterEvent('PLAYER_TARGET_CHANGED', updateOnAdded, true)
 	self:RegisterEvent('UNIT_FLAGS', updateOnAdded) -- for reaction state changes
 	self:RegisterEvent('UNIT_FACTION', updateOnAdded) -- for reaction state changes
 	self:RegisterEvent('UNIT_HEALTH', updateOnAdded) -- extra updates

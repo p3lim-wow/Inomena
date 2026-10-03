@@ -1,18 +1,10 @@
 local _, addon = ...
 local oUF = addon.oUF
 
-local function updateOutline(self)
-	self.FocusOutline:SetShown(UnitIsUnit(self.__unit, 'focus'))
-end
-
 local function updateOutlineAnchors(self)
-	if self.Castbar:IsShown() then
-		self.FocusOutline:SetPoint('BOTTOM', self.Castbar, 0, -4)
-		self.FocusOutline.edges.Bottom:SetPoint('TOP', self.Castbar, 'BOTTOM')
-	else
-		self.FocusOutline:SetPoint('BOTTOM', self.Health, 0, -4)
-		self.FocusOutline.edges.Bottom:SetPoint('TOP', self.Health, 'BOTTOM')
-	end
+	local relative = self.Castbar:IsShown() and self.Castbar or self.Power
+	self.FocusIndicator:SetPoint('BOTTOM', relative, 0, -4)
+	self.FocusIndicator.edges.Bottom:SetPoint('TOP', relative, 'BOTTOM')
 end
 
 local styleName = addon.unitPrefix .. 'Boss'
@@ -153,11 +145,8 @@ oUF:RegisterStyle(styleName, function(self, unit)
 
 	local FocusOutline = addon:CreateOutline(Health)
 	FocusOutline:SetColor(1, 0, 0)
-	FocusOutline:Hide()
-	self.FocusOutline = FocusOutline
-
-	self:RegisterEvent('PLAYER_FOCUS_CHANGED', updateOutline, true)
-	self:RegisterEvent('PLAYER_LOGIN', updateOutline, true)
+	FocusOutline.PostUpdate = GenerateFlatClosure(updateOutlineAnchors, self)
+	self.FocusIndicator = FocusOutline
 end)
 
 oUF:SetActiveStyle(styleName)
