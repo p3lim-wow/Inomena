@@ -139,7 +139,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Debuffs.PostCreateButton = addon.unitShared.PostCreateAura
 	Debuffs:AddGroup('HARMFUL')
 
-	addon.unitShared.CreateDispelOverlay(self, true)
+	addon.unitShared.CreateDispelOverlay(self)
 
 	local RaidIcon = HealthValue:GetParent():CreateTexture('OVERLAY') -- higher parent
 	RaidIcon:SetPoint('CENTER', self, 'TOP')
