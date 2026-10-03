@@ -59,7 +59,9 @@ do
 
 	local function updateMiddleClick(self)
 		local macroTexts = addon:T()
-		if addon.CLASS_HARMFUL_DISPEL_SPELLS[addon.PLAYER_CLASS] then
+		if addon:IsRetail() and addon.CLASS_HARMFUL_DISPEL_SPELLS[addon.PLAYER_CLASS] then
+			-- this is really hard to do in Forever since there are different spells for each dispel
+			-- type, need to see if we can find a good solution to that
 			for spellID in next, addon.CLASS_HARMFUL_DISPEL_SPELLS[addon.PLAYER_CLASS] do
 				if C_SpellBook.IsSpellInSpellBook(spellID) then
 					macroTexts:insert('/cast [@mouseover,exists,help,nodead] ' .. C_Spell.GetSpellName(spellID))
@@ -69,13 +71,43 @@ do
 		end
 
 		local resurrectSpellID = addon.CLASS_RESURRECT_SPELLS[addon.PLAYER_CLASS]
-		if resurrectSpellID and C_SpellBook.IsSpellInSpellBook(resurrectSpellID) then
-			macroTexts:insert('/cast [@mouseover,exists,help,dead,nocombat] ' .. C_Spell.GetSpellName(resurrectSpellID))
+		if resurrectSpellID then
+			local bestSpellID
+			if type(resurrectSpellID) == 'table' then
+				-- pick the highest rank
+				for _, spellID in ipairs(resurrectSpellID) do
+					if C_SpellBook.IsSpellInSpellBook(spellID) then
+						bestSpellID = spellID
+						break
+					end
+				end
+			elseif C_SpellBook.IsSpellInSpellBook(resurrectSpellID) then
+				bestSpellID = resurrectSpellID
+			end
+
+			if bestSpellID then
+				macroTexts:insert('/cast [@mouseover,exists,help,dead,nocombat] ' .. C_Spell.GetSpellName(bestSpellID))
+			end
 		end
 
 		local resurrectCombatSpellID = addon.CLASS_RESURRECT_COMBAT_SPELLS[addon.PLAYER_CLASS]
-		if resurrectCombatSpellID and C_SpellBook.IsSpellInSpellBook(resurrectCombatSpellID) then
-			macroTexts:insert('/cast [@mouseover,exists,help,dead,combat] ' .. C_Spell.GetSpellName(resurrectCombatSpellID))
+		if resurrectCombatSpellID then
+			local bestSpellID
+			if type(resurrectCombatSpellID) == 'table' then
+				-- pick the highest rank
+				for _, spellID in ipairs(resurrectCombatSpellID) do
+					if C_SpellBook.IsSpellInSpellBook(spellID) then
+						bestSpellID = spellID
+						break
+					end
+				end
+			elseif C_SpellBook.IsSpellInSpellBook(resurrectCombatSpellID) then
+				bestSpellID = resurrectCombatSpellID
+			end
+
+			if bestSpellID then
+				macroTexts:insert('/cast [@mouseover,exists,help,dead,combat] ' .. C_Spell.GetSpellName(bestSpellID))
+			end
 		elseif JUMPER_CABLES_ITEM_ID then
 			macroTexts:insert('/use [@mouseover,exists,help,dead,combat] item:' .. JUMPER_CABLES_ITEM_ID)
 		end

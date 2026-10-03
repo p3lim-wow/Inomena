@@ -48,12 +48,12 @@ for classIndex = 1, GetNumClasses() do
 end
 
 addon.CLASS_RESURRECT_SPELLS = {
-	DRUID = 50769, -- Revive
+	DRUID = addon:IsForever() and {1237951, 1237950, 1237949, 1237948, 437138} or 50769, -- Revive
 	EVOKER = 361227, -- Return
 	MONK = 115178, -- Resuscitate
-	PALADIN = 7328, -- Redemption
-	PRIEST = 2006, -- Resurrection
-	SHAMAN = 2008, -- Ancestral Spirit
+	PALADIN = {20773, 20772, 10324, 10322, 7328}, -- Redemption
+	PRIEST = {20770, 10881, 10880, 2010, 2006}, -- Resurrection
+	SHAMAN = {20777, 20776, 20610, 20609, 2008}, -- Ancestral Spirit
 }
 
 addon.CLASS_MASS_RESURRECT_SPELLS = {
@@ -67,28 +67,41 @@ addon.CLASS_MASS_RESURRECT_SPELLS = {
 
 addon.CLASS_RESURRECT_COMBAT_SPELLS = {
 	DEATHKNIGHT = 61999, -- Raise Ally
-	DRUID = 20484, -- Rebirth
+	DRUID = {20748, 20747, 20742, 20739, 20484}, -- Rebirth
 	PALADIN = 391054, -- Intercession
 	WARLOCK = 20707, -- Soulstone
 }
 
 addon.CLASS_BUFF_SPELLS = {
-	DRUID = 1126, -- Mark of the Wild
+	DRUID = {9885, 9884, 8907, 5234, 6756, 5232, 1126}, -- Mark of the Wild
 	EVOKER = 364342, -- Blessing of the Bronze
-	MAGE = 1459, -- Arcane Intellect
-	PRIEST = 21562, -- Power Word: Fortitude
-	SHAMAN = {462854, {52127, 192106}}, -- Skyfury + Water/Lightning Shield
-	WARRIOR = 6673, -- Battle Shout
+	MAGE = {10157, 10156, 1461, 1460, 1459}, -- Arcane Intellect
+	PRIEST = addon:IsForever() and {10938, 10937, 2791, 1245, 1244, 1243} or 21562, -- Power Word: Fortitude
+	-- SHAMAN = {462854, {52127, 192106}}, -- Skyfury + Water/Lightning Shield
+	SHAMAN = addon:IsRetail() and 462854, -- Skyfury
+	WARRIOR = addon:IsRetail() and 6673, -- Battle Shout
+}
+
+addon.CLASS_BUFF_GROUP_SPELLS = { -- forever only
+	DRUID = {21850, 21849}, -- Gift of the Wild
+	MAGE = 23028, -- Arcane Brilliance
+	PRIEST = {21564, 21562}, -- Prayer of Fortitude
 }
 
 addon.CLASS_HARMFUL_DISPEL_SPELLS = {
 	DRUID = {
-		[88423] = { -- Nature's Cure (Restoration only)
-			Magic = true,
+		[2782] = { -- Remove Corruption (non-Restoration) @ retail / Remove Curse @ forever
 			Curse = true,
-			Poison = true,
+			Poison = addon:IsRetail(),
 		},
-		[2782] = { -- Remove Corruption (non-Restoration)
+		[2893] = { -- Abolish Poison @ forever
+			Poison = addon:IsForever(),
+		},
+		[8946] = { -- Cure Poison @ forever
+			Poison = addon:IsForever(),
+		},
+		[88423] = { -- Nature's Cure (Restoration only) @ retail
+			Magic = true,
 			Curse = true,
 			Poison = true,
 		},
@@ -109,7 +122,7 @@ addon.CLASS_HARMFUL_DISPEL_SPELLS = {
 		},
 	},
 	MAGE = {
-		[475] = { -- Remove Curse
+		[475] = { -- Remove Curse @ retail / Remove Lesser Curse @ forever
 			Curse = true,
 		},
 	},
@@ -125,34 +138,59 @@ addon.CLASS_HARMFUL_DISPEL_SPELLS = {
 		},
 	},
 	PALADIN = {
-		[4987] = { -- Cleanse (Holy only)
-			Magic = true,
-			Poison = 393024, -- with Improved Cleanse talent
-			Disease = 393024, -- with Improved Cleanse talent
+		[1152] = { -- Purify @ forever
+			Poison = addon:IsForever(),
+			Disease = addon:IsForever(),
 		},
-		[213644] = { -- Cleanse Toxins (non-Holy)
+		[4987] = { -- Cleanse (Holy only) @ retail / Cleanse @ forever
+			Magic = true,
+			Poison = addon:IsForever() or (addon:IsRetail() and 393024), -- with Improved Cleanse talent @ retail
+			Disease = addon:IsForever() or (addon:IsRetail() and 393024), -- with Improved Cleanse talent @ retail
+		},
+		[213644] = { -- Cleanse Toxins (non-Holy) @ retail
 			Poison = true,
 			Disease = true,
 		},
 	},
 	PRIEST = {
-		[527] = { -- Purify (Holy and Discipline)
+		[527] = { -- Purify (Holy and Discipline) @ retail / Dispel Magic @ forever
 			Magic = true,
-			Disease = 390632, -- with Improved Purify talent
+			Disease = addon:IsRetail() and 390632, -- with Improved Purify talent @ retail
 		},
-		[213634] = { -- Purify Disease (Shadow)
+		[528] = { -- Cure Disease @ forever
+			Disease = addon:IsForever(),
+		},
+		[552] = { -- Abolish Disease @ forever
+			Disease = addon:IsForever(),
+		},
+		[988] = { -- Dispel Magic (rank 2) @ forever
+			Magic = addon:IsForever(),
+		},
+		[213634] = { -- Purify Disease (Shadow) @ retail
 			Disease = true,
 		},
 	},
 	SHAMAN = {
-		[77130] = { -- Purify Spirit (Restoration only)
+		[526] = { -- Curse Poison @ forever
+			Poison = addon:IsForever(),
+		},
+		[2870] = { -- Cure Disease @ forever
+			Disease = addon:IsForever(),
+		},
+		[8166] = { -- Poison Cleansing Totem @ forever
+			Poison = addon:IsForever(),
+		},
+		[8170] = { -- Disease Cleansing Totem @ forever
+			Disease = addon:IsForever(),
+		},
+		[51886] = { -- Cleanse Spirit (non-Restoration) @ retail
+			Curse = true,
+		},
+		[77130] = { -- Purify Spirit (Restoration only) @ retail
 			Magic = true,
 			Curse = 383016, -- with Improved Purify Spirit talent
 		},
-		[51886] = { -- Cleanse Spirit (non-Restoration)
-			Curse = true,
-		},
-		[383013] = { -- Poison Cleansing Totem (2 min cooldown)
+		[383013] = { -- Poison Cleansing Totem @ retail
 			Poison = true,
 		},
 	},
@@ -160,7 +198,7 @@ addon.CLASS_HARMFUL_DISPEL_SPELLS = {
 		[688] = { -- Singe Magic (from Imp pet)
 			-- the actual spellID is 89808, but that's a pet spell and we can't count on it,
 			-- so we check for the summon spell instead
-			Magic = true,
+			Magic = addon:IsRetail(),
 		},
 		[1276452] = { -- Singe Magic (from Grimoire: Imp Lord)
 			-- the actual spellID is 132411, but we can't check for that since it's an override
@@ -193,12 +231,17 @@ addon.CLASS_HARMFUL_DISPEL_SELF_SPELLS = {
 }
 
 addon.RACE_HARMFUL_DISPEL_SPELLS = {
+	[2] = { -- Orc
+		[1299026] = { -- Shatter Curse
+			Curse = true,
+		},
+	},
 	[3] = { -- Dwarf
 		[20594] = { -- Stoneform
-			Magic = true,
+			Magic = addon:IsRetail(),
 			Bleed = true,
 			Poison = true,
-			Curse = true,
+			Curse = addon:IsRetail(),
 			Disease = true,
 		},
 	},
@@ -221,13 +264,13 @@ addon.CLASS_HELPFUL_DISPEL_SPELLS = {
 	},
 	DRUID = {
 		[2908] = { -- Soothe
-			Enrage = true,
+			Enrage = addon:IsRetail(),
 		},
 	},
 	HUNTER = {
 		[19801] = { -- Tranquilizing Shot
 			Enrage = true,
-			Magic = true,
+			Magic = addon:IsRetail(),
 		},
 	},
 	MAGE = {
@@ -244,17 +287,23 @@ addon.CLASS_HELPFUL_DISPEL_SPELLS = {
 		[528] = { -- Dispel Magic
 			Magic = true,
 		},
+		[988] = { -- Dispel Magic (rank 2)
+			Magic = true,
+		},
 		[32375] = { -- Mass Dispel
 			Magic = true,
 		},
 	},
 	ROGUE = {
 		[5938] = { -- Shiv
-			Enrage = true,
+			Enrage = addon:IsRetail(),
 		},
 	},
 	SHAMAN = {
 		[370] = { -- Purge
+			Magic = true,
+		},
+		[8012] = { -- Purge (rank 2)
 			Magic = true,
 		},
 		[378773] = { -- Greater Purge
@@ -265,7 +314,7 @@ addon.CLASS_HELPFUL_DISPEL_SPELLS = {
 		[691] = { -- Devour Magic (from Felhunter pet)
 			-- the actual spellID is 19505, but that's a pet spell and we can't count on it,
 			-- so we check for the summon spell instead
-			Magic = true,
+			Magic = addon:IsRetail(),
 		},
 		[1276467] = { -- Devour Magic (from Grimoire: Fel Ravager)
 			-- the actual spellID is 388215, but we can't check for that since it's an override

@@ -2,11 +2,20 @@ local _, addon = ...
 local oUF = addon.oUF
 
 local CLASS_BUFFS = {}; do
-	for class, spellID in next, addon.CLASS_BUFF_SPELLS do
-		if addon.PLAYER_CLASS == class then
-			CLASS_BUFFS[spellID] = true
+	local function iterateSpells(spellID)
+		if spellID then
+			if type(spellID) == 'table' then
+				for _, spellIDWithRank in ipairs(spellID) do
+					CLASS_BUFFS[spellIDWithRank] = true
+				end
+			else
+				CLASS_BUFFS[spellID] = true
+			end
 		end
 	end
+
+	iterateSpells(addon.CLASS_BUFF_SPELLS[addon.PLAYER_CLASS])
+	iterateSpells(addon.CLASS_BUFF_GROUP_SPELLS[addon.PLAYER_CLASS])
 end
 
 local DEBUFF_FILTER = {
