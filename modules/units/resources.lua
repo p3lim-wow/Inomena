@@ -23,20 +23,24 @@ local function overrideDisplayPower(_, unit)
 			elseif spec == PLAYER_SPECS.Balance then
 				return Enum.PowerType.LunarPower
 			end
-		elseif PLAYER_CLASS == 'HUNTER' then
-			return addon:IsForever() and Enum.PowerType.Mana or Enum.PowerType.Focus
+		elseif PLAYER_CLASS == 'HUNTER' and addon:IsRetail() then
+			return Enum.PowerType.Focus
 		elseif PLAYER_CLASS == 'MAGE' and spec == PLAYER_SPECS.Arcane then
 			return Enum.PowerType.Mana -- it's a rotational important resource for this spec
 		elseif PLAYER_CLASS == 'MONK' and spec ~= PLAYER_SPECS.Mistweaver then
 			return Enum.PowerType.Energy
-		elseif PLAYER_CLASS == 'PRIEST' and spec == PLAYER_SPECS.Shadow then
+		elseif PLAYER_CLASS == 'PRIEST' and spec == PLAYER_SPECS.Shadow and addon:IsRetail() then
 			return Enum.PowerType.Insanity
 		elseif PLAYER_CLASS == 'ROGUE' then
 			return Enum.PowerType.Energy
-		elseif PLAYER_CLASS == 'SHAMAN' and spec == PLAYER_SPECS.Elemental then
+		elseif PLAYER_CLASS == 'SHAMAN' and spec == PLAYER_SPECS.Elemental and addon:IsRetail() then
 			return Enum.PowerType.Maelstrom
 		elseif PLAYER_CLASS == 'WARRIOR' then
 			return Enum.PowerType.Rage
+		end
+
+		if addon:IsForever() then
+			return Enum.PowerType.Mana
 		end
 	end
 end

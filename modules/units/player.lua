@@ -3,13 +3,13 @@ local oUF = addon.oUF
 
 local MANA_CLASSES = {
 	DRUID = true,
-	MAGE = true,
-	PALADIN = true,
-	PRIEST = true,
-	SHAMAN = true,
+	MAGE = addon:IsRetail(),
+	PALADIN = addon:IsRetail(),
+	PRIEST = addon:IsRetail(),
+	SHAMAN = addon:IsRetail(),
 	MONK = true,
 	EVOKER = true,
-	WARLOCK = true,
+	WARLOCK = addon:IsRetail(),
 }
 
 local function overrideDisplayPower()
