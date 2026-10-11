@@ -21,7 +21,7 @@ core\util.lua
 core\bind.lua
 
 modules\settings\bindings\auction.lua [AllowLoadGameType standard]
-modules\settings\bindings\buff.lua [AllowLoadGameType standard]
+modules\settings\bindings\buff.lua
 modules\settings\bindings\drive.lua [AllowLoadGameType standard]
 modules\settings\bindings\eject.lua [AllowLoadGameType standard]
 modules\settings\bindings\misdirect.lua [AllowLoadGameType standard]
