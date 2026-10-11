@@ -4,6 +4,16 @@ local _, addon = ...
 
 local REALM_SUFFIX = addon.colors.tooltip.greyed:WrapTextInColorCode(' (%s)')
 local FORMAT_NAME_REALM = '%s' .. REALM_SUFFIX
+local FORMAT_GUILD = '<%s>'
+local FORMAT_LEVEL = '%s%s %s'
+local FORMAT_LEVEL_PLAYER = '%s %s'
+local FORMAT_CLASSIFICATION = {
+	worldboss = addon.colors.classification.worldboss:WrapTextInColorCode(' Boss'),
+	rare = addon.colors.classification.rare:WrapTextInColorCode(' Rare'),
+	elite = addon.colors.classification.elite:WrapTextInColorCode('+'),
+}
+FORMAT_CLASSIFICATION.rareelite = FORMAT_CLASSIFICATION.elite .. FORMAT_CLASSIFICATION.rare
+
 -- color unit name
 TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(tooltip, data)
 	if tooltip:IsForbidden() or not tooltip:IsTooltipType(Enum.TooltipDataType.Unit) then
@@ -68,6 +78,102 @@ end)
 -- remove some lines
 TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitThreat, function(tooltip)
 	if not tooltip:IsForbidden() then
+		return true
+	end
+end)
+
+-- amalgamation of misc lines we want to remove or customize
+local MATCH_TOOLTIP_LEVEL = '^' .. TOOLTIP_UNIT_LEVEL:gsub('%%s', '')
+local MATCH_TOOLTIP_LEVEL_PET = '^' .. TOOLTIP_WILDBATTLEPET_LEVEL_CLASS:gsub(' %%s', '')
+TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.None, function(tooltip, data)
+	if tooltip:IsForbidden() or not tooltip:IsTooltipType(Enum.TooltipDataType.Unit) then
+		return
+	end
+
+	if issecretvalue(data.leftText) then
+		-- apparently not all lines are secret
+		return
+	elseif data.leftText == PVP then
+		-- WTB Enum.TooltipDataLineType.PvP
+		return true
+	elseif data.leftText == FACTION_HORDE or data.leftText == FACTION_ALLIANCE then
+		-- WTB Enum.TooltipDataLineType.UnitFaction
+		return true
+	elseif data.leftText == CORPSE then
+		-- WTB Enum.TooltipDataLineType.Corpse
+		tooltip:AddLine(data.leftText, addon.colors.tooltip.greyed:GetRGB())
+		return true
+	elseif data.leftText:match('A:friendslist%-recentallies%-yellow') then
+		-- WTB Enum.TooltipDataLineType.RecentAllies
+		return true
+	end
+
+	local _, unit = tooltip:GetUnit()
+	if unit == nil or issecretvalue(unit) then
+		return
+	end
+
+	if UnitIsPlayer(unit) then
+		local guildName = GetGuildInfo(unit)
+		if guildName and data.leftText:match(guildName) then
+			-- WTB Enum.TooltipDataLineType.Guild
+			local color
+			if UnitIsInMyGuild(unit) then
+				color = addon.colors.tooltip.guildie
+			else
+				color = addon.colors.tooltip.guild
+			end
+
+			tooltip:AddLine(FORMAT_GUILD:format(guildName), color:GetRGB())
+
+			return true
+		end
+
+		local localizedClass = UnitClass(unit)
+		if data.leftText:sub(data.leftText:len() - localizedClass:len() + 1) == localizedClass then
+			-- WTB Enum.TooltipDataLineType.UnitClass
+			return true
+		end
+	elseif UnitIsBattlePet(unit) and data.leftText == UnitName(unit) then
+		local color = addon.colors.reaction[UnitReaction(unit, 'player')]
+		if color then
+			-- WTB Enum.TooltipDataLineType.BattlePetName
+			tooltip:AddLine(data.leftText, color:GetRGB())
+			return true
+		end
+	end
+
+	if data.leftText == UnitCreatureFamily(unit) or data.leftText == UnitCreatureType(unit) then
+		-- WTB Enum.TooltipDataLineType.UnitType
+		return true
+	elseif data.leftText:match(MATCH_TOOLTIP_LEVEL) then
+		-- WTB Enum.TooltipDataLineType.UnitLevel
+		local level = UnitEffectiveLevel(unit)
+		local difficulty = C_PlayerInfo.GetContentDifficultyCreatureForPlayer(unit)
+
+		if UnitIsPlayer(unit) then
+			if UnitIsFriend(unit, 'player') then
+				local levelText = addon.colors.tooltip.level:WrapTextInColorCode(level > 0 and level or '??')
+				tooltip:AddLine(FORMAT_LEVEL_PLAYER:format(levelText, UnitRace(unit)), 1, 1, 1)
+				return true
+			else
+				local levelText = addon.colors.difficulty[difficulty]:WrapTextInColorCode(level > 0 and level or '??')
+				local raceText = addon.colors.tooltip.hostile:WrapTextInColorCode(UnitRace(unit))
+				tooltip:AddLine(FORMAT_LEVEL_PLAYER:format(levelText, raceText))
+				return true
+			end
+		else
+			local levelText = addon.colors.difficulty[difficulty]:WrapTextInColorCode(level > 0 and level or '??')
+			local rarityText = FORMAT_CLASSIFICATION[UnitClassification(unit)] or ''
+			local creatureText = UnitCreatureFamily(unit) or UnitCreatureType(unit) or ''
+			tooltip:AddLine(FORMAT_LEVEL:format(levelText, rarityText, creatureText), 1, 1, 1)
+			return true
+		end
+	elseif data.leftText:match(MATCH_TOOLTIP_LEVEL_PET) then
+		-- WTB Enum.TooltipDataLineType.CompanionLevel
+		local levelText = addon.colors.tooltip.levelpet:WrapTextInColorCode(UnitBattlePetLevel(unit))
+		local familyText = _G['BATTLE_PET_NAME_' .. UnitBattlePetType(unit)]
+		tooltip:AddLine(FORMAT_LEVEL_PLAYER:format(levelText, familyText))
 		return true
 	end
 end)

@@ -92,6 +92,15 @@ addon.colors.creature = {
 	trivial = addon:CreateColor(211, 211, 211),
 }
 
+addon.colors.difficulty = {
+	-- copied from QuestDifficultyColors to work with enums
+	[Enum.RelativeContentDifficulty.Trivial] = addon.colors.grey,
+	[Enum.RelativeContentDifficulty.Easy] = addon:CreateColor(64, 191, 64),
+	[Enum.RelativeContentDifficulty.Fair] = addon:CreateColor(255, 209, 0),
+	[Enum.RelativeContentDifficulty.Difficult] = addon:CreateColor(255, 127, 64),
+	[Enum.RelativeContentDifficulty.Impossible] = addon:CreateColor(255, 25, 25),
+}
+
 addon.colors.classification = {
 	worldboss = addon.colors.red,
 	rare = addon.colors.blue,
@@ -128,5 +137,10 @@ addon.colors.chatTab = {
 }
 
 addon.colors.tooltip = {
+	level = addon:CreateColor(255, 208, 0),
+	levelpet = addon.colors.yellow,
+	hostile = addon:CreateColor(255, 51, 0),
+	guild = addon:CreateColor(0, 255, 25),
+	guildie = addon.colors.blue,
 	greyed = addon.colors.grey,
 }
