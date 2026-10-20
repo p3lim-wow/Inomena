@@ -104,9 +104,9 @@ do
 		self:SetVertexColor(C_CurveUtil.EvaluateColorFromBoolean(...):GetRGB())
 	end
 
-	local createTexture = CreateFrame('Frame').CreateTexture
+	local mt = CopyTable(GetButtonMetatable().__index)
 	function widgetMixin:CreateTexture(layer, level)
-		local texture = Mixin(createTexture(self, nil, layer, nil, level), textureMixin)
+		local texture = Mixin(mt.CreateTexture(self, nil, layer, nil, level), textureMixin)
 		addon:PixelPerfect(texture)
 		return texture
 	end

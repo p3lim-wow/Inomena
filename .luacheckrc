@@ -163,6 +163,7 @@ read_globals = {
 
 	-- FrameXML functions
 	'CooldownFrame_Set',
+	'CopyTable',
 	'CreateAnchor',
 	'CreateAtlasMarkup',
 	'CreateColor',
@@ -341,6 +342,7 @@ read_globals = {
 	'GetActionInfo',
 	'GetBattlefieldStatus',
 	'GetBindingKey',
+	'GetButtonMetatable',
 	'GetClassInfo',
 	'GetFramerate',
 	'GetGuildBankMoney',
@@ -364,10 +366,10 @@ read_globals = {
 	'GetNumGuildMembers',
 	'GetNumLootItems',
 	'GetNumSpecializations',
-	'GetPVPDesired',
 	'GetPetActionInfo',
 	'GetPhysicalScreenSize',
 	'GetPlayerInfoByGUID',
+	'GetPVPDesired',
 	'GetRaidRosterInfo',
 	'GetRealmName',
 	'GetRepairAllCost',
