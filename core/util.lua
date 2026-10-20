@@ -2,7 +2,15 @@ local _, addon = ...
 
 do
 	local SCALE = 768 / select(2, GetPhysicalScreenSize())
-	function addon:PixelPerfect(obj)
+	function addon:PixelPerfect(obj, recursive)
+		if obj.CanBeAccessedInContext and not obj:CanBeAccessedInContext() then
+			return
+		end
+
+		if obj.IsForbidden and obj:IsForbidden() then
+			return
+		end
+
 		if obj.SetTexelSnappingBias then
 			obj:SetTexelSnappingBias(0)
 			obj:SetSnapToPixelGrid(false)
@@ -11,8 +19,20 @@ do
 			obj:SetIgnoreParentScale(true)
 			obj:SetScale(SCALE)
 		end
+
 		if obj.SetRoundLayoutToNearestPixel then
 			obj:SetRoundLayoutToNearestPixel(true)
+		end
+
+		if recursive and obj.GetObjectType then
+			-- can't use PixelUtil.SetRoundLayoutToNearestPixelRecursively due to taint issues
+			for _, region in pairs({obj:GetRegions()}) do
+				addon:PixelPerfect(region)
+			end
+
+			for _, child in pairs({obj:GetChildren()}) do
+				addon:PixelPerfect(child, true)
+			end
 		end
 	end
 end

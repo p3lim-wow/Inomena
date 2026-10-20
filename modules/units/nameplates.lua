@@ -155,8 +155,6 @@ oUF:RegisterStyle(styleName, function(self)
 	filler:SetAllPoints()
 	filler:SetColorTexture(0, 0, 0, 0)
 
-	addon:PixelPerfect(self)
-
 	local Health = self:CreateBackdropStatusBar()
 	Health:SetPoint('LEFT')
 	Health:SetPoint('RIGHT')
@@ -340,9 +338,7 @@ oUF:RegisterStyle(styleName, function(self)
 	self:RegisterEvent('UNIT_THREAT_LIST_UPDATE', updateHealthColor) -- unsure if needed
 	addon:RegisterUnitEvent('UNIT_FLAGS', 'player', GenerateFlatClosure(updateOnAdded, self))
 
-	if addon:HasVersion(120105) then
-		PixelUtil.SetRoundLayoutToNearestPixelRecursively(self, true)
-	end
+	addon:PixelPerfect(self, true)
 end)
 
 oUF:SetActiveStyle(styleName)
