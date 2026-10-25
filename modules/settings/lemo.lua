@@ -102,6 +102,12 @@ local SETTINGS = {
 			[Enum.EditModeMinimapSetting.IconScale] = 100,
 		},
 	},
+	MicroMenuContainer = {
+		-- we hide this but reanchor the LFG eye
+		settings = {
+			[Enum.EditModeMicroMenuSetting.EyeSize] = 70,
+		},
+	},
 	ChatFrame1 = {
 		anchor = {'BOTTOMLEFT', UIParent},
 		settings = {
@@ -124,6 +130,12 @@ local SETTINGS = {
 		settings = {
 			[Enum.EditModeStatusTrackingBarSetting.Size] = 80,
 		},
+	},
+	SecondaryStatusTrackingBarContainer = {
+		anchor = {'TOP', UIParent, 0, -10},
+		settings = {
+			[Enum.EditModeStatusTrackingBarSetting.Size] = 80,
+		}
 	},
 	LootFrame = {
 		anchor = {'TOPLEFT', UIParent, 400, -300},
