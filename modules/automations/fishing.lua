@@ -17,6 +17,10 @@ local CVARS = {
 }
 
 local FISHING_SPELLS = {
+	[7620] = true, -- Apprentise channel spell in Forever
+	[7731] = true, -- Journeyman channel spell in Forever
+	[7732] = true, -- Expert channel spell in Forever
+	[18248] = true, -- Artisan channel spell in Forever
 	[131474] = true, -- cast spell
 	[131476] = true, -- cast spell (duplicate? where is this used?)
 	[131490] = true, -- channel spell
