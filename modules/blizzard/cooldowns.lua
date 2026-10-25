@@ -61,7 +61,7 @@ local function skin(group, _, button)
 	end
 
 	-- add backdrop
-	addon:PixelPerfect(button)
+	addon:PixelPerfectUnscaled(button)
 	addon:AddBackdrop(button)
 	button:SetBorderIgnoreParentAlpha(true)
 
@@ -69,6 +69,7 @@ local function skin(group, _, button)
 	button.Icon:SetAllPoints()
 	button.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 	button.Icon:RemoveMaskTexture(button.Icon:GetMaskTexture(1))
+	addon:PixelPerfectUnscaled(button.Icon)
 
 	-- hide overlay texture
 	for _, child in next, {button:GetRegions()} do
@@ -112,6 +113,7 @@ local function skin(group, _, button)
 		button.CustomCooldown:SetCountdownAbbrevThreshold(59)
 		button.CustomCooldown:SetSwipeColor(0, 0, 0, 0.7)
 		button.CustomCooldown:SetTimeFont(group == 'EssentialCooldownViewer' and 20 or 14)
+		addon:PixelPerfectUnscaled(button.CustomCooldown)
 		addon:RegisterEvent('SPELL_UPDATE_COOLDOWN', GenerateClosure(updateCooldown, button))
 		addon:RegisterEvent('SPELL_UPDATE_USABLE', GenerateFlatClosure(updateCooldown, button))
 
@@ -129,6 +131,7 @@ local function skin(group, _, button)
 		button.Cooldown:SetAllPoints(button.Icon)
 		button.Cooldown:SetSwipeTexture(addon.TEXTURE)
 		button.Cooldown:SetIgnoreParentAlpha(true)
+		addon:PixelPerfectUnscaled(button.Cooldown)
 	end
 
 	-- flag utility cooldowns so we can do different things to them

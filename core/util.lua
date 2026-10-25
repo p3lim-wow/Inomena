@@ -35,6 +35,15 @@ do
 			end
 		end
 	end
+
+	function addon:PixelPerfectUnscaled(obj)
+		if obj.SetTexelSnappingBias then
+			obj:SetTexelSnappingBias(0)
+			obj:SetSnapToPixelGrid(false)
+		elseif obj.SetRoundLayoutToNearestPixel then
+			obj:SetRoundLayoutToNearestPixel(true)
+		end
+	end
 end
 
 function addon:IsHalloween()
