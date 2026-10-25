@@ -1,5 +1,10 @@
 local addonName, addon = ...
 
+local LEMO = LibStub and LibStub('LibEditModeOverride-1.0')
+if not LEMO then
+	return
+end
+
 local SETTINGS = {
 	MainActionBar = { -- Action Bar 1
 		anchor = {'BOTTOM', UIParent, 0, 15},
@@ -169,11 +174,6 @@ local SETTINGS = {
 		},
 	},
 }
-
-local LEMO = LibStub and LibStub('LibEditModeOverride-1.0')
-if not LEMO then
-	return
-end
 
 function addon:OnLogin()
 	LEMO:LoadLayouts()
