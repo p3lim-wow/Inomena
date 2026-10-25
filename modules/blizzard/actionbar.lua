@@ -98,6 +98,12 @@ for prefix, numButtons in next, {
 		if prefix == 'PetActionButton' then
 			Icon:SetSize(26, 26)
 
+			button.AutoCastOverlay.Corners:ClearAllPoints()
+			button.AutoCastOverlay.Corners:SetPoint('TOPLEFT', Icon, -2, 2)
+			button.AutoCastOverlay.Corners:SetPoint('BOTTOMRIGHT', Icon, 2, -2)
+
+			addon:Hide(button, 'AutoCastOverlay', 'Mask')
+			addon:Hide(button, 'AutoCastOverlay', 'Shine')
 			addon:Hide(button, 'IconMask')
 		else
 			Icon:SetSize(42, 42)
