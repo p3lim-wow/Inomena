@@ -3,6 +3,7 @@
 ## Title: Inomena
 ## Notes: Collection of bits and bobs that make up my UI
 ## Savedvariables: InomenaPlayed, InomenaPlayed2
+## OptionalDeps: LibEditModeOverride
 ## X-oUF: oUF_Inomena
 
 # files are loaded in order of importance and likelihood of breaking
@@ -112,3 +113,4 @@ modules\compat\handynotes.lua [AllowLoadGameType standard]
 modules\compat\tooltips.lua
 
 modules\settings\opie.lua [AllowLoadGameType standard]
+modules\settings\lemo.lua
