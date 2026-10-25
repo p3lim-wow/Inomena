@@ -97,6 +97,8 @@ for prefix, numButtons in next, {
 		-- set icon size
 		if prefix == 'PetActionButton' then
 			Icon:SetSize(26, 26)
+
+			addon:Hide(button, 'IconMask')
 		else
 			Icon:SetSize(42, 42)
 
