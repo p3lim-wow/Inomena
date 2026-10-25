@@ -92,7 +92,7 @@ local eventCallbacks = {
 }
 
 local function cast(_, _, _, spellID)
-	if InCombatLockdown() or issecretvalue(spellID) then
+	if InCombatLockdown() or issecretvalue(spellID) or UnitIsDeadOrGhost('player') then
 		return
 	elseif spellID == UNDERLIGHT_ANGLER_SPELL_ID then
 		-- the hidden cast for the rod failed, as the fishing equipment buff is not active,
