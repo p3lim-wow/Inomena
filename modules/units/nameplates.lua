@@ -338,7 +338,7 @@ oUF:RegisterStyle(styleName, function(self)
 	self:RegisterEvent('UNIT_THREAT_LIST_UPDATE', updateHealthColor) -- unsure if needed
 	addon:RegisterUnitEvent('UNIT_FLAGS', 'player', GenerateFlatClosure(updateOnAdded, self))
 
-	addon:PixelPerfect(self, true)
+	addon:PixelPerfect(self)
 end)
 
 oUF:SetActiveStyle(styleName)
