@@ -4,6 +4,7 @@ local _, addon = ...
 
 for tooltip, addonName in next, {
 	InteractiveWormholesTooltip = 'InteractiveWormholes',
+	BonusRollPreviewTooltip = 'BonusRollPreview',
 	NotGameTooltip1 = 'OPie',
 	RematchGameTooltip = 'Rematch',
 	WQT_GameTooltip = 'WorldQuestTab', -- fails to use shoppingTooltips table correctly
