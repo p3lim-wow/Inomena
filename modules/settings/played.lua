@@ -29,21 +29,11 @@ function addon:OnLogin()
 end
 
 function addon:TIME_PLAYED_MSG(total)
-	if not InomenaPlayed2 then
-		InomenaPlayed2 = {}
+	if not InomenaPlayed then
+		InomenaPlayed = {}
 	end
 
-	if InomenaPlayed and addon:IsRetail() then
-		for realm, chars in next, InomenaPlayed do
-			for char, seconds in next, chars do
-				InomenaPlayed2[realm .. '-' .. char] = seconds
-			end
-		end
-
-		InomenaPlayed = nil
-	end
-
-	InomenaPlayed2[playerIdentifier] = total
+	InomenaPlayed[playerIdentifier] = total
 
 	if chatFrameEvents then
 		-- restore chat frame events
@@ -58,8 +48,8 @@ end
 
 function addon:OnLogout()
 	-- update stored play time on session end
-	local played = InomenaPlayed2[playerIdentifier]
-	InomenaPlayed2[playerIdentifier] = played + (sessionStart - GetTime())
+	local played = InomenaPlayed[playerIdentifier]
+	InomenaPlayed[playerIdentifier] = played + (sessionStart - GetTime())
 end
 
 local function formatAverage(total)
@@ -70,7 +60,7 @@ end
 hooksecurefunc(ChatFrameUtil, 'DisplayTimePlayed', function(chatFrame)
 	-- tally up total play time across all characters
 	local total = 0
-	for _, seconds in next, InomenaPlayed2 do
+	for _, seconds in next, InomenaPlayed do
 		total = total + seconds
 	end
 

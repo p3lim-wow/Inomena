@@ -2,7 +2,7 @@
 ## Author: p3lim
 ## Title: Inomena
 ## Notes: Collection of bits and bobs that make up my UI
-## Savedvariables: InomenaPlayed, InomenaPlayed2
+## Savedvariables: InomenaPlayed
 ## OptionalDeps: LibEditModeOverride
 ## X-oUF: oUF_Inomena
 
