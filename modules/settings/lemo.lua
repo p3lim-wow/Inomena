@@ -1,6 +1,6 @@
 local addonName, addon = ...
 
-local LEMO = LibStub and LibStub('LibEditModeOverride-1.0')
+local LEMO = LibStub and LibStub('LibEditModeOverride-1.0', true)
 if not LEMO then
 	return
 end
