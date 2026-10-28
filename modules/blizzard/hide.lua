@@ -11,6 +11,8 @@ addon:Hide('MicroMenuContainer')
 addon:Hide('StanceBar')
 addon:Hide('BagsBar')
 addon:Hide('ExpansionLandingPageMinimapButton')
+addon:Hide('MainStatusTrackingBarContainer')
+addon:Hide('SecondaryStatusTrackingBarContainer')
 
 -- we create our own buffs (modules\widgets\buffs.lua)
 addon:Hide('BuffFrame')

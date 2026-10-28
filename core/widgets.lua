@@ -84,13 +84,13 @@ do
 	widgetMixin.statusBarMixin = statusBarMixin
 
 	function widgetMixin:CreateStatusBar(template)
-		local statusBar = Mixin(self:CreateFrame('StatusBar', template), statusBarMixin)
+		local statusBar = Mixin((self.CreateFrame or widgetMixin.CreateFrame)(self, 'StatusBar', template), statusBarMixin)
 		statusBar:SetDefaultOptions()
 		return statusBar
 	end
 
 	function widgetMixin:CreateBackdropStatusBar(template)
-		local statusBar = self:CreateStatusBar(template)
+		local statusBar = (self.CreateStatusBar or widgetMixin.CreateStatusBar)(self, template)
 		statusBar:AddBackdrop()
 		statusBar:SetBackgroundColor(0, 0, 0, 0.7) -- default is hard to see on light backgrounds
 		return statusBar

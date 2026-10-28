@@ -25,6 +25,7 @@ addon.colors.reaction = {}
 for key, color in next, FACTION_BAR_COLORS do
 	addon.colors.reaction[key] = addon:CreateColor(color.r, color.g, color.b)
 end
+addon.colors.reaction[MAX_REPUTATION_REACTION + 1] = addon:CreateColor(0, 127, 229)
 
 addon.colors.power = {}
 for powerToken, color in next, PowerBarColor do
@@ -144,3 +145,7 @@ addon.colors.tooltip = {
 	guildie = addon.colors.blue,
 	greyed = addon.colors.grey,
 }
+
+addon.colors.experience = addon:CreateColor(42, 170, 51)
+addon.colors.rested = addon:CreateColor(0, 99, 224)
+addon.colors.warband = addon:CreateColor(0, 197, 253)

@@ -83,6 +83,7 @@ modules\widgets\mail.lua
 modules\widgets\petbattle.lua [AllowLoadGameType standard]
 modules\widgets\repair.lua [AllowLoadGameType standard]
 modules\widgets\skyriding.lua [AllowLoadGameType standard]
+modules\widgets\standing.lua
 modules\widgets\stats.lua
 modules\widgets\strip.lua [AllowLoadGameType standard]
 modules\widgets\talents.lua [AllowLoadGameType standard]
