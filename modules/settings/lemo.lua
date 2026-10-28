@@ -93,6 +93,9 @@ local SETTINGS = {
 	PossessActionBar = {
 		anchor = {'BOTTOMLEFT', MainActionBar, 'BOTTOMRIGHT', 30, 0},
 	},
+	EncounterBar = {
+		anchor = {'BOTTOMRIGHT', UIParent, 'BOTTOM', -235, 280},
+	},
 	MinimapCluster = {
 		-- we manipulate anchor in modules/blizzard/minimap.lua instead
 		settings = {
