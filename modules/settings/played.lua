@@ -3,7 +3,29 @@ local _, addon = ...
 -- track account-wide played time (because I hate myself)
 
 local AVG_VALUE = '%.2f hours/day'
-local LAUNCH_EU = 1108080000 -- Febrary 11th 2005
+
+local accountInfo = C_BattleNet.GetGameAccountInfoByGUID(UnitGUID('player'))
+local regionID = accountInfo and accountInfo.regionID
+if not regionID then
+	error('Unable to determine region')
+	return
+end
+
+local LAUNCH_DATE
+if addon:IsForever() then
+	LAUNCH_DATE = 1793833200 -- November 4th 2026
+elseif addon:IsRetail() then
+	local dates = {
+		1101186000, -- US: November 23rd 2004
+		1105974000, -- KR: January 18th 2005
+		1108076400, -- EU: Febrary 11th 2005
+		1131379200, -- TW: November 8th 2005
+		1118146800, -- CN: June 7th 2005
+	}
+	LAUNCH_DATE = dates[regionID]
+elseif addon:IsClassic() then
+	LAUNCH_DATE = 1566856800 -- August 26th 2019
+end
 
 local sessionStart, playerIdentifier
 local chatFrameEvents = addon:T()
@@ -53,8 +75,8 @@ function addon:OnLogout()
 end
 
 local function formatAverage(total)
-	-- calculate the average value since the servers opened in 2005
-	return AVG_VALUE:format(total / (GetServerTime() - LAUNCH_EU) * 24)
+	-- calculate the average value since the servers opened
+	return AVG_VALUE:format(total / (GetServerTime() - LAUNCH_DATE) * 24)
 end
 
 hooksecurefunc(ChatFrameUtil, 'DisplayTimePlayed', function(chatFrame)
