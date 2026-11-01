@@ -1,6 +1,6 @@
 local _, addon = ...
 
--- add totems below the minimap
+-- add totems above the 3rd bar (I really wish this could be part of CDM)
 
 local NUM_TOTEMS = 5 -- MAX_TOTEMS is incorrect
 local WIDTH = 44
@@ -21,9 +21,14 @@ local function update(self, slot)
 	end
 end
 
+local parent = CreateFrame('Frame', nil, UIParent)
+parent:SetHeight(1)
+parent:SetPoint('BOTTOM', MultiBarBottomRight, 'TOP', 0, addon.SPACING + 3)
+-- TODO: this might collide with pet bar
+
 for index = 1, NUM_TOTEMS do
-	local Totem = addon:CreateBackdropFrame('Button', nil, UIParent, 'SecureActionButtonTemplate')
-	Totem:SetPoint('TOPLEFT', Minimap, 'BOTTOMLEFT', (index - 1) * (WIDTH + addon.SPACING), -addon.SPACING)
+	local Totem = addon:CreateBackdropFrame('Button', nil, parent, 'SecureActionButtonTemplate')
+	Totem:SetPoint('BOTTOMLEFT', (index - 1) * (WIDTH + addon.SPACING), -addon.SPACING)
 	Totem:SetSize(WIDTH, WIDTH / 2)
 	Totem:SetAttribute('type2', 'destroytotem')
 	Totem:SetAttribute('totem-slot', index)
@@ -41,4 +46,6 @@ for index = 1, NUM_TOTEMS do
 	Duration:SetAllPoints()
 	Duration:SetStatusBarColor(0, 0, 0, 0.7)
 	Totem.Duration = Duration
+
+	parent:SetWidth(parent:GetWidth() + Totem:GetWidth() + addon.SPACING)
 end

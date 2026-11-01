@@ -42,7 +42,6 @@ local SETTINGS = {
 		},
 	},
 	MultiBarRight = { -- Action Bar 4
-		-- TODO: change Y to -10 if we get totem support in CDM
 		anchor = {'TOPRIGHT', Minimap, 'BOTTOMRIGHT', 1, -30}, -- account for border on X offset
 		settings = {
 			[Enum.EditModeActionBarSetting.Orientation] = Enum.ActionBarOrientation.Vertical,
