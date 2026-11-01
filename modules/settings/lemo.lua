@@ -128,18 +128,6 @@ local SETTINGS = {
 			[Enum.EditModeObjectiveTrackerSetting.TextSize] = 12,
 		},
 	},
-	MainStatusTrackingBarContainer = {
-		anchor = {'TOP', UIParent},
-		settings = {
-			[Enum.EditModeStatusTrackingBarSetting.Size] = 80,
-		},
-	},
-	SecondaryStatusTrackingBarContainer = {
-		anchor = {'TOP', UIParent, 0, -10},
-		settings = {
-			[Enum.EditModeStatusTrackingBarSetting.Size] = 80,
-		}
-	},
 	LootFrame = {
 		anchor = {'TOPLEFT', UIParent, 400, -300},
 	},
