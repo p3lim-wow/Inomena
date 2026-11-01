@@ -28,7 +28,6 @@ elseif addon:IsClassic() then
 end
 
 local sessionStart, playerIdentifier
-local chatFrameEvents = addon:T()
 function addon:OnLogin()
 	sessionStart = GetTime()
 
@@ -43,7 +42,6 @@ function addon:OnLogin()
 	for index = 1, Constants.ChatFrameConstants.MaxChatWindows do
 		if _G['ChatFrame' .. index]:IsEventRegistered('TIME_PLAYED_MSG') then
 			_G['ChatFrame' .. index]:UnregisterEvent('TIME_PLAYED_MSG')
-			chatFrameEvents:insert(_G['ChatFrame' .. index])
 		end
 	end
 
@@ -57,14 +55,13 @@ function addon:TIME_PLAYED_MSG(total)
 
 	InomenaPlayed[playerIdentifier] = total
 
-	if chatFrameEvents then
-		-- restore chat frame events
-		for _, chatFrame in next, chatFrameEvents do
-			chatFrame:RegisterEvent('TIME_PLAYED_MSG')
+	for index = 1, Constants.ChatFrameConstants.MaxChatWindows do
+		for _, group in next, _G['ChatFrame' .. index].messageTypeList do
+			if group == 'SYSTEM' then
+				_G['ChatFrame' .. index]:RegisterEvent('TIME_PLAYED_MSG')
+				break
+			end
 		end
-
-		-- ensure we only do that once
-		chatFrameEvents = nil
 	end
 end
 
