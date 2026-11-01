@@ -54,7 +54,7 @@ function addon:IsHalloween()
 	end
 
 	local dateNum = tonumber(string.format('%02d%02d%02d', date.month, date.monthDay, date.hour))
-	return dateNum >= 101810 and dateNum <= 110111
+	return dateNum >= 101910 and dateNum <= 110211
 end
 
 do
