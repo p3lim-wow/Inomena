@@ -274,8 +274,10 @@ oUF:RegisterStyle(raidStyle, function(self, unit)
 	style(self, unit, true)
 end)
 
-oUF:Factory(function(self)
-	local sharedAttributes = {
+local headers = {}
+
+local SpawnHeader; do
+	local ATTRIBUTES = {
 		groupBy = 'ASSIGNEDROLE',
 		groupingOrder = 'TANK,HEALER,DAMAGER',
 		columnAnchorPoint = 'RIGHT',
@@ -285,66 +287,101 @@ oUF:Factory(function(self)
 		yOffset = -addon.SPACING,
 	}
 
-	local function SpawnHeader(styleName, role, attributes, ...)
-		local visibleSpecs = addon:T()
-		for specIndex, specRole in next, addon.CLASS_SPECIALIZATION_ROLE[addon.PLAYER_CLASS] do
-			if role:sub(1, 1) == '!' then
-				if specRole ~= role:sub(2) then
-					visibleSpecs:insert(specIndex)
-				end
-			elseif specRole == role then
-				visibleSpecs:insert(specIndex)
-			end
-		end
-
-		if #visibleSpecs == 0 then
-			return
-		end
-
+	function SpawnHeader(self, styleName, role, attributes, ...)
 		self:SetActiveStyle(styleName)
 
-		local header = self:SpawnHeader(nil, nil, attributes:merge(sharedAttributes))
-		header:SetPoint(...)
-		addon:PixelPerfect(header)
+		local spec
+		if addon:IsForever() then
+			spec = ''
+		else
+			local specs = addon:T()
+			for specIndex, specRole in next, addon.CLASS_SPECIALIZATION_ROLE[addon.PLAYER_CLASS] do
+				if role:sub(1, 1) == '!' then
+					if specRole ~= role:sub(2) then
+						specs:insert(specIndex)
+					end
+				elseif specRole == role then
+					specs:insert(specIndex)
+				end
+			end
+
+			if #specs == 0 then
+				return
+			end
+
+			spec = ',spec:' .. specs:concat('/')
+		end
 
 		local visibility
 		if attributes.showRaid then
-			visibility = 'custom [group:raid,spec:%s] show; hide'
+			visibility = 'custom [group:raid' .. spec .. '] show; hide'
 		else
-			visibility = 'custom [group:party,nogroup:raid,spec:%s] show; hide'
+			visibility = 'custom [group:party,nogroup:raid' .. spec .. '] show; hide'
 		end
 
-		header:SetVisibility(visibility:format(visibleSpecs:concat('/')))
+		local header = self:SpawnHeader(nil, nil, attributes:merge(ATTRIBUTES))
+		header:SetPoint(...)
+		header:SetVisibility(visibility)
+		addon:PixelPerfect(header)
+
+		return header
 	end
+end
 
-	-- same party frames for all roles, so we use a fake negative role to match all roles
-	SpawnHeader(partyStyle, '!ALL', addon:T({
-		showParty = true,
-		showPlayer = true,
-		maxColumns = 1,
-		['oUF-initialConfigFunction'] = [[
-			self:SetWidth(144)
-			self:SetHeight(52)
-		]]
-	}), 'RIGHT', UIParent, 'CENTER', -360, 0)
+-- same party frames for all roles, so we use a fake negative role to match all roles
+SpawnHeader(oUF, partyStyle, '!ALL', addon:T({
+	showParty = true,
+	showPlayer = true,
+	maxColumns = 1,
+	['oUF-initialConfigFunction'] = [[
+		self:SetWidth(144)
+		self:SetHeight(52)
+	]]
+}), 'RIGHT', UIParent, 'CENTER', -360, 0)
 
-	-- healer-specific raid
-	SpawnHeader(raidStyle, 'HEALER', addon:T({
-		showRaid = true,
-		maxColumns = 8,
-		['oUF-initialConfigFunction'] = [[
-			self:SetWidth(92)
-			self:SetHeight(48)
-		]]
-	}), 'RIGHT', UIParent, 'CENTER', -300, 0)
+-- healer-specific raid
+headers.HEALER = SpawnHeader(oUF, raidStyle, 'HEALER', addon:T({
+	showRaid = true,
+	maxColumns = 8,
+	['oUF-initialConfigFunction'] = [[
+		self:SetWidth(92)
+		self:SetHeight(48)
+	]]
+}), 'RIGHT', UIParent, 'CENTER', -300, 0)
 
-	-- dmg & tank use the same raid layout
-	SpawnHeader(raidStyle, '!HEALER', addon:T({
-		showRaid = true,
-		maxColumns = 8,
-		['oUF-initialConfigFunction'] = [[
-			self:SetWidth(80)
-			self:SetHeight(40)
-		]]
-	}), 'RIGHT', UIParent, 'CENTER', -500, -90)
-end)
+-- dmg & tank use the same raid layout
+headers.OTHER = SpawnHeader(oUF, raidStyle, '!HEALER', addon:T({
+	showRaid = true,
+	maxColumns = 8,
+	['oUF-initialConfigFunction'] = [[
+		self:SetWidth(80)
+		self:SetHeight(40)
+	]]
+}), 'RIGHT', UIParent, 'CENTER', -500, -90)
+
+if addon:IsForever() then
+	local LS = LibStub and LibStub('LibSpecialization', true)
+	if LS then
+		local function updateRaidLayout()
+			local _, role = LS.MySpecialization()
+			if role == 'HEALER' then
+				if headers.HEALER.visibility ~= 'hide' then
+					headers.HEALER:SetVisibility('custom [group:raid] show; hide')
+					headers.OTHER:SetVisibility('hide')
+				end
+			else
+				if headers.OTHER.visibility ~= 'hide' then
+					headers.OTHER:SetVisibility('custom [group:raid] show; hide')
+					headers.HEALER:SetVisibility('hide')
+				end
+			end
+		end
+
+		LS.RegisterPlayerSpecChange(addon, function()
+			addon:Defer(updateRaidLayout)
+		end)
+	else
+		-- default to healer layout
+		headers.OTHER:SetVisibility('hide')
+	end
+end
