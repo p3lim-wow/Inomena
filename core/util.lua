@@ -186,6 +186,10 @@ do
 			return -- this can happen with UnitNameFromGUID (?)
 		end
 
+		if not realmOrSurname then
+			realmOrSurname = ''
+		end
+
 		if addon:IsForever() and isHuman then
 			name = name .. Constants.CharacterNameSeparatorConsts.CHARACTERNAME_SURNAME_SEPARATOR .. realmOrSurname
 		end
