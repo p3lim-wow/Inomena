@@ -126,8 +126,8 @@ tags.Methods['inomena:level'] = function(unit)
 	local level = UnitEffectiveLevel(unit)
 	local text
 	if level > 0 then
-		local color = GetCreatureDifficultyColor(level)
-		text = Hex(color) .. level .. '|r'
+		local difficulty = C_PlayerInfo.GetContentDifficultyCreatureForPlayer(unit)
+		text = addon.colors.difficulty[difficulty]:WrapTextInColorCode(level)
 	else
 		text = '|cffff0000??|r'
 	end
