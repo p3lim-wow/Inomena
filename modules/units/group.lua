@@ -34,14 +34,19 @@ local DEBUFF_FILTER_RAID = CreateFromMixins(DEBUFF_FILTER, {
 })
 
 local function overrideDisplayPower(element, unit)
-	-- only show power for healers' mana or blood death knights' runic power
-	local role = UnitGroupRolesAssignedEnum(unit)
-	if role == Enum.LFGRole.Healer then
+	if addon:IsForever() and UnitHasPowerType(unit, Enum.PowerType.Mana) then
+		-- show mana for anyone that uses it
 		return Enum.PowerType.Mana
-	elseif role == Enum.LFGRole.Tank then
-		local _, classToken = UnitClass(unit)
-		if classToken == 'DEATHKNIGHT' then
-			return Enum.PowerType.RunicPower
+	else
+		-- only show power for healers' mana or blood death knights' runic power
+		local role = UnitGroupRolesAssignedEnum(unit)
+		if role == Enum.LFGRole.Healer then
+			return Enum.PowerType.Mana
+		elseif role == Enum.LFGRole.Tank then
+			local _, classToken = UnitClass(unit)
+			if classToken == 'DEATHKNIGHT' then
+				return Enum.PowerType.RunicPower
+			end
 		end
 	end
 
