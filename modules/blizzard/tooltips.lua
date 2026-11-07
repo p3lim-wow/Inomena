@@ -130,7 +130,7 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.None, function(tool
 		end
 
 		local localizedClass = UnitClass(unit)
-		if data.leftText:sub(data.leftText:len() - localizedClass:len() + 1) == localizedClass then
+		if localizedClass and data.leftText:sub(data.leftText:len() - localizedClass:len() + 1) == localizedClass then
 			-- WTB Enum.TooltipDataLineType.UnitClass
 			return true
 		end
