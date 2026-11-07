@@ -104,12 +104,6 @@ local SETTINGS = {
 			[Enum.EditModeMinimapSetting.IconScale] = 100,
 		},
 	},
-	MicroMenuContainer = {
-		-- we hide this but reanchor the LFG eye
-		settings = {
-			[Enum.EditModeMicroMenuSetting.EyeSize] = 70,
-		},
-	},
 	ChatFrame1 = {
 		anchor = {'BOTTOMLEFT', UIParent},
 		settings = {
@@ -177,6 +171,26 @@ local SETTINGS = {
 	},
 }
 
+if addon:IsRetail() then
+	SETTINGS.MicroMenuContainer = {
+		-- we hide this but reanchor the LFG eye
+		settings = {
+			[Enum.EditModeMicroMenuSetting.EyeSize] = 70,
+		},
+	}
+else
+	SETTINGS[MainActionBar.EndCaps.LeftEndCap] = {
+		settings = {
+			[Enum.EditModeMainActionBarEndCapSetting.Hidden] = 1,
+		}
+	}
+	SETTINGS[MainActionBar.EndCaps.RightEndCap] = {
+		settings = {
+			[Enum.EditModeMainActionBarEndCapSetting.Hidden] = 1,
+		}
+	}
+end
+
 function addon:OnLogin()
 	LEMO:LoadLayouts()
 
@@ -187,13 +201,17 @@ function addon:OnLogin()
 	end
 
 	for frame, info in next, SETTINGS do
+		if type(frame) == 'string' then
+			frame = _G[frame]
+		end
+
 		if info.anchor then
-			LEMO:ReanchorFrame(_G[frame], unpack(info.anchor))
+			LEMO:ReanchorFrame(frame, unpack(info.anchor))
 		end
 
 		if info.settings then
 			for setting, value in next, info.settings do
-				LEMO:SetFrameSetting(_G[frame], setting, value)
+				LEMO:SetFrameSetting(frame, setting, value)
 			end
 		end
 	end
