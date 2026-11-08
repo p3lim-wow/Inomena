@@ -3,6 +3,7 @@ local _, addon = ...
 local HEIGHT = 6
 
 local FORMAT_PERC = '%s / %s (%d%%)'
+local FORMAT_LEFT = '-%s'
 local FORMAT_LEVEL = string.format('|cffffcc00%s|r %%d', LEVEL)
 local FORMAT_RESTED = string.format('|cff0090ff%s|r %%s (%%d%%%%)', TUTORIAL_TITLE26)
 local FORMAT_RENOWN = string.format('|cff00c5fd%s|r %%d', (RENOWN_LEVEL_LABEL:gsub(' %%d', '')))
@@ -26,6 +27,7 @@ local experience; do -- xp + rested bar
 		local max = BreakUpLargeNumbers(self.max)
 		local perc = math.floor(self.cur / self.max * 100 + 0.5)
 		tooltip:AddLine(FORMAT_PERC:format(cur, max, perc), 1, 1, 1)
+		tooltip:AddLine(FORMAT_LEFT:format(BreakUpLargeNumbers(self.max - self.cur)), 1, 1, 1)
 
 		if self.exhaustion > 0 then
 			local exhaustion = BreakUpLargeNumbers(self.exhaustion)
