@@ -86,26 +86,33 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	RaidIcon:SetSize(24, 24)
 	self.RaidTargetIndicator = RaidIcon
 
-	local Buffs = self:CreateAuras({
+	local Auras = self:CreateAuras({
 		growthX = 'LEFT',
 		growthY = 'UP', -- default
 		initialAnchor = 'RIGHT'
 	})
-	Buffs:SetPoint('RIGHT', self, 'LEFT', -addon.SPACING, 0)
-	Buffs.elementSpacing = addon.SPACING
-	Buffs.lineSpacing = addon.SPACING
-	Buffs.showCount = true
-	Buffs.size = self:GetHeight() - 2
-	Buffs.tooltipAnchor = 'ANCHOR_BOTTOMLEFT'
-	Buffs.tooltipOffsetX = -3
-	Buffs.tooltipOffsetY = self:GetHeight() - 4 -- this is some jank
-	Buffs.PostCreateButton = addon.unitShared.PostCreateAura
-	Buffs:AddGroup('HELPFUL|PLAYER')
-	Buffs:AddGroup('HELPFUL|!PLAYER|IMPORTANT')
-	Buffs:AddGroup('HELPFUL|!PLAYER|DISPELLABLE|!IMPORTANT')
-	Buffs:AddGroup('HELPFUL|!PLAYER|!DISPELLABLE|!IMPORTANT', {
+	Auras:SetPoint('RIGHT', self, 'LEFT', -addon.SPACING, 0)
+	Auras.elementSpacing = addon.SPACING
+	Auras.lineSpacing = addon.SPACING
+	Auras.showCount = true
+	Auras.size = self:GetHeight() - 2
+	Auras.tooltipAnchor = 'ANCHOR_BOTTOMLEFT'
+	Auras.tooltipOffsetX = -3
+	Auras.tooltipOffsetY = self:GetHeight() - 4 -- this is some jank
+	Auras.PostCreateButton = addon.unitShared.PostCreateAura
+	Auras:AddGroup('HELPFUL|PLAYER')
+	Auras:AddGroup('HELPFUL|!PLAYER|IMPORTANT')
+	Auras:AddGroup('HELPFUL|!PLAYER|DISPELLABLE|!IMPORTANT')
+	Auras:AddGroup('HELPFUL|!PLAYER|!DISPELLABLE|!IMPORTANT', {
 		candidateFilters = {
 			isBossOrRoleAura = true,
+		}
+	})
+	Auras:AddGroup('HARMFUL|PLAYER', {
+		candidateFilters = {
+			includeSpellIDs = {
+				[257284] = true, -- Hunter's Mark
+			}
 		}
 	})
 
