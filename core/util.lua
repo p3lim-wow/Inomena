@@ -190,9 +190,7 @@ do
 			name = name .. Constants.CharacterNameSeparatorConsts.CHARACTERNAME_SURNAME_SEPARATOR .. (realmOrSurname or '')
 		end
 
-		if C_Intl then -- TODO: remove check in 12.1.5/1.60.x
-			name = C_Intl.Transliterate(name, 'Any-Latin')
-		end
+		name = C_Intl.Transliterate(name, 'Any-Latin')
 
 		if addon:IsForever() then
 			return name
