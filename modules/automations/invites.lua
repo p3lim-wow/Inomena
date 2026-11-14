@@ -38,7 +38,12 @@ local function HidePopup()
 	end
 end
 
-function addon:PARTY_INVITE_REQUEST(_, isTank, isHealer, isDamager, _, _, inviterGUID)
+function addon:PARTY_INVITE_REQUEST(_, isTank, isHealer, isDamager, _, _, inviterGUID, inviterGUID2)
+	if addon:IsForever() and addon:HasBuild(70888) then
+		-- they changed the signature
+		inviterGUID = inviterGUID2
+	end
+
 	if QueueStatusButton:IsVisible() then
 		-- don't lose queue
 		return
