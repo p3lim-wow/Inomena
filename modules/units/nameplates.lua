@@ -227,7 +227,7 @@ oUF:RegisterStyle(styleName, function(self)
 	EliteIcon:SetSize(30, 30)
 	self.EliteIcon = EliteIcon
 
-	local Buffs = self:CreateAuras({
+	local Buffs = self:CreateAurasElement({
 		layoutLimit = 95, -- will fit 2 emphasized or 3 non-emphasized
 		growthX = 'LEFT',
 		growthY = 'UP', -- default
@@ -254,7 +254,7 @@ oUF:RegisterStyle(styleName, function(self)
 	self:RegisterEvent('SPELLS_CHANGED', GenerateFlatClosure(updateBuffFilters, Buffs), true)
 	updateBuffFilters(Buffs)
 
-	local Debuffs = self:CreateAuras({
+	local Debuffs = self:CreateAurasElement({
 		layoutLimit = 135, -- 4 debuffs for each row
 		growthX = 'RIGHT',
 		growthY = 'UP', -- default
@@ -272,7 +272,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Debuffs:AddGroup('HARMFUL|PLAYER|!CROWD_CONTROL')
 	self.Debuffs = Debuffs
 
-	local CrowdControl = self:CreateAuras({
+	local CrowdControl = self:CreateAurasElement({
 		growthX = 'RIGHT',
 		initialAnchor = 'LEFT',
 	})

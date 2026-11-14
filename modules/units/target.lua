@@ -58,7 +58,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	RaidIcon:SetSize(24, 24)
 	self.RaidTargetIndicator = RaidIcon
 
-	local Buffs = self:CreateAuras({
+	local Buffs = self:CreateAurasElement({
 		layoutLimit = 110, -- enough for 3
 		growthX = 'LEFT',
 		growthY = 'UP', -- default
@@ -77,7 +77,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		showCustomBuffBorder = true, -- custom option
 	})
 
-	local Debuffs = self:CreateAuras({
+	local Debuffs = self:CreateAurasElement({
 		layoutLimit = 220, -- enough for 5
 		growthX = 'RIGHT',
 		growthY = 'UP', -- default

@@ -13,7 +13,7 @@ oUF:RegisterStyle(styleName, function(self)
 	Name:SetJustifyH('LEFT')
 	self:Tag(Name, '[inomena:reactioncolor][inomena:name<$|r]')
 
-	local Debuffs = self:CreateAuras({
+	local Debuffs = self:CreateAurasElement({
 		layoutLimit = math.huge,
 		growthX = 'RIGHT',
 		growthY = 'UP', -- default

@@ -20,7 +20,7 @@ oUF:RegisterStyle(styleName, function(self)
 		Health:SetPointsOffset(0, -10)
 	end
 
-	local Auras = self:CreateAuras({
+	local Auras = self:CreateAurasElement({
 		layoutLimit = math.huge,
 		growthX = 'LEFT',
 		growthY = 'DOWN',

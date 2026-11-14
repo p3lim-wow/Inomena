@@ -173,7 +173,7 @@ local function style(self, unit, isRaidStyle)
 	ReadyCheck:SetIgnoreParentAlpha(true) -- so we can see status regardless of range
 	self.ReadyCheckIndicator = ReadyCheck
 
-	local Buffs = self:CreateAuras({
+	local Buffs = self:CreateAurasElement({
 		layoutLimit = self:GetWidth() - 3,
 		growthX = 'RIGHT',
 		growthY = 'DOWN',
@@ -207,7 +207,7 @@ local function style(self, unit, isRaidStyle)
 		postCreateButton = postCreateDefensiveSlot,
 	})
 
-	local Debuffs = self:CreateAuras({
+	local Debuffs = self:CreateAurasElement({
 		layoutLimit = math.huge, -- never let them wrap
 		growthX = isRaidStyle and 'LEFT' or 'RIGHT',
 		initialAnchor = isRaidStyle and 'BOTTOMRIGHT' or 'LEFT',

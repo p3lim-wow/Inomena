@@ -51,7 +51,7 @@ local function createButton(element, _, button)
 end
 
 function addon.unitShared.CreateDispelOverlay(frame, iconOnly)
-	local DispelOverlay = frame:CreateAuras()
+	local DispelOverlay = frame:CreateAurasElement()
 	DispelOverlay.PostUpdate = reactionCallback
 	DispelOverlay.iconOnly = iconOnly
 	DispelOverlay.slotKey = DispelOverlay:AddSlot('HARMFUL', {

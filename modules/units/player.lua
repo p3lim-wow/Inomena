@@ -102,7 +102,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		Power.CostPrediction = PowerPrediction
 	end
 
-	local Buffs = self:CreateAuras({
+	local Buffs = self:CreateAurasElement({
 		layoutLimit = self:GetWidth() - (addon.SPACING * 2),
 		growthX = 'RIGHT',
 		growthY = 'DOWN',
@@ -123,7 +123,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Buffs:AddGroup('HELPFUL|EXTERNAL_DEFENSIVE')
 	Buffs:AddGroup('HELPFUL|BIG_DEFENSIVE|!EXTERNAL_DEFENSIVE')
 
-	local Debuffs = self:CreateAuras({
+	local Debuffs = self:CreateAurasElement({
 		growthX = 'LEFT',
 		growthY = 'UP', -- default
 		initialAnchor = 'BOTTOMRIGHT',

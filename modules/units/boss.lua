@@ -86,7 +86,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	RaidIcon:SetSize(24, 24)
 	self.RaidTargetIndicator = RaidIcon
 
-	local Auras = self:CreateAuras({
+	local Auras = self:CreateAurasElement({
 		growthX = 'LEFT',
 		growthY = 'UP', -- default
 		initialAnchor = 'RIGHT'
