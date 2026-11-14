@@ -219,10 +219,5 @@ function addon:OnLogin()
 		C_CVar.SetCVar(key, value)
 	end
 
-	if UnitLevel('player') < GetMaxLevelForPlayerExpansion() then
-		-- this is kinda nice while leveling
-		C_CVar.SetCVar('AutoPushSpellToActionBar', 1)
-	end
-
 	return true
 end
