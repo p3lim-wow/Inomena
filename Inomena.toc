@@ -98,6 +98,7 @@ modules\blizzard\chatmessages.lua
 modules\blizzard\cooldowns.lua
 modules\blizzard\dressingroom.lua
 modules\blizzard\ephemeral.lua [AllowLoadGameType standard]
+modules\blizzard\fonts.lua
 modules\blizzard\hide.lua
 modules\blizzard\mail.lua
 modules\blizzard\minimap.lua

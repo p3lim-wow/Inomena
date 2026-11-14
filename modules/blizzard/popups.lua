@@ -66,8 +66,3 @@ end
 for index = 1, #Enum.FrameTutorialAccount do
 	C_CVar.SetCVarBitfield('closedInfoFramesAccountWide', index, true)
 end
-
--- use our font for the zone splash text
-ZoneTextString:SetFont(addon.FONT, 28, 'SLUG,OUTLINE')
-SubZoneTextString:SetFont(addon.FONT, 22, 'SLUG,OUTLINE')
-PVPArenaTextString:SetFont(addon.FONT, 16, 'SLUG,OUTLINE')

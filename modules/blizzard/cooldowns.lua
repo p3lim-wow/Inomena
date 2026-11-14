@@ -92,14 +92,14 @@ local function skin(group, _, button)
 	if button.ChargeCount then
 		button.ChargeCount.Current:ClearAllPoints()
 		button.ChargeCount.Current:SetPoint('CENTER', button.Icon, 'TOP')
-		button.ChargeCount.Current:SetFont(addon.FONT, 18, 'OUTLINE')
+		button.ChargeCount.Current:SetFont(addon.FONT, 18, addon.FONTFLAGS)
 	end
 
 	-- re-anchor and change font of applications
 	if button.Applications then
 		button.Applications.Applications:ClearAllPoints()
 		button.Applications.Applications:SetPoint('CENTER', button.Icon, 'TOP')
-		button.Applications.Applications:SetFont(addon.FONT, 24, 'OUTLINE')
+		button.Applications.Applications:SetFont(addon.FONT, 24, addon.FONTFLAGS)
 	end
 
 	if button.RefreshSpellCooldownInfo then

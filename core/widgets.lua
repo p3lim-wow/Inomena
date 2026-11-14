@@ -137,7 +137,7 @@ end
 do
 	local textMixin = {}
 	function textMixin:SetFontSize(size)
-		self:SetFont(addon.FONT, size or 16, 'SLUG,OUTLINE')
+		self:SetFont(addon.FONT, size or 16, addon.FONTFLAGS)
 	end
 
 	function textMixin:SetFrameLevel(level)
@@ -174,7 +174,7 @@ end
 do
 	local cooldownMixin = {}
 	function cooldownMixin:SetTimeFont(size)
-		self:GetCountdownFontString():SetFont(addon.FONT, size or 16, 'SLUG,OUTLINE')
+		self:GetCountdownFontString():SetFont(addon.FONT, size or 16, addon.FONTFLAGS)
 	end
 
 	function cooldownMixin:ClearTimePoints()

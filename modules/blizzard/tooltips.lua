@@ -250,13 +250,3 @@ AuraContainerInbound.SetTooltipBackdrop({
 	borderColor = CreateColor(0, 0, 0, 1),
 	centerColor = CreateColor(0, 0, 0, 0.7),
 })
-
--- set custom font
-for _, tooltipFontString in next, {
-	'GameTooltipHeaderText',
-	'GameTooltipText',
-	'GameTooltipTextSmall',
-} do
-	_G[tooltipFontString]:SetFont(addon.FONT, 12, 'SLUG,OUTLINE')
-	_G[tooltipFontString]:SetShadowOffset(0, 0)
-end

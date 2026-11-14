@@ -8,6 +8,7 @@ addon.GLOW = { -- backdrop
 
 -- modified version of AvantGarde to include cyrillic characters, by muleyo @ wowui discord
 addon.FONT = addon.PATH .. 'AvantGarde.ttf'
+addon.FONTFLAGS = 'SLUG,OUTLINE'
 
 -- register our font with LibSharedMedia
 local LSM = LibStub and LibStub('LibSharedMedia-3.0', true)
