@@ -13,6 +13,7 @@
 
 core\enums.lua
 core\constants.lua
+core\maps.lua
 core\colors.lua
 core\curves.lua
 core\formatters.lua
