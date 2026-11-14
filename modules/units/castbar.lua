@@ -63,7 +63,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 		Swing:SetHeight(12)
 		Swing:SetStatusBarTexture(addon.TEXTURE)
 		Swing:SetStatusBarColor(addon.colors.swing.ranged:GetRGB())
-		Swing.showCombat = true
+		Swing.direction = Enum.StatusBarTimerDirection.RemainingTime
 		addon:AddBackdrop(Swing)
 
 		local SwingTime = addon.widgetMixin.CreateText(Swing)
