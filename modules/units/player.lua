@@ -51,12 +51,39 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	HealingPrediction:SetStatusBarColor(addon.colors.healing:GetRGBA())
 	Health.HealingAll = HealingPrediction
 
-	local DamageAbsorb = Health:CreateStatusBar()
+	local DamageAbsorbContainer = Health:CreateFrame()
+	DamageAbsorbContainer:SetAllPoints()
+	DamageAbsorbContainer:SetClipsChildren(true)
+
+	local DamageAbsorb = DamageAbsorbContainer:CreateStatusBar()
 	DamageAbsorb:SetPoint('TOP')
 	DamageAbsorb:SetPoint('BOTTOM')
 	DamageAbsorb:SetPoint('LEFT', HealingPrediction:GetStatusBarTexture(), 'RIGHT')
 	DamageAbsorb:SetStatusBarColor(addon.colors.absorb:GetRGB())
 	Health.DamageAbsorb = DamageAbsorb
+
+	local DamageAbsorbClip = DamageAbsorbContainer:CreateFrame()
+	DamageAbsorbClip:SetClipsChildren(true)
+	DamageAbsorbClip:SetPoint('TOPLEFT', Health)
+	DamageAbsorbClip:SetPoint('BOTTOMRIGHT', HealingPrediction:GetStatusBarTexture())
+
+	local DamageAbsorbOverflow = DamageAbsorbClip:CreateStatusBar()
+	DamageAbsorbOverflow:SetPoint('TOP', Health)
+	DamageAbsorbOverflow:SetPoint('BOTTOM', Health)
+	DamageAbsorbOverflow:SetPoint('RIGHT', Health)
+	DamageAbsorbOverflow:SetReverseFill(true)
+	DamageAbsorbOverflow:SetStatusBarColor(addon.colors.absorb:GetRGB())
+	Health.DamageAbsorbOverflow = DamageAbsorbOverflow
+
+	hooksecurefunc(DamageAbsorb, 'SetMinMaxValues', function(_, ...)
+		DamageAbsorbOverflow:SetMinMaxValues(...)
+	end)
+	hooksecurefunc(DamageAbsorb, 'SetValue', function(_, ...)
+		DamageAbsorbOverflow:SetValue(...)
+	end)
+	hooksecurefunc(DamageAbsorb, 'SetWidth', function(_, ...)
+		DamageAbsorbOverflow:SetWidth(...)
+	end)
 
 	local HealAbsorb = Health:CreateStatusBar()
 	HealAbsorb:SetPoint('TOP')
