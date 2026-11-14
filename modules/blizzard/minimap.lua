@@ -66,7 +66,7 @@ clickOverlay:SetScript('OnMouseUp', function(self, button)
 			-- we'll want to open the tomtom waypoint menu surely
 			local waypoint = TomTomTooltip:GetOwner()
 			if waypoint then
-				waypoint.callbacks.onclick('onclick', waypoint.point.uid, waypoint, button)
+				waypoint.callbacks.onclick('onclick', (waypoint.uid or waypoint.point.uid), waypoint, button)
 				return
 			end
 		end
