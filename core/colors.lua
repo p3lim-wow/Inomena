@@ -149,3 +149,8 @@ addon.colors.tooltip = {
 addon.colors.experience = addon:CreateColor(42, 170, 51)
 addon.colors.rested = addon:CreateColor(0, 99, 224)
 addon.colors.warband = addon:CreateColor(0, 197, 253)
+
+addon.colors.swing = {
+	-- plucked from default textures
+	ranged = addon:CreateColor(177, 162, 142),
+}
