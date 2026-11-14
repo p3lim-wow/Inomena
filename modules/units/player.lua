@@ -41,6 +41,7 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	Health.colorClass = true
 	Health.colorReaction = true
 	Health.incomingHealOverflow = 1
+	Health.damageAbsorbClampMode = Enum.UnitDamageAbsorbClampMode.MaximumHealth
 	Health.TempLoss = HealthTempLoss
 	self.Health = Health
 
