@@ -55,6 +55,22 @@ oUF:RegisterStyle(styleName, function(self, unit)
 	CastbarDelay:SetJustifyH('LEFT')
 	CastbarDelay:SetTextColor(1, 0, 0)
 	Castbar.Delay = CastbarDelay
+
+	if addon:IsForever() then
+		local Swing = self:CreateSwingElement(Enum.PlayerSwingType.Ranged)
+		Swing:SetPoint('TOPLEFT', Castbar, 'BOTTOMLEFT', 0, -addon.SPACING)
+		Swing:SetPoint('TOPRIGHT', Castbar, 'BOTTOMRIGHT', 0, -addon.SPACING)
+		Swing:SetHeight(12)
+		Swing:SetStatusBarTexture(addon.TEXTURE)
+		Swing:SetStatusBarColor(addon.colors.swing.ranged:GetRGB())
+		Swing.showCombat = true
+		addon:AddBackdrop(Swing)
+
+		local SwingTime = addon.widgetMixin.CreateText(Swing)
+		SwingTime:SetPoint('CENTER')
+		SwingTime:SetJustifyH('CENTER')
+		Swing.Time = SwingTime
+	end
 end)
 
 oUF:SetActiveStyle(styleName)
