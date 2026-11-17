@@ -104,7 +104,7 @@ modules\blizzard\mail.lua
 modules\blizzard\minimap.lua
 modules\blizzard\id.lua
 modules\blizzard\popups.lua
-modules\blizzard\queue.lua [AllowLoadGameType standard]
+modules\blizzard\queue.lua
 modules\blizzard\skyriding.lua [AllowLoadGameType standard]
 modules\blizzard\tooltips.lua
 

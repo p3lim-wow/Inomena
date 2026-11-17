@@ -179,6 +179,12 @@ if addon:IsRetail() then
 		},
 	}
 else
+	SETTINGS.QueueStatusButton = {
+		anchor = {'TOPRIGHT', Minimap, -10, -10},
+		settings = {
+			[Enum.EditModeGroupFinderSetting.Size] = 70,
+		},
+	}
 	SETTINGS[MainActionBar.EndCaps.LeftEndCap] = {
 		settings = {
 			[Enum.EditModeMainActionBarEndCapSetting.Hidden] = 1,
