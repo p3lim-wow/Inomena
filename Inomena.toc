@@ -111,8 +111,8 @@ modules\blizzard\tooltips.lua
 modules\compat\minimap.lua
 modules\compat\bugsack.lua
 modules\compat\opie.lua [AllowLoadGameType standard]
-modules\compat\syndicator.lua [AllowLoadGameType standard]
-modules\compat\handynotes.lua [AllowLoadGameType standard]
+modules\compat\syndicator.lua
+modules\compat\handynotes.lua
 modules\compat\tooltips.lua
 
 modules\settings\opie.lua [AllowLoadGameType standard]
