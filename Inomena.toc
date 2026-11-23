@@ -58,7 +58,7 @@ modules\units\resources.lua
 modules\units\castbar.lua
 
 modules\automations\alerts.lua
-modules\automations\auction.lua
+modules\automations\auction.lua [AllowLoadGameType standard]
 modules\automations\equipment.lua [AllowLoadGameType standard]
 modules\automations\fishing.lua
 modules\automations\gossip.lua
