@@ -210,6 +210,10 @@ local UVARS = { -- unexposed (hidden) settings
 	tooltipShowAuraCasterNames = 1,
 }
 
+if addon:IsForever() then
+	UVARS.outlineModeShowLootEffectWhenDisabled = 1
+end
+
 function addon:OnLogin()
 	for key, value in next, CVARS do
 		C_CVar.SetCVar(key, value)
