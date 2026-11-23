@@ -386,18 +386,6 @@ nameplates:SetCVars({
 	nameplateTargetBehindMaxDistance = 30,
 })
 
--- use our font for friendly nameplates in instances
-for _, fontObject in next, {
-	'SystemFont_NamePlate',
-	'SystemFont_NamePlateFixed',
-	'SystemFont_NamePlate_Outlined',
-	'SystemFont_LargeNamePlate',
-	'SystemFont_LargeNamePlateFixed',
-} do
-	-- font size doesn't seem to matter, they'll be resized anyways?
-	_G[fontObject]:SetFont(addon.FONT, 16, 'SLUG,OUTLINE')
-end
-
 -- hide realm names for friendly nameplates in instances,
 -- the new "nameplateShowFriendlyRealmName" cvar will still append "(*)"
 addon:SafeSetNil(NamePlateFriendlyFrameOptions, 'updateNameUsesGetUnitName')
