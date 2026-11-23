@@ -35,13 +35,14 @@ oUF:RegisterStyle(styleName, function(self)
 	Auras.tooltipOffsetY = 3
 	Auras.PostCreateButton = addon.unitShared.PostCreateAura
 	Auras:AddGroup('HARMFUL|CROWD_CONTROL', {
-		size = self:GetHeight() * 3 -- emphasize!
+		size = self:GetHeight() * 2 -- emphasize!
 	})
 	Auras:AddGroup('HELPFUL|PLAYER', {
 		disableCooldownText = true, -- they're too small to see
 		candidateFilters = {
 			includeSpellIDs = {
 				[136] = true, -- Mend Pet
+				[1539] = true, -- Feed Pet
 			}
 		}
 	})
