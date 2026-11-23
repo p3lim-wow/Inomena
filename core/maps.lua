@@ -65,19 +65,44 @@ addon.CLASS_RESURRECT_COMBAT_SPELLS = {
 }
 
 addon.CLASS_BUFF_SPELLS = {
-	DRUID = {9885, 9884, 8907, 5234, 6756, 5232, 1126}, -- Mark of the Wild
-	EVOKER = 364342, -- Blessing of the Bronze
-	MAGE = {10157, 10156, 1461, 1460, 1459}, -- Arcane Intellect
-	PRIEST = addon:IsForever() and {10938, 10937, 2791, 1245, 1244, 1243} or 21562, -- Power Word: Fortitude
-	-- SHAMAN = {462854, {52127, 192106}}, -- Skyfury + Water/Lightning Shield
-	SHAMAN = addon:IsRetail() and 462854, -- Skyfury
-	WARRIOR = addon:IsRetail() and 6673, -- Battle Shout
+	DRUID = {
+		{9885, 9884, 8907, 5234, 6756, 5232, 1126}, -- Mark of the Wild
+		{9910, 9756, 8914, 1075, 782, 467}, -- Thorns
+	},
+	EVOKER = {364342}, -- Blessing of the Bronze
+	MAGE = {
+		{10157, 10156, 1461, 1460, 1459}, -- Arcane Intellect
+	},
+	PALADIN = addon:IsForever() and {
+		{20217}, -- Blessing of Kings
+		{25291, 19838, 19837, 19836, 19835, 19834, 19740}, -- Blessing of Might
+		{25290, 19854, 19853, 19852, 19850, 19742}, -- Blessing of Wisdom
+	},
+	PRIEST = addon:IsForever() and {
+		{10938, 10937, 2791, 1245, 1244, 1243}, -- Power Word: Fortitude
+		{27841, 14819, 14818, 14752}, -- Divine Spirit
+		{10958, 10957, 976}, -- Shadow Protection
+	} or {21562}, -- Power Word: Fortitude
+	SHAMAN = addon:IsRetail() and {
+		462854, -- Skyfury
+		{52127, 192106}, -- Skyfury + Water/Lightning Shield
+	},
+	WARRIOR = addon:IsRetail() and {6673}, -- Battle Shout
 }
 
 addon.CLASS_BUFF_GROUP_SPELLS = { -- forever only
-	DRUID = {21850, 21849}, -- Gift of the Wild
-	MAGE = 23028, -- Arcane Brilliance
-	PRIEST = {21564, 21562}, -- Prayer of Fortitude
+	DRUID = {{21850, 21849}}, -- Gift of the Wild
+	MAGE = {23028}, -- Arcane Brilliance
+	PALADIN = {
+		{25898}, -- Greater Blessing of Kings
+		{25916, 25782}, -- Greater Blessing of Might
+		{25918, 25894}, -- Greater Blessing of Wisdom
+	},
+	PRIEST = {
+		{21564, 21562}, -- Prayer of Fortitude
+		{27681}, -- Prayer of Spirit
+		{27683}, -- Prayer of Shadow Protection
+	},
 }
 
 addon.CLASS_HARMFUL_DISPEL_SPELLS = {

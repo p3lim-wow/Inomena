@@ -22,71 +22,43 @@ local function bind(spellID, index)
 	button:SetAttribute('macrotext', MACRO:format(C_Spell.GetSpellName(spellID)))
 end
 
-local function updateSpells()
-	if InCombatLockdown() then
-		return
+local function useGroupSpells()
+	if not addon:IsForever() then
+		return false
+	elseif C_SpellBook.IsSpellKnown(1225503) then
+		return true
+	elseif addon:IsInDungeon() and IsInGroup() then
+		return true
 	end
-
-	local bestSpellID
-	if addon:IsForever() and addon:IsInDungeon() and IsInGroup() and not addon:IsInRaid() then
-		-- Forever has group-wide spells that should be used when in grouped dungeon content,
-		-- but limit it to raids as buffing 5 people is better than the reagent cost.
-		-- this might change in the future with Legacy unlocks to remove the reagent cost.
-		local groupSpell = addon.CLASS_BUFF_GROUP_SPELLS[addon.PLAYER_CLASS]
-		if groupSpell then
-			if type(groupSpell) == 'table' then
-				for _, spellID in ipairs(groupSpell) do
-					if C_SpellBook.IsSpellKnown(spellID) then
-						bestSpellID = spellID
-						break
-					end
-				end
-			elseif C_SpellBook.IsSpellKnown(groupSpell) then
-				bestSpellID = groupSpell
-			end
-		end
-	end
-
-	if not bestSpellID then
-		local spell = addon.CLASS_BUFF_SPELLS[addon.PLAYER_CLASS]
-		if spell then
-			if type(spell) == 'table' then
-				for _, spellID in ipairs(spell) do
-					if C_SpellBook.IsSpellKnown(spellID) then
-						bestSpellID = spellID
-						break
-					end
-				end
-			elseif C_SpellBook.IsSpellKnown(spell) then
-				bestSpellID = spell
-			end
-		end
-	end
-
-	if bestSpellID then
-		bind(bestSpellID)
-	end
-
-	-- if type(spells) == 'table' then
-	-- 	for index, spellID in next, spells do
-	-- 		if type(spellID) == 'table' then
-	-- 			for _, spell in next, spellID do
-	-- 				if C_SpellBook.IsSpellKnown(spell) then
-	-- 					bind(spell, index)
-	-- 					break
-	-- 				end
-	-- 			end
-	-- 		else
-	-- 			bind(spellID, index)
-	-- 		end
-	-- 	end
-	-- else
-	-- 	bind(spells)
-	-- end
 end
 
-addon:RegisterEvent('SPELLS_CHANGED', updateSpells)
+local function getKnownSpell(spellIdentifier)
+	if type(spellIdentifier) == 'table' then
+		for _, spellID in next, spellIdentifier do
+			if C_SpellBook.IsSpellKnown(spellID) then
+				return spellID
+			end
+		end
+	elseif spellIdentifier and C_SpellBook.IsSpellKnown(spellIdentifier) then
+		return spellIdentifier
+	end
+end
+
+local function updateBinds()
+	local buffs = addon.CLASS_BUFF_SPELLS[addon.PLAYER_CLASS]
+	local groupBuffs = useGroupSpells() and addon.CLASS_BUFF_GROUP_SPELLS[addon.PLAYER_CLASS]
+
+	local numButtons = math.max(groupBuffs and #groupBuffs or 0, buffs and #buffs or 0)
+	for buttonIndex = 1, numButtons do
+		local spellID = (groupBuffs and getKnownSpell(groupBuffs[buttonIndex]) or (buffs and getKnownSpell(buffs[buttonIndex])))
+		if spellID then
+			addon:Defer(bind, spellID, buttonIndex)
+		end
+	end
+end
+
+addon:RegisterEvent('SPELLS_CHANGED', updateBinds)
 
 if addon:IsForever() then
-	addon:RegisterEvent('PLAYER_ENTERING_WORLD', updateSpells)
+	addon:RegisterEvent('PLAYER_ENTERING_WORLD', updateBinds)
 end
